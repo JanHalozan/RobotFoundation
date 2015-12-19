@@ -22,6 +22,7 @@
 		C98C34B31C25D24B006840C3 /* IOBluetoothDeviceTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34B21C25D24B006840C3 /* IOBluetoothDeviceTransport.swift */; };
 		C98C34B51C25D28D006840C3 /* DeviceTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34B41C25D28D006840C3 /* DeviceTransport.swift */; };
 		C98C34B71C25DC40006840C3 /* IOKitUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34B61C25DC40006840C3 /* IOKitUtilities.swift */; };
+		C98C34B91C25E00D006840C3 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34B81C25E00D006840C3 /* Device.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		C98C34B21C25D24B006840C3 /* IOBluetoothDeviceTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IOBluetoothDeviceTransport.swift; sourceTree = "<group>"; };
 		C98C34B41C25D28D006840C3 /* DeviceTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceTransport.swift; sourceTree = "<group>"; };
 		C98C34B61C25DC40006840C3 /* IOKitUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IOKitUtilities.swift; sourceTree = "<group>"; };
+		C98C34B81C25E00D006840C3 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +141,7 @@
 		C98C34B11C25D1F7006840C3 /* Device */ = {
 			isa = PBXGroup;
 			children = (
+				C98C34B81C25E00D006840C3 /* Device.swift */,
 				C98C34B41C25D28D006840C3 /* DeviceTransport.swift */,
 				C98C34B21C25D24B006840C3 /* IOBluetoothDeviceTransport.swift */,
 				C98C34B61C25DC40006840C3 /* IOKitUtilities.swift */,
@@ -254,6 +257,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C98C34B91C25E00D006840C3 /* Device.swift in Sources */,
 				C98C34AD1C25D1D1006840C3 /* NXTFindFirstCommand.swift in Sources */,
 				C98C34A81C25D1D1006840C3 /* NSDataNXTExtras.swift in Sources */,
 				C98C34AB1C25D1D1006840C3 /* NXTDeleteCommand.swift in Sources */,
