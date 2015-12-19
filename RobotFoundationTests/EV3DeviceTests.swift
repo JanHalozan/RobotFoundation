@@ -6,7 +6,7 @@
 //
 
 import XCTest
-import IOBluetoothUI
+import IOBluetooth
 @testable import RobotFoundation
 
 // This requires a physical EV3 device to be available via Bluetooth.
