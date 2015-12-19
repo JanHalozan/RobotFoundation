@@ -48,6 +48,7 @@ final class EV3Device: Device {
 	}
 
 	override func receivedData(data: NSData) {
+		// TODO: validate the message counter
 		guard let operation = currentlyExecutingOperation else {
 			assertionFailure("How did we get data if an operation isn't executing?")
 			return
