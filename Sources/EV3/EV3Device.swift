@@ -15,8 +15,8 @@ final class EV3Device: Device {
 		return operationQueue
 	}()
 
-	func enqueueCommand(command: NXTCommand, responseHandler: NXTResponseHandler) {
-		let operation = NXTCommandOperation(transport: transport, command: command, responseHandler: responseHandler)
+	func enqueueCommand(command: EV3Command, responseHandler: NXTResponseHandler) {
+		let operation = EV3CommandOperation(transport: transport, command: command, responseHandler: responseHandler)
 		operationQueue.addOperation(operation)
 	}
 
@@ -30,10 +30,10 @@ final class EV3Device: Device {
 		}
 	}
 
-	private var currentlyExecutingOperation: NXTCommandOperation? {
+	private var currentlyExecutingOperation: EV3CommandOperation? {
 		for operation in operationQueue.operations {
 			if operation.executing {
-				return operation as? NXTCommandOperation
+				return operation as? EV3CommandOperation
 			}
 		}
 

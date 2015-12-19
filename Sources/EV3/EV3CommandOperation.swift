@@ -35,4 +35,8 @@ final class EV3CommandOperation: NSOperation {
 			print("Cannot write packet data: \(error)")
 		}
 	}
+
+	func handleResponseData(data: NSData) {
+		
+	}
 }

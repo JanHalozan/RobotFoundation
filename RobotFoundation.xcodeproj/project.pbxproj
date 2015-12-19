@@ -34,6 +34,7 @@
 		C98C34CD1C25F1EA006840C3 /* MindstormsCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34CC1C25F1EA006840C3 /* MindstormsCommand.swift */; };
 		C98C34CF1C25F644006840C3 /* EV3CommandSerialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34CE1C25F644006840C3 /* EV3CommandSerialization.swift */; };
 		C98C34D11C25F893006840C3 /* NSDataEV3Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34D01C25F893006840C3 /* NSDataEV3Extras.swift */; };
+		C98C34D31C25FA37006840C3 /* EV3DeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34D21C25FA37006840C3 /* EV3DeviceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 		C98C34CC1C25F1EA006840C3 /* MindstormsCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MindstormsCommand.swift; sourceTree = "<group>"; };
 		C98C34CE1C25F644006840C3 /* EV3CommandSerialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3CommandSerialization.swift; sourceTree = "<group>"; };
 		C98C34D01C25F893006840C3 /* NSDataEV3Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDataEV3Extras.swift; sourceTree = "<group>"; };
+		C98C34D21C25FA37006840C3 /* EV3DeviceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3DeviceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				C98C34C91C25F134006840C3 /* EV3CommandTests.swift */,
+				C98C34D21C25FA37006840C3 /* EV3DeviceTests.swift */,
 				C98C347C1C25C160006840C3 /* RobotFoundationTests.swift */,
 				C98C347E1C25C160006840C3 /* Info.plist */,
 			);
@@ -337,6 +340,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C98C34CA1C25F134006840C3 /* EV3CommandTests.swift in Sources */,
+				C98C34D31C25FA37006840C3 /* EV3DeviceTests.swift in Sources */,
 				C98C347D1C25C160006840C3 /* RobotFoundationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
