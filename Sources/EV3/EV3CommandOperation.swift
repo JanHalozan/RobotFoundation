@@ -45,6 +45,7 @@ final class EV3CommandOperation: NSOperation {
 			return
 		}
 
+		// TODO: actually increment the message counter
 		let data = command.formEV3PacketData(0, prependTotalLength: false)
 
 		do {
@@ -63,6 +64,19 @@ final class EV3CommandOperation: NSOperation {
 	}
 
 	func handleResponseData(data: NSData) {
-		
+		// Response handlers are optional.
+		guard let responseHandler = self.responseHandler else {
+			return
+		}
+
+		// TODO: handle differences in USB packets
+		let fullData = data
+
+		guard let response = command.responseType.init(data: fullData) else {
+			print("Could not parse a response")
+			return
+		}
+
+		responseHandler(response)
 	}
 }

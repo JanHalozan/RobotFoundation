@@ -10,11 +10,11 @@ import Foundation
 struct NXTCloseCommand: NXTCommand {
 	let handle: UInt8
 
-	var responseType: NXTResponse.Type {
+	var responseType: MindstormsResponse.Type {
 		return NXTGenericResponse.self
 	}
 
-	var type: NXTCommandType {
+	var type: MindstormsCommandType {
 		return .System
 	}
 

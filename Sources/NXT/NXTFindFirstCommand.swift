@@ -14,7 +14,7 @@ struct NXTFindFirstCommand {
 		return NXTFileResponse.self
 	}
 
-	var type: NXTCommandType {
+	var type: MindstormsCommandType {
 		return .System
 	}
 

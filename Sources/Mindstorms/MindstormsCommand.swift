@@ -8,7 +8,8 @@
 import Foundation
 
 protocol MindstormsCommand {
-	var type: NXTCommandType { get }
+	var responseType: MindstormsResponse.Type { get }
+	var type: MindstormsCommandType { get }
 	var payloadData: NSData { get }
 }
 

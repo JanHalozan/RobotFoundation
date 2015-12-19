@@ -21,13 +21,4 @@ extension NSMutableData {
 		appendBytes(&lc2, length: sizeof(UInt8))
 		appendUInt16(value)
 	}
-
-	func appendUInt8(var value: UInt8) {
-		appendBytes(&value, length: sizeof(UInt8))
-	}
-
-	func appendUInt16(var value: UInt16) {
-		value = NSSwapHostShortToLittle(value)
-		appendBytes(&value, length: sizeof(UInt16))
-	}
 }

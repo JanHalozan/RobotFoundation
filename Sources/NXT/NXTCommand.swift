@@ -8,8 +8,6 @@
 import Foundation
 
 protocol NXTCommand: MindstormsCommand, CustomDebugStringConvertible {
-	var responseType: NXTResponse.Type { get }
-
 	var identifier: UInt8 { get }
 }
 

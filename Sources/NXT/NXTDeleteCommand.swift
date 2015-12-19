@@ -10,11 +10,11 @@ import Foundation
 struct NXTDeleteCommand: NXTCommand {
 	let filename: String
 
-	var responseType: NXTResponse.Type {
+	var responseType: MindstormsResponse.Type {
 		return NXTGenericResponse.self
 	}
 
-	var type: NXTCommandType {
+	var type: MindstormsCommandType {
 		return .System
 	}
 

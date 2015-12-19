@@ -7,11 +7,9 @@
 
 import Foundation
 
-typealias NXTResponseHandler = NXTResponse -> ()
+typealias NXTResponseHandler = MindstormsResponse -> ()
 
-protocol NXTResponse: CustomDebugStringConvertible {
-	init?(data: NSData)
-
+protocol NXTResponse: MindstormsResponse, CustomDebugStringConvertible {
 	var status: NXTStatus { get }
 }
 
