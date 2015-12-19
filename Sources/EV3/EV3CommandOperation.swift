@@ -12,6 +12,8 @@ final class EV3CommandOperation: NSOperation {
 	private let command: EV3Command
 	private let responseHandler: NXTResponseHandler?
 
+	private var isExecuting = false
+
 	init(transport: DeviceTransport, command: EV3Command, responseHandler: NXTResponseHandler?) {
 		self.transport = transport
 		self.command = command
@@ -23,17 +25,42 @@ final class EV3CommandOperation: NSOperation {
 		return true
 	}
 
+	override var executing: Bool {
+		return isExecuting
+	}
+
+	override var finished: Bool {
+		return !isExecuting
+	}
+
+	override var ready: Bool {
+		return super.ready && transport.isOpen
+	}
+
 	override func start() {
-		assert(NSThread.isMainThread())
+		guard NSThread.isMainThread() else {
+			dispatch_sync(dispatch_get_main_queue()) {
+				self.start()
+			}
+			return
+		}
 
 		let prependTotalLength = transport is IOBluetoothDeviceTransport
-		let data = command.formEV3PacketData(0, prependTotalLength: prependTotalLength)
+		let data = command.formEV3PacketData(0, prependTotalLength: false)
 
 		do {
 			try transport.writeData(data)
 		} catch {
 			print("Cannot write packet data: \(error)")
 		}
+
+		willChangeValueForKey("isExecuting")
+		willChangeValueForKey("isFinished")
+
+		isExecuting = true
+
+		didChangeValueForKey("isExecuting")
+		didChangeValueForKey("isFinished")
 	}
 
 	func handleResponseData(data: NSData) {

@@ -57,10 +57,15 @@ class Device: DeviceTransportDelegate {
 	}
 
 	func deviceTransportDidOpen(transport: DeviceTransport) {
+		openedTransport()
 		delegate?.deviceDidOpen(self)
 	}
 
 	/* this is only for use by subclasses */
+	func openedTransport() {
+		fatalError("Subclasses must override")
+	}
+
 	func wroteData() {
 		fatalError("Subclasses must override")
 	}

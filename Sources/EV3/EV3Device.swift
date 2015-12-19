@@ -40,6 +40,13 @@ final class EV3Device: Device {
 		return nil
 	}
 
+	override func openedTransport() {
+		for operation in operationQueue.operations {
+			operation.willChangeValueForKey("isReady")
+			operation.didChangeValueForKey("isReady")
+		}
+	}
+
 	override func receivedData(data: NSData) {
 		guard let operation = currentlyExecutingOperation else {
 			assertionFailure("How did we get data if an operation isn't executing?")

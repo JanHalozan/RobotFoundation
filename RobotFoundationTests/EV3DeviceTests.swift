@@ -10,6 +10,8 @@ import IOBluetoothUI
 @testable import RobotFoundation
 
 // This requires a physical EV3 device to be available via Bluetooth.
+private let deviceAddress = "00-16-53-40-82-33"
+
 class EV3DeviceTests: XCTestCase {
 	private var device: EV3Device!
 
@@ -17,18 +19,15 @@ class EV3DeviceTests: XCTestCase {
 		super.setUp()
 		// Put setup code here. This method is called before the invocation of each test method in the class.
 
-		let selector = IOBluetoothDeviceSelectorController.deviceSelector()
-		selector.runModal()
+		let bDevice = IOBluetoothDevice(addressString: deviceAddress)
 
-		let results = selector.getResults() as! [IOBluetoothDevice]
-
-		let transport = IOBluetoothDeviceTransport(bluetoothDevice: results.first!)
+		let transport = IOBluetoothDeviceTransport(bluetoothDevice: bDevice)
 		device = EV3Device(transport: transport)
 		try! device.open()
 	}
 
 	override func tearDown() {
-		// Put teardown code here. This method is called after the invocation of each test method in the class.
+		device.close()
 		super.tearDown()
 	}
 

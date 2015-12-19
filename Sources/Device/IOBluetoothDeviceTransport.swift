@@ -9,7 +9,7 @@ import Foundation
 import IOBluetooth
 
 /* supports RFCOMM communication */
-final class IOBluetoothDeviceTransport: DeviceTransport {
+final class IOBluetoothDeviceTransport: DeviceTransport, IOBluetoothRFCOMMChannelDelegate {
 	 /* use with care */
 	let bluetoothDevice: IOBluetoothDevice
 
@@ -51,8 +51,7 @@ final class IOBluetoothDeviceTransport: DeviceTransport {
 		}
 
 		var bytes = data.bytes
-		var conn = unsafeBitCast(self, UInt8.self)
-		let status = channel.writeAsync(&bytes, length: UInt16(data.length), refcon: &conn)
+		let status = channel.writeAsync(&bytes, length: UInt16(data.length), refcon: nil)
 
 		guard status == kIOReturnSuccess else {
 			throw status
@@ -62,6 +61,8 @@ final class IOBluetoothDeviceTransport: DeviceTransport {
 	}
 
 	@objc func connectionComplete(device: IOBluetoothDevice, var status: IOReturn) {
+		assert(NSThread.isMainThread())
+
 		guard status == kIOReturnSuccess else {
 			failedToOpenWithError(status)
 			return
@@ -91,21 +92,27 @@ final class IOBluetoothDeviceTransport: DeviceTransport {
 		self.channel = channel
 	}
 
-	@objc func rfcommChannelOpenComplete(channel: IOBluetoothRFCOMMChannel, status: IOReturn) {
-		guard status == kIOReturnSuccess else {
-			failedToOpenWithError(status)
+	@objc func rfcommChannelOpenComplete(rfcommChannel: IOBluetoothRFCOMMChannel!, status error: IOReturn) {
+		assert(NSThread.isMainThread())
+
+		guard error == kIOReturnSuccess else {
+			failedToOpenWithError(error)
 			return
 		}
 
 		opened()
 	}
 
-	@objc func rfcommChannelData(channel: IOBluetoothRFCOMMChannel, data: UnsafePointer<Void>, length: size_t) {
-		let data = NSData(bytes: data, length: length)
+	@objc func rfcommChannelData(rfcommChannel: IOBluetoothRFCOMMChannel!, data dataPointer: UnsafeMutablePointer<Void>, length dataLength: Int) {
+		assert(NSThread.isMainThread())
+
+		let data = NSData(bytes: dataPointer, length: dataLength)
 		receivedData(data)
 	}
 
-	@objc func rfcommChannelClosed(channel: IOBluetoothRFCOMMChannel) {
+	@objc func rfcommChannelClosed(rfcommChannel: IOBluetoothRFCOMMChannel!) {
+		assert(NSThread.isMainThread())
+		
 		close()
 	}
 }
