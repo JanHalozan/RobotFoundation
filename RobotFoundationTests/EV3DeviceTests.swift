@@ -12,7 +12,7 @@ import IOBluetooth
 // This requires a physical EV3 device to be available via Bluetooth.
 private let deviceAddress = "00-16-53-40-82-33"
 
-class EV3DeviceTests: XCTestCase {
+final class EV3DeviceTests: XCTestCase {
 	private var device: EV3Device!
 
 	override func setUp() {

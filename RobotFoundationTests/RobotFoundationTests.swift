@@ -9,7 +9,7 @@
 import XCTest
 @testable import RobotFoundation
 
-class RobotFoundationTests: XCTestCase {
+final class RobotFoundationTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

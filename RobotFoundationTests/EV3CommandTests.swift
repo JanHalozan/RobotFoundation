@@ -8,7 +8,7 @@
 import XCTest
 @testable import RobotFoundation
 
-class EV3CommandTests: XCTestCase {
+final class EV3CommandTests: XCTestCase {
 
 	override func setUp() {
 		super.setUp()
