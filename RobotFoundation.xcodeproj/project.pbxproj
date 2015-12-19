@@ -14,6 +14,7 @@
 		C98C348E1C25C460006840C3 /* NXTTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C348D1C25C460006840C3 /* NXTTypes.swift */; };
 		C98C34901C25C7EF006840C3 /* NSDataNXTExtras.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C348F1C25C7EF006840C3 /* NSDataNXTExtras.swift */; };
 		C98C34931C25C940006840C3 /* NXTCloseCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34921C25C940006840C3 /* NXTCloseCommand.swift */; };
+		C98C34951C25CB20006840C3 /* NXTDeleteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34941C25CB20006840C3 /* NXTDeleteCommand.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +38,7 @@
 		C98C348D1C25C460006840C3 /* NXTTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTTypes.swift; sourceTree = "<group>"; };
 		C98C348F1C25C7EF006840C3 /* NSDataNXTExtras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDataNXTExtras.swift; sourceTree = "<group>"; };
 		C98C34921C25C940006840C3 /* NXTCloseCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTCloseCommand.swift; sourceTree = "<group>"; };
+		C98C34941C25CB20006840C3 /* NXTDeleteCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTDeleteCommand.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				C98C34921C25C940006840C3 /* NXTCloseCommand.swift */,
+				C98C34941C25CB20006840C3 /* NXTDeleteCommand.swift */,
 			);
 			name = Commands;
 			sourceTree = "<group>";
@@ -233,6 +236,7 @@
 				C98C348E1C25C460006840C3 /* NXTTypes.swift in Sources */,
 				C98C34901C25C7EF006840C3 /* NSDataNXTExtras.swift in Sources */,
 				C98C348B1C25C39B006840C3 /* NXTCommand.swift in Sources */,
+				C98C34951C25CB20006840C3 /* NXTDeleteCommand.swift in Sources */,
 				C98C34931C25C940006840C3 /* NXTCloseCommand.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
