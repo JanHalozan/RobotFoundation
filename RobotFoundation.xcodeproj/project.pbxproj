@@ -10,15 +10,15 @@
 		C98C34781C25C160006840C3 /* RobotFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C98C346D1C25C160006840C3 /* RobotFoundation.framework */; };
 		C98C347D1C25C160006840C3 /* RobotFoundationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C347C1C25C160006840C3 /* RobotFoundationTests.swift */; };
 		C98C34881C25C262006840C3 /* RobotFoundation.h in Headers */ = {isa = PBXBuildFile; fileRef = C98C34871C25C262006840C3 /* RobotFoundation.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C98C348B1C25C39B006840C3 /* NXTCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C348A1C25C39B006840C3 /* NXTCommand.swift */; };
-		C98C348E1C25C460006840C3 /* NXTTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C348D1C25C460006840C3 /* NXTTypes.swift */; };
-		C98C34901C25C7EF006840C3 /* NSDataNXTExtras.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C348F1C25C7EF006840C3 /* NSDataNXTExtras.swift */; };
-		C98C34931C25C940006840C3 /* NXTCloseCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34921C25C940006840C3 /* NXTCloseCommand.swift */; };
-		C98C34951C25CB20006840C3 /* NXTDeleteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34941C25CB20006840C3 /* NXTDeleteCommand.swift */; };
-		C98C34971C25CB97006840C3 /* NXTFindFirstCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34961C25CB97006840C3 /* NXTFindFirstCommand.swift */; };
-		C98C34991C25CBD4006840C3 /* NXTResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34981C25CBD4006840C3 /* NXTResponse.swift */; };
-		C98C349B1C25CC21006840C3 /* NXTFileResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C349A1C25CC21006840C3 /* NXTFileResponse.swift */; };
-		C98C349D1C25CFDC006840C3 /* NXTGenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C349C1C25CFDC006840C3 /* NXTGenericResponse.swift */; };
+		C98C34A81C25D1D1006840C3 /* NSDataNXTExtras.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C349F1C25D1D1006840C3 /* NSDataNXTExtras.swift */; };
+		C98C34A91C25D1D1006840C3 /* NXTCloseCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34A01C25D1D1006840C3 /* NXTCloseCommand.swift */; };
+		C98C34AA1C25D1D1006840C3 /* NXTCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34A11C25D1D1006840C3 /* NXTCommand.swift */; };
+		C98C34AB1C25D1D1006840C3 /* NXTDeleteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34A21C25D1D1006840C3 /* NXTDeleteCommand.swift */; };
+		C98C34AC1C25D1D1006840C3 /* NXTFileResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34A31C25D1D1006840C3 /* NXTFileResponse.swift */; };
+		C98C34AD1C25D1D1006840C3 /* NXTFindFirstCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34A41C25D1D1006840C3 /* NXTFindFirstCommand.swift */; };
+		C98C34AE1C25D1D1006840C3 /* NXTGenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34A51C25D1D1006840C3 /* NXTGenericResponse.swift */; };
+		C98C34AF1C25D1D1006840C3 /* NXTResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34A61C25D1D1006840C3 /* NXTResponse.swift */; };
+		C98C34B01C25D1D1006840C3 /* NXTTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34A71C25D1D1006840C3 /* NXTTypes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,15 +38,15 @@
 		C98C347C1C25C160006840C3 /* RobotFoundationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobotFoundationTests.swift; sourceTree = "<group>"; };
 		C98C347E1C25C160006840C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C98C34871C25C262006840C3 /* RobotFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RobotFoundation.h; sourceTree = SOURCE_ROOT; };
-		C98C348A1C25C39B006840C3 /* NXTCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTCommand.swift; sourceTree = "<group>"; };
-		C98C348D1C25C460006840C3 /* NXTTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTTypes.swift; sourceTree = "<group>"; };
-		C98C348F1C25C7EF006840C3 /* NSDataNXTExtras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDataNXTExtras.swift; sourceTree = "<group>"; };
-		C98C34921C25C940006840C3 /* NXTCloseCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTCloseCommand.swift; sourceTree = "<group>"; };
-		C98C34941C25CB20006840C3 /* NXTDeleteCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTDeleteCommand.swift; sourceTree = "<group>"; };
-		C98C34961C25CB97006840C3 /* NXTFindFirstCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTFindFirstCommand.swift; sourceTree = "<group>"; };
-		C98C34981C25CBD4006840C3 /* NXTResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTResponse.swift; sourceTree = "<group>"; };
-		C98C349A1C25CC21006840C3 /* NXTFileResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTFileResponse.swift; sourceTree = "<group>"; };
-		C98C349C1C25CFDC006840C3 /* NXTGenericResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTGenericResponse.swift; sourceTree = "<group>"; };
+		C98C349F1C25D1D1006840C3 /* NSDataNXTExtras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDataNXTExtras.swift; sourceTree = "<group>"; };
+		C98C34A01C25D1D1006840C3 /* NXTCloseCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTCloseCommand.swift; sourceTree = "<group>"; };
+		C98C34A11C25D1D1006840C3 /* NXTCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTCommand.swift; sourceTree = "<group>"; };
+		C98C34A21C25D1D1006840C3 /* NXTDeleteCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTDeleteCommand.swift; sourceTree = "<group>"; };
+		C98C34A31C25D1D1006840C3 /* NXTFileResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTFileResponse.swift; sourceTree = "<group>"; };
+		C98C34A41C25D1D1006840C3 /* NXTFindFirstCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTFindFirstCommand.swift; sourceTree = "<group>"; };
+		C98C34A51C25D1D1006840C3 /* NXTGenericResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTGenericResponse.swift; sourceTree = "<group>"; };
+		C98C34A61C25D1D1006840C3 /* NXTResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTResponse.swift; sourceTree = "<group>"; };
+		C98C34A71C25D1D1006840C3 /* NXTTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTTypes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,33 +108,25 @@
 		C98C34891C25C38A006840C3 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				C98C348C1C25C3B5006840C3 /* NXT */,
+				C98C349E1C25D1D1006840C3 /* NXT */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		C98C348C1C25C3B5006840C3 /* NXT */ = {
+		C98C349E1C25D1D1006840C3 /* NXT */ = {
 			isa = PBXGroup;
 			children = (
-				C98C34911C25C92E006840C3 /* Commands */,
-				C98C348F1C25C7EF006840C3 /* NSDataNXTExtras.swift */,
-				C98C348A1C25C39B006840C3 /* NXTCommand.swift */,
-				C98C349A1C25CC21006840C3 /* NXTFileResponse.swift */,
-				C98C349C1C25CFDC006840C3 /* NXTGenericResponse.swift */,
-				C98C34981C25CBD4006840C3 /* NXTResponse.swift */,
-				C98C348D1C25C460006840C3 /* NXTTypes.swift */,
+				C98C349F1C25D1D1006840C3 /* NSDataNXTExtras.swift */,
+				C98C34A01C25D1D1006840C3 /* NXTCloseCommand.swift */,
+				C98C34A11C25D1D1006840C3 /* NXTCommand.swift */,
+				C98C34A21C25D1D1006840C3 /* NXTDeleteCommand.swift */,
+				C98C34A31C25D1D1006840C3 /* NXTFileResponse.swift */,
+				C98C34A41C25D1D1006840C3 /* NXTFindFirstCommand.swift */,
+				C98C34A51C25D1D1006840C3 /* NXTGenericResponse.swift */,
+				C98C34A61C25D1D1006840C3 /* NXTResponse.swift */,
+				C98C34A71C25D1D1006840C3 /* NXTTypes.swift */,
 			);
-			name = NXT;
-			sourceTree = "<group>";
-		};
-		C98C34911C25C92E006840C3 /* Commands */ = {
-			isa = PBXGroup;
-			children = (
-				C98C34921C25C940006840C3 /* NXTCloseCommand.swift */,
-				C98C34941C25CB20006840C3 /* NXTDeleteCommand.swift */,
-				C98C34961C25CB97006840C3 /* NXTFindFirstCommand.swift */,
-			);
-			name = Commands;
+			path = NXT;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -245,15 +237,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C98C34971C25CB97006840C3 /* NXTFindFirstCommand.swift in Sources */,
-				C98C349B1C25CC21006840C3 /* NXTFileResponse.swift in Sources */,
-				C98C348E1C25C460006840C3 /* NXTTypes.swift in Sources */,
-				C98C34991C25CBD4006840C3 /* NXTResponse.swift in Sources */,
-				C98C34901C25C7EF006840C3 /* NSDataNXTExtras.swift in Sources */,
-				C98C348B1C25C39B006840C3 /* NXTCommand.swift in Sources */,
-				C98C34951C25CB20006840C3 /* NXTDeleteCommand.swift in Sources */,
-				C98C34931C25C940006840C3 /* NXTCloseCommand.swift in Sources */,
-				C98C349D1C25CFDC006840C3 /* NXTGenericResponse.swift in Sources */,
+				C98C34AD1C25D1D1006840C3 /* NXTFindFirstCommand.swift in Sources */,
+				C98C34A81C25D1D1006840C3 /* NSDataNXTExtras.swift in Sources */,
+				C98C34AB1C25D1D1006840C3 /* NXTDeleteCommand.swift in Sources */,
+				C98C34AA1C25D1D1006840C3 /* NXTCommand.swift in Sources */,
+				C98C34AE1C25D1D1006840C3 /* NXTGenericResponse.swift in Sources */,
+				C98C34AF1C25D1D1006840C3 /* NXTResponse.swift in Sources */,
+				C98C34B01C25D1D1006840C3 /* NXTTypes.swift in Sources */,
+				C98C34AC1C25D1D1006840C3 /* NXTFileResponse.swift in Sources */,
+				C98C34A91C25D1D1006840C3 /* NXTCloseCommand.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
