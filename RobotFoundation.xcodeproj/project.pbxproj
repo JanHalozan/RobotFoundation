@@ -15,6 +15,10 @@
 		C98C34901C25C7EF006840C3 /* NSDataNXTExtras.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C348F1C25C7EF006840C3 /* NSDataNXTExtras.swift */; };
 		C98C34931C25C940006840C3 /* NXTCloseCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34921C25C940006840C3 /* NXTCloseCommand.swift */; };
 		C98C34951C25CB20006840C3 /* NXTDeleteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34941C25CB20006840C3 /* NXTDeleteCommand.swift */; };
+		C98C34971C25CB97006840C3 /* NXTFindFirstCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34961C25CB97006840C3 /* NXTFindFirstCommand.swift */; };
+		C98C34991C25CBD4006840C3 /* NXTResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34981C25CBD4006840C3 /* NXTResponse.swift */; };
+		C98C349B1C25CC21006840C3 /* NXTFileResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C349A1C25CC21006840C3 /* NXTFileResponse.swift */; };
+		C98C349D1C25CFDC006840C3 /* NXTGenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C349C1C25CFDC006840C3 /* NXTGenericResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +43,10 @@
 		C98C348F1C25C7EF006840C3 /* NSDataNXTExtras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDataNXTExtras.swift; sourceTree = "<group>"; };
 		C98C34921C25C940006840C3 /* NXTCloseCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTCloseCommand.swift; sourceTree = "<group>"; };
 		C98C34941C25CB20006840C3 /* NXTDeleteCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTDeleteCommand.swift; sourceTree = "<group>"; };
+		C98C34961C25CB97006840C3 /* NXTFindFirstCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTFindFirstCommand.swift; sourceTree = "<group>"; };
+		C98C34981C25CBD4006840C3 /* NXTResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTResponse.swift; sourceTree = "<group>"; };
+		C98C349A1C25CC21006840C3 /* NXTFileResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTFileResponse.swift; sourceTree = "<group>"; };
+		C98C349C1C25CFDC006840C3 /* NXTGenericResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTGenericResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +119,9 @@
 				C98C34911C25C92E006840C3 /* Commands */,
 				C98C348F1C25C7EF006840C3 /* NSDataNXTExtras.swift */,
 				C98C348A1C25C39B006840C3 /* NXTCommand.swift */,
+				C98C349A1C25CC21006840C3 /* NXTFileResponse.swift */,
+				C98C349C1C25CFDC006840C3 /* NXTGenericResponse.swift */,
+				C98C34981C25CBD4006840C3 /* NXTResponse.swift */,
 				C98C348D1C25C460006840C3 /* NXTTypes.swift */,
 			);
 			name = NXT;
@@ -121,6 +132,7 @@
 			children = (
 				C98C34921C25C940006840C3 /* NXTCloseCommand.swift */,
 				C98C34941C25CB20006840C3 /* NXTDeleteCommand.swift */,
+				C98C34961C25CB97006840C3 /* NXTFindFirstCommand.swift */,
 			);
 			name = Commands;
 			sourceTree = "<group>";
@@ -233,11 +245,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C98C34971C25CB97006840C3 /* NXTFindFirstCommand.swift in Sources */,
+				C98C349B1C25CC21006840C3 /* NXTFileResponse.swift in Sources */,
 				C98C348E1C25C460006840C3 /* NXTTypes.swift in Sources */,
+				C98C34991C25CBD4006840C3 /* NXTResponse.swift in Sources */,
 				C98C34901C25C7EF006840C3 /* NSDataNXTExtras.swift in Sources */,
 				C98C348B1C25C39B006840C3 /* NXTCommand.swift in Sources */,
 				C98C34951C25CB20006840C3 /* NXTDeleteCommand.swift in Sources */,
 				C98C34931C25C940006840C3 /* NXTCloseCommand.swift in Sources */,
+				C98C349D1C25CFDC006840C3 /* NXTGenericResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

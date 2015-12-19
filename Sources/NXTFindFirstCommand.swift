@@ -1,5 +1,5 @@
 //
-//  NXTDeleteCommand.swift
+//  NXTFindFirstCommand.swift
 //  RobotFoundation
 //
 //  Created by Matt on 12/19/15.
@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct NXTDeleteCommand: NXTCommand {
+struct NXTFindFirstCommand {
 	let filename: String
 
-	var responseType: NXTResponse.Type {
-		return NXTGenericResponse.self
+	var response: NXTResponse.Type {
+		return NXTFileResponse.self
 	}
 
 	var type: NXTCommandType {
@@ -19,7 +19,7 @@ struct NXTDeleteCommand: NXTCommand {
 	}
 
 	var identifier: UInt8 {
-		return 0x85
+		return 0x86
 	}
 
 	var payloadData: NSData {

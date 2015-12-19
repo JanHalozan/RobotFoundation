@@ -8,6 +8,8 @@
 import Foundation
 
 protocol NXTCommand: CustomDebugStringConvertible {
+	var responseType: NXTResponse.Type { get }
+
 	var type: NXTCommandType { get }
 	var identifier: UInt8 { get }
 	var payloadData: NSData { get }
