@@ -1,0 +1,8 @@
+//
+// Prefix header for all source files of the 'NXTKit' target in the 'NXTKit' project.
+//
+
+#ifdef __OBJC__
+	#import <Cocoa/Cocoa.h>
+	#import "NSMutableData+NXT.h"
+#endif
