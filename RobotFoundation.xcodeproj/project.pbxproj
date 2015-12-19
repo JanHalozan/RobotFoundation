@@ -10,6 +10,8 @@
 		C98C34781C25C160006840C3 /* RobotFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C98C346D1C25C160006840C3 /* RobotFoundation.framework */; };
 		C98C347D1C25C160006840C3 /* RobotFoundationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C347C1C25C160006840C3 /* RobotFoundationTests.swift */; };
 		C98C34881C25C262006840C3 /* RobotFoundation.h in Headers */ = {isa = PBXBuildFile; fileRef = C98C34871C25C262006840C3 /* RobotFoundation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C98C348B1C25C39B006840C3 /* NXTCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C348A1C25C39B006840C3 /* NXTCommand.swift */; };
+		C98C348E1C25C460006840C3 /* NXTTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C348D1C25C460006840C3 /* NXTTypes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +31,8 @@
 		C98C347C1C25C160006840C3 /* RobotFoundationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobotFoundationTests.swift; sourceTree = "<group>"; };
 		C98C347E1C25C160006840C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C98C34871C25C262006840C3 /* RobotFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RobotFoundation.h; sourceTree = SOURCE_ROOT; };
+		C98C348A1C25C39B006840C3 /* NXTCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTCommand.swift; sourceTree = "<group>"; };
+		C98C348D1C25C460006840C3 /* NXTTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTTypes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +57,7 @@
 		C98C34631C25C160006840C3 = {
 			isa = PBXGroup;
 			children = (
+				C98C34891C25C38A006840C3 /* Sources */,
 				C98C346F1C25C160006840C3 /* RobotFoundation */,
 				C98C347B1C25C160006840C3 /* RobotFoundationTests */,
 				C98C346E1C25C160006840C3 /* Products */,
@@ -84,6 +89,23 @@
 				C98C347E1C25C160006840C3 /* Info.plist */,
 			);
 			path = RobotFoundationTests;
+			sourceTree = "<group>";
+		};
+		C98C34891C25C38A006840C3 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				C98C348C1C25C3B5006840C3 /* NXT */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		C98C348C1C25C3B5006840C3 /* NXT */ = {
+			isa = PBXGroup;
+			children = (
+				C98C348A1C25C39B006840C3 /* NXTCommand.swift */,
+				C98C348D1C25C460006840C3 /* NXTTypes.swift */,
+			);
+			name = NXT;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,6 +216,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C98C348E1C25C460006840C3 /* NXTTypes.swift in Sources */,
+				C98C348B1C25C39B006840C3 /* NXTCommand.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -305,6 +329,7 @@
 		C98C34821C25C160006840C3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -317,12 +342,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.MattRajca.RobotFoundation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		C98C34831C25C160006840C3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
