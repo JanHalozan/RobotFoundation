@@ -7,22 +7,10 @@
 
 import Foundation
 
-protocol NXTCommand: CustomDebugStringConvertible {
+protocol NXTCommand: MindstormsCommand, CustomDebugStringConvertible {
 	var responseType: NXTResponse.Type { get }
 
-	var type: NXTCommandType { get }
 	var identifier: UInt8 { get }
-	var payloadData: NSData { get }
-}
-
-extension NXTCommand {
-	var telegramType: UInt8 {
-		if type == .Direct {
-			return 0x0
-		}
-
-		return 0x01
-	}
 }
 
 extension NXTCommand {

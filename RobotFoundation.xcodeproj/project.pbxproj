@@ -26,6 +26,14 @@
 		C98C34BB1C25E1E3006840C3 /* NXTDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34BA1C25E1E3006840C3 /* NXTDevice.swift */; };
 		C98C34BD1C25E28A006840C3 /* NXTCommandOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34BC1C25E28A006840C3 /* NXTCommandOperation.swift */; };
 		C98C34BF1C25E520006840C3 /* IOUSBDeviceTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34BE1C25E520006840C3 /* IOUSBDeviceTransport.swift */; };
+		C98C34C21C25EADB006840C3 /* EV3Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34C11C25EADB006840C3 /* EV3Device.swift */; };
+		C98C34C41C25EB2E006840C3 /* EV3Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34C31C25EB2E006840C3 /* EV3Command.swift */; };
+		C98C34C61C25EC3B006840C3 /* EV3CommandOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34C51C25EC3B006840C3 /* EV3CommandOperation.swift */; };
+		C98C34C81C25EC57006840C3 /* EV3PlayToneCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34C71C25EC57006840C3 /* EV3PlayToneCommand.swift */; };
+		C98C34CA1C25F134006840C3 /* EV3CommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34C91C25F134006840C3 /* EV3CommandTests.swift */; };
+		C98C34CD1C25F1EA006840C3 /* MindstormsCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34CC1C25F1EA006840C3 /* MindstormsCommand.swift */; };
+		C98C34CF1C25F644006840C3 /* EV3CommandSerialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34CE1C25F644006840C3 /* EV3CommandSerialization.swift */; };
+		C98C34D11C25F893006840C3 /* NSDataEV3Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34D01C25F893006840C3 /* NSDataEV3Extras.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +69,14 @@
 		C98C34BA1C25E1E3006840C3 /* NXTDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTDevice.swift; sourceTree = "<group>"; };
 		C98C34BC1C25E28A006840C3 /* NXTCommandOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTCommandOperation.swift; sourceTree = "<group>"; };
 		C98C34BE1C25E520006840C3 /* IOUSBDeviceTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IOUSBDeviceTransport.swift; sourceTree = "<group>"; };
+		C98C34C11C25EADB006840C3 /* EV3Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3Device.swift; sourceTree = "<group>"; };
+		C98C34C31C25EB2E006840C3 /* EV3Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3Command.swift; sourceTree = "<group>"; };
+		C98C34C51C25EC3B006840C3 /* EV3CommandOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3CommandOperation.swift; sourceTree = "<group>"; };
+		C98C34C71C25EC57006840C3 /* EV3PlayToneCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3PlayToneCommand.swift; sourceTree = "<group>"; };
+		C98C34C91C25F134006840C3 /* EV3CommandTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3CommandTests.swift; sourceTree = "<group>"; };
+		C98C34CC1C25F1EA006840C3 /* MindstormsCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MindstormsCommand.swift; sourceTree = "<group>"; };
+		C98C34CE1C25F644006840C3 /* EV3CommandSerialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3CommandSerialization.swift; sourceTree = "<group>"; };
+		C98C34D01C25F893006840C3 /* NSDataEV3Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDataEV3Extras.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +129,7 @@
 		C98C347B1C25C160006840C3 /* RobotFoundationTests */ = {
 			isa = PBXGroup;
 			children = (
+				C98C34C91C25F134006840C3 /* EV3CommandTests.swift */,
 				C98C347C1C25C160006840C3 /* RobotFoundationTests.swift */,
 				C98C347E1C25C160006840C3 /* Info.plist */,
 			);
@@ -123,6 +140,8 @@
 			isa = PBXGroup;
 			children = (
 				C98C34B11C25D1F7006840C3 /* Device */,
+				C98C34C01C25EA10006840C3 /* EV3 */,
+				C98C34CB1C25F1E0006840C3 /* Mindstorms */,
 				C98C349E1C25D1D1006840C3 /* NXT */,
 			);
 			path = Sources;
@@ -156,6 +175,27 @@
 				C98C34BE1C25E520006840C3 /* IOUSBDeviceTransport.swift */,
 			);
 			path = Device;
+			sourceTree = "<group>";
+		};
+		C98C34C01C25EA10006840C3 /* EV3 */ = {
+			isa = PBXGroup;
+			children = (
+				C98C34C11C25EADB006840C3 /* EV3Device.swift */,
+				C98C34C31C25EB2E006840C3 /* EV3Command.swift */,
+				C98C34C51C25EC3B006840C3 /* EV3CommandOperation.swift */,
+				C98C34CE1C25F644006840C3 /* EV3CommandSerialization.swift */,
+				C98C34C71C25EC57006840C3 /* EV3PlayToneCommand.swift */,
+				C98C34D01C25F893006840C3 /* NSDataEV3Extras.swift */,
+			);
+			path = EV3;
+			sourceTree = "<group>";
+		};
+		C98C34CB1C25F1E0006840C3 /* Mindstorms */ = {
+			isa = PBXGroup;
+			children = (
+				C98C34CC1C25F1EA006840C3 /* MindstormsCommand.swift */,
+			);
+			path = Mindstorms;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -267,17 +307,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				C98C34B91C25E00D006840C3 /* Device.swift in Sources */,
+				C98C34CD1C25F1EA006840C3 /* MindstormsCommand.swift in Sources */,
 				C98C34AD1C25D1D1006840C3 /* NXTFindFirstCommand.swift in Sources */,
 				C98C34A81C25D1D1006840C3 /* NSDataNXTExtras.swift in Sources */,
 				C98C34AB1C25D1D1006840C3 /* NXTDeleteCommand.swift in Sources */,
 				C98C34BF1C25E520006840C3 /* IOUSBDeviceTransport.swift in Sources */,
 				C98C34BB1C25E1E3006840C3 /* NXTDevice.swift in Sources */,
+				C98C34D11C25F893006840C3 /* NSDataEV3Extras.swift in Sources */,
+				C98C34C41C25EB2E006840C3 /* EV3Command.swift in Sources */,
 				C98C34BD1C25E28A006840C3 /* NXTCommandOperation.swift in Sources */,
 				C98C34B71C25DC40006840C3 /* IOKitUtilities.swift in Sources */,
 				C98C34AA1C25D1D1006840C3 /* NXTCommand.swift in Sources */,
 				C98C34AE1C25D1D1006840C3 /* NXTGenericResponse.swift in Sources */,
 				C98C34AF1C25D1D1006840C3 /* NXTResponse.swift in Sources */,
+				C98C34C81C25EC57006840C3 /* EV3PlayToneCommand.swift in Sources */,
+				C98C34C61C25EC3B006840C3 /* EV3CommandOperation.swift in Sources */,
 				C98C34B51C25D28D006840C3 /* DeviceTransport.swift in Sources */,
+				C98C34C21C25EADB006840C3 /* EV3Device.swift in Sources */,
+				C98C34CF1C25F644006840C3 /* EV3CommandSerialization.swift in Sources */,
 				C98C34B01C25D1D1006840C3 /* NXTTypes.swift in Sources */,
 				C98C34AC1C25D1D1006840C3 /* NXTFileResponse.swift in Sources */,
 				C98C34B31C25D24B006840C3 /* IOBluetoothDeviceTransport.swift in Sources */,
@@ -289,6 +336,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C98C34CA1C25F134006840C3 /* EV3CommandTests.swift in Sources */,
 				C98C347D1C25C160006840C3 /* RobotFoundationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
