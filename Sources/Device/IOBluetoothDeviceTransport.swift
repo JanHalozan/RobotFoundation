@@ -38,6 +38,7 @@ final class IOBluetoothDeviceTransport: DeviceTransport, IOBluetoothRFCOMMChanne
 			return
 		}
 
+		assert(channel != nil)
 		channel?.closeChannel()
 		bluetoothDevice.closeConnection()
 
@@ -50,8 +51,9 @@ final class IOBluetoothDeviceTransport: DeviceTransport, IOBluetoothRFCOMMChanne
 			return false
 		}
 
-		var bytes = data.bytes
-		let status = channel.writeAsync(&bytes, length: UInt16(data.length), refcon: nil)
+		var array = [UInt8](count: data.length, repeatedValue: 0)
+		data.getBytes(&array, length: data.length)
+		let status = channel.writeAsync(&array, length: UInt16(data.length), refcon: nil)
 
 		guard status == kIOReturnSuccess else {
 			throw status
