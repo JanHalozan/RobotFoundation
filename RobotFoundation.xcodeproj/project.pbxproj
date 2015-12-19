@@ -23,6 +23,9 @@
 		C98C34B51C25D28D006840C3 /* DeviceTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34B41C25D28D006840C3 /* DeviceTransport.swift */; };
 		C98C34B71C25DC40006840C3 /* IOKitUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34B61C25DC40006840C3 /* IOKitUtilities.swift */; };
 		C98C34B91C25E00D006840C3 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34B81C25E00D006840C3 /* Device.swift */; };
+		C98C34BB1C25E1E3006840C3 /* NXTDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34BA1C25E1E3006840C3 /* NXTDevice.swift */; };
+		C98C34BD1C25E28A006840C3 /* NXTCommandOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34BC1C25E28A006840C3 /* NXTCommandOperation.swift */; };
+		C98C34BF1C25E520006840C3 /* IOUSBDeviceTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34BE1C25E520006840C3 /* IOUSBDeviceTransport.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +58,9 @@
 		C98C34B41C25D28D006840C3 /* DeviceTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceTransport.swift; sourceTree = "<group>"; };
 		C98C34B61C25DC40006840C3 /* IOKitUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IOKitUtilities.swift; sourceTree = "<group>"; };
 		C98C34B81C25E00D006840C3 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
+		C98C34BA1C25E1E3006840C3 /* NXTDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTDevice.swift; sourceTree = "<group>"; };
+		C98C34BC1C25E28A006840C3 /* NXTCommandOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTCommandOperation.swift; sourceTree = "<group>"; };
+		C98C34BE1C25E520006840C3 /* IOUSBDeviceTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IOUSBDeviceTransport.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,7 +134,9 @@
 				C98C349F1C25D1D1006840C3 /* NSDataNXTExtras.swift */,
 				C98C34A01C25D1D1006840C3 /* NXTCloseCommand.swift */,
 				C98C34A11C25D1D1006840C3 /* NXTCommand.swift */,
+				C98C34BC1C25E28A006840C3 /* NXTCommandOperation.swift */,
 				C98C34A21C25D1D1006840C3 /* NXTDeleteCommand.swift */,
+				C98C34BA1C25E1E3006840C3 /* NXTDevice.swift */,
 				C98C34A31C25D1D1006840C3 /* NXTFileResponse.swift */,
 				C98C34A41C25D1D1006840C3 /* NXTFindFirstCommand.swift */,
 				C98C34A51C25D1D1006840C3 /* NXTGenericResponse.swift */,
@@ -145,6 +153,7 @@
 				C98C34B41C25D28D006840C3 /* DeviceTransport.swift */,
 				C98C34B21C25D24B006840C3 /* IOBluetoothDeviceTransport.swift */,
 				C98C34B61C25DC40006840C3 /* IOKitUtilities.swift */,
+				C98C34BE1C25E520006840C3 /* IOUSBDeviceTransport.swift */,
 			);
 			path = Device;
 			sourceTree = "<group>";
@@ -261,6 +270,9 @@
 				C98C34AD1C25D1D1006840C3 /* NXTFindFirstCommand.swift in Sources */,
 				C98C34A81C25D1D1006840C3 /* NSDataNXTExtras.swift in Sources */,
 				C98C34AB1C25D1D1006840C3 /* NXTDeleteCommand.swift in Sources */,
+				C98C34BF1C25E520006840C3 /* IOUSBDeviceTransport.swift in Sources */,
+				C98C34BB1C25E1E3006840C3 /* NXTDevice.swift in Sources */,
+				C98C34BD1C25E28A006840C3 /* NXTCommandOperation.swift in Sources */,
 				C98C34B71C25DC40006840C3 /* IOKitUtilities.swift in Sources */,
 				C98C34AA1C25D1D1006840C3 /* NXTCommand.swift in Sources */,
 				C98C34AE1C25D1D1006840C3 /* NXTGenericResponse.swift in Sources */,

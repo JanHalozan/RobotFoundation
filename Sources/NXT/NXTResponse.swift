@@ -7,6 +7,8 @@
 
 import Foundation
 
+typealias NXTResponseHandler = NXTResponse -> ()
+
 protocol NXTResponse: CustomDebugStringConvertible {
 	init?(data: NSData)
 
