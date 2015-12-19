@@ -13,6 +13,7 @@
 		C98C348B1C25C39B006840C3 /* NXTCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C348A1C25C39B006840C3 /* NXTCommand.swift */; };
 		C98C348E1C25C460006840C3 /* NXTTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C348D1C25C460006840C3 /* NXTTypes.swift */; };
 		C98C34901C25C7EF006840C3 /* NSDataNXTExtras.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C348F1C25C7EF006840C3 /* NSDataNXTExtras.swift */; };
+		C98C34931C25C940006840C3 /* NXTCloseCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34921C25C940006840C3 /* NXTCloseCommand.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +36,7 @@
 		C98C348A1C25C39B006840C3 /* NXTCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTCommand.swift; sourceTree = "<group>"; };
 		C98C348D1C25C460006840C3 /* NXTTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTTypes.swift; sourceTree = "<group>"; };
 		C98C348F1C25C7EF006840C3 /* NSDataNXTExtras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDataNXTExtras.swift; sourceTree = "<group>"; };
+		C98C34921C25C940006840C3 /* NXTCloseCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTCloseCommand.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,11 +106,20 @@
 		C98C348C1C25C3B5006840C3 /* NXT */ = {
 			isa = PBXGroup;
 			children = (
+				C98C34911C25C92E006840C3 /* Commands */,
 				C98C348F1C25C7EF006840C3 /* NSDataNXTExtras.swift */,
 				C98C348A1C25C39B006840C3 /* NXTCommand.swift */,
 				C98C348D1C25C460006840C3 /* NXTTypes.swift */,
 			);
 			name = NXT;
+			sourceTree = "<group>";
+		};
+		C98C34911C25C92E006840C3 /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				C98C34921C25C940006840C3 /* NXTCloseCommand.swift */,
+			);
+			name = Commands;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -222,6 +233,7 @@
 				C98C348E1C25C460006840C3 /* NXTTypes.swift in Sources */,
 				C98C34901C25C7EF006840C3 /* NSDataNXTExtras.swift in Sources */,
 				C98C348B1C25C39B006840C3 /* NXTCommand.swift in Sources */,
+				C98C34931C25C940006840C3 /* NXTCloseCommand.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
