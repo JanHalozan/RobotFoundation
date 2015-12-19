@@ -12,6 +12,7 @@
 		C98C34881C25C262006840C3 /* RobotFoundation.h in Headers */ = {isa = PBXBuildFile; fileRef = C98C34871C25C262006840C3 /* RobotFoundation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C98C348B1C25C39B006840C3 /* NXTCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C348A1C25C39B006840C3 /* NXTCommand.swift */; };
 		C98C348E1C25C460006840C3 /* NXTTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C348D1C25C460006840C3 /* NXTTypes.swift */; };
+		C98C34901C25C7EF006840C3 /* NSDataNXTExtras.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C348F1C25C7EF006840C3 /* NSDataNXTExtras.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +34,7 @@
 		C98C34871C25C262006840C3 /* RobotFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RobotFoundation.h; sourceTree = SOURCE_ROOT; };
 		C98C348A1C25C39B006840C3 /* NXTCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTCommand.swift; sourceTree = "<group>"; };
 		C98C348D1C25C460006840C3 /* NXTTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTTypes.swift; sourceTree = "<group>"; };
+		C98C348F1C25C7EF006840C3 /* NSDataNXTExtras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDataNXTExtras.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 		C98C348C1C25C3B5006840C3 /* NXT */ = {
 			isa = PBXGroup;
 			children = (
+				C98C348F1C25C7EF006840C3 /* NSDataNXTExtras.swift */,
 				C98C348A1C25C39B006840C3 /* NXTCommand.swift */,
 				C98C348D1C25C460006840C3 /* NXTTypes.swift */,
 			);
@@ -217,6 +220,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C98C348E1C25C460006840C3 /* NXTTypes.swift in Sources */,
+				C98C34901C25C7EF006840C3 /* NSDataNXTExtras.swift in Sources */,
 				C98C348B1C25C39B006840C3 /* NXTCommand.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
