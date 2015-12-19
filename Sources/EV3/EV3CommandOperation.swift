@@ -45,7 +45,6 @@ final class EV3CommandOperation: NSOperation {
 			return
 		}
 
-		let prependTotalLength = transport is IOBluetoothDeviceTransport
 		let data = command.formEV3PacketData(0, prependTotalLength: false)
 
 		do {
