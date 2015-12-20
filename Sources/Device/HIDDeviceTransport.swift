@@ -13,19 +13,31 @@ import IOKit.hid
 final class HIDDeviceTransport: DeviceTransport {
 	private var device: IOHIDDeviceRef
 
+	var inputReportBuffer = [UInt8](count: 128, repeatedValue: 0)
+
 	init(device: IOHIDDeviceRef) {
 		self.device = device
 	}
 
 	override func open() throws {
 		IOHIDDeviceScheduleWithRunLoop(device, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode)
+		IOHIDDeviceRegisterInputReportCallback(device, &inputReportBuffer, inputReportBuffer.count, { context, result, interface, reportType, index, bytes, length in
 
+			let selfPointer = unsafeBitCast(context, HIDDeviceTransport.self)
+			selfPointer.receivedReport()
+
+		}, UnsafeMutablePointer(unsafeAddressOf(self)))
 		let result = IOHIDDeviceOpen(device, 0)
 		guard result == kIOReturnSuccess else {
 			throw result
 		}
 
 		opened()
+	}
+
+	private func receivedReport() {
+		let data = NSData(bytes: &inputReportBuffer, length: inputReportBuffer.count)
+		receivedData(data)
 	}
 
 	override func close() {
