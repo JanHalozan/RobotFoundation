@@ -25,7 +25,7 @@ extension EV3Command {
 			packet.appendBytes(&totalLength, length: sizeof(UInt16))
 		}
 
-		var type = self.type
+		var type = self.telegramType
 		var header = UInt16()
 
 		packet.appendBytes(&dataLength, length: sizeof(UInt16))
