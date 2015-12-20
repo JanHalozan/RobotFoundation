@@ -46,6 +46,7 @@
 		C98C34E91C264532006840C3 /* EV3SetLEDCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34E81C264532006840C3 /* EV3SetLEDCommand.swift */; };
 		C98C34EB1C264DD5006840C3 /* EV3ReadReflectedLightCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34EA1C264DD5006840C3 /* EV3ReadReflectedLightCommand.swift */; };
 		C98C34ED1C265381006840C3 /* EV3PercentFloatResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34EC1C265381006840C3 /* EV3PercentFloatResponse.swift */; };
+		C98C34F61C26540C006840C3 /* MobileRobotFoundation.h in Headers */ = {isa = PBXBuildFile; fileRef = C98C34F51C26540C006840C3 /* MobileRobotFoundation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +102,9 @@
 		C98C34E81C264532006840C3 /* EV3SetLEDCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3SetLEDCommand.swift; sourceTree = "<group>"; };
 		C98C34EA1C264DD5006840C3 /* EV3ReadReflectedLightCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ReadReflectedLightCommand.swift; sourceTree = "<group>"; };
 		C98C34EC1C265381006840C3 /* EV3PercentFloatResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3PercentFloatResponse.swift; sourceTree = "<group>"; };
+		C98C34F31C26540C006840C3 /* MobileRobotFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MobileRobotFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C98C34F51C26540C006840C3 /* MobileRobotFoundation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MobileRobotFoundation.h; sourceTree = "<group>"; };
+		C98C34F71C26540C006840C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +123,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C98C34EF1C26540C006840C3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -128,6 +139,7 @@
 				C98C34891C25C38A006840C3 /* Sources */,
 				C98C346F1C25C160006840C3 /* RobotFoundation */,
 				C98C347B1C25C160006840C3 /* RobotFoundationTests */,
+				C98C34F41C26540C006840C3 /* MobileRobotFoundation */,
 				C98C346E1C25C160006840C3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -137,6 +149,7 @@
 			children = (
 				C98C346D1C25C160006840C3 /* RobotFoundation.framework */,
 				C98C34771C25C160006840C3 /* RobotFoundationTests.xctest */,
+				C98C34F31C26540C006840C3 /* MobileRobotFoundation.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -234,6 +247,15 @@
 			path = Mindstorms;
 			sourceTree = "<group>";
 		};
+		C98C34F41C26540C006840C3 /* MobileRobotFoundation */ = {
+			isa = PBXGroup;
+			children = (
+				C98C34F51C26540C006840C3 /* MobileRobotFoundation.h */,
+				C98C34F71C26540C006840C3 /* Info.plist */,
+			);
+			path = MobileRobotFoundation;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -242,6 +264,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				C98C34881C25C262006840C3 /* RobotFoundation.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C98C34F01C26540C006840C3 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C98C34F61C26540C006840C3 /* MobileRobotFoundation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +314,24 @@
 			productReference = C98C34771C25C160006840C3 /* RobotFoundationTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		C98C34F21C26540C006840C3 /* MobileRobotFoundation */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C98C34F81C26540C006840C3 /* Build configuration list for PBXNativeTarget "MobileRobotFoundation" */;
+			buildPhases = (
+				C98C34EE1C26540C006840C3 /* Sources */,
+				C98C34EF1C26540C006840C3 /* Frameworks */,
+				C98C34F01C26540C006840C3 /* Headers */,
+				C98C34F11C26540C006840C3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MobileRobotFoundation;
+			productName = MobileRobotFoundation;
+			productReference = C98C34F31C26540C006840C3 /* MobileRobotFoundation.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -298,6 +346,9 @@
 						CreatedOnToolsVersion = 7.2;
 					};
 					C98C34761C25C160006840C3 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					C98C34F21C26540C006840C3 = {
 						CreatedOnToolsVersion = 7.2;
 					};
 				};
@@ -315,6 +366,7 @@
 			projectRoot = "";
 			targets = (
 				C98C346C1C25C160006840C3 /* RobotFoundation */,
+				C98C34F21C26540C006840C3 /* MobileRobotFoundation */,
 				C98C34761C25C160006840C3 /* RobotFoundationTests */,
 			);
 		};
@@ -329,6 +381,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C98C34751C25C160006840C3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C98C34F11C26540C006840C3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -386,6 +445,13 @@
 				C98C34CA1C25F134006840C3 /* EV3CommandTests.swift in Sources */,
 				C98C34D31C25FA37006840C3 /* EV3DeviceTests.swift in Sources */,
 				C98C347D1C25C160006840C3 /* RobotFoundationTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C98C34EE1C26540C006840C3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -547,6 +613,47 @@
 			};
 			name = Release;
 		};
+		C98C34F91C26540C006840C3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = MobileRobotFoundation/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.MattRajca.MobileRobotFoundation;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C98C34FA1C26540C006840C3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = MobileRobotFoundation/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.MattRajca.MobileRobotFoundation;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -576,6 +683,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		C98C34F81C26540C006840C3 /* Build configuration list for PBXNativeTarget "MobileRobotFoundation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C98C34F91C26540C006840C3 /* Debug */,
+				C98C34FA1C26540C006840C3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
