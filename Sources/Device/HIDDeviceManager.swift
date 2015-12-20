@@ -17,8 +17,6 @@ protocol HIDDeviceManagerDelegate: class {
 final class HIDDeviceManager {
 	private let manager: IOHIDManagerRef
 
-	private var foundDevices = [IOHIDDeviceRef]()
-
 	private weak var delegate: HIDDeviceManagerDelegate?
 
 	init(delegate: HIDDeviceManagerDelegate) {
@@ -49,7 +47,6 @@ final class HIDDeviceManager {
 	}
 
 	private func foundDevice(device: IOHIDDeviceRef) {
-		foundDevices.append(device)
 		delegate?.HIDDeviceManagerFoundDevice(device)
 	}
 }
