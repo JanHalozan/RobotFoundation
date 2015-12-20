@@ -43,7 +43,6 @@
 		C98C34E11C2610AA006840C3 /* NSDataExtras.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34E01C2610AA006840C3 /* NSDataExtras.swift */; };
 		C98C34E31C262BC6006840C3 /* NXTFindNextCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34E21C262BC6006840C3 /* NXTFindNextCommand.swift */; };
 		C98C34E51C262CF3006840C3 /* NXTStartProgramCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34E41C262CF3006840C3 /* NXTStartProgramCommand.swift */; };
-		C98C34E71C262F0B006840C3 /* EV3ReadBatteryLevelCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34E61C262F0B006840C3 /* EV3ReadBatteryLevelCommand.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,7 +95,6 @@
 		C98C34E01C2610AA006840C3 /* NSDataExtras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDataExtras.swift; sourceTree = "<group>"; };
 		C98C34E21C262BC6006840C3 /* NXTFindNextCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTFindNextCommand.swift; sourceTree = "<group>"; };
 		C98C34E41C262CF3006840C3 /* NXTStartProgramCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTStartProgramCommand.swift; sourceTree = "<group>"; };
-		C98C34E61C262F0B006840C3 /* EV3ReadBatteryLevelCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ReadBatteryLevelCommand.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,7 +208,6 @@
 				C98C34CE1C25F644006840C3 /* EV3CommandSerialization.swift */,
 				C98C34DE1C260F28006840C3 /* EV3GenericResponse.swift */,
 				C98C34C71C25EC57006840C3 /* EV3PlayToneCommand.swift */,
-				C98C34E61C262F0B006840C3 /* EV3ReadBatteryLevelCommand.swift */,
 				C98C34D81C260E46006840C3 /* EV3Response.swift */,
 				C98C34D61C260E0A006840C3 /* EV3Types.swift */,
 				C98C34D01C25F893006840C3 /* NSDataEV3Extras.swift */,
@@ -350,7 +347,6 @@
 				C98C34C41C25EB2E006840C3 /* EV3Command.swift in Sources */,
 				C98C34BD1C25E28A006840C3 /* NXTCommandOperation.swift in Sources */,
 				C98C34DF1C260F28006840C3 /* EV3GenericResponse.swift in Sources */,
-				C98C34E71C262F0B006840C3 /* EV3ReadBatteryLevelCommand.swift in Sources */,
 				C98C34B71C25DC40006840C3 /* IOKitUtilities.swift in Sources */,
 				C98C34AA1C25D1D1006840C3 /* NXTCommand.swift in Sources */,
 				C98C34E11C2610AA006840C3 /* NSDataExtras.swift in Sources */,
