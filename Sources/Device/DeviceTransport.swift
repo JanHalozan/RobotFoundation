@@ -22,7 +22,7 @@ class DeviceTransport {
 
 	weak var delegate: DeviceTransportDelegate?
 
-	func open() throws -> Bool {
+	func open() throws {
 		fatalError("Must be overriden")
 	}
 
@@ -30,7 +30,7 @@ class DeviceTransport {
 		fatalError("Must be overriden")
 	}
 
-	func writeData(data: NSData) throws -> Bool {
+	func writeData(data: NSData) throws {
 		fatalError("Must be overriden")
 	}
 

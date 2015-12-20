@@ -17,7 +17,7 @@ final class HIDDeviceTransport: DeviceTransport {
 		self.device = device
 	}
 
-	override func open() throws -> Bool {
+	override func open() throws {
 		IOHIDDeviceScheduleWithRunLoop(device, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode)
 
 		let result = IOHIDDeviceOpen(device, 0)
@@ -26,8 +26,6 @@ final class HIDDeviceTransport: DeviceTransport {
 		}
 
 		opened()
-
-		return true
 	}
 
 	override func close() {
@@ -36,14 +34,12 @@ final class HIDDeviceTransport: DeviceTransport {
 		closed()
 	}
 
-	override func writeData(data: NSData) throws -> Bool {
+	override func writeData(data: NSData) throws {
 		let bytes = unsafeBitCast(data.bytes, UnsafePointer<UInt8>.self)
 		let result = IOHIDDeviceSetReport(device, kIOHIDReportTypeOutput, 0, bytes, data.length)
 		guard result == kIOReturnSuccess else {
 			throw result
 		}
-
-		return true
 	}
 }
 

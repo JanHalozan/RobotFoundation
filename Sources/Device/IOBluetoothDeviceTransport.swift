@@ -25,14 +25,12 @@ final class IOBluetoothDeviceTransport: DeviceTransport, IOBluetoothRFCOMMChanne
 		self.bluetoothDevice = bluetoothDevice
 	}
 
-	override func open() throws -> Bool {
+	override func open() throws {
 		let status = bluetoothDevice.openConnection(self)
 
 		guard status == kIOReturnSuccess else {
 			throw status
 		}
-
-		return true
 	}
 
 	override func close() {
@@ -48,9 +46,9 @@ final class IOBluetoothDeviceTransport: DeviceTransport, IOBluetoothRFCOMMChanne
 		closed()
 	}
 
-	override func writeData(data: NSData) throws -> Bool {
+	override func writeData(data: NSData) throws {
 		guard let channel = channel else {
-			return false
+			throw IOReturn(1)
 		}
 
 		var array = [UInt8](count: data.length, repeatedValue: 0)
@@ -60,8 +58,6 @@ final class IOBluetoothDeviceTransport: DeviceTransport, IOBluetoothRFCOMMChanne
 		guard status == kIOReturnSuccess else {
 			throw status
 		}
-
-		return true
 	}
 
 	@objc func connectionComplete(device: IOBluetoothDevice, var status: IOReturn) {
