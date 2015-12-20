@@ -42,4 +42,17 @@ final class EV3DeviceTests: XCTestCase {
 
 		waitForExpectationsWithTimeout(10, handler: nil)
 	}
+
+	func testSetLEDCommand() {
+		let responseExpectation = expectationWithDescription("command response")
+
+		let command = EV3SetLEDCommand(pattern: .PulsingOrange)
+		device.enqueueCommand(command) { response in
+			let ev3Response = response as! EV3GenericResponse
+			XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
+			responseExpectation.fulfill()
+		}
+
+		waitForExpectationsWithTimeout(10, handler: nil)
+	}
 }
