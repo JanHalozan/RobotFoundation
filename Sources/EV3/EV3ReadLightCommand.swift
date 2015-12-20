@@ -1,5 +1,5 @@
 //
-//  EV3ReadReflectedLightCommand.swift
+//  EV3ReadLightCommand.swift
 //  RobotFoundation
 //
 //  Created by Matt on 12/19/15.
@@ -7,8 +7,14 @@
 
 import Foundation
 
-struct EV3ReadReflectedLightCommand: EV3Command {
+enum EV3ReadLightType: UInt8 {
+	case Reflected = 0
+	case Ambient = 3
+}
+
+struct EV3ReadLightCommand: EV3Command {
 	let port: EV3Port
+	let lightType: EV3ReadLightType
 
 	var responseType: MindstormsResponse.Type {
 		return EV3PercentFloatResponse.self
@@ -37,7 +43,7 @@ struct EV3ReadReflectedLightCommand: EV3Command {
 		mutableData.appendUInt8(port.rawValue)
 
 		mutableData.appendUInt8(0)
-		mutableData.appendUInt8(0)
+		mutableData.appendUInt8(lightType.rawValue)
 		mutableData.appendUInt8(1)
 		mutableData.appendUInt8(0x60) // write output to a global variable
 

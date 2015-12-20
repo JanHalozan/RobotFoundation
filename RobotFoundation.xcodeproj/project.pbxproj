@@ -49,7 +49,7 @@
 		C98C34E31C262BC6006840C3 /* NXTFindNextCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34E21C262BC6006840C3 /* NXTFindNextCommand.swift */; };
 		C98C34E51C262CF3006840C3 /* NXTStartProgramCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34E41C262CF3006840C3 /* NXTStartProgramCommand.swift */; };
 		C98C34E91C264532006840C3 /* EV3SetLEDCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34E81C264532006840C3 /* EV3SetLEDCommand.swift */; };
-		C98C34EB1C264DD5006840C3 /* EV3ReadReflectedLightCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34EA1C264DD5006840C3 /* EV3ReadReflectedLightCommand.swift */; };
+		C98C34EB1C264DD5006840C3 /* EV3ReadLightCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34EA1C264DD5006840C3 /* EV3ReadLightCommand.swift */; };
 		C98C34ED1C265381006840C3 /* EV3PercentFloatResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34EC1C265381006840C3 /* EV3PercentFloatResponse.swift */; };
 		C98C34F61C26540C006840C3 /* MobileRobotFoundation.h in Headers */ = {isa = PBXBuildFile; fileRef = C98C34F51C26540C006840C3 /* MobileRobotFoundation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C98C34FB1C26544D006840C3 /* NSDataExtras.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34E01C2610AA006840C3 /* NSDataExtras.swift */; };
@@ -65,7 +65,7 @@
 		C98C35051C26544D006840C3 /* EV3GenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34DE1C260F28006840C3 /* EV3GenericResponse.swift */; };
 		C98C35061C26544D006840C3 /* EV3PercentFloatResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34EC1C265381006840C3 /* EV3PercentFloatResponse.swift */; };
 		C98C35071C26544D006840C3 /* EV3PlayToneCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34C71C25EC57006840C3 /* EV3PlayToneCommand.swift */; };
-		C98C35081C26544D006840C3 /* EV3ReadReflectedLightCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34EA1C264DD5006840C3 /* EV3ReadReflectedLightCommand.swift */; };
+		C98C35081C26544D006840C3 /* EV3ReadLightCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34EA1C264DD5006840C3 /* EV3ReadLightCommand.swift */; };
 		C98C35091C26544D006840C3 /* EV3Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34D81C260E46006840C3 /* EV3Response.swift */; };
 		C98C350A1C26544D006840C3 /* EV3SetLEDCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34E81C264532006840C3 /* EV3SetLEDCommand.swift */; };
 		C98C350B1C26544D006840C3 /* EV3Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34D61C260E0A006840C3 /* EV3Types.swift */; };
@@ -142,7 +142,7 @@
 		C98C34E21C262BC6006840C3 /* NXTFindNextCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTFindNextCommand.swift; sourceTree = "<group>"; };
 		C98C34E41C262CF3006840C3 /* NXTStartProgramCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTStartProgramCommand.swift; sourceTree = "<group>"; };
 		C98C34E81C264532006840C3 /* EV3SetLEDCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3SetLEDCommand.swift; sourceTree = "<group>"; };
-		C98C34EA1C264DD5006840C3 /* EV3ReadReflectedLightCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ReadReflectedLightCommand.swift; sourceTree = "<group>"; };
+		C98C34EA1C264DD5006840C3 /* EV3ReadLightCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ReadLightCommand.swift; sourceTree = "<group>"; };
 		C98C34EC1C265381006840C3 /* EV3PercentFloatResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3PercentFloatResponse.swift; sourceTree = "<group>"; };
 		C98C34F31C26540C006840C3 /* MobileRobotFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MobileRobotFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C98C34F51C26540C006840C3 /* MobileRobotFoundation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MobileRobotFoundation.h; sourceTree = "<group>"; };
@@ -272,7 +272,7 @@
 				C98C34DE1C260F28006840C3 /* EV3GenericResponse.swift */,
 				C98C34EC1C265381006840C3 /* EV3PercentFloatResponse.swift */,
 				C98C34C71C25EC57006840C3 /* EV3PlayToneCommand.swift */,
-				C98C34EA1C264DD5006840C3 /* EV3ReadReflectedLightCommand.swift */,
+				C98C34EA1C264DD5006840C3 /* EV3ReadLightCommand.swift */,
 				C98C34D81C260E46006840C3 /* EV3Response.swift */,
 				C98C34E81C264532006840C3 /* EV3SetLEDCommand.swift */,
 				C98C34D61C260E0A006840C3 /* EV3Types.swift */,
@@ -464,7 +464,7 @@
 				C98C34AA1C25D1D1006840C3 /* NXTCommand.swift in Sources */,
 				C98C34E11C2610AA006840C3 /* NSDataExtras.swift in Sources */,
 				C98C34AE1C25D1D1006840C3 /* NXTGenericResponse.swift in Sources */,
-				C98C34EB1C264DD5006840C3 /* EV3ReadReflectedLightCommand.swift in Sources */,
+				C98C34EB1C264DD5006840C3 /* EV3ReadLightCommand.swift in Sources */,
 				C917F68C1C27311E00AE980B /* HIDDeviceManager.swift in Sources */,
 				C98C34AF1C25D1D1006840C3 /* NXTResponse.swift in Sources */,
 				C98C34C81C25EC57006840C3 /* EV3PlayToneCommand.swift in Sources */,
@@ -513,7 +513,7 @@
 				C98C35051C26544D006840C3 /* EV3GenericResponse.swift in Sources */,
 				C98C35061C26544D006840C3 /* EV3PercentFloatResponse.swift in Sources */,
 				C98C35071C26544D006840C3 /* EV3PlayToneCommand.swift in Sources */,
-				C98C35081C26544D006840C3 /* EV3ReadReflectedLightCommand.swift in Sources */,
+				C98C35081C26544D006840C3 /* EV3ReadLightCommand.swift in Sources */,
 				C98C35091C26544D006840C3 /* EV3Response.swift in Sources */,
 				C98C350A1C26544D006840C3 /* EV3SetLEDCommand.swift in Sources */,
 				C98C350B1C26544D006840C3 /* EV3Types.swift in Sources */,
