@@ -59,6 +59,7 @@ final class NXTCommandOperation: NSOperation {
 
 		let fullData: NSData
 
+		/*
 		if transport is IOUSBDeviceTransport {
 			// USB packets are missing with some data we have to trim.
 			let fullMutableData = NSMutableData()
@@ -73,8 +74,9 @@ final class NXTCommandOperation: NSOperation {
 
 			fullData = fullMutableData.copy() as! NSData
 		} else {
+*/
 			fullData = data
-		}
+//		}
 
 		guard let response = command.responseType.init(data: fullData) else {
 			print("Could not parse a response")

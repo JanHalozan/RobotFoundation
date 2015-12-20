@@ -21,6 +21,7 @@ final class EV3Device: Device {
 	}
 
 	override func wroteData() {
+		/*
 		if let usbTransport = transport as? IOUSBDeviceTransport {
 			do {
 				try usbTransport.scheduleRead()
@@ -28,6 +29,7 @@ final class EV3Device: Device {
 				print("Cannot schedule read: \(error)")
 			}
 		}
+		*/
 	}
 
 	private var currentlyExecutingOperation: EV3CommandOperation? {

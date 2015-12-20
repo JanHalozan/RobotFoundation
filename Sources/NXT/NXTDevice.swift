@@ -20,6 +20,7 @@ final class NXTDevice: Device {
 	}
 
 	override func wroteData() {
+		/*
 		if let usbTransport = transport as? IOUSBDeviceTransport {
 			do {
 				try usbTransport.scheduleRead()
@@ -27,6 +28,7 @@ final class NXTDevice: Device {
 				print("Cannot schedule read: \(error)")
 			}
 		}
+		*/
 	}
 
 	private var currentlyExecutingOperation: NXTCommandOperation? {
