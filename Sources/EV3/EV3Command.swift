@@ -8,5 +8,11 @@
 import Foundation
 
 protocol EV3Command: MindstormsCommand {
+	var numberOfGlobals: UInt8 { get }
+}
 
+extension EV3Command {
+	var numberOfGlobals: UInt8 {
+		return 0
+	}
 }

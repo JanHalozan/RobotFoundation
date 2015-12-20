@@ -55,4 +55,17 @@ final class EV3DeviceTests: XCTestCase {
 
 		waitForExpectationsWithTimeout(10, handler: nil)
 	}
+
+	func testReadLightSensorCommand() {
+		let responseExpectation = expectationWithDescription("command response")
+
+		let command = EV3ReadLightSensorCommand(port: .Three)
+		device.enqueueCommand(command) { response in
+			let ev3Response = response as! EV3PercentFloatResponse
+			XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
+			responseExpectation.fulfill()
+		}
+
+		waitForExpectationsWithTimeout(10, handler: nil)
+	}
 }
