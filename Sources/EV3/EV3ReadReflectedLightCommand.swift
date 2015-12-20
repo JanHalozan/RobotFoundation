@@ -1,5 +1,5 @@
 //
-//  EV3ReadLightSensorCommand.swift
+//  EV3ReadReflectedLightCommand.swift
 //  RobotFoundation
 //
 //  Created by Matt on 12/19/15.
@@ -32,7 +32,7 @@ struct EV3PercentFloatResponse: MindstormsResponse {
 	}
 }
 
-struct EV3ReadLightSensorCommand: EV3Command {
+struct EV3ReadReflectedLightCommand: EV3Command {
 	let port: EV3Port
 
 	var responseType: MindstormsResponse.Type {
