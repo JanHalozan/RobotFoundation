@@ -5,6 +5,8 @@
 //  Created by Matt on 12/19/15.
 //
 
+#if os(OSX)
+
 import Foundation
 import IOBluetooth
 
@@ -118,3 +120,5 @@ final class IOBluetoothDeviceTransport: DeviceTransport, IOBluetoothRFCOMMChanne
 		close()
 	}
 }
+
+#endif

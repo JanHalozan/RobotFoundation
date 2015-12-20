@@ -33,9 +33,12 @@ final class NXTCommandOperation: NSOperation {
 
 		let packet = NSMutableData()
 
+		#if os(OSX)
+		// TODO: should this actually check for USB transport?
 		if transport is IOBluetoothDeviceTransport {
 			packet.appendBytes(&dataLength, length: sizeof(UInt16))
 		}
+		#endif
 
 		packet.appendBytes(&type, length: sizeof(UInt8))
 		packet.appendBytes(&identifier, length: sizeof(UInt8))
