@@ -42,19 +42,4 @@ final class EV3DeviceTests: XCTestCase {
 
 		waitForExpectationsWithTimeout(10, handler: nil)
 	}
-
-	func testBatteryLevelCommand() {
-		let responseExpectation = expectationWithDescription("command response")
-
-		let command = EV3ReadBatteryLevelCommand()
-		device.enqueueCommand(command) { response in
-			let ev3Response = response as! EV3BatteryLevelResponse
-			XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
-			XCTAssertGreaterThan(ev3Response.batteryLevel, 0)
-			XCTAssertLessThanOrEqual(ev3Response.batteryLevel, 100)
-			responseExpectation.fulfill()
-		}
-
-		waitForExpectationsWithTimeout(10, handler: nil)
-	}
 }
