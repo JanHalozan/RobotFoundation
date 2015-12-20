@@ -45,6 +45,7 @@
 		C98C34E51C262CF3006840C3 /* NXTStartProgramCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34E41C262CF3006840C3 /* NXTStartProgramCommand.swift */; };
 		C98C34E91C264532006840C3 /* EV3SetLEDCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34E81C264532006840C3 /* EV3SetLEDCommand.swift */; };
 		C98C34EB1C264DD5006840C3 /* EV3ReadReflectedLightCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34EA1C264DD5006840C3 /* EV3ReadReflectedLightCommand.swift */; };
+		C98C34ED1C265381006840C3 /* EV3PercentFloatResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34EC1C265381006840C3 /* EV3PercentFloatResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +100,7 @@
 		C98C34E41C262CF3006840C3 /* NXTStartProgramCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTStartProgramCommand.swift; sourceTree = "<group>"; };
 		C98C34E81C264532006840C3 /* EV3SetLEDCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3SetLEDCommand.swift; sourceTree = "<group>"; };
 		C98C34EA1C264DD5006840C3 /* EV3ReadReflectedLightCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ReadReflectedLightCommand.swift; sourceTree = "<group>"; };
+		C98C34EC1C265381006840C3 /* EV3PercentFloatResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3PercentFloatResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +213,7 @@
 				C98C34C51C25EC3B006840C3 /* EV3CommandOperation.swift */,
 				C98C34CE1C25F644006840C3 /* EV3CommandSerialization.swift */,
 				C98C34DE1C260F28006840C3 /* EV3GenericResponse.swift */,
+				C98C34EC1C265381006840C3 /* EV3PercentFloatResponse.swift */,
 				C98C34C71C25EC57006840C3 /* EV3PlayToneCommand.swift */,
 				C98C34EA1C264DD5006840C3 /* EV3ReadReflectedLightCommand.swift */,
 				C98C34D81C260E46006840C3 /* EV3Response.swift */,
@@ -365,6 +368,7 @@
 				C98C34E31C262BC6006840C3 /* NXTFindNextCommand.swift in Sources */,
 				C98C34C21C25EADB006840C3 /* EV3Device.swift in Sources */,
 				C98C34E51C262CF3006840C3 /* NXTStartProgramCommand.swift in Sources */,
+				C98C34ED1C265381006840C3 /* EV3PercentFloatResponse.swift in Sources */,
 				C98C34CF1C25F644006840C3 /* EV3CommandSerialization.swift in Sources */,
 				C98C34B01C25D1D1006840C3 /* NXTTypes.swift in Sources */,
 				C98C34AC1C25D1D1006840C3 /* NXTFileResponse.swift in Sources */,

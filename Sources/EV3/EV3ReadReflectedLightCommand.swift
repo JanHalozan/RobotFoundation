@@ -7,31 +7,6 @@
 
 import Foundation
 
-enum EV3Port: UInt8 {
-	case One = 0, Two, Three, Four
-}
-
-struct EV3PercentFloatResponse: MindstormsResponse {
-	let replyType: EV3ReplyType
-	let messageCounter: UInt16
-
-	let percent: Float
-
-	init?(data: NSData) {
-		guard let (messageCounter, replyType) = processGenericResponseForData(data) else {
-			return nil
-		}
-
-		self.replyType = replyType
-		self.messageCounter = messageCounter
-
-		var percent = Float()
-		data.getBytes(&percent, range: NSMakeRange(5, 4))
-
-		self.percent = percent
-	}
-}
-
 struct EV3ReadReflectedLightCommand: EV3Command {
 	let port: EV3Port
 
