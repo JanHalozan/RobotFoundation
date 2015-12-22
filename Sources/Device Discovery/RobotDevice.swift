@@ -17,8 +17,11 @@ private enum RobotDeviceType {
 public class RobotDevice {
 	private let type: RobotDeviceType
 
+	public private(set) var name: String?
+
 	init(hidDevice: IOHIDDeviceRef) {
 		type = .HIDDevice(hidDevice)
+		name = IOHIDDeviceGetProperty(hidDevice, kIOHIDProductKey)?.takeRetainedValue() as? String
 	}
 
 	init(bluetoothDevice: IOBluetoothDevice) {
