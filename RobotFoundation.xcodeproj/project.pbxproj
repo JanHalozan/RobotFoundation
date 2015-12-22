@@ -12,6 +12,12 @@
 		C917F68D1C27311E00AE980B /* HIDDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917F68B1C27311E00AE980B /* HIDDeviceManager.swift */; };
 		C917F68F1C2731B700AE980B /* HIDDeviceManagerEV3Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917F68E1C2731B700AE980B /* HIDDeviceManagerEV3Extras.swift */; };
 		C917F6901C2731B700AE980B /* HIDDeviceManagerEV3Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917F68E1C2731B700AE980B /* HIDDeviceManagerEV3Extras.swift */; };
+		C97868641C28BF960099BB82 /* EV3ReadTouchSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97868631C28BF960099BB82 /* EV3ReadTouchSensor.swift */; };
+		C97868651C28BF960099BB82 /* EV3ReadTouchSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97868631C28BF960099BB82 /* EV3ReadTouchSensor.swift */; };
+		C97868671C28BFC10099BB82 /* EV3Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97868661C28BFC10099BB82 /* EV3Constants.swift */; };
+		C97868681C28BFC10099BB82 /* EV3Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97868661C28BFC10099BB82 /* EV3Constants.swift */; };
+		C978686A1C28D0B00099BB82 /* EV3PercentByteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97868691C28D0B00099BB82 /* EV3PercentByteResponse.swift */; };
+		C978686B1C28D0B00099BB82 /* EV3PercentByteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97868691C28D0B00099BB82 /* EV3PercentByteResponse.swift */; };
 		C98C34781C25C160006840C3 /* RobotFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C98C346D1C25C160006840C3 /* RobotFoundation.framework */; };
 		C98C347D1C25C160006840C3 /* RobotFoundationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C347C1C25C160006840C3 /* RobotFoundationTests.swift */; };
 		C98C34881C25C262006840C3 /* RobotFoundation.h in Headers */ = {isa = PBXBuildFile; fileRef = C98C34871C25C262006840C3 /* RobotFoundation.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -102,6 +108,9 @@
 		C917F6891C272D6A00AE980B /* EV3HIDDeviceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3HIDDeviceTests.swift; sourceTree = "<group>"; };
 		C917F68B1C27311E00AE980B /* HIDDeviceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HIDDeviceManager.swift; sourceTree = "<group>"; };
 		C917F68E1C2731B700AE980B /* HIDDeviceManagerEV3Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HIDDeviceManagerEV3Extras.swift; sourceTree = "<group>"; };
+		C97868631C28BF960099BB82 /* EV3ReadTouchSensor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ReadTouchSensor.swift; sourceTree = "<group>"; };
+		C97868661C28BFC10099BB82 /* EV3Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3Constants.swift; sourceTree = "<group>"; };
+		C97868691C28D0B00099BB82 /* EV3PercentByteResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3PercentByteResponse.swift; sourceTree = "<group>"; };
 		C98C346D1C25C160006840C3 /* RobotFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RobotFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C98C34721C25C160006840C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C98C34771C25C160006840C3 /* RobotFoundationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RobotFoundationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -265,14 +274,17 @@
 		C98C34C01C25EA10006840C3 /* EV3 */ = {
 			isa = PBXGroup;
 			children = (
-				C98C34C11C25EADB006840C3 /* EV3Device.swift */,
 				C98C34C31C25EB2E006840C3 /* EV3Command.swift */,
 				C98C34C51C25EC3B006840C3 /* EV3CommandOperation.swift */,
 				C98C34CE1C25F644006840C3 /* EV3CommandSerialization.swift */,
+				C97868661C28BFC10099BB82 /* EV3Constants.swift */,
+				C98C34C11C25EADB006840C3 /* EV3Device.swift */,
 				C98C34DE1C260F28006840C3 /* EV3GenericResponse.swift */,
+				C97868691C28D0B00099BB82 /* EV3PercentByteResponse.swift */,
 				C98C34EC1C265381006840C3 /* EV3PercentFloatResponse.swift */,
 				C98C34C71C25EC57006840C3 /* EV3PlayToneCommand.swift */,
 				C98C34EA1C264DD5006840C3 /* EV3ReadLightCommand.swift */,
+				C97868631C28BF960099BB82 /* EV3ReadTouchSensor.swift */,
 				C98C34D81C260E46006840C3 /* EV3Response.swift */,
 				C98C34E81C264532006840C3 /* EV3SetLEDCommand.swift */,
 				C98C34D61C260E0A006840C3 /* EV3Types.swift */,
@@ -453,6 +465,7 @@
 				C98C34D71C260E0A006840C3 /* EV3Types.swift in Sources */,
 				C98C34D91C260E46006840C3 /* EV3Response.swift in Sources */,
 				C98C34AB1C25D1D1006840C3 /* NXTDeleteCommand.swift in Sources */,
+				C97868641C28BF960099BB82 /* EV3ReadTouchSensor.swift in Sources */,
 				C98C34BF1C25E520006840C3 /* HIDDeviceTransport.swift in Sources */,
 				C98C34DB1C260E72006840C3 /* MindstormsResponse.swift in Sources */,
 				C98C34BB1C25E1E3006840C3 /* NXTDevice.swift in Sources */,
@@ -461,6 +474,7 @@
 				C98C34BD1C25E28A006840C3 /* NXTCommandOperation.swift in Sources */,
 				C98C34DF1C260F28006840C3 /* EV3GenericResponse.swift in Sources */,
 				C98C34B71C25DC40006840C3 /* IOKitUtilities.swift in Sources */,
+				C978686A1C28D0B00099BB82 /* EV3PercentByteResponse.swift in Sources */,
 				C98C34AA1C25D1D1006840C3 /* NXTCommand.swift in Sources */,
 				C98C34E11C2610AA006840C3 /* NSDataExtras.swift in Sources */,
 				C98C34AE1C25D1D1006840C3 /* NXTGenericResponse.swift in Sources */,
@@ -473,6 +487,7 @@
 				C98C34E31C262BC6006840C3 /* NXTFindNextCommand.swift in Sources */,
 				C98C34C21C25EADB006840C3 /* EV3Device.swift in Sources */,
 				C98C34E51C262CF3006840C3 /* NXTStartProgramCommand.swift in Sources */,
+				C97868671C28BFC10099BB82 /* EV3Constants.swift in Sources */,
 				C917F68F1C2731B700AE980B /* HIDDeviceManagerEV3Extras.swift in Sources */,
 				C98C34ED1C265381006840C3 /* EV3PercentFloatResponse.swift in Sources */,
 				C98C34CF1C25F644006840C3 /* EV3CommandSerialization.swift in Sources */,
@@ -507,6 +522,7 @@
 				C98C34FF1C26544D006840C3 /* IOKitUtilities.swift in Sources */,
 				C98C35001C26544D006840C3 /* HIDDeviceTransport.swift in Sources */,
 				C98C35011C26544D006840C3 /* EV3Device.swift in Sources */,
+				C97868651C28BF960099BB82 /* EV3ReadTouchSensor.swift in Sources */,
 				C98C35021C26544D006840C3 /* EV3Command.swift in Sources */,
 				C98C35031C26544D006840C3 /* EV3CommandOperation.swift in Sources */,
 				C98C35041C26544D006840C3 /* EV3CommandSerialization.swift in Sources */,
@@ -515,6 +531,7 @@
 				C98C35071C26544D006840C3 /* EV3PlayToneCommand.swift in Sources */,
 				C98C35081C26544D006840C3 /* EV3ReadLightCommand.swift in Sources */,
 				C98C35091C26544D006840C3 /* EV3Response.swift in Sources */,
+				C978686B1C28D0B00099BB82 /* EV3PercentByteResponse.swift in Sources */,
 				C98C350A1C26544D006840C3 /* EV3SetLEDCommand.swift in Sources */,
 				C98C350B1C26544D006840C3 /* EV3Types.swift in Sources */,
 				C98C350C1C26544D006840C3 /* NSDataEV3Extras.swift in Sources */,
@@ -527,6 +544,7 @@
 				C98C35121C26544D006840C3 /* NXTCommand.swift in Sources */,
 				C98C35131C26544D006840C3 /* NXTCommandOperation.swift in Sources */,
 				C98C35141C26544D006840C3 /* NXTDeleteCommand.swift in Sources */,
+				C97868681C28BFC10099BB82 /* EV3Constants.swift in Sources */,
 				C917F6901C2731B700AE980B /* HIDDeviceManagerEV3Extras.swift in Sources */,
 				C98C35151C26544D006840C3 /* NXTDevice.swift in Sources */,
 				C98C35161C26544D006840C3 /* NXTFileResponse.swift in Sources */,
