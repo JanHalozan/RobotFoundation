@@ -19,7 +19,7 @@ public final class RobotDeviceManager: RobotDeviceSourceClient {
 	private var sources = [RobotDeviceSource]()
 	private let searchCriteria: [RobotDeviceDescriptor]
 	
-	public private(set) var foundDevices = Set<RobotDevice>()
+	public private(set) var foundDevices = [RobotDevice]()
 
 	private weak var delegate: RobotDeviceManagerDelegate?
 
@@ -40,7 +40,7 @@ public final class RobotDeviceManager: RobotDeviceSourceClient {
 	}
 
 	public func robotDeviceSourceDidFindDevice(device: RobotDevice) {
-		foundDevices.insert(device)
+		foundDevices.append(device)
 		delegate?.robotDeviceManagerDidFindDevice(device)
 
 		let userInfo = [DeviceKey: device] as [String: AnyObject]
@@ -48,7 +48,9 @@ public final class RobotDeviceManager: RobotDeviceSourceClient {
 	}
 
 	public func robotDeviceSourceDidLoseDevice(device: RobotDevice) {
-		foundDevices.remove(device)
+		if let index = foundDevices.indexOf(device) {
+			foundDevices.removeAtIndex(index)
+		}
 
 		let userInfo = [DeviceKey: device] as [String: AnyObject]
 		NSNotificationCenter.defaultCenter().postNotificationName(RobotDeviceManagerDidLoseDeviceNotificationName, object: self, userInfo: userInfo)
