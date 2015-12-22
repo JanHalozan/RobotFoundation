@@ -10,6 +10,6 @@ import Foundation
 struct RobotDeviceDescriptor {
 	let productID: Int
 	let vendorID: Int
-	let majorDeviceClass: Int
-	let minorDeviceClass: Int
+	let majorDeviceClass: UInt32
+	let minorDeviceClass: UInt32
 }

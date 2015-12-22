@@ -11,4 +11,5 @@ import IOBluetooth
 
 enum RobotDevice {
 	case HIDDevice(IOHIDDeviceRef)
+	case BluetoothDevice(IOBluetoothDevice)
 }

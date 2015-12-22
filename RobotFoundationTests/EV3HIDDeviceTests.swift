@@ -34,6 +34,8 @@ final class EV3HIDDeviceTests: XCTestCase, RobotDeviceManagerDelegate {
 			let transport = HIDDeviceTransport(device: hidDevice)
 			self.device = EV3Device(transport: transport)
 			try! self.device.open()
+		default:
+			assertionFailure()
 		}
 
 		activeTest()
