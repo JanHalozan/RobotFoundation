@@ -5,6 +5,8 @@
 //  Created by Matt on 12/21/15.
 //
 
+#if os(OSX)
+
 import Foundation
 import IOBluetooth
 
@@ -83,3 +85,5 @@ private func bluetoothDevicesContainRobotDevice(bluetoothDevices: [IOBluetoothDe
 
 	return false
 }
+
+#endif
