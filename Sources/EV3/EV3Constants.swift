@@ -8,16 +8,21 @@
 import Foundation
 
 enum EV3OpCode: UInt8 {
+	case UIRead = 0x81
 	case InputDevice = 0x99
 	case InputRead = 0x9A
 	case InputReadSI = 0x9D
 }
 
-enum EV3OpSubcode: UInt8 {
+enum EV3InputDeviceOpSubcode: UInt8 {
 	case GetRaw = 11
 	case ReadyPct = 27
 	case ReadyRaw = 28
 	case ReadySI = 29
+}
+
+enum EV3UIReadOpSubcode: UInt8 {
+	case GetOSVersion = 3
 }
 
 enum EV3SensorType: UInt8 {
@@ -38,3 +43,4 @@ enum EV3Layer: UInt8 {
 }
 
 let EV3ColorMode = UInt8(2)
+let EV3MaxFileLength = UInt8(64)

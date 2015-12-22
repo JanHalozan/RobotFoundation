@@ -26,7 +26,7 @@ struct EV3ReadColorCommand: EV3Command {
 		let mutableData = NSMutableData()
 
 		mutableData.appendUInt8(EV3OpCode.InputDevice.rawValue)
-		mutableData.appendUInt8(EV3OpSubcode.GetRaw.rawValue)
+		mutableData.appendUInt8(EV3InputDeviceOpSubcode.GetRaw.rawValue)
 		mutableData.appendUInt8(EV3Layer.ThisBrick.rawValue)
 		mutableData.appendUInt8(port.rawValue)
 

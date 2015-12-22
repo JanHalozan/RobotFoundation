@@ -29,7 +29,7 @@ final class EV3HIDDeviceTests: XCTestCase, RobotDeviceManagerDelegate {
 	func robotDeviceManagerDidFindDevice(device: RobotDevice) {
 		assert(NSThread.isMainThread())
 
-		switch device {
+		switch device.internalType {
 		case let .HIDDevice(hidDevice):
 			let transport = HIDDeviceTransport(device: hidDevice)
 			self.device = EV3Device(transport: transport)
@@ -124,6 +124,23 @@ final class EV3HIDDeviceTests: XCTestCase, RobotDeviceManagerDelegate {
 			self.device.enqueueCommand(command) { response in
 				let ev3Response = response as! EV3ColorResponse
 				XCTAssertEqual(ev3Response.color, EV3Color.White)
+				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
+				self.responseExpectation.fulfill()
+			}
+		}
+
+		manager.beginDiscovery()
+		waitForExpectationsWithTimeout(10, handler: nil)
+	}
+
+	func testGetOSVersionCommand() {
+		responseExpectation = expectationWithDescription("command response")
+		activeTest = { [unowned self] in
+			// Put the light sensor in 'Color' mode before we read the 'raw' value.
+			let modeCommand = EV3GetOSVersionCommand()
+			self.device.enqueueCommand(modeCommand) { response in
+				let ev3Response = response as! EV3StringResponse
+				XCTAssertEqual(ev3Response.string, "Linux 2.6.33-rc4")
 				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
 				self.responseExpectation.fulfill()
 			}
