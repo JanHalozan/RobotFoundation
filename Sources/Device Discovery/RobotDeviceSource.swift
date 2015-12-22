@@ -9,6 +9,7 @@ import Foundation
 
 public protocol RobotDeviceSourceClient: class {
 	func robotDeviceSourceDidFindDevice(device: RobotDevice)
+	func robotDeviceSourceDidLoseDevice(device: RobotDevice)
 }
 
 public protocol RobotDeviceSource: class {

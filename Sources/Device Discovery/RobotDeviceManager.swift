@@ -12,13 +12,14 @@ public protocol RobotDeviceManagerDelegate: class {
 }
 
 public let RobotDeviceManagerDidFindDeviceNotificationName = "notification.DeviceDiscovery.RobotDeviceManager.DidFindDevice"
+public let RobotDeviceManagerDidLoseDeviceNotificationName = "notification.DeviceDiscovery.RobotDeviceManager.DidLoseDevice"
 	public let DeviceKey = "notification.key.device"
 
 public final class RobotDeviceManager: RobotDeviceSourceClient {
 	private var sources = [RobotDeviceSource]()
 	private let searchCriteria: [RobotDeviceDescriptor]
 	
-	public private(set) var foundDevices = [RobotDevice]()
+	public private(set) var foundDevices = Set<RobotDevice>()
 
 	private weak var delegate: RobotDeviceManagerDelegate?
 
@@ -39,10 +40,17 @@ public final class RobotDeviceManager: RobotDeviceSourceClient {
 	}
 
 	public func robotDeviceSourceDidFindDevice(device: RobotDevice) {
-		foundDevices.append(device)
+		foundDevices.insert(device)
 		delegate?.robotDeviceManagerDidFindDevice(device)
 
 		let userInfo = [DeviceKey: device] as [String: AnyObject]
 		NSNotificationCenter.defaultCenter().postNotificationName(RobotDeviceManagerDidFindDeviceNotificationName, object: self, userInfo: userInfo)
+	}
+
+	public func robotDeviceSourceDidLoseDevice(device: RobotDevice) {
+		foundDevices.remove(device)
+
+		let userInfo = [DeviceKey: device] as [String: AnyObject]
+		NSNotificationCenter.defaultCenter().postNotificationName(RobotDeviceManagerDidLoseDeviceNotificationName, object: self, userInfo: userInfo)
 	}
 }
