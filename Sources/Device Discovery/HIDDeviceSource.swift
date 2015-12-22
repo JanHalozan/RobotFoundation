@@ -12,6 +12,7 @@ import IOKit.hid
 
 public final class HIDDeviceSource: RobotDeviceSource {
 	private let manager: IOHIDManagerRef
+	private var foundDevices = Set<RobotDevice>()
 
 	private unowned var client: RobotDeviceSourceClient
 
@@ -48,6 +49,12 @@ public final class HIDDeviceSource: RobotDeviceSource {
 			selfPointer.foundDevice(device)
 
 		}, UnsafeMutablePointer<Void>(unsafeAddressOf(self)))
+		IOHIDManagerRegisterDeviceRemovalCallback(manager, { context, result, other, device in
+
+			let selfPointer = unsafeBitCast(context, HIDDeviceSource.self)
+			selfPointer.lostDevice(device)
+
+		}, UnsafeMutablePointer<Void>(unsafeAddressOf(self)))
 		IOHIDManagerScheduleWithRunLoop(manager, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode)
 
 		let result = IOHIDManagerOpen(manager, 0)
@@ -57,7 +64,27 @@ public final class HIDDeviceSource: RobotDeviceSource {
 	}
 
 	private func foundDevice(device: IOHIDDeviceRef) {
-		client.robotDeviceSourceDidFindDevice(RobotDevice(hidDevice: device))
+		let robotDevice = RobotDevice(hidDevice: device)
+		foundDevices.insert(robotDevice)
+		client.robotDeviceSourceDidFindDevice(robotDevice)
+	}
+
+	private func lostDevice(device: IOHIDDeviceRef) {
+		if let robotDevice = findHIDRobotDevice(device) {
+			client.robotDeviceSourceDidLoseDevice(robotDevice)
+		}
+	}
+
+	private func findHIDRobotDevice(deviceRef: IOHIDDeviceRef) -> RobotDevice? {
+		for foundDevice in foundDevices {
+			if case RobotDeviceTypeInternal.HIDDevice(let dev) = foundDevice.internalType {
+				if dev === deviceRef {
+					return foundDevice
+				}
+			}
+		}
+
+		return nil
 	}
 }
 
