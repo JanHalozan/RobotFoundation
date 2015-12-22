@@ -124,4 +124,32 @@ final class EV3HIDDeviceTests: XCTestCase, HIDDeviceManagerDelegate {
 
 		waitForExpectationsWithTimeout(10, handler: nil)
 	}
+
+	func testReadWhiteColorCommand() {
+		responseExpectation = expectationWithDescription("command response")
+		activeTest = { [unowned self] in
+			// Put the light sensor in 'Color' mode before we read the 'raw' value.
+			let modeCommand = EV3SetSensorModeCommand(port: .Three, mode: EV3ColorMode)
+			self.device.enqueueCommand(modeCommand) { response in
+				let ev3Response = response as! EV3GenericResponse
+				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
+			}
+
+			let command = EV3ReadColorCommand(port: .Three)
+			self.device.enqueueCommand(command) { response in
+				let ev3Response = response as! EV3ColorResponse
+				XCTAssertEqual(ev3Response.color, EV3Color.White)
+				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
+				self.responseExpectation.fulfill()
+			}
+		}
+
+		do {
+			try manager.searchForEV3Devices()
+		} catch {
+			XCTFail("Could not begin search for EV3 devices")
+		}
+
+		waitForExpectationsWithTimeout(10, handler: nil)
+	}
 }

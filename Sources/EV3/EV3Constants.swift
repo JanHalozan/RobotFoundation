@@ -10,9 +10,11 @@ import Foundation
 enum EV3OpCode: UInt8 {
 	case InputDevice = 0x99
 	case InputRead = 0x9A
+	case InputReadSI = 0x9D
 }
 
 enum EV3OpSubcode: UInt8 {
+	case GetRaw = 11
 	case ReadyPct = 27
 	case ReadyRaw = 28
 	case ReadySI = 29
@@ -34,3 +36,5 @@ enum EV3Variables: UInt8 {
 enum EV3Layer: UInt8 {
 	case ThisBrick = 0
 }
+
+let EV3ColorMode = UInt8(2)

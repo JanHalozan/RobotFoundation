@@ -78,5 +78,13 @@ final class EV3CommandOperation: NSOperation {
 		}
 
 		responseHandler(response)
+
+		willChangeValueForKey("isExecuting")
+		willChangeValueForKey("isFinished")
+
+		isExecuting = false
+
+		didChangeValueForKey("isExecuting")
+		didChangeValueForKey("isFinished")
 	}
 }

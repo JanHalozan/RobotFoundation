@@ -61,7 +61,7 @@ final class EV3DeviceTests: XCTestCase {
 
 		let command = EV3ReadLightCommand(port: .Three, lightType: .Ambient)
 		device.enqueueCommand(command) { response in
-			let ev3Response = response as! EV3PercentFloatResponse
+			let ev3Response = response as! EV3PercentByteResponse
 			XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
 			responseExpectation.fulfill()
 		}
