@@ -7,20 +7,22 @@
 
 import Foundation
 
-struct EV3GetOSVersionCommand: EV3Command {
-	var responseType: MindstormsResponse.Type {
+public struct EV3GetOSVersionCommand: EV3Command {
+	public init() { }
+
+	public var responseType: MindstormsResponse.Type {
 		return EV3StringResponse.self
 	}
 
-	var type: MindstormsCommandType {
+	public var type: MindstormsCommandType {
 		return .Direct
 	}
 
-	var numberOfGlobals: UInt8 {
+	public var numberOfGlobals: UInt8 {
 		return EV3MaxFileLength
 	}
 
-	var payloadData: NSData {
+	public var payloadData: NSData {
 		let mutableData = NSMutableData()
 
 		mutableData.appendUInt8(EV3OpCode.UIRead.rawValue)

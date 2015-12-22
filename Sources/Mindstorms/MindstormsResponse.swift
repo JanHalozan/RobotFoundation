@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol MindstormsResponse {
+public protocol MindstormsResponse {
 	init?(data: NSData)
 }

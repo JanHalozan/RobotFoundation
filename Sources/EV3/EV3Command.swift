@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol EV3Command: MindstormsCommand {
+public protocol EV3Command: MindstormsCommand {
 	var numberOfGlobals: UInt8 { get }
 }
 

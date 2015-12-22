@@ -8,14 +8,14 @@
 import Foundation
 
 // TODO: This is mostly a copy of NXTDevice. Once we figure out what works and doesn't we should refactor things.
-final class EV3Device: Device {
+public final class EV3Device: Device {
 	private lazy var operationQueue: NSOperationQueue = {
 		let operationQueue = NSOperationQueue()
 		operationQueue.maxConcurrentOperationCount = 1
 		return operationQueue
 	}()
 
-	func enqueueCommand(command: EV3Command, responseHandler: NXTResponseHandler) {
+	public func enqueueCommand(command: EV3Command, responseHandler: NXTResponseHandler) {
 		let operation = EV3CommandOperation(transport: transport, command: command, responseHandler: responseHandler)
 		operationQueue.addOperation(operation)
 	}

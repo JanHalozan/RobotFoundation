@@ -7,6 +7,6 @@
 
 import Foundation
 
-enum MindstormsCommandType: UInt8 {
+public enum MindstormsCommandType: UInt8 {
 	case Direct = 0x0, System
 }

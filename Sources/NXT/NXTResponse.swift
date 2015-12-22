@@ -7,7 +7,7 @@
 
 import Foundation
 
-typealias NXTResponseHandler = MindstormsResponse -> ()
+public typealias NXTResponseHandler = MindstormsResponse -> ()
 
 protocol NXTResponse: MindstormsResponse, CustomDebugStringConvertible {
 	var status: NXTStatus { get }

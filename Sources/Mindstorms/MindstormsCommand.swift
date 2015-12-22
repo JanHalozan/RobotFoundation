@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol MindstormsCommand {
+public protocol MindstormsCommand {
 	var responseType: MindstormsResponse.Type { get }
 	var type: MindstormsCommandType { get }
 	var payloadData: NSData { get }

@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct EV3StringResponse: MindstormsResponse {
+public struct EV3StringResponse: MindstormsResponse {
 	let replyType: EV3ReplyType
 	let messageCounter: UInt16
 
-	let string: String
+	public let string: String
 
-	init?(data: NSData) {
+	public init?(data: NSData) {
 		guard let (messageCounter, replyType) = processGenericResponseForData(data) else {
 			return nil
 		}

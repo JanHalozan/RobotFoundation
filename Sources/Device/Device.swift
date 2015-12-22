@@ -14,7 +14,7 @@ protocol DeviceDelegate: class {
 	func deviceDidClose()
 }
 
-class Device: DeviceTransportDelegate {
+public class Device: DeviceTransportDelegate {
 	let transport: DeviceTransport
 
 	var isOpen: Bool {
@@ -32,7 +32,7 @@ class Device: DeviceTransportDelegate {
 		close()
 	}
 
-	func open() throws {
+	public func open() throws {
 		try transport.open()
 	}
 
