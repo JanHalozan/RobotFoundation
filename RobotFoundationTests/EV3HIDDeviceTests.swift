@@ -9,8 +9,8 @@
 import XCTest
 @testable import RobotFoundation
 
-final class EV3HIDDeviceTests: XCTestCase, HIDDeviceManagerDelegate {
-	private var manager: HIDDeviceManager!
+final class EV3HIDDeviceTests: XCTestCase, RobotDeviceManagerDelegate {
+	private var manager: RobotDeviceManager!
 	private var device: EV3Device!
 	private var responseExpectation: XCTestExpectation!
 	private var activeTest: (() -> ())!
@@ -18,7 +18,7 @@ final class EV3HIDDeviceTests: XCTestCase, HIDDeviceManagerDelegate {
 	override func setUp() {
 		super.setUp()
 
-		manager = HIDDeviceManager(delegate: self)
+		manager = RobotDeviceManager(sourceTypes: [HIDDeviceSource.self], searchCriteria: [RobotDeviceDescriptor.EV3()], delegate: self)
 	}
 
 	override func tearDown() {
@@ -26,12 +26,15 @@ final class EV3HIDDeviceTests: XCTestCase, HIDDeviceManagerDelegate {
 		super.tearDown()
 	}
 
-	func HIDDeviceManagerFoundDevice(hidDevice: IOHIDDeviceRef) {
+	func robotDeviceManagerDidFindDevice(device: RobotDevice) {
 		assert(NSThread.isMainThread())
 
-		let transport = HIDDeviceTransport(device: hidDevice)
-		device = EV3Device(transport: transport)
-		try! device.open()
+		switch device {
+		case let .HIDDevice(hidDevice):
+			let transport = HIDDeviceTransport(device: hidDevice)
+			self.device = EV3Device(transport: transport)
+			try! self.device.open()
+		}
 
 		activeTest()
 	}
@@ -47,12 +50,7 @@ final class EV3HIDDeviceTests: XCTestCase, HIDDeviceManagerDelegate {
 			}
 		}
 
-		do {
-			try manager.searchForEV3Devices()
-		} catch {
-			XCTFail("Could not begin search for EV3 devices")
-		}
-
+		manager.beginDiscovery()
 		waitForExpectationsWithTimeout(10, handler: nil)
 	}
 
@@ -76,12 +74,7 @@ final class EV3HIDDeviceTests: XCTestCase, HIDDeviceManagerDelegate {
 			}
 		}
 
-		do {
-			try manager.searchForEV3Devices()
-		} catch {
-			XCTFail("Could not begin search for EV3 devices")
-		}
-
+		manager.beginDiscovery()
 		waitForExpectationsWithTimeout(10, handler: nil)
 	}
 
@@ -96,12 +89,7 @@ final class EV3HIDDeviceTests: XCTestCase, HIDDeviceManagerDelegate {
 			}
 		}
 
-		do {
-			try manager.searchForEV3Devices()
-		} catch {
-			XCTFail("Could not begin search for EV3 devices")
-		}
-
+		manager.beginDiscovery()
 		waitForExpectationsWithTimeout(10, handler: nil)
 	}
 
@@ -116,12 +104,7 @@ final class EV3HIDDeviceTests: XCTestCase, HIDDeviceManagerDelegate {
 			}
 		}
 
-		do {
-			try manager.searchForEV3Devices()
-		} catch {
-			XCTFail("Could not begin search for EV3 devices")
-		}
-
+		manager.beginDiscovery()
 		waitForExpectationsWithTimeout(10, handler: nil)
 	}
 
@@ -144,12 +127,7 @@ final class EV3HIDDeviceTests: XCTestCase, HIDDeviceManagerDelegate {
 			}
 		}
 
-		do {
-			try manager.searchForEV3Devices()
-		} catch {
-			XCTFail("Could not begin search for EV3 devices")
-		}
-
+		manager.beginDiscovery()
 		waitForExpectationsWithTimeout(10, handler: nil)
 	}
 }
