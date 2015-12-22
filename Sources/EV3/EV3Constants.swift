@@ -34,7 +34,3 @@ enum EV3Variables: UInt8 {
 enum EV3Layer: UInt8 {
 	case ThisBrick = 0
 }
-
-enum EV3Dataset: UInt8 {
-	case One = 0
-}

@@ -1,5 +1,5 @@
 //
-//  EV3ReadTouchSensor.swift
+//  EV3ReadTouchSensorCommand.swift
 //  RobotFoundation
 //
 //  Created by Matt on 12/21/15.
@@ -19,7 +19,7 @@ struct EV3ReadTouchSensorCommand: EV3Command {
 	}
 
 	var numberOfGlobals: UInt8 {
-		return 1 // 32-bit float
+		return 1
 	}
 
 	var payloadData: NSData {
@@ -30,7 +30,7 @@ struct EV3ReadTouchSensorCommand: EV3Command {
 		mutableData.appendUInt8(port.rawValue)
 
 		mutableData.appendUInt8(EV3SensorType.KeepType.rawValue)
-		mutableData.appendUInt8(0)
+		mutableData.appendUInt8(0) // Touch mode
 		mutableData.appendUInt8(EV3Variables.GlobalVar0.rawValue)
 
 		return mutableData.copy() as! NSData

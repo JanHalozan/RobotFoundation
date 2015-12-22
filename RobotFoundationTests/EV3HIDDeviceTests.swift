@@ -84,4 +84,44 @@ final class EV3HIDDeviceTests: XCTestCase, HIDDeviceManagerDelegate {
 
 		waitForExpectationsWithTimeout(10, handler: nil)
 	}
+
+	func testReadReflectedLightCommand() {
+		responseExpectation = expectationWithDescription("command response")
+		activeTest = { [unowned self] in
+			let command = EV3ReadLightCommand(port: .Three, lightType: .Reflected)
+			self.device.enqueueCommand(command) { response in
+				let ev3Response = response as! EV3PercentByteResponse
+				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
+				self.responseExpectation.fulfill()
+			}
+		}
+
+		do {
+			try manager.searchForEV3Devices()
+		} catch {
+			XCTFail("Could not begin search for EV3 devices")
+		}
+
+		waitForExpectationsWithTimeout(10, handler: nil)
+	}
+
+	func testReadAmbientLightCommand() {
+		responseExpectation = expectationWithDescription("command response")
+		activeTest = { [unowned self] in
+			let command = EV3ReadLightCommand(port: .Three, lightType: .Ambient)
+			self.device.enqueueCommand(command) { response in
+				let ev3Response = response as! EV3PercentByteResponse
+				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
+				self.responseExpectation.fulfill()
+			}
+		}
+
+		do {
+			try manager.searchForEV3Devices()
+		} catch {
+			XCTFail("Could not begin search for EV3 devices")
+		}
+
+		waitForExpectationsWithTimeout(10, handler: nil)
+	}
 }
