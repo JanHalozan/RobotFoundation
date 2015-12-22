@@ -9,22 +9,30 @@ import Foundation
 import IOKit.hid
 import IOBluetooth
 
-private enum RobotDeviceType {
+public enum RobotDeviceType {
+	case HIDDevice, BluetoothDevice
+}
+
+private enum RobotDeviceTypeInternal {
 	case HIDDevice(IOHIDDeviceRef)
 	case BluetoothDevice(IOBluetoothDevice)
 }
 
 public class RobotDevice {
-	private let type: RobotDeviceType
+	private let internalType: RobotDeviceTypeInternal
+	public let type: RobotDeviceType
 
 	public private(set) var name: String?
 
 	init(hidDevice: IOHIDDeviceRef) {
-		type = .HIDDevice(hidDevice)
+		internalType = .HIDDevice(hidDevice)
+		type = .HIDDevice
 		name = IOHIDDeviceGetProperty(hidDevice, kIOHIDProductKey)?.takeRetainedValue() as? String
 	}
 
 	init(bluetoothDevice: IOBluetoothDevice) {
-		type = .BluetoothDevice(bluetoothDevice)
+		internalType = .BluetoothDevice(bluetoothDevice)
+		type = .BluetoothDevice
+		name = bluetoothDevice.name
 	}
 }

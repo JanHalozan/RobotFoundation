@@ -8,25 +8,25 @@
 import Foundation
 import IOBluetooth
 
-final class BluetoothDeviceSource: RobotDeviceSource, IOBluetoothDeviceInquiryDelegate {
+public final class BluetoothDeviceSource: RobotDeviceSource, IOBluetoothDeviceInquiryDelegate {
 	private let deviceInquiry: IOBluetoothDeviceInquiry
 
 	private unowned var client: RobotDeviceSourceClient
 
-	init(client: RobotDeviceSourceClient) {
+	public init(client: RobotDeviceSourceClient) {
 		self.deviceInquiry = IOBluetoothDeviceInquiry()
 		self.client = client
 		deviceInquiry.delegate = self
 	}
 
-	func beginDiscovery(searchCriteria: [RobotDeviceDescriptor]) {
+	public func beginDiscovery(searchCriteria: [RobotDeviceDescriptor]) {
 		deviceInquiry.stop()
 
-		deviceInquiry.setSearchCriteria(BluetoothServiceClassMajor(kBluetoothServiceClassMajorAny), majorDeviceClass: BluetoothDeviceClassMajor(kBluetoothDeviceClassMajorAny), minorDeviceClass: BluetoothDeviceClassMinor(kBluetoothDeviceClassMinorAny))
+		deviceInquiry.setSearchCriteria(BluetoothServiceClassMajor(kBluetoothServiceClassMajorAny), majorDeviceClass: BluetoothDeviceClassMajor(kBluetoothDeviceClassMajorToy), minorDeviceClass: BluetoothDeviceClassMinor(kBluetoothDeviceClassMinorToyRobot))
 		deviceInquiry.start()
 	}
 
-	@objc func deviceInquiryDeviceFound(sender: IOBluetoothDeviceInquiry!, device: IOBluetoothDevice!) {
+	@objc public func deviceInquiryDeviceFound(sender: IOBluetoothDeviceInquiry!, device: IOBluetoothDevice!) {
 		client.robotDeviceSourceDidFindDevice(RobotDevice(bluetoothDevice: device))
 	}
 }
