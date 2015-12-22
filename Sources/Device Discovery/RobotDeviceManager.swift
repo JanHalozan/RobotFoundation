@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol RobotDeviceManagerDelegate: class {
-	func robotDeviceManagerDidFindDevice(device: RobotDevice)
+	func robotDeviceManagerDidFindDevice(device: MetaDevice)
 }
 
 public let RobotDeviceManagerDidFindDeviceNotificationName = "notification.DeviceDiscovery.RobotDeviceManager.DidFindDevice"
@@ -19,7 +19,7 @@ public final class RobotDeviceManager: RobotDeviceSourceClient {
 	private var sources = [RobotDeviceSource]()
 	private let searchCriteria: [RobotDeviceDescriptor]
 	
-	public private(set) var foundDevices = [RobotDevice]()
+	public private(set) var foundDevices = [MetaDevice]()
 
 	private weak var delegate: RobotDeviceManagerDelegate?
 
@@ -39,7 +39,7 @@ public final class RobotDeviceManager: RobotDeviceSourceClient {
 		}
 	}
 
-	public func robotDeviceSourceDidFindDevice(device: RobotDevice) {
+	public func robotDeviceSourceDidFindDevice(device: MetaDevice) {
 		foundDevices.append(device)
 		delegate?.robotDeviceManagerDidFindDevice(device)
 
@@ -47,7 +47,7 @@ public final class RobotDeviceManager: RobotDeviceSourceClient {
 		NSNotificationCenter.defaultCenter().postNotificationName(RobotDeviceManagerDidFindDeviceNotificationName, object: self, userInfo: userInfo)
 	}
 
-	public func robotDeviceSourceDidLoseDevice(device: RobotDevice) {
+	public func robotDeviceSourceDidLoseDevice(device: MetaDevice) {
 		if let index = foundDevices.indexOf(device) {
 			foundDevices.removeAtIndex(index)
 		}

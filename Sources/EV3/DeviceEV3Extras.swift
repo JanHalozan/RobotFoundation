@@ -8,9 +8,9 @@
 import Foundation
 
 extension Device {
-	public convenience init?(metadevice: RobotDevice) {
+	public convenience init?(metaDevice: MetaDevice) {
 		#if os(OSX)
-		switch metadevice.internalType {
+		switch metaDevice.internalType {
 		case .BluetoothDevice(let bld):
 			self.init(transport: IOBluetoothDeviceTransport(bluetoothDevice: bld))
 		case .HIDDevice(let hid):

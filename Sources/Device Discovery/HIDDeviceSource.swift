@@ -12,7 +12,7 @@ import IOKit.hid
 
 public final class HIDDeviceSource: RobotDeviceSource {
 	private let manager: IOHIDManagerRef
-	private var foundDevices = Set<RobotDevice>()
+	private var foundDevices = Set<MetaDevice>()
 
 	private unowned var client: RobotDeviceSourceClient
 
@@ -64,7 +64,7 @@ public final class HIDDeviceSource: RobotDeviceSource {
 	}
 
 	private func foundDevice(device: IOHIDDeviceRef) {
-		let robotDevice = RobotDevice(hidDevice: device)
+		let robotDevice = MetaDevice(hidDevice: device)
 		foundDevices.insert(robotDevice)
 		client.robotDeviceSourceDidFindDevice(robotDevice)
 	}
@@ -75,7 +75,7 @@ public final class HIDDeviceSource: RobotDeviceSource {
 		}
 	}
 
-	private func findHIDRobotDevice(deviceRef: IOHIDDeviceRef) -> RobotDevice? {
+	private func findHIDRobotDevice(deviceRef: IOHIDDeviceRef) -> MetaDevice? {
 		for foundDevice in foundDevices {
 			if case RobotDeviceTypeInternal.HIDDevice(let dev) = foundDevice.internalType {
 				if dev === deviceRef {

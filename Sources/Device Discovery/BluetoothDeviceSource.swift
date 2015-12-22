@@ -12,7 +12,7 @@ import IOBluetooth
 
 public final class BluetoothDeviceSource: RobotDeviceSource, IOBluetoothDeviceInquiryDelegate {
 	private let deviceInquiry: IOBluetoothDeviceInquiry
-	private var foundDevices = [RobotDevice]()
+	private var foundDevices = [MetaDevice]()
 	private var scanTimer: NSTimer?
 
 	private unowned var client: RobotDeviceSourceClient
@@ -42,7 +42,7 @@ public final class BluetoothDeviceSource: RobotDeviceSource, IOBluetoothDeviceIn
 	@objc public func deviceInquiryDeviceFound(sender: IOBluetoothDeviceInquiry!, device: IOBluetoothDevice!) {
 		assert(NSThread.isMainThread())
 
-		let robotDevice = RobotDevice(bluetoothDevice: device)
+		let robotDevice = MetaDevice(bluetoothDevice: device)
 		foundDevices.append(robotDevice)
 		client.robotDeviceSourceDidFindDevice(robotDevice)
 	}
@@ -72,7 +72,7 @@ public final class BluetoothDeviceSource: RobotDeviceSource, IOBluetoothDeviceIn
 	}
 }
 
-private func bluetoothDevicesContainRobotDevice(bluetoothDevices: [IOBluetoothDevice], _ robotDevice: RobotDevice) -> Bool {
+private func bluetoothDevicesContainRobotDevice(bluetoothDevices: [IOBluetoothDevice], _ robotDevice: MetaDevice) -> Bool {
 	guard case RobotDeviceTypeInternal.BluetoothDevice(let device) = robotDevice.internalType else {
 		return false
 	}

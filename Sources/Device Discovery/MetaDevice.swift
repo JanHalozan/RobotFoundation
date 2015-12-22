@@ -38,7 +38,9 @@ enum RobotDeviceTypeInternal {
 	#endif
 }
 
-public class RobotDevice {
+// A meta device can't be used to make connections. Rather, it describes a device's name, unique
+// identifier, and other parameters and can be used to initialize concrete Devices (or subclasses thereof).
+public final class MetaDevice {
 	let internalType: RobotDeviceTypeInternal
 	public let type: RobotDeviceType
 
@@ -69,13 +71,13 @@ public class RobotDevice {
 	#endif
 }
 
-extension RobotDevice: Hashable {
+extension MetaDevice: Hashable {
 	public var hashValue: Int {
 		return uniqueIdentifier?.hashValue ?? 1984
 	}
 }
 
-public func ==(lhs: RobotDevice, rhs: RobotDevice) -> Bool {
+public func ==(lhs: MetaDevice, rhs: MetaDevice) -> Bool {
 	if let uq1 = lhs.uniqueIdentifier, uq2 = rhs.uniqueIdentifier where uq1 == uq2 {
 		return true
 	}
