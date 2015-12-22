@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol RobotDeviceSourceClient: class {
+public protocol RobotDeviceSourceClient: class {
 	func robotDeviceSourceDidFindDevice(device: RobotDevice)
 }
 
-protocol RobotDeviceSource: class {
+public protocol RobotDeviceSource: class {
 	init(client: RobotDeviceSourceClient)
 
 	func beginDiscovery(searchCriteria: [RobotDeviceDescriptor])

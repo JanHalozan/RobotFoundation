@@ -9,7 +9,7 @@ import Foundation
 import IOKit.hid
 import IOBluetooth
 
-enum RobotDevice {
+public enum RobotDevice {
 	case HIDDevice(IOHIDDeviceRef)
 	case BluetoothDevice(IOBluetoothDevice)
 }

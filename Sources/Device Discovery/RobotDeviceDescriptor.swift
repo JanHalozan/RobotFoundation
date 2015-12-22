@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RobotDeviceDescriptor {
+public struct RobotDeviceDescriptor {
 	let productID: Int
 	let vendorID: Int
 	let majorDeviceClass: UInt32

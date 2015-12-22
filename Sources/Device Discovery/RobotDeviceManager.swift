@@ -7,18 +7,18 @@
 
 import Foundation
 
-protocol RobotDeviceManagerDelegate: class {
+public protocol RobotDeviceManagerDelegate: class {
 	func robotDeviceManagerDidFindDevice(device: RobotDevice)
 }
 
-final class RobotDeviceManager: RobotDeviceSourceClient {
+public final class RobotDeviceManager: RobotDeviceSourceClient {
 	private var sources = [RobotDeviceSource]()
 	private let searchCriteria: [RobotDeviceDescriptor]
 	private var foundDevices = [RobotDevice]()
 
 	private weak var delegate: RobotDeviceManagerDelegate?
 
-	init(sourceTypes: [RobotDeviceSource.Type], searchCriteria: [RobotDeviceDescriptor], delegate: RobotDeviceManagerDelegate) {
+	public init(sourceTypes: [RobotDeviceSource.Type], searchCriteria: [RobotDeviceDescriptor], delegate: RobotDeviceManagerDelegate) {
 		self.searchCriteria = searchCriteria
 		self.delegate = delegate
 
@@ -28,13 +28,13 @@ final class RobotDeviceManager: RobotDeviceSourceClient {
 		}
 	}
 
-	func beginDiscovery() {
+	public func beginDiscovery() {
 		for source in sources {
 			source.beginDiscovery(searchCriteria)
 		}
 	}
 
-	func robotDeviceSourceDidFindDevice(device: RobotDevice) {
+	public func robotDeviceSourceDidFindDevice(device: RobotDevice) {
 		foundDevices.append(device)
 		delegate?.robotDeviceManagerDidFindDevice(device)
 	}
