@@ -10,12 +10,12 @@
 import Foundation
 import IOKit.hid
 
-final class HIDDeviceSource: RobotDeviceSource {
+public final class HIDDeviceSource: RobotDeviceSource {
 	private let manager: IOHIDManagerRef
 
 	private unowned var client: RobotDeviceSourceClient
 
-	init(client: RobotDeviceSourceClient) {
+	public init(client: RobotDeviceSourceClient) {
 		manager = IOHIDManagerCreate(nil, 0).takeRetainedValue()
 		self.client = client
 	}
@@ -25,7 +25,7 @@ final class HIDDeviceSource: RobotDeviceSource {
 		IOHIDManagerClose(manager, 0)
 	}
 
-	func beginDiscovery(searchCriteria: [RobotDeviceDescriptor]) {
+	public func beginDiscovery(searchCriteria: [RobotDeviceDescriptor]) {
 		do {
 			try searchForDeviceWithCriteria(searchCriteria)
 		} catch {
@@ -33,7 +33,7 @@ final class HIDDeviceSource: RobotDeviceSource {
 		}
 	}
 
-	func searchForDeviceWithCriteria(criteria: [RobotDeviceDescriptor]) throws {
+	public func searchForDeviceWithCriteria(criteria: [RobotDeviceDescriptor]) throws {
 		var matchingDicts = [CFDictionary]()
 
 		for c in criteria {
@@ -57,7 +57,7 @@ final class HIDDeviceSource: RobotDeviceSource {
 	}
 
 	private func foundDevice(device: IOHIDDeviceRef) {
-		client.robotDeviceSourceDidFindDevice(RobotDevice.HIDDevice(device))
+		client.robotDeviceSourceDidFindDevice(RobotDevice(hidDevice: device))
 	}
 }
 

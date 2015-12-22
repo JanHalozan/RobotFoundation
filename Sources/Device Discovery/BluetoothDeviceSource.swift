@@ -27,6 +27,6 @@ final class BluetoothDeviceSource: RobotDeviceSource, IOBluetoothDeviceInquiryDe
 	}
 
 	@objc func deviceInquiryDeviceFound(sender: IOBluetoothDeviceInquiry!, device: IOBluetoothDevice!) {
-		client.robotDeviceSourceDidFindDevice(RobotDevice.BluetoothDevice(device))
+		client.robotDeviceSourceDidFindDevice(RobotDevice(bluetoothDevice: device))
 	}
 }
