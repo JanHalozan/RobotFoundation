@@ -7,16 +7,16 @@
 
 import Foundation
 
-protocol EV3Entry { }
+public protocol EV3Entry { }
 
-struct EV3FolderEntry: EV3Entry {
-	let name: String
+public struct EV3FolderEntry: EV3Entry {
+	public let name: String
 }
 
-struct EV3FileEntry: EV3Entry {
-	let md5: String
-	let fileSizeHex: String
-	let name: String
+public struct EV3FileEntry: EV3Entry {
+	public let md5: String
+	public let fileSizeHex: String
+	public let name: String
 }
 
 func entriesForListingString(string: String) -> [EV3Entry] {
