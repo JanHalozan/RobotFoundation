@@ -16,6 +16,8 @@ struct EV3ListingResponse: MindstormsResponse {
 	let listSize: UInt32
 	let handle: UInt8
 
+	let entries: [EV3Entry]
+
 	init?(data: NSData) {
 		guard let (messageCounter, replyType) = processGenericResponseForData(data) else {
 			return nil
@@ -34,6 +36,6 @@ struct EV3ListingResponse: MindstormsResponse {
 		data.getBytes(&stringBuffer, range: NSMakeRange(12, toEnd))
 
 		let string = NSString(UTF8String: stringBuffer) as! String
-		var x = 5
+		self.entries = entriesForListingString(string)
 	}
 }
