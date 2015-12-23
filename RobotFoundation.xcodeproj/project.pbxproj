@@ -79,7 +79,6 @@
 		C98C34D11C25F893006840C3 /* NSDataEV3Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34D01C25F893006840C3 /* NSDataEV3Extras.swift */; };
 		C98C34D31C25FA37006840C3 /* EV3DeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34D21C25FA37006840C3 /* EV3DeviceTests.swift */; };
 		C98C34D71C260E0A006840C3 /* EV3Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34D61C260E0A006840C3 /* EV3Types.swift */; };
-		C98C34D91C260E46006840C3 /* EV3Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34D81C260E46006840C3 /* EV3Response.swift */; };
 		C98C34DB1C260E72006840C3 /* MindstormsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34DA1C260E72006840C3 /* MindstormsResponse.swift */; };
 		C98C34DD1C260EA6006840C3 /* MindstormsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34DC1C260EA6006840C3 /* MindstormsType.swift */; };
 		C98C34DF1C260F28006840C3 /* EV3GenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34DE1C260F28006840C3 /* EV3GenericResponse.swift */; };
@@ -102,7 +101,6 @@
 		C98C35051C26544D006840C3 /* EV3GenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34DE1C260F28006840C3 /* EV3GenericResponse.swift */; };
 		C98C35071C26544D006840C3 /* EV3PlayToneCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34C71C25EC57006840C3 /* EV3PlayToneCommand.swift */; };
 		C98C35081C26544D006840C3 /* EV3ReadLightCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34EA1C264DD5006840C3 /* EV3ReadLightCommand.swift */; };
-		C98C35091C26544D006840C3 /* EV3Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34D81C260E46006840C3 /* EV3Response.swift */; };
 		C98C350A1C26544D006840C3 /* EV3SetLEDCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34E81C264532006840C3 /* EV3SetLEDCommand.swift */; };
 		C98C350B1C26544D006840C3 /* EV3Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34D61C260E0A006840C3 /* EV3Types.swift */; };
 		C98C350C1C26544D006840C3 /* NSDataEV3Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34D01C25F893006840C3 /* NSDataEV3Extras.swift */; };
@@ -122,6 +120,8 @@
 		C98C351A1C26544D006840C3 /* NXTStartProgramCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34E41C262CF3006840C3 /* NXTStartProgramCommand.swift */; };
 		C98C351B1C26544D006840C3 /* NXTResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34A61C25D1D1006840C3 /* NXTResponse.swift */; };
 		C98C351C1C26544D006840C3 /* NXTTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34A71C25D1D1006840C3 /* NXTTypes.swift */; };
+		C9B138771C2B09650018812F /* EV3ListFilesCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B138761C2B09650018812F /* EV3ListFilesCommand.swift */; };
+		C9B138781C2B09650018812F /* EV3ListFilesCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B138761C2B09650018812F /* EV3ListFilesCommand.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -189,7 +189,6 @@
 		C98C34D01C25F893006840C3 /* NSDataEV3Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDataEV3Extras.swift; sourceTree = "<group>"; };
 		C98C34D21C25FA37006840C3 /* EV3DeviceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3DeviceTests.swift; sourceTree = "<group>"; };
 		C98C34D61C260E0A006840C3 /* EV3Types.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3Types.swift; sourceTree = "<group>"; };
-		C98C34D81C260E46006840C3 /* EV3Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3Response.swift; sourceTree = "<group>"; };
 		C98C34DA1C260E72006840C3 /* MindstormsResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MindstormsResponse.swift; sourceTree = "<group>"; };
 		C98C34DC1C260EA6006840C3 /* MindstormsType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MindstormsType.swift; sourceTree = "<group>"; };
 		C98C34DE1C260F28006840C3 /* EV3GenericResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3GenericResponse.swift; sourceTree = "<group>"; };
@@ -201,6 +200,7 @@
 		C98C34F31C26540C006840C3 /* MobileRobotFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MobileRobotFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C98C34F51C26540C006840C3 /* MobileRobotFoundation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MobileRobotFoundation.h; sourceTree = "<group>"; };
 		C98C34F71C26540C006840C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C9B138761C2B09650018812F /* EV3ListFilesCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ListFilesCommand.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -342,12 +342,12 @@
 				C98C34C11C25EADB006840C3 /* EV3Device.swift */,
 				C98C34DE1C260F28006840C3 /* EV3GenericResponse.swift */,
 				C97551AD1C29C46A002A5796 /* EV3GetOSVersionCommand.swift */,
+				C9B138761C2B09650018812F /* EV3ListFilesCommand.swift */,
 				C97868691C28D0B00099BB82 /* EV3PercentByteResponse.swift */,
 				C98C34C71C25EC57006840C3 /* EV3PlayToneCommand.swift */,
 				C978686C1C28DE5B0099BB82 /* EV3ReadColorCommand.swift */,
 				C98C34EA1C264DD5006840C3 /* EV3ReadLightCommand.swift */,
 				C97868631C28BF960099BB82 /* EV3ReadTouchSensorCommand.swift */,
-				C98C34D81C260E46006840C3 /* EV3Response.swift */,
 				C907C25B1C2A239400647531 /* EV3SetMotorSpeedCommand.swift */,
 				C978686F1C28DF5A0099BB82 /* EV3SetSensorModeCommand.swift */,
 				C98C34E81C264532006840C3 /* EV3SetLEDCommand.swift */,
@@ -535,7 +535,6 @@
 				C907C25F1C2A28B000647531 /* EV3StartMotorCommand.swift in Sources */,
 				C98C34D71C260E0A006840C3 /* EV3Types.swift in Sources */,
 				C97868731C28E89F0099BB82 /* EV3ColorResponse.swift in Sources */,
-				C98C34D91C260E46006840C3 /* EV3Response.swift in Sources */,
 				C98C34AB1C25D1D1006840C3 /* NXTDeleteCommand.swift in Sources */,
 				C97868641C28BF960099BB82 /* EV3ReadTouchSensorCommand.swift in Sources */,
 				C96945731C28FB420030DEB3 /* RobotDeviceDescriptor.swift in Sources */,
@@ -571,6 +570,7 @@
 				C917F68F1C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift in Sources */,
 				C96945791C28FCA30030DEB3 /* BluetoothDeviceSource.swift in Sources */,
 				C98C34CF1C25F644006840C3 /* EV3CommandSerialization.swift in Sources */,
+				C9B138771C2B09650018812F /* EV3ListFilesCommand.swift in Sources */,
 				C98C34B01C25D1D1006840C3 /* NXTTypes.swift in Sources */,
 				C98C34AC1C25D1D1006840C3 /* NXTFileResponse.swift in Sources */,
 				C98C34B31C25D24B006840C3 /* IOBluetoothDeviceTransport.swift in Sources */,
@@ -623,7 +623,6 @@
 				C978686E1C28DE5B0099BB82 /* EV3ReadColorCommand.swift in Sources */,
 				C98C35071C26544D006840C3 /* EV3PlayToneCommand.swift in Sources */,
 				C98C35081C26544D006840C3 /* EV3ReadLightCommand.swift in Sources */,
-				C98C35091C26544D006840C3 /* EV3Response.swift in Sources */,
 				C978686B1C28D0B00099BB82 /* EV3PercentByteResponse.swift in Sources */,
 				C98C350A1C26544D006840C3 /* EV3SetLEDCommand.swift in Sources */,
 				C98C350B1C26544D006840C3 /* EV3Types.swift in Sources */,
@@ -643,6 +642,7 @@
 				C98C35151C26544D006840C3 /* NXTDevice.swift in Sources */,
 				C969457A1C28FCA30030DEB3 /* BluetoothDeviceSource.swift in Sources */,
 				C98C35161C26544D006840C3 /* NXTFileResponse.swift in Sources */,
+				C9B138781C2B09650018812F /* EV3ListFilesCommand.swift in Sources */,
 				C98C35171C26544D006840C3 /* NXTFindFirstCommand.swift in Sources */,
 				C98C35181C26544D006840C3 /* NXTFindNextCommand.swift in Sources */,
 				C98C35191C26544D006840C3 /* NXTGenericResponse.swift in Sources */,
