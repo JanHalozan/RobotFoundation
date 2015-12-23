@@ -13,16 +13,12 @@ enum EV3ReadLightType: UInt8 {
 	case Ambient = 1
 }
 
-struct EV3ReadLightCommand: EV3Command {
+struct EV3ReadLightCommand: EV3DirectCommand {
 	let port: EV3InputPort
 	let lightType: EV3ReadLightType
 
 	var responseType: MindstormsResponse.Type {
 		return EV3PercentByteResponse.self
-	}
-
-	var type: MindstormsCommandType {
-		return .Direct
 	}
 
 	var numberOfGlobals: UInt8 {

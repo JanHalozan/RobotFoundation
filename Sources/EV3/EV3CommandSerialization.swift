@@ -12,7 +12,7 @@ private let typeLength = sizeof(UInt8)
 private let messageCounterLength = sizeof(UInt16)
 private let packetLengthLength = sizeof(UInt16)
 
-extension EV3Command {
+extension EV3DirectCommand {
 	func formEV3PacketData(var messageCounter: UInt16, prependTotalLength: Bool) -> NSData {
 		let byteCodeData = payloadData
 

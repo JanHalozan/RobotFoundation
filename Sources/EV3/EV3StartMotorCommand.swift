@@ -7,15 +7,11 @@
 
 import Foundation
 
-struct EV3StartMotorCommand: EV3Command {
+struct EV3StartMotorCommand: EV3DirectCommand {
 	let port: EV3OutputPortOptions
 
 	var responseType: MindstormsResponse.Type {
 		return EV3GenericResponse.self
-	}
-
-	var type: MindstormsCommandType {
-		return .Direct
 	}
 
 	var numberOfGlobals: UInt8 {

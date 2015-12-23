@@ -45,8 +45,16 @@ final class EV3CommandOperation: NSOperation {
 			return
 		}
 
+		let data: NSData
+
 		// TODO: actually increment the message counter
-		let data = command.formEV3PacketData(0, prependTotalLength: false)
+		if let directCommand = command as? EV3DirectCommand {
+			data = directCommand.formEV3PacketData(0, prependTotalLength: false)
+		} else if let systemCommand = command as? EV3SystemCommand {
+			fatalError()
+		} else {
+			fatalError()
+		}
 
 		do {
 			try transport.writeData(data)

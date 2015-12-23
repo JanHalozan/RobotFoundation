@@ -7,16 +7,12 @@
 
 import Foundation
 
-struct EV3PlayToneCommand: EV3Command {
+struct EV3PlayToneCommand: EV3DirectCommand {
 	let frequency: UInt16
 	let duration: UInt16 // ms
 
 	var responseType: MindstormsResponse.Type {
 		return EV3GenericResponse.self
-	}
-
-	var type: MindstormsCommandType {
-		return .Direct
 	}
 
 	var payloadData: NSData {

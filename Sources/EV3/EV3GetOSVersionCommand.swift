@@ -7,15 +7,11 @@
 
 import Foundation
 
-public struct EV3GetOSVersionCommand: EV3Command {
+public struct EV3GetOSVersionCommand: EV3DirectCommand {
 	public init() { }
 
 	public var responseType: MindstormsResponse.Type {
 		return EV3StringResponse.self
-	}
-
-	public var type: MindstormsCommandType {
-		return .Direct
 	}
 
 	public var numberOfGlobals: UInt8 {

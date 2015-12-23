@@ -7,16 +7,12 @@
 
 import Foundation
 
-struct EV3SetSensorModeCommand: EV3Command {
+struct EV3SetSensorModeCommand: EV3DirectCommand {
 	let port: EV3InputPort
 	let mode: UInt8
 
 	var responseType: MindstormsResponse.Type {
 		return EV3GenericResponse.self
-	}
-
-	var type: MindstormsCommandType {
-		return .Direct
 	}
 
 	var numberOfGlobals: UInt8 {

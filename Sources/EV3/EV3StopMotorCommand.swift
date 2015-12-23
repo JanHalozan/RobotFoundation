@@ -12,16 +12,12 @@ enum EV3StopType: UInt8 {
 	case Brake = 1
 }
 
-struct EV3StopMotorCommand: EV3Command {
+struct EV3StopMotorCommand: EV3DirectCommand {
 	let port: EV3OutputPortOptions
 	let stopType: EV3StopType
 
 	var responseType: MindstormsResponse.Type {
 		return EV3GenericResponse.self
-	}
-
-	var type: MindstormsCommandType {
-		return .Direct
 	}
 
 	var numberOfGlobals: UInt8 {

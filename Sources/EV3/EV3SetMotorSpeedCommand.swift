@@ -7,16 +7,12 @@
 
 import Foundation
 
-struct EV3SetMotorSpeedCommand: EV3Command {
+struct EV3SetMotorSpeedCommand: EV3DirectCommand {
 	let port: EV3OutputPortOptions
 	let speed: UInt8
 
 	var responseType: MindstormsResponse.Type {
 		return EV3GenericResponse.self
-	}
-
-	var type: MindstormsCommandType {
-		return .Direct
 	}
 
 	var numberOfGlobals: UInt8 {
