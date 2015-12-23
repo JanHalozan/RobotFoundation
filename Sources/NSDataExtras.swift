@@ -16,6 +16,15 @@ extension NSMutableData {
 		value = NSSwapHostShortToLittle(value)
 		appendBytes(&value, length: sizeof(UInt16))
 	}
+
+	func appendString(string: String) {
+		for unit in string.utf8 {
+			appendUInt8(unit)
+		}
+
+		// null-terminated
+		appendUInt8(0)
+	}
 }
 
 extension NSData {

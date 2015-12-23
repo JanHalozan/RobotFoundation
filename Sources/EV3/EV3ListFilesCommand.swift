@@ -10,8 +10,12 @@ import Foundation
 public struct EV3ListFilesCommand: EV3SystemCommand {
 	public let path: String
 
+	public init(path: String) {
+		self.path = path
+	}
+
 	public var responseType: MindstormsResponse.Type {
-		return EV3StringResponse.self
+		return EV3ListingResponse.self
 	}
 
 	public var systemCommand: UInt8 {
@@ -22,7 +26,9 @@ public struct EV3ListFilesCommand: EV3SystemCommand {
 		let mutableData = NSMutableData()
 
 		// max bytes to read
-		mutableData.appendUInt16(64)
+		// apparently 1000 is the max bytes we can read from a file list
+		mutableData.appendUInt16(1000)
+		mutableData.appendString(path)
 
 		return mutableData.copy() as! NSData
 	}

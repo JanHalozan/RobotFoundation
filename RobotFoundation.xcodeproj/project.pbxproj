@@ -122,6 +122,8 @@
 		C98C351C1C26544D006840C3 /* NXTTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34A71C25D1D1006840C3 /* NXTTypes.swift */; };
 		C9B138771C2B09650018812F /* EV3ListFilesCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B138761C2B09650018812F /* EV3ListFilesCommand.swift */; };
 		C9B138781C2B09650018812F /* EV3ListFilesCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B138761C2B09650018812F /* EV3ListFilesCommand.swift */; };
+		C9B1387A1C2B12BB0018812F /* EV3ListingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B138791C2B12BB0018812F /* EV3ListingResponse.swift */; };
+		C9B1387B1C2B12BB0018812F /* EV3ListingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B138791C2B12BB0018812F /* EV3ListingResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -201,6 +203,7 @@
 		C98C34F51C26540C006840C3 /* MobileRobotFoundation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MobileRobotFoundation.h; sourceTree = "<group>"; };
 		C98C34F71C26540C006840C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C9B138761C2B09650018812F /* EV3ListFilesCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ListFilesCommand.swift; sourceTree = "<group>"; };
+		C9B138791C2B12BB0018812F /* EV3ListingResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ListingResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -343,6 +346,7 @@
 				C98C34DE1C260F28006840C3 /* EV3GenericResponse.swift */,
 				C97551AD1C29C46A002A5796 /* EV3GetOSVersionCommand.swift */,
 				C9B138761C2B09650018812F /* EV3ListFilesCommand.swift */,
+				C9B138791C2B12BB0018812F /* EV3ListingResponse.swift */,
 				C97868691C28D0B00099BB82 /* EV3PercentByteResponse.swift */,
 				C98C34C71C25EC57006840C3 /* EV3PlayToneCommand.swift */,
 				C978686C1C28DE5B0099BB82 /* EV3ReadColorCommand.swift */,
@@ -530,6 +534,7 @@
 				C969456A1C28F9690030DEB3 /* HIDDeviceSource.swift in Sources */,
 				C98C34CD1C25F1EA006840C3 /* MindstormsCommand.swift in Sources */,
 				C98C34AD1C25D1D1006840C3 /* NXTFindFirstCommand.swift in Sources */,
+				C9B1387A1C2B12BB0018812F /* EV3ListingResponse.swift in Sources */,
 				C969456D1C28F97F0030DEB3 /* RobotDeviceManager.swift in Sources */,
 				C98C34A81C25D1D1006840C3 /* NSDataNXTExtras.swift in Sources */,
 				C907C25F1C2A28B000647531 /* EV3StartMotorCommand.swift in Sources */,
@@ -602,6 +607,7 @@
 				C969456B1C28F9690030DEB3 /* HIDDeviceSource.swift in Sources */,
 				C98C34FC1C26544D006840C3 /* Device.swift in Sources */,
 				C98C34FD1C26544D006840C3 /* DeviceTransport.swift in Sources */,
+				C9B1387B1C2B12BB0018812F /* EV3ListingResponse.swift in Sources */,
 				C969456E1C28F97F0030DEB3 /* RobotDeviceManager.swift in Sources */,
 				C98C34FE1C26544D006840C3 /* IOBluetoothDeviceTransport.swift in Sources */,
 				C907C2601C2A28B000647531 /* EV3StartMotorCommand.swift in Sources */,

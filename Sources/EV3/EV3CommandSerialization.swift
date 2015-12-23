@@ -13,26 +13,37 @@ private let messageCounterLength = sizeof(UInt16)
 private let packetLengthLength = sizeof(UInt16)
 
 extension EV3DirectCommand {
-	func formEV3PacketData(var messageCounter: UInt16, prependTotalLength: Bool) -> NSData {
-		let byteCodeData = payloadData
-
+	func formEV3PacketData(messageCounter: UInt16, prependTotalLength: Bool) -> NSData {
 		let packet = NSMutableData()
 
-		var dataLength = byteCodeData.length + headerLength + typeLength + messageCounterLength
-		var totalLength = dataLength + packetLengthLength
+		let dataLength = UInt16(payloadData.length + headerLength + typeLength + messageCounterLength)
 
 		if prependTotalLength {
-			packet.appendBytes(&totalLength, length: sizeof(UInt16))
+			let totalLength = dataLength + UInt16(packetLengthLength)
+			packet.appendUInt16(totalLength)
 		}
 
-		var type = self.telegramType
-
-		packet.appendBytes(&dataLength, length: sizeof(UInt16))
-		packet.appendBytes(&messageCounter, length: sizeof(UInt16))
-		packet.appendBytes(&type, length: sizeof(UInt8))
+		packet.appendUInt16(dataLength)
+		packet.appendUInt16(messageCounter)
+		packet.appendUInt8(telegramType)
 		packet.appendUInt8(numberOfGlobals)
 		packet.appendUInt8(0)
-		packet.appendData(byteCodeData)
+		packet.appendData(payloadData)
+
+		return packet
+	}
+}
+
+extension EV3SystemCommand {
+	func formEV3PacketData(messageCounter: UInt16) -> NSData {
+		let dataLength = UInt16(payloadData.length + headerLength + typeLength + messageCounterLength)
+
+		let packet = NSMutableData()
+		packet.appendUInt16(dataLength)
+		packet.appendUInt16(messageCounter)
+		packet.appendUInt8(telegramType)
+		packet.appendUInt8(systemCommand)
+		packet.appendData(payloadData)
 
 		return packet
 	}
