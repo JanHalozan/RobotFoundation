@@ -51,7 +51,7 @@ final class EV3CommandOperation: NSOperation {
 		if let directCommand = command as? EV3DirectCommand {
 			data = directCommand.formEV3PacketData(0, prependTotalLength: false)
 		} else if let systemCommand = command as? EV3SystemCommand {
-			fatalError()
+			data = systemCommand.formEV3PacketData(0)
 		} else {
 			fatalError()
 		}
@@ -77,10 +77,7 @@ final class EV3CommandOperation: NSOperation {
 			return
 		}
 
-		// TODO: handle differences in USB packets
-		let fullData = data
-
-		guard let response = command.responseType.init(data: fullData) else {
+		guard let response = command.responseType.init(data: data) else {
 			print("Could not parse a response")
 			return
 		}

@@ -41,4 +41,11 @@ extension NSData {
 
 		return NSSwapLittleShortToHost(value)
 	}
+
+	func readUInt32AtIndex(index: Int) -> UInt32 {
+		var value = UInt32()
+		getBytes(&value, range: NSMakeRange(index, 4))
+
+		return NSSwapLittleIntToHost(value)
+	}
 }

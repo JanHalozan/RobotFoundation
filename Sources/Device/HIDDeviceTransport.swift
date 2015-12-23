@@ -13,7 +13,7 @@ import IOKit.hid
 final class HIDDeviceTransport: DeviceTransport {
 	private var device: IOHIDDeviceRef
 
-	var inputReportBuffer = [UInt8](count: 128, repeatedValue: 0)
+	private var inputReportBuffer = [UInt8](count: 1024, repeatedValue: 0)
 
 	init(device: IOHIDDeviceRef) {
 		self.device = device

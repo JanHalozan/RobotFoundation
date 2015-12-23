@@ -185,4 +185,19 @@ final class EV3HIDDeviceTests: XCTestCase, RobotDeviceManagerDelegate {
 		manager.beginDiscovery()
 		waitForExpectationsWithTimeout(10, handler: nil)
 	}
+
+	func testFolderListingCommand() {
+		responseExpectation = expectationWithDescription("command response")
+		activeTest = { [unowned self] in
+			let command = EV3ListFilesCommand(path: "../apps/")
+			self.device.enqueueCommand(command) { response in
+				let ev3Response = response as! EV3ListingResponse
+				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
+				self.responseExpectation.fulfill()
+			}
+		}
+
+		manager.beginDiscovery()
+		waitForExpectationsWithTimeout(10, handler: nil)
+	}
 }

@@ -11,7 +11,10 @@ struct EV3ListingResponse: MindstormsResponse {
 	let replyType: EV3ReplyType
 	let messageCounter: UInt16
 
-	let percent: UInt8
+	let systemCommand: UInt8
+	let returnStatus: UInt8
+	let listSize: UInt32
+	let handle: UInt8
 
 	init?(data: NSData) {
 		guard let (messageCounter, replyType) = processGenericResponseForData(data) else {
@@ -21,9 +24,16 @@ struct EV3ListingResponse: MindstormsResponse {
 		self.replyType = replyType
 		self.messageCounter = messageCounter
 
-		var percent = UInt8()
-		data.getBytes(&percent, range: NSMakeRange(5, 1))
+		self.systemCommand = data.readUInt8AtIndex(5)
+		self.returnStatus = data.readUInt8AtIndex(6)
+		self.listSize = data.readUInt32AtIndex(7)
+		self.handle = data.readUInt8AtIndex(11)
+		
+		let toEnd = data.length - 12
+		var stringBuffer = [Int8](count: toEnd, repeatedValue: 0)
+		data.getBytes(&stringBuffer, range: NSMakeRange(12, toEnd))
 
-		self.percent = percent
+		let string = NSString(UTF8String: stringBuffer) as! String
+		var x = 5
 	}
 }
