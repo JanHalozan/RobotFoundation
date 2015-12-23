@@ -14,7 +14,7 @@ enum EV3ReadLightType: UInt8 {
 }
 
 struct EV3ReadLightCommand: EV3Command {
-	let port: EV3Port
+	let port: EV3InputPort
 	let lightType: EV3ReadLightType
 
 	var responseType: MindstormsResponse.Type {

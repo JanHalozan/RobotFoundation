@@ -1,17 +1,18 @@
 //
-//  EV3ReadColorCommand.swift
+//  EV3SetMotorSpeedCommand.swift
 //  RobotFoundation
 //
-//  Created by Matt on 12/21/15.
+//  Created by Matt on 12/22/15.
 //
 
 import Foundation
 
-struct EV3ReadColorCommand: EV3Command {
-	let port: EV3InputPort
+struct EV3SetMotorSpeedCommand: EV3Command {
+	let port: EV3OutputPortOptions
+	let speed: UInt8
 
 	var responseType: MindstormsResponse.Type {
-		return EV3ColorResponse.self
+		return EV3GenericResponse.self
 	}
 
 	var type: MindstormsCommandType {
@@ -19,18 +20,15 @@ struct EV3ReadColorCommand: EV3Command {
 	}
 
 	var numberOfGlobals: UInt8 {
-		return 1
+		return 0
 	}
 
 	var payloadData: NSData {
 		let mutableData = NSMutableData()
-
-		mutableData.appendUInt8(EV3OpCode.InputDevice.rawValue)
-		mutableData.appendUInt8(EV3InputDeviceOpSubcode.GetRaw.rawValue)
+		mutableData.appendUInt8(EV3OpCode.OutputSpeed.rawValue)
 		mutableData.appendUInt8(EV3Layer.ThisBrick.rawValue)
 		mutableData.appendUInt8(port.rawValue)
-
-		mutableData.appendUInt8(EV3Variables.GlobalVar0.rawValue)
+		mutableData.appendUInt8(speed)
 
 		return mutableData.copy() as! NSData
 	}

@@ -26,7 +26,7 @@ final class EV3HIDDeviceTests: XCTestCase, RobotDeviceManagerDelegate {
 		super.tearDown()
 	}
 
-	func robotDeviceManagerDidFindDevice(device: RobotDevice) {
+	func robotDeviceManagerDidFindDevice(device: MetaDevice) {
 		assert(NSThread.isMainThread())
 
 		switch device.internalType {
@@ -144,6 +144,27 @@ final class EV3HIDDeviceTests: XCTestCase, RobotDeviceManagerDelegate {
 				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
 				self.responseExpectation.fulfill()
 			}
+		}
+
+		manager.beginDiscovery()
+		waitForExpectationsWithTimeout(10, handler: nil)
+	}
+
+	func testMotorSpeedCommand() {
+		responseExpectation = expectationWithDescription("command response")
+		activeTest = { [unowned self] in
+			let modeCommand = EV3SetMotorSpeedCommand(port: .A, speed: 10)
+			self.device.enqueueCommand(modeCommand) { response in
+				let ev3Response = response as! EV3GenericResponse
+				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
+			}
+
+			let startCommand = EV3StartMotorCommand(port: .A)
+			self.device.enqueueCommand(startCommand, responseHandler: { (response) -> () in
+				let ev3Response = response as! EV3GenericResponse
+				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
+				self.responseExpectation.fulfill()
+			})
 		}
 
 		manager.beginDiscovery()

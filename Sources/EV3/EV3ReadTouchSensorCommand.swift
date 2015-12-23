@@ -8,7 +8,7 @@
 import Foundation
 
 struct EV3ReadTouchSensorCommand: EV3Command {
-	let port: EV3Port
+	let port: EV3InputPort
 
 	var responseType: MindstormsResponse.Type {
 		return EV3PercentByteResponse.self
