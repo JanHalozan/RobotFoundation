@@ -170,4 +170,19 @@ final class EV3HIDDeviceTests: XCTestCase, RobotDeviceManagerDelegate {
 		manager.beginDiscovery()
 		waitForExpectationsWithTimeout(10, handler: nil)
 	}
+
+	func testMotorStopCommand() {
+		responseExpectation = expectationWithDescription("command response")
+		activeTest = { [unowned self] in
+			let modeCommand = EV3StopMotorCommand(port: .A, stopType: .Coast)
+			self.device.enqueueCommand(modeCommand) { response in
+				let ev3Response = response as! EV3GenericResponse
+				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
+				self.responseExpectation.fulfill()
+			}
+		}
+
+		manager.beginDiscovery()
+		waitForExpectationsWithTimeout(10, handler: nil)
+	}
 }

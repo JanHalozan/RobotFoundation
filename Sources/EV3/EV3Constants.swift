@@ -14,6 +14,7 @@ enum EV3OpCode: UInt8 {
 	case InputReadSI = 0x9D
 	case OutputSpeed = 0xA5
 	case OutputStart = 0xA6
+	case OutputStop = 0xA3
 }
 
 enum EV3InputDeviceOpSubcode: UInt8 {
