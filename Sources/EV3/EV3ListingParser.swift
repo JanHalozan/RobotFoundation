@@ -7,16 +7,9 @@
 
 import Foundation
 
-public protocol EV3Entry { }
-
-public struct EV3FolderEntry: EV3Entry {
-	public let name: String
-}
-
-public struct EV3FileEntry: EV3Entry {
-	public let md5: String
-	public let fileSizeHex: String
-	public let name: String
+enum EV3Entry {
+	case Folder(name: String)
+	case File(name: String, md5: String, fileSizeHex: String)
 }
 
 func entriesForListingString(string: String) -> [EV3Entry] {
@@ -28,13 +21,13 @@ func entriesForListingString(string: String) -> [EV3Entry] {
 			return
 		} else if line.hasSuffix("/") {
 			// Folder
-			entries.append(EV3FolderEntry(name: line))
+			entries.append(.Folder(name: line))
 		} else {
 			// File
 			let md5 = line.substringToIndex(line.startIndex.advancedBy(32))
 			let fileSizeHex = line.substringWithRange(Range<String.Index>(start: line.startIndex.advancedBy(33), end: line.startIndex.advancedBy(41)))
 			let name = line.substringFromIndex(line.startIndex.advancedBy(42))
-			entries.append(EV3FileEntry(md5: md5, fileSizeHex: fileSizeHex, name: name))
+			entries.append(.File(name: name, md5: md5, fileSizeHex: fileSizeHex))
 		}
 	}
 
