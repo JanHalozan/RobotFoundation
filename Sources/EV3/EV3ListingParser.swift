@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum EV3Entry {
+public enum EV3Entry {
 	case Folder(name: String)
 	case File(name: String, md5: String, fileSizeHex: String)
 }
