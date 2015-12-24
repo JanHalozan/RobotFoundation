@@ -19,7 +19,7 @@ public struct EV3GetFileCommand: EV3SystemCommand {
 	}
 
 	public var systemCommand: UInt8 {
-		return 0x92
+		return 0x96
 	}
 
 	public var payloadData: NSData {
@@ -47,7 +47,7 @@ public struct EV3ContinueGetFileCommand: EV3SystemCommand {
 	}
 
 	public var systemCommand: UInt8 {
-		return 0x93
+		return 0x97
 	}
 
 	public var payloadData: NSData {
