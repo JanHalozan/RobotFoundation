@@ -7,9 +7,14 @@
 
 import Foundation
 
-enum EV3ReplyType: UInt8 {
+public enum EV3ReplyType: UInt8 {
 	case Success = 0x2
 	case SystemSuccess = 0x3
 	case Error = 0x4
 	case SystemError = 0x5
+}
+
+public enum EV3SystemReturnStatus: UInt8 {
+	case Success = 0x0
+	case EndOfFile = 0x8
 }

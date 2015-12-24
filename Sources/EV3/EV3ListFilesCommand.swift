@@ -33,3 +33,32 @@ public struct EV3ListFilesCommand: EV3SystemCommand {
 		return mutableData.copy() as! NSData
 	}
 }
+
+
+public struct EV3ContinueListFilesCommand: EV3SystemCommand {
+	public let handle: UInt8
+
+	public init(handle: UInt8) {
+		self.handle = handle
+	}
+
+	public var responseType: MindstormsResponse.Type {
+		return EV3ContinueListingResponse.self
+	}
+
+	public var systemCommand: UInt8 {
+		return 0x9A
+	}
+
+	public var payloadData: NSData {
+		let mutableData = NSMutableData()
+
+		mutableData.appendUInt8(handle)
+
+		// max bytes to read
+		// apparently 1000 is the max bytes we can read from a file list
+		mutableData.appendUInt16(1000)
+
+		return mutableData.copy() as! NSData
+	}
+}

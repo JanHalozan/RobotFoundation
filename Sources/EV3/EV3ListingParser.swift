@@ -12,7 +12,7 @@ public enum EV3Entry {
 	case File(name: String, md5: String, fileSizeHex: String)
 }
 
-func entriesForListingString(string: String) -> [EV3Entry] {
+public func parseEV3FileListingWithString(string: String) -> [EV3Entry] {
 	var entries = [EV3Entry]()
 
 	string.enumerateLines { line, stop in
