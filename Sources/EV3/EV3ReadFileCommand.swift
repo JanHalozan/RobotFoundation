@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct EV3GetFileCommand: EV3SystemCommand {
+public struct EV3ReadFileCommand: EV3SystemCommand {
 	public let path: String
 
 	public init(path: String) {
@@ -19,7 +19,7 @@ public struct EV3GetFileCommand: EV3SystemCommand {
 	}
 
 	public var systemCommand: UInt8 {
-		return 0x96
+		return 0x94
 	}
 
 	public var payloadData: NSData {
@@ -35,7 +35,7 @@ public struct EV3GetFileCommand: EV3SystemCommand {
 }
 
 
-public struct EV3ContinueGetFileCommand: EV3SystemCommand {
+public struct EV3ContinueReadFileCommand: EV3SystemCommand {
 	public let handle: UInt8
 
 	public init(handle: UInt8) {
@@ -43,11 +43,11 @@ public struct EV3ContinueGetFileCommand: EV3SystemCommand {
 	}
 
 	public var responseType: MindstormsResponse.Type {
-		return EV3FileResponse.self
+		return EV3ContinueFileResponse.self
 	}
 
 	public var systemCommand: UInt8 {
-		return 0x97
+		return 0x95
 	}
 
 	public var payloadData: NSData {
