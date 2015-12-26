@@ -9,17 +9,19 @@ import Foundation
 
 public struct EV3ReadChainedCommand: EV3DirectCommand {
 	public let path: String
+	public let bytesToRead: UInt16
 
-	public init(path: String) {
+	public init(path: String, bytesToRead: UInt16) {
 		self.path = path
+		self.bytesToRead = bytesToRead
 	}
 
 	public var responseType: MindstormsResponse.Type {
-		return EV3GenericResponse.self
+		return EV3HandleDataResponse.self
 	}
 
 	public var globalSpaceSize: UInt16 {
-		return 1004
+		return bytesToRead + 4
 	}
 
 	public var payloadData: NSData {
@@ -40,7 +42,7 @@ public struct EV3ReadChainedCommand: EV3DirectCommand {
 		mutableData.appendUInt8(EV3OpCode.File.rawValue)
 		mutableData.appendUInt8(EV3FileOpSubcode.ReadBytes.rawValue)
 		mutableData.appendUInt8(EV3Variables.GlobalVar0.rawValue)
-		mutableData.appendLC2(1000)
+		mutableData.appendLC2(bytesToRead)
 		mutableData.appendUInt8(EV3Variables.GlobalVar0.rawValue)
 
 		// Close
