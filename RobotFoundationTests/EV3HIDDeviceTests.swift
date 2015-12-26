@@ -29,14 +29,8 @@ final class EV3HIDDeviceTests: XCTestCase, RobotDeviceManagerDelegate {
 	func robotDeviceManagerDidFindDevice(device: MetaDevice) {
 		assert(NSThread.isMainThread())
 
-		switch device.internalType {
-		case let .HIDDevice(hidDevice):
-			let transport = HIDDeviceTransport(device: hidDevice)
-			self.device = EV3Device(transport: transport)
-			try! self.device.open()
-		default:
-			assertionFailure()
-		}
+		self.device = EV3Device(metaDevice: device)
+		try! self.device.open()
 
 		activeTest()
 	}
