@@ -355,33 +355,14 @@
 		C98C34C01C25EA10006840C3 /* EV3 */ = {
 			isa = PBXGroup;
 			children = (
-				C97868721C28E89F0099BB82 /* EV3ColorResponse.swift */,
+				C9C561211C2E1F3E00E61C28 /* Commands */,
+				C9C561221C2E1F4300E61C28 /* Responses */,
 				C98C34C31C25EB2E006840C3 /* EV3Command.swift */,
 				C98C34C51C25EC3B006840C3 /* EV3CommandOperation.swift */,
 				C98C34CE1C25F644006840C3 /* EV3CommandSerialization.swift */,
 				C97868661C28BFC10099BB82 /* EV3Constants.swift */,
-				C9EDF44D1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift */,
-				C9EDF4501C2B56B600879F00 /* EV3DeleteItemCommand.swift */,
 				C98C34C11C25EADB006840C3 /* EV3Device.swift */,
-				C905867C1C2C605F0068E560 /* EV3FileResponse.swift */,
-				C98C34DE1C260F28006840C3 /* EV3GenericResponse.swift */,
-				C97551AD1C29C46A002A5796 /* EV3GetOSVersionCommand.swift */,
-				C9B138761C2B09650018812F /* EV3ListFilesCommand.swift */,
 				C9B1387C1C2B1C5C0018812F /* EV3ListingParser.swift */,
-				C9B138791C2B12BB0018812F /* EV3ListingResponse.swift */,
-				C97868691C28D0B00099BB82 /* EV3PercentByteResponse.swift */,
-				C98C34C71C25EC57006840C3 /* EV3PlayToneCommand.swift */,
-				C94A9F3A1C2CF5660031642F /* EV3ReadChainedCommand.swift */,
-				C978686C1C28DE5B0099BB82 /* EV3ReadColorCommand.swift */,
-				C90586791C2C5FDB0068E560 /* EV3ReadFileCommand.swift */,
-				C98C34EA1C264DD5006840C3 /* EV3ReadLightCommand.swift */,
-				C97868631C28BF960099BB82 /* EV3ReadTouchSensorCommand.swift */,
-				C907C25B1C2A239400647531 /* EV3SetMotorSpeedCommand.swift */,
-				C978686F1C28DF5A0099BB82 /* EV3SetSensorModeCommand.swift */,
-				C98C34E81C264532006840C3 /* EV3SetLEDCommand.swift */,
-				C907C25E1C2A28B000647531 /* EV3StartMotorCommand.swift */,
-				C907C2641C2A2F0300647531 /* EV3StopMotorCommand.swift */,
-				C97551B01C29D094002A5796 /* EV3StringResponse.swift */,
 				C98C34D61C260E0A006840C3 /* EV3Types.swift */,
 				C98C34D01C25F893006840C3 /* NSDataEV3Extras.swift */,
 				C917F68E1C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift */,
@@ -407,6 +388,41 @@
 				C98C34F71C26540C006840C3 /* Info.plist */,
 			);
 			path = MobileRobotFoundation;
+			sourceTree = "<group>";
+		};
+		C9C561211C2E1F3E00E61C28 /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				C9EDF44D1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift */,
+				C9EDF4501C2B56B600879F00 /* EV3DeleteItemCommand.swift */,
+				C97551AD1C29C46A002A5796 /* EV3GetOSVersionCommand.swift */,
+				C9B138761C2B09650018812F /* EV3ListFilesCommand.swift */,
+				C98C34C71C25EC57006840C3 /* EV3PlayToneCommand.swift */,
+				C94A9F3A1C2CF5660031642F /* EV3ReadChainedCommand.swift */,
+				C978686C1C28DE5B0099BB82 /* EV3ReadColorCommand.swift */,
+				C90586791C2C5FDB0068E560 /* EV3ReadFileCommand.swift */,
+				C98C34EA1C264DD5006840C3 /* EV3ReadLightCommand.swift */,
+				C97868631C28BF960099BB82 /* EV3ReadTouchSensorCommand.swift */,
+				C907C25B1C2A239400647531 /* EV3SetMotorSpeedCommand.swift */,
+				C978686F1C28DF5A0099BB82 /* EV3SetSensorModeCommand.swift */,
+				C98C34E81C264532006840C3 /* EV3SetLEDCommand.swift */,
+				C907C25E1C2A28B000647531 /* EV3StartMotorCommand.swift */,
+				C907C2641C2A2F0300647531 /* EV3StopMotorCommand.swift */,
+			);
+			name = Commands;
+			sourceTree = "<group>";
+		};
+		C9C561221C2E1F4300E61C28 /* Responses */ = {
+			isa = PBXGroup;
+			children = (
+				C97868721C28E89F0099BB82 /* EV3ColorResponse.swift */,
+				C905867C1C2C605F0068E560 /* EV3FileResponse.swift */,
+				C98C34DE1C260F28006840C3 /* EV3GenericResponse.swift */,
+				C9B138791C2B12BB0018812F /* EV3ListingResponse.swift */,
+				C97868691C28D0B00099BB82 /* EV3PercentByteResponse.swift */,
+				C97551B01C29D094002A5796 /* EV3StringResponse.swift */,
+			);
+			name = Responses;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
