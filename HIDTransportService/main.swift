@@ -28,12 +28,12 @@ class ServiceDelegate : NSObject, NSXPCListenerDelegate {
 	}
 }
 
-    // Create the delegate for the service.
-    let delegate = ServiceDelegate()
-    
-    // Set up the one NSXPCListener for this service. It will handle all incoming connections.
-    let listener = NSXPCListener.serviceListener()
-    listener.delegate = delegate;
-    
-    // Resuming the serviceListener starts this service. This method does not return.
-    listener.resume()
+// Create the delegate for the service.
+let delegate = ServiceDelegate()
+
+// Set up the one NSXPCListener for this service. It will handle all incoming connections.
+let listener = NSXPCListener.serviceListener()
+listener.delegate = delegate
+
+// Resuming the serviceListener starts this service. This method does not return.
+listener.resume()
