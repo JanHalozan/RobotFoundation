@@ -12,7 +12,7 @@ extension Device {
 		#if os(OSX)
 		switch metaDevice.internalType {
 		case .BluetoothDevice(let bld):
-			self.init(transport: IOBluetoothDeviceTransport(bluetoothDevice: bld))
+			self.init(transport: IOBluetoothDeviceTransport(address: bld.addressString))
 		case .HIDDevice(let hid):
 			let serialNumber = IOHIDDeviceGetProperty(hid, kIOHIDSerialNumberKey)!.takeRetainedValue() as! String
 			self.init(transport: HIDDeviceTransport(serialNumber: serialNumber))

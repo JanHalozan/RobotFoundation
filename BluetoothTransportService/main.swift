@@ -1,6 +1,6 @@
 //
-//  main.m
-//  HIDTransportService
+//  main.swift
+//  BluetoothTransportService
 //
 //  Created by Matt on 12/26/15.
 //
@@ -16,7 +16,7 @@ class ServiceDelegate : NSObject, NSXPCListenerDelegate {
 		newConnection.exportedInterface = NSXPCInterface(withProtocol: XPCTransportServiceProtocol.self)
 
 		// Next, set the object that the connection exports. All messages sent on the connection to this service will be sent to the exported object to handle. The connection retains the exported object.
-		let exportedObject = HIDTransportService(connection: newConnection)
+		let exportedObject = BluetoothTransportService(connection: newConnection)
 		newConnection.exportedObject = exportedObject
 
 		// Resuming the connection allows the system to deliver more incoming messages.

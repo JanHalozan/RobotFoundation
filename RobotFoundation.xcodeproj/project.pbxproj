@@ -146,6 +146,10 @@
 		C9CFFC291C2F393800E75768 /* HIDDeviceTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CFFC281C2F393800E75768 /* HIDDeviceTransport.swift */; };
 		C9CFFC2A1C2F393800E75768 /* HIDDeviceTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CFFC281C2F393800E75768 /* HIDDeviceTransport.swift */; };
 		C9CFFC2C1C2F3A8200E75768 /* XPCTransportServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CFFC2B1C2F3A8200E75768 /* XPCTransportServiceProtocol.swift */; };
+		C9CFFC3F1C2F542700E75768 /* BluetoothTransportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CFFC3E1C2F542700E75768 /* BluetoothTransportService.swift */; };
+		C9CFFC411C2F542700E75768 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CFFC401C2F542700E75768 /* main.swift */; };
+		C9CFFC451C2F542700E75768 /* BluetoothTransportService.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = C9CFFC3A1C2F542700E75768 /* BluetoothTransportService.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C9CFFC4A1C2F54C900E75768 /* XPCTransportServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CFFC491C2F54C900E75768 /* XPCTransportServiceProtocol.swift */; };
 		C9EDF44E1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF44D1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift */; };
 		C9EDF44F1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF44D1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift */; };
 		C9EDF4511C2B56B600879F00 /* EV3DeleteItemCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF4501C2B56B600879F00 /* EV3DeleteItemCommand.swift */; };
@@ -167,6 +171,13 @@
 			remoteGlobalIDString = C9BC33CD1C2F162300E0A41F;
 			remoteInfo = HIDTransportService;
 		};
+		C9CFFC431C2F542700E75768 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C98C34641C25C160006840C3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C9CFFC391C2F542700E75768;
+			remoteInfo = BluetoothTransportService;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -176,6 +187,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
 			dstSubfolderSpec = 16;
 			files = (
+				C9CFFC451C2F542700E75768 /* BluetoothTransportService.xpc in Embed XPC Services */,
 				C9BC33DA1C2F162400E0A41F /* HIDTransportService.xpc in Embed XPC Services */,
 			);
 			name = "Embed XPC Services";
@@ -265,6 +277,11 @@
 		C9C561271C2E21F700E61C28 /* EV3DisplayFramebuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3DisplayFramebuffer.swift; sourceTree = "<group>"; };
 		C9CFFC281C2F393800E75768 /* HIDDeviceTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HIDDeviceTransport.swift; sourceTree = "<group>"; };
 		C9CFFC2B1C2F3A8200E75768 /* XPCTransportServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XPCTransportServiceProtocol.swift; sourceTree = "<group>"; };
+		C9CFFC3A1C2F542700E75768 /* BluetoothTransportService.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = BluetoothTransportService.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9CFFC3E1C2F542700E75768 /* BluetoothTransportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothTransportService.swift; sourceTree = "<group>"; };
+		C9CFFC401C2F542700E75768 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		C9CFFC421C2F542700E75768 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C9CFFC491C2F54C900E75768 /* XPCTransportServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XPCTransportServiceProtocol.swift; path = HIDTransportService/XPCTransportServiceProtocol.swift; sourceTree = SOURCE_ROOT; };
 		C9EDF44D1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3CreateFolderCommand.swift; sourceTree = "<group>"; };
 		C9EDF4501C2B56B600879F00 /* EV3DeleteItemCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3DeleteItemCommand.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -299,6 +316,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C9CFFC371C2F542700E75768 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -323,6 +347,7 @@
 				C98C347B1C25C160006840C3 /* RobotFoundationTests */,
 				C98C34F41C26540C006840C3 /* MobileRobotFoundation */,
 				C9BC33CF1C2F162300E0A41F /* HIDTransportService */,
+				C9CFFC3B1C2F542700E75768 /* BluetoothTransportService */,
 				C98C346E1C25C160006840C3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -334,6 +359,7 @@
 				C98C34771C25C160006840C3 /* RobotFoundationTests.xctest */,
 				C98C34F31C26540C006840C3 /* MobileRobotFoundation.framework */,
 				C9BC33CE1C2F162300E0A41F /* HIDTransportService.xpc */,
+				C9CFFC3A1C2F542700E75768 /* BluetoothTransportService.xpc */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -503,6 +529,17 @@
 			name = Utilities;
 			sourceTree = "<group>";
 		};
+		C9CFFC3B1C2F542700E75768 /* BluetoothTransportService */ = {
+			isa = PBXGroup;
+			children = (
+				C9CFFC491C2F54C900E75768 /* XPCTransportServiceProtocol.swift */,
+				C9CFFC3E1C2F542700E75768 /* BluetoothTransportService.swift */,
+				C9CFFC401C2F542700E75768 /* main.swift */,
+				C9CFFC421C2F542700E75768 /* Info.plist */,
+			);
+			path = BluetoothTransportService;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -539,6 +576,7 @@
 			);
 			dependencies = (
 				C9BC33D81C2F162400E0A41F /* PBXTargetDependency */,
+				C9CFFC441C2F542700E75768 /* PBXTargetDependency */,
 			);
 			name = RobotFoundation;
 			productName = RobotFoundation;
@@ -598,6 +636,23 @@
 			productReference = C9BC33CE1C2F162300E0A41F /* HIDTransportService.xpc */;
 			productType = "com.apple.product-type.xpc-service";
 		};
+		C9CFFC391C2F542700E75768 /* BluetoothTransportService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C9CFFC481C2F542700E75768 /* Build configuration list for PBXNativeTarget "BluetoothTransportService" */;
+			buildPhases = (
+				C9CFFC361C2F542700E75768 /* Sources */,
+				C9CFFC371C2F542700E75768 /* Frameworks */,
+				C9CFFC381C2F542700E75768 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BluetoothTransportService;
+			productName = BluetoothTransportService;
+			productReference = C9CFFC3A1C2F542700E75768 /* BluetoothTransportService.xpc */;
+			productType = "com.apple.product-type.xpc-service";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -620,6 +675,9 @@
 					C9BC33CD1C2F162300E0A41F = {
 						CreatedOnToolsVersion = 7.2;
 					};
+					C9CFFC391C2F542700E75768 = {
+						CreatedOnToolsVersion = 7.2;
+					};
 				};
 			};
 			buildConfigurationList = C98C34671C25C160006840C3 /* Build configuration list for PBXProject "RobotFoundation" */;
@@ -638,6 +696,7 @@
 				C98C34F21C26540C006840C3 /* MobileRobotFoundation */,
 				C98C34761C25C160006840C3 /* RobotFoundationTests */,
 				C9BC33CD1C2F162300E0A41F /* HIDTransportService */,
+				C9CFFC391C2F542700E75768 /* BluetoothTransportService */,
 			);
 		};
 /* End PBXProject section */
@@ -665,6 +724,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C9BC33CC1C2F162300E0A41F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9CFFC381C2F542700E75768 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -841,6 +907,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C9CFFC361C2F542700E75768 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9CFFC411C2F542700E75768 /* main.swift in Sources */,
+				C9CFFC4A1C2F54C900E75768 /* XPCTransportServiceProtocol.swift in Sources */,
+				C9CFFC3F1C2F542700E75768 /* BluetoothTransportService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -853,6 +929,11 @@
 			isa = PBXTargetDependency;
 			target = C9BC33CD1C2F162300E0A41F /* HIDTransportService */;
 			targetProxy = C9BC33D71C2F162400E0A41F /* PBXContainerItemProxy */;
+		};
+		C9CFFC441C2F542700E75768 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C9CFFC391C2F542700E75768 /* BluetoothTransportService */;
+			targetProxy = C9CFFC431C2F542700E75768 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1075,6 +1156,32 @@
 			};
 			name = Release;
 		};
+		C9CFFC461C2F542700E75768 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = BluetoothTransportService/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Xrobot.BluetoothTransportService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		C9CFFC471C2F542700E75768 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = BluetoothTransportService/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Xrobot.BluetoothTransportService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1119,6 +1226,15 @@
 			buildConfigurations = (
 				C9BC33DB1C2F162400E0A41F /* Debug */,
 				C9BC33DC1C2F162400E0A41F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C9CFFC481C2F542700E75768 /* Build configuration list for PBXNativeTarget "BluetoothTransportService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9CFFC461C2F542700E75768 /* Debug */,
+				C9CFFC471C2F542700E75768 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

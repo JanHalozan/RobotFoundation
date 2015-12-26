@@ -10,7 +10,7 @@
 import Foundation
 import IOKit.hid
 
-class XPCBackedDeviceTransport: DeviceTransport, XPCTransportServiceClientProtocol {
+class XPCBackedDeviceTransport: DeviceTransport {
 	private var serviceConnection: NSXPCConnection?
 
 	var serviceName: String {
@@ -32,7 +32,6 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportServiceClientProtoc
 		}
 
 		serviceConnection.remoteObjectInterface = NSXPCInterface(withProtocol: XPCTransportServiceProtocol.self)
-		serviceConnection.exportedInterface = NSXPCInterface(withProtocol: XPCTransportServiceClientProtocol.self)
 		serviceConnection.exportedObject = self
 		serviceConnection.resume()
 

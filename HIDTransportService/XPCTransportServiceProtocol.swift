@@ -16,10 +16,6 @@ import Foundation
 	func close(handler: Int -> ())
 }
 
-@objc protocol XPCTransportServiceClientProtocol {
-	//func didReceiveData(data: NSData)
-}
-
 /*
  To use the service from an application or other process, use NSXPCConnection to establish a connection to the service by doing something like this:
 

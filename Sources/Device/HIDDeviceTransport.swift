@@ -5,6 +5,8 @@
 //  Created by Matt on 12/26/15.
 //
 
+#if os(OSX)
+
 import Foundation
 
 final class HIDDeviceTransport: XPCBackedDeviceTransport {
@@ -23,3 +25,5 @@ final class HIDDeviceTransport: XPCBackedDeviceTransport {
 		return serialNumber
 	}
 }
+
+#endif
