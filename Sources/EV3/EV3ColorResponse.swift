@@ -12,16 +12,18 @@ enum EV3Color: UInt8 {
 }
 
 struct EV3ColorResponse: MindstormsResponse {
+	let length: UInt16
 	let replyType: EV3ReplyType
 	let messageCounter: UInt16
 
 	let color: EV3Color
 
 	init?(data: NSData) {
-		guard let (messageCounter, replyType) = processGenericResponseForData(data) else {
+		guard let (length, messageCounter, replyType) = processGenericResponseForData(data) else {
 			return nil
 		}
 
+		self.length = length
 		self.replyType = replyType
 		self.messageCounter = messageCounter
 

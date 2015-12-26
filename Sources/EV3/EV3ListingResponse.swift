@@ -8,6 +8,7 @@
 import Foundation
 
 public struct EV3ListingResponse: MindstormsResponse {
+	public let length: UInt16
 	public let replyType: EV3ReplyType
 	public let messageCounter: UInt16
 
@@ -19,10 +20,11 @@ public struct EV3ListingResponse: MindstormsResponse {
 	public let string: String
 
 	public init?(data: NSData) {
-		guard let (messageCounter, replyType) = processGenericResponseForData(data) else {
+		guard let (length, messageCounter, replyType) = processGenericResponseForData(data) else {
 			return nil
 		}
 
+		self.length = length
 		self.replyType = replyType
 		self.messageCounter = messageCounter
 
@@ -40,6 +42,7 @@ public struct EV3ListingResponse: MindstormsResponse {
 }
 
 public struct EV3ContinueListingResponse: MindstormsResponse {
+	public let length: UInt16
 	public let replyType: EV3ReplyType
 	public let messageCounter: UInt16
 
@@ -50,10 +53,11 @@ public struct EV3ContinueListingResponse: MindstormsResponse {
 	public let string: String
 
 	public init?(data: NSData) {
-		guard let (messageCounter, replyType) = processGenericResponseForData(data) else {
+		guard let (length, messageCounter, replyType) = processGenericResponseForData(data) else {
 			return nil
 		}
 
+		self.length = length
 		self.replyType = replyType
 		self.messageCounter = messageCounter
 

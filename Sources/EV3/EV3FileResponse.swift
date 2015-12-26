@@ -9,6 +9,7 @@ import Foundation
 
 // TODO: This is really similar to the listing response
 public struct EV3FileResponse: MindstormsResponse {
+	public let length: UInt16
 	public let replyType: EV3ReplyType
 	public let messageCounter: UInt16
 
@@ -20,10 +21,11 @@ public struct EV3FileResponse: MindstormsResponse {
 	public let data: NSData
 
 	public init?(data: NSData) {
-		guard let (messageCounter, replyType) = processGenericResponseForData(data) else {
+		guard let (length, messageCounter, replyType) = processGenericResponseForData(data) else {
 			return nil
 		}
 
+		self.length = length
 		self.replyType = replyType
 		self.messageCounter = messageCounter
 
@@ -32,13 +34,14 @@ public struct EV3FileResponse: MindstormsResponse {
 		self.fileSize = data.readUInt32AtIndex(7)
 		self.handle = data.readUInt8AtIndex(11)
 
-		let toEnd = data.length - 12
+		let toEnd = Int(self.length) - 12
 		self.data = data.subdataWithRange(NSMakeRange(12, toEnd))
 	}
 }
 
 
 public struct EV3ContinueFileResponse: MindstormsResponse {
+	public let length: UInt16
 	public let replyType: EV3ReplyType
 	public let messageCounter: UInt16
 
@@ -49,10 +52,11 @@ public struct EV3ContinueFileResponse: MindstormsResponse {
 	public let data: NSData
 
 	public init?(data: NSData) {
-		guard let (messageCounter, replyType) = processGenericResponseForData(data) else {
+		guard let (length, messageCounter, replyType) = processGenericResponseForData(data) else {
 			return nil
 		}
 
+		self.length = length
 		self.replyType = replyType
 		self.messageCounter = messageCounter
 
@@ -60,7 +64,7 @@ public struct EV3ContinueFileResponse: MindstormsResponse {
 		self.returnStatus = EV3SystemReturnStatus(rawValue: data.readUInt8AtIndex(6))!
 		self.handle = data.readUInt8AtIndex(7)
 
-		let toEnd = data.length - 8
+		let toEnd = Int(self.length) - 8
 		self.data = data.subdataWithRange(NSMakeRange(8, toEnd))
 	}
 }

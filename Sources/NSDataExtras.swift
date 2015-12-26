@@ -28,6 +28,13 @@ extension NSMutableData {
 }
 
 extension NSData {
+	func dataByAppendingData(data: NSData) -> NSData {
+		let mutableData = mutableCopy() as! NSMutableData
+		mutableData.appendData(data)
+
+		return mutableData.copy() as! NSData
+	}
+
 	func readUInt8AtIndex(index: Int) -> UInt8 {
 		var value = UInt8()
 		getBytes(&value, range: NSMakeRange(index, 1))

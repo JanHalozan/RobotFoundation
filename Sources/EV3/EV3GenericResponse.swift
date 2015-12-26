@@ -7,7 +7,7 @@
 
 import Foundation
 
-func processGenericResponseForData(data: NSData) -> (UInt16, EV3ReplyType)? {
+func processGenericResponseForData(data: NSData) -> (UInt16, UInt16, EV3ReplyType)? {
 	guard data.length >= 2 else {
 		// We don't even have enough space to read the length.
 		return nil
@@ -26,18 +26,20 @@ func processGenericResponseForData(data: NSData) -> (UInt16, EV3ReplyType)? {
 		return nil
 	}
 
-	return (messageCounter, replyType)
+	return (length, messageCounter, replyType)
 }
 
 public struct EV3GenericResponse: MindstormsResponse {
+	public let length: UInt16
 	public let replyType: EV3ReplyType
 	public let messageCounter: UInt16
 
 	public init?(data: NSData) {
-		guard let (messageCounter, replyType) = processGenericResponseForData(data) else {
+		guard let (length, messageCounter, replyType) = processGenericResponseForData(data) else {
 			return nil
 		}
 
+		self.length = length
 		self.replyType = replyType
 		self.messageCounter = messageCounter
 	}

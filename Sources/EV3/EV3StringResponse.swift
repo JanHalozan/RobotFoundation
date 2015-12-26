@@ -8,16 +8,18 @@
 import Foundation
 
 public struct EV3StringResponse: MindstormsResponse {
+	let length: UInt16
 	let replyType: EV3ReplyType
 	let messageCounter: UInt16
 
 	public let string: String
 
 	public init?(data: NSData) {
-		guard let (messageCounter, replyType) = processGenericResponseForData(data) else {
+		guard let (length, messageCounter, replyType) = processGenericResponseForData(data) else {
 			return nil
 		}
 
+		self.length = length
 		self.replyType = replyType
 		self.messageCounter = messageCounter
 

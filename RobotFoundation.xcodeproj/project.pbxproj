@@ -17,6 +17,8 @@
 		C907C2601C2A28B000647531 /* EV3StartMotorCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907C25E1C2A28B000647531 /* EV3StartMotorCommand.swift */; };
 		C907C2651C2A2F0300647531 /* EV3StopMotorCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907C2641C2A2F0300647531 /* EV3StopMotorCommand.swift */; };
 		C907C2661C2A2F0300647531 /* EV3StopMotorCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907C2641C2A2F0300647531 /* EV3StopMotorCommand.swift */; };
+		C9115B521C2EF69600BCE9BC /* EV3DeviceConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9115B511C2EF69600BCE9BC /* EV3DeviceConvenience.swift */; };
+		C9115B531C2EF69600BCE9BC /* EV3DeviceConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9115B511C2EF69600BCE9BC /* EV3DeviceConvenience.swift */; };
 		C917F68A1C272D6A00AE980B /* EV3HIDDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917F6891C272D6A00AE980B /* EV3HIDDeviceTests.swift */; };
 		C917F68F1C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917F68E1C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift */; };
 		C917F6901C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917F68E1C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift */; };
@@ -158,6 +160,7 @@
 		C907C25B1C2A239400647531 /* EV3SetMotorSpeedCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3SetMotorSpeedCommand.swift; sourceTree = "<group>"; };
 		C907C25E1C2A28B000647531 /* EV3StartMotorCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3StartMotorCommand.swift; sourceTree = "<group>"; };
 		C907C2641C2A2F0300647531 /* EV3StopMotorCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3StopMotorCommand.swift; sourceTree = "<group>"; };
+		C9115B511C2EF69600BCE9BC /* EV3DeviceConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3DeviceConvenience.swift; sourceTree = "<group>"; };
 		C917F6891C272D6A00AE980B /* EV3HIDDeviceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3HIDDeviceTests.swift; sourceTree = "<group>"; };
 		C917F68E1C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RobotDeviceDescriptorEV3Extras.swift; sourceTree = "<group>"; };
 		C94A9F3A1C2CF5660031642F /* EV3ReadChainedCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ReadChainedCommand.swift; sourceTree = "<group>"; };
@@ -369,6 +372,7 @@
 				C98C34CE1C25F644006840C3 /* EV3CommandSerialization.swift */,
 				C97868661C28BFC10099BB82 /* EV3Constants.swift */,
 				C98C34C11C25EADB006840C3 /* EV3Device.swift */,
+				C9115B511C2EF69600BCE9BC /* EV3DeviceConvenience.swift */,
 				C9B1387C1C2B1C5C0018812F /* EV3ListingParser.swift */,
 				C98C34D61C260E0A006840C3 /* EV3Types.swift */,
 				C98C34D01C25F893006840C3 /* NSDataEV3Extras.swift */,
@@ -586,6 +590,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9115B521C2EF69600BCE9BC /* EV3DeviceConvenience.swift in Sources */,
 				C98C34B91C25E00D006840C3 /* Device.swift in Sources */,
 				C969456A1C28F9690030DEB3 /* HIDDeviceSource.swift in Sources */,
 				C98C34CD1C25F1EA006840C3 /* MindstormsCommand.swift in Sources */,
@@ -667,6 +672,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9115B531C2EF69600BCE9BC /* EV3DeviceConvenience.swift in Sources */,
 				C98C34FB1C26544D006840C3 /* NSDataExtras.swift in Sources */,
 				C969456B1C28F9690030DEB3 /* HIDDeviceSource.swift in Sources */,
 				C98C34FC1C26544D006840C3 /* Device.swift in Sources */,
