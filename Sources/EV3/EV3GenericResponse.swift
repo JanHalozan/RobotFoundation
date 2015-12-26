@@ -29,11 +29,11 @@ func processGenericResponseForData(data: NSData) -> (UInt16, EV3ReplyType)? {
 	return (messageCounter, replyType)
 }
 
-struct EV3GenericResponse: MindstormsResponse {
-	let replyType: EV3ReplyType
-	let messageCounter: UInt16
+public struct EV3GenericResponse: MindstormsResponse {
+	public let replyType: EV3ReplyType
+	public let messageCounter: UInt16
 
-	init?(data: NSData) {
+	public init?(data: NSData) {
 		guard let (messageCounter, replyType) = processGenericResponseForData(data) else {
 			return nil
 		}
