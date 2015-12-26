@@ -15,11 +15,22 @@ final class HIDDeviceTransport: DeviceTransport {
 
 	private var inputReportBuffer = [UInt8](count: 1024, repeatedValue: 0)
 
+	private var serviceConnection: NSXPCConnection?
+
 	init(device: IOHIDDeviceRef) {
 		self.device = device
 	}
 
 	override func open() throws {
+		serviceConnection = NSXPCConnection(serviceName: "com.Xrobot.HIDTransportService")
+		serviceConnection?.remoteObjectInterface = NSXPCInterface(withProtocol: HIDTransportServiceProtocol.self)
+		serviceConnection?.resume()
+
+		let proxy = serviceConnection?.remoteObjectProxy as? HIDTransportServiceProtocol
+		proxy?.upperCaseString("abc") { result in
+			print(result)
+		}
+
 		IOHIDDeviceScheduleWithRunLoop(device, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode)
 		IOHIDDeviceRegisterInputReportCallback(device, &inputReportBuffer, inputReportBuffer.count, { context, result, interface, reportType, index, bytes, length in
 

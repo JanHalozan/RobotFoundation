@@ -6,15 +6,15 @@
 //  Copyright © 2015 Matt Rajca. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#if os(OSX)
+
+import Foundation
 
 // The protocol that this service will vend as its API. This header file will also need to be visible to the process hosting the service.
-@protocol HIDTransportServiceProtocol
-
-// Replace the API of this protocol with an API appropriate to the service you are vending.
-- (void)upperCaseString:(NSString *)aString withReply:(void (^)(NSString *))reply;
-    
-@end
+@objc protocol HIDTransportServiceProtocol {
+	// Replace the API of this protocol with an API appropriate to the service you are vending.
+	func upperCaseString(string: NSString, withReply reply: NSString -> ())
+}
 
 /*
  To use the service from an application or other process, use NSXPCConnection to establish a connection to the service by doing something like this:
@@ -34,3 +34,5 @@ Once you have a connection to the service, you can use it like this:
 
      [_connectionToService invalidate];
 */
+
+#endif
