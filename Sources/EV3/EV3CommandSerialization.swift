@@ -26,8 +26,7 @@ extension EV3DirectCommand {
 		packet.appendUInt16(dataLength)
 		packet.appendUInt16(messageCounter)
 		packet.appendUInt8(telegramType)
-		packet.appendUInt8(numberOfGlobals)
-		packet.appendUInt8(0)
+		packet.appendUInt16(globalSpaceSize)
 		packet.appendData(payloadData)
 
 		return packet

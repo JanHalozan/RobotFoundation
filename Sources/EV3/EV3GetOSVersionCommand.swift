@@ -14,7 +14,7 @@ public struct EV3GetOSVersionCommand: EV3DirectCommand {
 		return EV3StringResponse.self
 	}
 
-	public var numberOfGlobals: UInt8 {
+	public var globalSpaceSize: UInt16 {
 		return EV3MaxFileLength
 	}
 

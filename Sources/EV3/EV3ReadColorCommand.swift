@@ -14,7 +14,7 @@ struct EV3ReadColorCommand: EV3DirectCommand {
 		return EV3ColorResponse.self
 	}
 
-	var numberOfGlobals: UInt8 {
+	var globalSpaceSize: UInt16 {
 		return 1
 	}
 

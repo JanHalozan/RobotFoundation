@@ -58,4 +58,4 @@ enum EV3Layer: UInt8 {
 }
 
 let EV3ColorMode = UInt8(2)
-let EV3MaxFileLength = UInt8(64)
+let EV3MaxFileLength = UInt16(64)

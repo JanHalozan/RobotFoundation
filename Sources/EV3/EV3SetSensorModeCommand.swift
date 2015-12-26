@@ -15,7 +15,7 @@ struct EV3SetSensorModeCommand: EV3DirectCommand {
 		return EV3GenericResponse.self
 	}
 
-	var numberOfGlobals: UInt8 {
+	var globalSpaceSize: UInt16 {
 		return 1
 	}
 

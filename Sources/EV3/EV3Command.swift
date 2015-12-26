@@ -10,11 +10,11 @@ import Foundation
 public protocol EV3Command: MindstormsCommand { }
 
 public protocol EV3DirectCommand: EV3Command {
-	var numberOfGlobals: UInt8 { get }
+	var globalSpaceSize: UInt16 { get } // 0-1023
 }
 
 extension EV3DirectCommand {
-	var numberOfGlobals: UInt8 {
+	public var globalSpaceSize: UInt16 {
 		return 0
 	}
 

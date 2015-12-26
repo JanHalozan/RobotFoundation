@@ -21,7 +21,7 @@ struct EV3ReadLightCommand: EV3DirectCommand {
 		return EV3PercentByteResponse.self
 	}
 
-	var numberOfGlobals: UInt8 {
+	var globalSpaceSize: UInt16 {
 		return 1
 	}
 
