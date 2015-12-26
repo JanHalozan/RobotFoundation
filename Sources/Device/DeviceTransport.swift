@@ -30,7 +30,7 @@ class DeviceTransport {
 		fatalError("Must be overriden")
 	}
 
-	func writeData(data: NSData) throws {
+	func writeData(data: NSData, handler: NSData -> ()) throws {
 		fatalError("Must be overriden")
 	}
 
@@ -39,12 +39,7 @@ class DeviceTransport {
 		assert(NSThread.isMainThread())
 		delegate?.deviceTransportDidWriteData(self)
 	}
-
-	func receivedData(data: NSData) {
-		assert(NSThread.isMainThread())
-		delegate?.deviceTransport(self, didReceiveData: data)
-	}
-
+	
 	func opened() {
 		assert(NSThread.isMainThread())
 

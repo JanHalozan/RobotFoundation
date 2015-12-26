@@ -46,7 +46,7 @@ final class IOBluetoothDeviceTransport: DeviceTransport, IOBluetoothRFCOMMChanne
 		closed()
 	}
 
-	override func writeData(data: NSData) throws {
+	override func writeData(data: NSData, handler: NSData -> ()) throws {
 		guard let channel = channel else {
 			throw IOReturn(1)
 		}
@@ -107,7 +107,7 @@ final class IOBluetoothDeviceTransport: DeviceTransport, IOBluetoothRFCOMMChanne
 		assert(NSThread.isMainThread())
 
 		let data = NSData(bytes: dataPointer, length: dataLength)
-		receivedData(data)
+//		receivedData(data)
 	}
 
 	@objc func rfcommChannelClosed(rfcommChannel: IOBluetoothRFCOMMChannel!) {

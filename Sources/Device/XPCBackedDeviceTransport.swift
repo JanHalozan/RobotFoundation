@@ -67,7 +67,7 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportServiceClientProtoc
 		}
 	}
 
-	override func writeData(data: NSData) throws {
+	override func writeData(data: NSData, handler: NSData -> ()) throws {
 		guard let serviceConnection = serviceConnection else {
 			return
 		}
@@ -77,17 +77,15 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportServiceClientProtoc
 			return
 		}
 
-		proxy.writeData(data) { result in
+		proxy.writeData(data) { data, result in
 			dispatch_async(dispatch_get_main_queue()) {
 				print(result)
 				self.wroteData()
-			}
-		}
-	}
 
-	@objc func didReceiveData(data: NSData) {
-		dispatch_async(dispatch_get_main_queue()) {
-			self.receivedData(data)
+				if let data = data {
+					handler(data)
+				}
+			}
 		}
 	}
 }

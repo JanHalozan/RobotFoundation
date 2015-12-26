@@ -12,12 +12,12 @@ import Foundation
 // The protocol that this service will vend as its API. This header file will also need to be visible to the process hosting the service.
 @objc protocol XPCTransportServiceProtocol {
 	func open(identifier: NSString, handler: Int -> ())
-	func writeData(data: NSData, handler: Int -> ())
+	func writeData(data: NSData, handler: (NSData?, Int) -> ())
 	func close(handler: Int -> ())
 }
 
 @objc protocol XPCTransportServiceClientProtocol {
-	func didReceiveData(data: NSData)
+	//func didReceiveData(data: NSData)
 }
 
 /*

@@ -57,7 +57,9 @@ final class EV3CommandOperation: NSOperation {
 		}
 
 		do {
-			try transport.writeData(data)
+			try transport.writeData(data) { resultData in
+				self.handleResponseData(resultData)
+			}
 		} catch {
 			print("Cannot write packet data: \(error)")
 		}

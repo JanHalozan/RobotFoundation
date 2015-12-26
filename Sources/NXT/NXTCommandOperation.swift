@@ -45,7 +45,9 @@ final class NXTCommandOperation: NSOperation {
 		packet.appendData(data)
 
 		do {
-			try transport.writeData(data)
+			try transport.writeData(data) { responseData in
+				self.handleResponseData(responseData)
+			}
 		} catch {
 			print("Cannot write packet data: \(error)")
 		}

@@ -12,6 +12,8 @@ import IOKit.hid
 final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 	private var device: IOHIDDeviceRef?
 	private var inputReportBuffer = [UInt8](count: 1024, repeatedValue: 0)
+	private var writeSemaphore = dispatch_semaphore_create(0)
+	private var receivedData: NSData?
 
 	private let connection: NSXPCConnection
 
@@ -48,23 +50,23 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 		}
 	}
 
-	func writeData(data: NSData, handler: Int -> ()) {
+	func writeData(data: NSData, handler: (NSData?, Int) -> ()) {
 		dispatch_sync(dispatch_get_main_queue()) {
 			let bytes = unsafeBitCast(data.bytes, UnsafePointer<UInt8>.self)
 			let result = IOHIDDeviceSetReport(self.device, kIOHIDReportTypeOutput, 0, bytes, data.length)
 			guard result == kIOReturnSuccess else {
-				handler(Int(result))
+				handler(nil, Int(result))
 				return
 			}
-
-			handler(Int(kIOReturnSuccess))
 		}
+
+		dispatch_semaphore_wait(writeSemaphore, DISPATCH_TIME_FOREVER)
+		handler(receivedData, Int(kIOReturnSuccess))
 	}
 
 	private func receivedReport() {
-		let data = NSData(bytes: &inputReportBuffer, length: inputReportBuffer.count)
-		let proxy = connection.remoteObjectProxy as? XPCTransportServiceClientProtocol
-		proxy?.didReceiveData(data)
+		receivedData = NSData(bytes: &inputReportBuffer, length: inputReportBuffer.count)
+		dispatch_semaphore_signal(writeSemaphore)
 	}
 
 	func close(handler: Int -> ()) {
