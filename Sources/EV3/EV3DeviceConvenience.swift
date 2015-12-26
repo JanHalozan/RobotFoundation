@@ -15,7 +15,6 @@ extension EV3Device {
 		let command = EV3ReadFileCommand(path: path, bytesToRead: 1000)
 		enqueueCommand(command) { response in
 			let listingResponse = response as! EV3FileResponse
-			let bytesLeft = listingResponse.fileSize > 1000 ? listingResponse.fileSize - 1000 : listingResponse.fileSize
 
 			if listingResponse.returnStatus == .EndOfFile {
 				handler(listingResponse.data)
