@@ -29,7 +29,7 @@ public struct EV3FileResponse: MindstormsResponse {
 
 		self.systemCommand = data.readUInt8AtIndex(5)
 		self.returnStatus = EV3SystemReturnStatus(rawValue: data.readUInt8AtIndex(6))!
-		self.fileSize = data.readUInt32AtIndex(8)
+		self.fileSize = data.readUInt32AtIndex(7)
 		self.handle = data.readUInt8AtIndex(11)
 
 		let toEnd = data.length - 12
