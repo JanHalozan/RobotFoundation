@@ -76,7 +76,7 @@
 		C98C34B91C25E00D006840C3 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34B81C25E00D006840C3 /* Device.swift */; };
 		C98C34BB1C25E1E3006840C3 /* NXTDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34BA1C25E1E3006840C3 /* NXTDevice.swift */; };
 		C98C34BD1C25E28A006840C3 /* NXTCommandOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34BC1C25E28A006840C3 /* NXTCommandOperation.swift */; };
-		C98C34BF1C25E520006840C3 /* HIDDeviceTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34BE1C25E520006840C3 /* HIDDeviceTransport.swift */; };
+		C98C34BF1C25E520006840C3 /* XPCBackedDeviceTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34BE1C25E520006840C3 /* XPCBackedDeviceTransport.swift */; };
 		C98C34C21C25EADB006840C3 /* EV3Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34C11C25EADB006840C3 /* EV3Device.swift */; };
 		C98C34C41C25EB2E006840C3 /* EV3Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34C31C25EB2E006840C3 /* EV3Command.swift */; };
 		C98C34C61C25EC3B006840C3 /* EV3CommandOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34C51C25EC3B006840C3 /* EV3CommandOperation.swift */; };
@@ -101,7 +101,7 @@
 		C98C34FD1C26544D006840C3 /* DeviceTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34B41C25D28D006840C3 /* DeviceTransport.swift */; };
 		C98C34FE1C26544D006840C3 /* IOBluetoothDeviceTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34B21C25D24B006840C3 /* IOBluetoothDeviceTransport.swift */; };
 		C98C34FF1C26544D006840C3 /* IOKitUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34B61C25DC40006840C3 /* IOKitUtilities.swift */; };
-		C98C35001C26544D006840C3 /* HIDDeviceTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34BE1C25E520006840C3 /* HIDDeviceTransport.swift */; };
+		C98C35001C26544D006840C3 /* XPCBackedDeviceTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34BE1C25E520006840C3 /* XPCBackedDeviceTransport.swift */; };
 		C98C35011C26544D006840C3 /* EV3Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34C11C25EADB006840C3 /* EV3Device.swift */; };
 		C98C35021C26544D006840C3 /* EV3Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34C31C25EB2E006840C3 /* EV3Command.swift */; };
 		C98C35031C26544D006840C3 /* EV3CommandOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C34C51C25EC3B006840C3 /* EV3CommandOperation.swift */; };
@@ -137,13 +137,15 @@
 		C9BC33D51C2F162300E0A41F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BC33D41C2F162300E0A41F /* main.swift */; };
 		C9BC33DA1C2F162400E0A41F /* HIDTransportService.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = C9BC33CE1C2F162300E0A41F /* HIDTransportService.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C9BC33DE1C2F170800E0A41F /* HIDTransportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BC33D11C2F162300E0A41F /* HIDTransportService.swift */; };
-		C9BC33DF1C2F176900E0A41F /* HIDTransportServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BC33D01C2F162300E0A41F /* HIDTransportServiceProtocol.swift */; };
-		C9BC33E11C2F1A2D00E0A41F /* HIDTransportServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BC33E01C2F1A2D00E0A41F /* HIDTransportServiceProtocol.swift */; };
-		C9BC33E21C2F1A2D00E0A41F /* HIDTransportServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BC33E01C2F1A2D00E0A41F /* HIDTransportServiceProtocol.swift */; };
+		C9BC33E11C2F1A2D00E0A41F /* XPCTransportServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BC33E01C2F1A2D00E0A41F /* XPCTransportServiceProtocol.swift */; };
+		C9BC33E21C2F1A2D00E0A41F /* XPCTransportServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BC33E01C2F1A2D00E0A41F /* XPCTransportServiceProtocol.swift */; };
 		C9C561241C2E1FC700E61C28 /* EV3HandleDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C561231C2E1FC700E61C28 /* EV3HandleDataResponse.swift */; };
 		C9C561251C2E1FC700E61C28 /* EV3HandleDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C561231C2E1FC700E61C28 /* EV3HandleDataResponse.swift */; };
 		C9C561281C2E21F700E61C28 /* EV3DisplayFramebuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C561271C2E21F700E61C28 /* EV3DisplayFramebuffer.swift */; };
 		C9C561291C2E21F700E61C28 /* EV3DisplayFramebuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C561271C2E21F700E61C28 /* EV3DisplayFramebuffer.swift */; };
+		C9CFFC291C2F393800E75768 /* HIDDeviceTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CFFC281C2F393800E75768 /* HIDDeviceTransport.swift */; };
+		C9CFFC2A1C2F393800E75768 /* HIDDeviceTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CFFC281C2F393800E75768 /* HIDDeviceTransport.swift */; };
+		C9CFFC2C1C2F3A8200E75768 /* XPCTransportServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CFFC2B1C2F3A8200E75768 /* XPCTransportServiceProtocol.swift */; };
 		C9EDF44E1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF44D1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift */; };
 		C9EDF44F1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF44D1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift */; };
 		C9EDF4511C2B56B600879F00 /* EV3DeleteItemCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF4501C2B56B600879F00 /* EV3DeleteItemCommand.swift */; };
@@ -229,7 +231,7 @@
 		C98C34B81C25E00D006840C3 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		C98C34BA1C25E1E3006840C3 /* NXTDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTDevice.swift; sourceTree = "<group>"; };
 		C98C34BC1C25E28A006840C3 /* NXTCommandOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTCommandOperation.swift; sourceTree = "<group>"; };
-		C98C34BE1C25E520006840C3 /* HIDDeviceTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HIDDeviceTransport.swift; sourceTree = "<group>"; };
+		C98C34BE1C25E520006840C3 /* XPCBackedDeviceTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XPCBackedDeviceTransport.swift; sourceTree = "<group>"; };
 		C98C34C11C25EADB006840C3 /* EV3Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3Device.swift; sourceTree = "<group>"; };
 		C98C34C31C25EB2E006840C3 /* EV3Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3Command.swift; sourceTree = "<group>"; };
 		C98C34C51C25EC3B006840C3 /* EV3CommandOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3CommandOperation.swift; sourceTree = "<group>"; };
@@ -255,13 +257,14 @@
 		C9B138791C2B12BB0018812F /* EV3ListingResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ListingResponse.swift; sourceTree = "<group>"; };
 		C9B1387C1C2B1C5C0018812F /* EV3ListingParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ListingParser.swift; sourceTree = "<group>"; };
 		C9BC33CE1C2F162300E0A41F /* HIDTransportService.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = HIDTransportService.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
-		C9BC33D01C2F162300E0A41F /* HIDTransportServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDTransportServiceProtocol.swift; sourceTree = "<group>"; };
 		C9BC33D11C2F162300E0A41F /* HIDTransportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDTransportService.swift; sourceTree = "<group>"; };
 		C9BC33D41C2F162300E0A41F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		C9BC33D61C2F162400E0A41F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C9BC33E01C2F1A2D00E0A41F /* HIDTransportServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HIDTransportServiceProtocol.swift; path = HIDTransportService/HIDTransportServiceProtocol.swift; sourceTree = SOURCE_ROOT; };
+		C9BC33E01C2F1A2D00E0A41F /* XPCTransportServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XPCTransportServiceProtocol.swift; path = HIDTransportService/XPCTransportServiceProtocol.swift; sourceTree = SOURCE_ROOT; };
 		C9C561231C2E1FC700E61C28 /* EV3HandleDataResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3HandleDataResponse.swift; sourceTree = "<group>"; };
 		C9C561271C2E21F700E61C28 /* EV3DisplayFramebuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3DisplayFramebuffer.swift; sourceTree = "<group>"; };
+		C9CFFC281C2F393800E75768 /* HIDDeviceTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HIDDeviceTransport.swift; sourceTree = "<group>"; };
+		C9CFFC2B1C2F3A8200E75768 /* XPCTransportServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XPCTransportServiceProtocol.swift; sourceTree = "<group>"; };
 		C9EDF44D1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3CreateFolderCommand.swift; sourceTree = "<group>"; };
 		C9EDF4501C2B56B600879F00 /* EV3DeleteItemCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3DeleteItemCommand.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -398,8 +401,9 @@
 				C98C34B41C25D28D006840C3 /* DeviceTransport.swift */,
 				C98C34B21C25D24B006840C3 /* IOBluetoothDeviceTransport.swift */,
 				C98C34B61C25DC40006840C3 /* IOKitUtilities.swift */,
-				C98C34BE1C25E520006840C3 /* HIDDeviceTransport.swift */,
-				C9BC33E01C2F1A2D00E0A41F /* HIDTransportServiceProtocol.swift */,
+				C9CFFC281C2F393800E75768 /* HIDDeviceTransport.swift */,
+				C98C34BE1C25E520006840C3 /* XPCBackedDeviceTransport.swift */,
+				C9BC33E01C2F1A2D00E0A41F /* XPCTransportServiceProtocol.swift */,
 			);
 			path = Device;
 			sourceTree = "<group>";
@@ -447,7 +451,7 @@
 		C9BC33CF1C2F162300E0A41F /* HIDTransportService */ = {
 			isa = PBXGroup;
 			children = (
-				C9BC33D01C2F162300E0A41F /* HIDTransportServiceProtocol.swift */,
+				C9CFFC2B1C2F3A8200E75768 /* XPCTransportServiceProtocol.swift */,
 				C9BC33D11C2F162300E0A41F /* HIDTransportService.swift */,
 				C9BC33D41C2F162300E0A41F /* main.swift */,
 				C9BC33D61C2F162400E0A41F /* Info.plist */,
@@ -683,6 +687,7 @@
 				C969456D1C28F97F0030DEB3 /* RobotDeviceManager.swift in Sources */,
 				C98C34A81C25D1D1006840C3 /* NSDataNXTExtras.swift in Sources */,
 				C907C25F1C2A28B000647531 /* EV3StartMotorCommand.swift in Sources */,
+				C9CFFC291C2F393800E75768 /* HIDDeviceTransport.swift in Sources */,
 				C98C34D71C260E0A006840C3 /* EV3Types.swift in Sources */,
 				C97868731C28E89F0099BB82 /* EV3ColorResponse.swift in Sources */,
 				C98C34AB1C25D1D1006840C3 /* NXTDeleteCommand.swift in Sources */,
@@ -691,7 +696,7 @@
 				C9EDF4511C2B56B600879F00 /* EV3DeleteItemCommand.swift in Sources */,
 				C96945731C28FB420030DEB3 /* RobotDeviceDescriptor.swift in Sources */,
 				C96945581C28F3760030DEB3 /* NXTHandleResponse.swift in Sources */,
-				C98C34BF1C25E520006840C3 /* HIDDeviceTransport.swift in Sources */,
+				C98C34BF1C25E520006840C3 /* XPCBackedDeviceTransport.swift in Sources */,
 				C905867A1C2C5FDB0068E560 /* EV3ReadFileCommand.swift in Sources */,
 				C96945701C28FA0B0030DEB3 /* RobotDeviceSource.swift in Sources */,
 				C907C25C1C2A239400647531 /* EV3SetMotorSpeedCommand.swift in Sources */,
@@ -734,7 +739,7 @@
 				C97551AE1C29C46A002A5796 /* EV3GetOSVersionCommand.swift in Sources */,
 				C98C34A91C25D1D1006840C3 /* NXTCloseCommand.swift in Sources */,
 				C98C34DD1C260EA6006840C3 /* MindstormsType.swift in Sources */,
-				C9BC33E11C2F1A2D00E0A41F /* HIDTransportServiceProtocol.swift in Sources */,
+				C9BC33E11C2F1A2D00E0A41F /* XPCTransportServiceProtocol.swift in Sources */,
 				C98C34E91C264532006840C3 /* EV3SetLEDCommand.swift in Sources */,
 				C907C2651C2A2F0300647531 /* EV3StopMotorCommand.swift in Sources */,
 				C9B1387D1C2B1C5C0018812F /* EV3ListingParser.swift in Sources */,
@@ -766,9 +771,10 @@
 				C969456E1C28F97F0030DEB3 /* RobotDeviceManager.swift in Sources */,
 				C98C34FE1C26544D006840C3 /* IOBluetoothDeviceTransport.swift in Sources */,
 				C907C2601C2A28B000647531 /* EV3StartMotorCommand.swift in Sources */,
+				C9CFFC2A1C2F393800E75768 /* HIDDeviceTransport.swift in Sources */,
 				C98C34FF1C26544D006840C3 /* IOKitUtilities.swift in Sources */,
 				C97868741C28E89F0099BB82 /* EV3ColorResponse.swift in Sources */,
-				C98C35001C26544D006840C3 /* HIDDeviceTransport.swift in Sources */,
+				C98C35001C26544D006840C3 /* XPCBackedDeviceTransport.swift in Sources */,
 				C94A9F3C1C2CF5660031642F /* EV3ReadChainedCommand.swift in Sources */,
 				C98C35011C26544D006840C3 /* EV3Device.swift in Sources */,
 				C9EDF4521C2B56B600879F00 /* EV3DeleteItemCommand.swift in Sources */,
@@ -817,7 +823,7 @@
 				C97551AF1C29C46A002A5796 /* EV3GetOSVersionCommand.swift in Sources */,
 				C98C351A1C26544D006840C3 /* NXTStartProgramCommand.swift in Sources */,
 				C98C351B1C26544D006840C3 /* NXTResponse.swift in Sources */,
-				C9BC33E21C2F1A2D00E0A41F /* HIDTransportServiceProtocol.swift in Sources */,
+				C9BC33E21C2F1A2D00E0A41F /* XPCTransportServiceProtocol.swift in Sources */,
 				C98C351C1C26544D006840C3 /* NXTTypes.swift in Sources */,
 				C907C2661C2A2F0300647531 /* EV3StopMotorCommand.swift in Sources */,
 				C9B1387E1C2B1C5C0018812F /* EV3ListingParser.swift in Sources */,
@@ -829,8 +835,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9BC33DF1C2F176900E0A41F /* HIDTransportServiceProtocol.swift in Sources */,
 				C9BC33DE1C2F170800E0A41F /* HIDTransportService.swift in Sources */,
+				C9CFFC2C1C2F3A8200E75768 /* XPCTransportServiceProtocol.swift in Sources */,
 				C9BC33D51C2F162300E0A41F /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1115,6 +1121,7 @@
 				C9BC33DC1C2F162400E0A41F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

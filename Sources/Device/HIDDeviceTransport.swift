@@ -2,70 +2,24 @@
 //  HIDDeviceTransport.swift
 //  RobotFoundation
 //
-//  Created by Matt on 12/19/15.
+//  Created by Matt on 12/26/15.
 //
 
-#if os(OSX)
-
 import Foundation
-import IOKit.hid
 
-final class HIDDeviceTransport: DeviceTransport {
-	private var device: IOHIDDeviceRef
+final class HIDDeviceTransport: XPCBackedDeviceTransport {
+	private let serialNumber: String
 
-	private var inputReportBuffer = [UInt8](count: 1024, repeatedValue: 0)
-
-	private var serviceConnection: NSXPCConnection?
-
-	init(device: IOHIDDeviceRef) {
-		self.device = device
+	init(serialNumber: String) {
+		self.serialNumber = serialNumber
+		super.init()
 	}
 
-	override func open() throws {
-		serviceConnection = NSXPCConnection(serviceName: "com.Xrobot.HIDTransportService")
-		serviceConnection?.remoteObjectInterface = NSXPCInterface(withProtocol: HIDTransportServiceProtocol.self)
-		serviceConnection?.resume()
-
-		let proxy = serviceConnection?.remoteObjectProxy as? HIDTransportServiceProtocol
-		proxy?.upperCaseString("abc") { result in
-			print(result)
-		}
-
-		IOHIDDeviceScheduleWithRunLoop(device, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode)
-		IOHIDDeviceRegisterInputReportCallback(device, &inputReportBuffer, inputReportBuffer.count, { context, result, interface, reportType, index, bytes, length in
-
-			let selfPointer = unsafeBitCast(context, HIDDeviceTransport.self)
-			selfPointer.receivedReport()
-
-		}, UnsafeMutablePointer(unsafeAddressOf(self)))
-		let result = IOHIDDeviceOpen(device, 0)
-		guard result == kIOReturnSuccess else {
-			throw result
-		}
-
-		opened()
+	override var serviceName: String {
+		return "com.Xrobot.HIDTransportService"
 	}
 
-	private func receivedReport() {
-		let data = NSData(bytes: &inputReportBuffer, length: inputReportBuffer.count)
-		receivedData(data)
-	}
-
-	override func close() {
-		IOHIDDeviceClose(device, 0)
-
-		closed()
-	}
-
-	override func writeData(data: NSData) throws {
-		let bytes = unsafeBitCast(data.bytes, UnsafePointer<UInt8>.self)
-		let result = IOHIDDeviceSetReport(device, kIOHIDReportTypeOutput, 0, bytes, data.length)
-		guard result == kIOReturnSuccess else {
-			throw result
-		}
+	override var identifier: String {
+		return serialNumber
 	}
 }
-
-#endif
-
-

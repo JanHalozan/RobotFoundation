@@ -1,9 +1,8 @@
 //
-//  HIDTransportServiceProtocol.h
+//  XPCTransportServiceProtocol.h
 //  HIDTransportService
 //
 //  Created by Matt on 12/26/15.
-//  Copyright © 2015 Matt Rajca. All rights reserved.
 //
 
 #if os(OSX)
@@ -11,9 +10,14 @@
 import Foundation
 
 // The protocol that this service will vend as its API. This header file will also need to be visible to the process hosting the service.
-@objc protocol HIDTransportServiceProtocol {
-	// Replace the API of this protocol with an API appropriate to the service you are vending.
-	func upperCaseString(string: NSString, withReply reply: NSString -> ())
+@objc protocol XPCTransportServiceProtocol {
+	func open(identifier: NSString, handler: Int -> ())
+	func writeData(data: NSData, handler: Int -> ())
+	func close(handler: Int -> ())
+}
+
+@objc protocol XPCTransportServiceClientProtocol {
+	func didReceiveData(data: NSData)
 }
 
 /*
