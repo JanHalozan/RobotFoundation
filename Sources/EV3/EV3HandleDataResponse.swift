@@ -7,10 +7,10 @@
 
 import Foundation
 
-public struct EV3HandleDataResponse: MindstormsResponse {
+public struct EV3HandleDataResponse: EV3Response {
 	public let length: UInt16
-	public let replyType: EV3ReplyType
 	public let messageCounter: UInt16
+	public let replyType: EV3ReplyType
 
 	public let handle: UInt32
 	public let data: NSData
@@ -21,12 +21,12 @@ public struct EV3HandleDataResponse: MindstormsResponse {
 		}
 
 		self.length = length
-		self.replyType = replyType
 		self.messageCounter = messageCounter
+		self.replyType = replyType
 
 		self.handle = data.readUInt32AtIndex(5)
 
-		let toEnd = data.length - 9
+		let toEnd = Int(length) - 7 // size (2 bytes) not included
 		self.data = data.subdataWithRange(NSMakeRange(9, toEnd))
 	}
 }

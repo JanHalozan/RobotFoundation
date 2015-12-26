@@ -3,7 +3,6 @@
 //  MobileRobotFoundation
 //
 //  Created by Matt on 12/19/15.
-//  Copyright © 2015 Matt Rajca. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

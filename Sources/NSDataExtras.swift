@@ -29,10 +29,19 @@ extension NSMutableData {
 
 extension NSData {
 	func dataByAppendingData(data: NSData) -> NSData {
-		let mutableData = mutableCopy() as! NSMutableData
+		guard let mutableData = mutableCopy() as? NSMutableData else {
+			assertionFailure()
+			return data
+		}
+
 		mutableData.appendData(data)
 
-		return mutableData.copy() as! NSData
+		guard let singleData = mutableData.copy() as? NSData else {
+			assertionFailure()
+			return mutableData
+		}
+
+		return singleData
 	}
 
 	func readUInt8AtIndex(index: Int) -> UInt8 {
@@ -54,5 +63,12 @@ extension NSData {
 		getBytes(&value, range: NSMakeRange(index, 4))
 
 		return NSSwapLittleIntToHost(value)
+	}
+
+	func readStringAtIndex(index: Int, length: Int) -> String {
+		var stringBuffer = [Int8](count: length, repeatedValue: 0)
+		getBytes(&stringBuffer, range: NSMakeRange(index, length))
+
+		return NSString(UTF8String: stringBuffer) as? String ?? ""
 	}
 }

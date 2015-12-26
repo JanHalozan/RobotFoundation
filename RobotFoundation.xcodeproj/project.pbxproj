@@ -19,6 +19,8 @@
 		C907C2661C2A2F0300647531 /* EV3StopMotorCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907C2641C2A2F0300647531 /* EV3StopMotorCommand.swift */; };
 		C9115B521C2EF69600BCE9BC /* EV3DeviceConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9115B511C2EF69600BCE9BC /* EV3DeviceConvenience.swift */; };
 		C9115B531C2EF69600BCE9BC /* EV3DeviceConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9115B511C2EF69600BCE9BC /* EV3DeviceConvenience.swift */; };
+		C91381301C2F5C6000BB2C67 /* EV3Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = C913812F1C2F5C6000BB2C67 /* EV3Response.swift */; };
+		C91381311C2F5C6000BB2C67 /* EV3Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = C913812F1C2F5C6000BB2C67 /* EV3Response.swift */; };
 		C917F68A1C272D6A00AE980B /* EV3HIDDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917F6891C272D6A00AE980B /* EV3HIDDeviceTests.swift */; };
 		C917F68F1C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917F68E1C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift */; };
 		C917F6901C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917F68E1C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift */; };
@@ -202,6 +204,7 @@
 		C907C25E1C2A28B000647531 /* EV3StartMotorCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3StartMotorCommand.swift; sourceTree = "<group>"; };
 		C907C2641C2A2F0300647531 /* EV3StopMotorCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3StopMotorCommand.swift; sourceTree = "<group>"; };
 		C9115B511C2EF69600BCE9BC /* EV3DeviceConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3DeviceConvenience.swift; sourceTree = "<group>"; };
+		C913812F1C2F5C6000BB2C67 /* EV3Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3Response.swift; sourceTree = "<group>"; };
 		C917F6891C272D6A00AE980B /* EV3HIDDeviceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3HIDDeviceTests.swift; sourceTree = "<group>"; };
 		C917F68E1C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RobotDeviceDescriptorEV3Extras.swift; sourceTree = "<group>"; };
 		C94A9F3A1C2CF5660031642F /* EV3ReadChainedCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ReadChainedCommand.swift; sourceTree = "<group>"; };
@@ -516,6 +519,7 @@
 				C9C561231C2E1FC700E61C28 /* EV3HandleDataResponse.swift */,
 				C9B138791C2B12BB0018812F /* EV3ListingResponse.swift */,
 				C97868691C28D0B00099BB82 /* EV3PercentByteResponse.swift */,
+				C913812F1C2F5C6000BB2C67 /* EV3Response.swift */,
 				C97551B01C29D094002A5796 /* EV3StringResponse.swift */,
 			);
 			name = Responses;
@@ -771,6 +775,7 @@
 				C98C34DB1C260E72006840C3 /* MindstormsResponse.swift in Sources */,
 				C98C34BB1C25E1E3006840C3 /* NXTDevice.swift in Sources */,
 				C97551B11C29D094002A5796 /* EV3StringResponse.swift in Sources */,
+				C91381301C2F5C6000BB2C67 /* EV3Response.swift in Sources */,
 				C98C34D11C25F893006840C3 /* NSDataEV3Extras.swift in Sources */,
 				C905867D1C2C605F0068E560 /* EV3FileResponse.swift in Sources */,
 				C9C561281C2E21F700E61C28 /* EV3DisplayFramebuffer.swift in Sources */,
@@ -855,6 +860,7 @@
 				C97868711C28DF5A0099BB82 /* EV3SetSensorModeCommand.swift in Sources */,
 				C98C35031C26544D006840C3 /* EV3CommandOperation.swift in Sources */,
 				C98C35041C26544D006840C3 /* EV3CommandSerialization.swift in Sources */,
+				C91381311C2F5C6000BB2C67 /* EV3Response.swift in Sources */,
 				C97551B21C29D094002A5796 /* EV3StringResponse.swift in Sources */,
 				C905867E1C2C605F0068E560 /* EV3FileResponse.swift in Sources */,
 				C9C561291C2E21F700E61C28 /* EV3DisplayFramebuffer.swift in Sources */,

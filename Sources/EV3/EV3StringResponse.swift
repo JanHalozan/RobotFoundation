@@ -7,10 +7,10 @@
 
 import Foundation
 
-public struct EV3StringResponse: MindstormsResponse {
-	let length: UInt16
-	let replyType: EV3ReplyType
-	let messageCounter: UInt16
+public struct EV3StringResponse: EV3Response {
+	public let length: UInt16
+	public let messageCounter: UInt16
+	public let replyType: EV3ReplyType
 
 	public let string: String
 
@@ -20,13 +20,9 @@ public struct EV3StringResponse: MindstormsResponse {
 		}
 
 		self.length = length
-		self.replyType = replyType
 		self.messageCounter = messageCounter
+		self.replyType = replyType
 
-		let toEnd = data.length - 5
-		var string = [Int8](count: toEnd, repeatedValue: 0)
-		data.getBytes(&string, range: NSMakeRange(5, toEnd))
-
-		self.string = NSString(UTF8String: string) as! String
+		self.string = data.readStringAtIndex(5, length: Int(length) - 3)
 	}
 }

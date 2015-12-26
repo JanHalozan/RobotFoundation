@@ -7,10 +7,10 @@
 
 import Foundation
 
-public struct EV3ListingResponse: MindstormsResponse {
+public struct EV3ListingResponse: EV3Response {
 	public let length: UInt16
-	public let replyType: EV3ReplyType
 	public let messageCounter: UInt16
+	public let replyType: EV3ReplyType
 
 	public let systemCommand: UInt8
 	public let returnStatus: EV3SystemReturnStatus
@@ -25,26 +25,21 @@ public struct EV3ListingResponse: MindstormsResponse {
 		}
 
 		self.length = length
-		self.replyType = replyType
 		self.messageCounter = messageCounter
+		self.replyType = replyType
 
 		self.systemCommand = data.readUInt8AtIndex(5)
-		self.returnStatus = EV3SystemReturnStatus(rawValue: data.readUInt8AtIndex(6))!
+		self.returnStatus = EV3SystemReturnStatus(rawValue: data.readUInt8AtIndex(6)) ?? EV3SystemReturnStatus.UnknownError
 		self.listSize = data.readUInt32AtIndex(7)
 		self.handle = data.readUInt8AtIndex(11)
-		
-		let toEnd = data.length - 12
-		var stringBuffer = [Int8](count: toEnd, repeatedValue: 0)
-		data.getBytes(&stringBuffer, range: NSMakeRange(12, toEnd))
-
-		self.string = NSString(UTF8String: stringBuffer) as! String
+		self.string = data.readStringAtIndex(12, length: Int(length) - 10)
 	}
 }
 
-public struct EV3ContinueListingResponse: MindstormsResponse {
+public struct EV3ContinueListingResponse: EV3Response {
 	public let length: UInt16
-	public let replyType: EV3ReplyType
 	public let messageCounter: UInt16
+	public let replyType: EV3ReplyType
 
 	public let systemCommand: UInt8
 	public let returnStatus: EV3SystemReturnStatus
@@ -58,17 +53,12 @@ public struct EV3ContinueListingResponse: MindstormsResponse {
 		}
 
 		self.length = length
-		self.replyType = replyType
 		self.messageCounter = messageCounter
+		self.replyType = replyType
 
 		self.systemCommand = data.readUInt8AtIndex(5)
-		self.returnStatus = EV3SystemReturnStatus(rawValue: data.readUInt8AtIndex(6))!
+		self.returnStatus = EV3SystemReturnStatus(rawValue: data.readUInt8AtIndex(6)) ?? EV3SystemReturnStatus.UnknownError
 		self.handle = data.readUInt8AtIndex(7)
-
-		let toEnd = data.length - 8
-		var stringBuffer = [Int8](count: toEnd, repeatedValue: 0)
-		data.getBytes(&stringBuffer, range: NSMakeRange(8, toEnd))
-
-		self.string = NSString(UTF8String: stringBuffer) as! String
+		self.string = data.readStringAtIndex(8, length: Int(length) - 6)
 	}
 }

@@ -17,4 +17,5 @@ public enum EV3ReplyType: UInt8 {
 public enum EV3SystemReturnStatus: UInt8 {
 	case Success = 0x0
 	case EndOfFile = 0x8
+	case UnknownError = 0x0A
 }
