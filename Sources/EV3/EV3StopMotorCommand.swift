@@ -20,10 +20,6 @@ struct EV3StopMotorCommand: EV3DirectCommand {
 		return EV3GenericResponse.self
 	}
 
-	var numberOfGlobals: UInt8 {
-		return 0
-	}
-
 	var payloadData: NSData {
 		let mutableData = NSMutableData()
 		mutableData.appendUInt8(EV3OpCode.OutputStop.rawValue)
