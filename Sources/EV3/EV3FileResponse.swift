@@ -34,7 +34,7 @@ public struct EV3FileResponse: MindstormsResponse {
 		self.fileSize = data.readUInt32AtIndex(7)
 		self.handle = data.readUInt8AtIndex(11)
 
-		let toEnd = Int(self.length) - 12
+		let toEnd = Int(self.length) - 10 // size (2 bytes) not included
 		self.data = data.subdataWithRange(NSMakeRange(12, toEnd))
 	}
 }
@@ -64,7 +64,7 @@ public struct EV3ContinueFileResponse: MindstormsResponse {
 		self.returnStatus = EV3SystemReturnStatus(rawValue: data.readUInt8AtIndex(6))!
 		self.handle = data.readUInt8AtIndex(7)
 
-		let toEnd = Int(self.length) - 8
+		let toEnd = Int(self.length) - 6 // size (2 bytes) not included
 		self.data = data.subdataWithRange(NSMakeRange(8, toEnd))
 	}
 }
