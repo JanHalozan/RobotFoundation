@@ -9,7 +9,7 @@ import Foundation
 
 public enum EV3Entry {
 	case Folder(name: String)
-	case File(name: String, md5: String, fileSizeHex: String)
+	case File(name: String, md5: String, fileSize: Int)
 }
 
 public func parseEV3FileListingWithString(string: String) -> [EV3Entry] {
@@ -26,8 +26,9 @@ public func parseEV3FileListingWithString(string: String) -> [EV3Entry] {
 			// File
 			let md5 = line.substringToIndex(line.startIndex.advancedBy(32))
 			let fileSizeHex = line.substringWithRange(Range<String.Index>(start: line.startIndex.advancedBy(33), end: line.startIndex.advancedBy(41)))
+			let fileSize = Int(fileSizeHex, radix: 16) ?? 0
 			let name = line.substringFromIndex(line.startIndex.advancedBy(42))
-			entries.append(.File(name: name, md5: md5, fileSizeHex: fileSizeHex))
+			entries.append(.File(name: name, md5: md5, fileSize: fileSize))
 		}
 	}
 
