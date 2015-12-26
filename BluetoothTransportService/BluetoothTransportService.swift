@@ -68,6 +68,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol {
 		}
 
 		dispatch_semaphore_wait(writeSemaphore, DISPATCH_TIME_FOREVER)
+		handler(receivedData!, Int(kIOReturnSuccess))
 	}
 
 	@objc func connectionComplete(device: IOBluetoothDevice, var status: IOReturn) {

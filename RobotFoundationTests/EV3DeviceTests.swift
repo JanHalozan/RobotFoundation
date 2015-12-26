@@ -18,9 +18,7 @@ final class EV3DeviceTests: XCTestCase {
 	override func setUp() {
 		super.setUp()
 
-		let bDevice = IOBluetoothDevice(addressString: deviceAddress)
-
-		let transport = IOBluetoothDeviceTransport(bluetoothDevice: bDevice)
+		let transport = IOBluetoothDeviceTransport(address: deviceAddress)
 		device = EV3Device(transport: transport)
 		try! device.open()
 	}
