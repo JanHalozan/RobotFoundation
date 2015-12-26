@@ -134,6 +134,9 @@
 		C9B1387B1C2B12BB0018812F /* EV3ListingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B138791C2B12BB0018812F /* EV3ListingResponse.swift */; };
 		C9B1387D1C2B1C5C0018812F /* EV3ListingParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B1387C1C2B1C5C0018812F /* EV3ListingParser.swift */; };
 		C9B1387E1C2B1C5C0018812F /* EV3ListingParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B1387C1C2B1C5C0018812F /* EV3ListingParser.swift */; };
+		C9BC33D31C2F162300E0A41F /* HIDTransportService.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BC33D21C2F162300E0A41F /* HIDTransportService.m */; };
+		C9BC33D51C2F162300E0A41F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BC33D41C2F162300E0A41F /* main.m */; };
+		C9BC33DA1C2F162400E0A41F /* HIDTransportService.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = C9BC33CE1C2F162300E0A41F /* HIDTransportService.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C9C561241C2E1FC700E61C28 /* EV3HandleDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C561231C2E1FC700E61C28 /* EV3HandleDataResponse.swift */; };
 		C9C561251C2E1FC700E61C28 /* EV3HandleDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C561231C2E1FC700E61C28 /* EV3HandleDataResponse.swift */; };
 		C9C561281C2E21F700E61C28 /* EV3DisplayFramebuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C561271C2E21F700E61C28 /* EV3DisplayFramebuffer.swift */; };
@@ -152,7 +155,28 @@
 			remoteGlobalIDString = C98C346C1C25C160006840C3;
 			remoteInfo = RobotFoundation;
 		};
+		C9BC33D71C2F162400E0A41F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C98C34641C25C160006840C3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C9BC33CD1C2F162300E0A41F;
+			remoteInfo = HIDTransportService;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C9BC33D91C2F162400E0A41F /* Embed XPC Services */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
+			dstSubfolderSpec = 16;
+			files = (
+				C9BC33DA1C2F162400E0A41F /* HIDTransportService.xpc in Embed XPC Services */,
+			);
+			name = "Embed XPC Services";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		C90586791C2C5FDB0068E560 /* EV3ReadFileCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ReadFileCommand.swift; sourceTree = "<group>"; };
@@ -227,6 +251,12 @@
 		C9B138761C2B09650018812F /* EV3ListFilesCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ListFilesCommand.swift; sourceTree = "<group>"; };
 		C9B138791C2B12BB0018812F /* EV3ListingResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ListingResponse.swift; sourceTree = "<group>"; };
 		C9B1387C1C2B1C5C0018812F /* EV3ListingParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ListingParser.swift; sourceTree = "<group>"; };
+		C9BC33CE1C2F162300E0A41F /* HIDTransportService.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = HIDTransportService.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9BC33D01C2F162300E0A41F /* HIDTransportServiceProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDTransportServiceProtocol.h; sourceTree = "<group>"; };
+		C9BC33D11C2F162300E0A41F /* HIDTransportService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDTransportService.h; sourceTree = "<group>"; };
+		C9BC33D21C2F162300E0A41F /* HIDTransportService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HIDTransportService.m; sourceTree = "<group>"; };
+		C9BC33D41C2F162300E0A41F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C9BC33D61C2F162400E0A41F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C9C561231C2E1FC700E61C28 /* EV3HandleDataResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3HandleDataResponse.swift; sourceTree = "<group>"; };
 		C9C561271C2E21F700E61C28 /* EV3DisplayFramebuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3DisplayFramebuffer.swift; sourceTree = "<group>"; };
 		C9EDF44D1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3CreateFolderCommand.swift; sourceTree = "<group>"; };
@@ -256,6 +286,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C9BC33CB1C2F162300E0A41F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -279,6 +316,7 @@
 				C98C346F1C25C160006840C3 /* RobotFoundation */,
 				C98C347B1C25C160006840C3 /* RobotFoundationTests */,
 				C98C34F41C26540C006840C3 /* MobileRobotFoundation */,
+				C9BC33CF1C2F162300E0A41F /* HIDTransportService */,
 				C98C346E1C25C160006840C3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -289,6 +327,7 @@
 				C98C346D1C25C160006840C3 /* RobotFoundation.framework */,
 				C98C34771C25C160006840C3 /* RobotFoundationTests.xctest */,
 				C98C34F31C26540C006840C3 /* MobileRobotFoundation.framework */,
+				C9BC33CE1C2F162300E0A41F /* HIDTransportService.xpc */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -401,6 +440,18 @@
 			path = MobileRobotFoundation;
 			sourceTree = "<group>";
 		};
+		C9BC33CF1C2F162300E0A41F /* HIDTransportService */ = {
+			isa = PBXGroup;
+			children = (
+				C9BC33D01C2F162300E0A41F /* HIDTransportServiceProtocol.h */,
+				C9BC33D11C2F162300E0A41F /* HIDTransportService.h */,
+				C9BC33D21C2F162300E0A41F /* HIDTransportService.m */,
+				C9BC33D41C2F162300E0A41F /* main.m */,
+				C9BC33D61C2F162400E0A41F /* Info.plist */,
+			);
+			path = HIDTransportService;
+			sourceTree = "<group>";
+		};
 		C9C561211C2E1F3E00E61C28 /* Commands */ = {
 			isa = PBXGroup;
 			children = (
@@ -475,10 +526,12 @@
 				C98C34691C25C160006840C3 /* Frameworks */,
 				C98C346A1C25C160006840C3 /* Headers */,
 				C98C346B1C25C160006840C3 /* Resources */,
+				C9BC33D91C2F162400E0A41F /* Embed XPC Services */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				C9BC33D81C2F162400E0A41F /* PBXTargetDependency */,
 			);
 			name = RobotFoundation;
 			productName = RobotFoundation;
@@ -521,6 +574,23 @@
 			productReference = C98C34F31C26540C006840C3 /* MobileRobotFoundation.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		C9BC33CD1C2F162300E0A41F /* HIDTransportService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C9BC33DD1C2F162400E0A41F /* Build configuration list for PBXNativeTarget "HIDTransportService" */;
+			buildPhases = (
+				C9BC33CA1C2F162300E0A41F /* Sources */,
+				C9BC33CB1C2F162300E0A41F /* Frameworks */,
+				C9BC33CC1C2F162300E0A41F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HIDTransportService;
+			productName = HIDTransportService;
+			productReference = C9BC33CE1C2F162300E0A41F /* HIDTransportService.xpc */;
+			productType = "com.apple.product-type.xpc-service";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -540,6 +610,9 @@
 					C98C34F21C26540C006840C3 = {
 						CreatedOnToolsVersion = 7.2;
 					};
+					C9BC33CD1C2F162300E0A41F = {
+						CreatedOnToolsVersion = 7.2;
+					};
 				};
 			};
 			buildConfigurationList = C98C34671C25C160006840C3 /* Build configuration list for PBXProject "RobotFoundation" */;
@@ -557,6 +630,7 @@
 				C98C346C1C25C160006840C3 /* RobotFoundation */,
 				C98C34F21C26540C006840C3 /* MobileRobotFoundation */,
 				C98C34761C25C160006840C3 /* RobotFoundationTests */,
+				C9BC33CD1C2F162300E0A41F /* HIDTransportService */,
 			);
 		};
 /* End PBXProject section */
@@ -577,6 +651,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C98C34F11C26540C006840C3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9BC33CC1C2F162300E0A41F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -739,6 +820,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C9BC33CA1C2F162300E0A41F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9BC33D51C2F162300E0A41F /* main.m in Sources */,
+				C9BC33D31C2F162300E0A41F /* HIDTransportService.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -746,6 +836,11 @@
 			isa = PBXTargetDependency;
 			target = C98C346C1C25C160006840C3 /* RobotFoundation */;
 			targetProxy = C98C34791C25C160006840C3 /* PBXContainerItemProxy */;
+		};
+		C9BC33D81C2F162400E0A41F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C9BC33CD1C2F162300E0A41F /* HIDTransportService */;
+			targetProxy = C9BC33D71C2F162400E0A41F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -938,6 +1033,28 @@
 			};
 			name = Release;
 		};
+		C9BC33DB1C2F162400E0A41F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = HIDTransportService/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Xrobot.HIDTransportService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		C9BC33DC1C2F162400E0A41F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = HIDTransportService/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Xrobot.HIDTransportService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -976,6 +1093,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		C9BC33DD1C2F162400E0A41F /* Build configuration list for PBXNativeTarget "HIDTransportService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9BC33DB1C2F162400E0A41F /* Debug */,
+				C9BC33DC1C2F162400E0A41F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
