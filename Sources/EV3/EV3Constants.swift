@@ -15,6 +15,13 @@ enum EV3OpCode: UInt8 {
 	case OutputSpeed = 0xA5
 	case OutputStart = 0xA6
 	case OutputStop = 0xA3
+	case File = 0xC0
+}
+
+enum EV3FileOpSubcode: UInt8 {
+	case OpenRead = 1
+	case Close = 7
+	case ReadBytes = 28
 }
 
 enum EV3InputDeviceOpSubcode: UInt8 {
@@ -51,6 +58,10 @@ struct EV3OutputPortOptions: OptionSetType {
 
 enum EV3Variables: UInt8 {
 	case GlobalVar0 = 0x60
+	case GlobalVar1 = 0x61
+	case GlobalVar2 = 0x62
+	case GlobalVar3 = 0x63
+	case GlobalVar4 = 0x64
 }
 
 enum EV3Layer: UInt8 {
