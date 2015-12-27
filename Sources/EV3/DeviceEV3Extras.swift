@@ -14,8 +14,11 @@ extension Device {
 		case .BluetoothDevice(let bld):
 			self.init(transport: IOBluetoothDeviceTransport(address: bld.addressString))
 		case .HIDDevice(let hid):
-			let serialNumber = IOHIDDeviceGetProperty(hid, kIOHIDSerialNumberKey)!.takeRetainedValue() as! String
-			self.init(transport: HIDDeviceTransport(serialNumber: serialNumber))
+			if let serialNumber = IOHIDDeviceGetProperty(hid, kIOHIDSerialNumberKey)?.takeRetainedValue() as? String {
+				self.init(transport: HIDDeviceTransport(serialNumber: serialNumber))
+			} else {
+				return nil
+			}
 		}
 		#endif
 

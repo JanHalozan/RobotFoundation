@@ -451,9 +451,6 @@
 				C9115B511C2EF69600BCE9BC /* EV3DeviceConvenience.swift */,
 				C9B1387C1C2B1C5C0018812F /* EV3ListingParser.swift */,
 				C98C34D61C260E0A006840C3 /* EV3Types.swift */,
-				C98C34D01C25F893006840C3 /* NSDataEV3Extras.swift */,
-				C917F68E1C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift */,
-				C97551C01C29D74D002A5796 /* DeviceEV3Extras.swift */,
 			);
 			path = EV3;
 			sourceTree = "<group>";
@@ -528,7 +525,10 @@
 		C9C561261C2E21E700E61C28 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				C97551C01C29D74D002A5796 /* DeviceEV3Extras.swift */,
 				C9C561271C2E21F700E61C28 /* EV3DisplayFramebuffer.swift */,
+				C98C34D01C25F893006840C3 /* NSDataEV3Extras.swift */,
+				C917F68E1C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";

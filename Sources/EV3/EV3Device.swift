@@ -20,15 +20,9 @@ public final class EV3Device: Device {
 		operationQueue.addOperation(operation)
 	}
 
-	public func enqueueBarrier(handler: () -> ()) {
-		operationQueue.addOperationWithBlock {
-			dispatch_async(dispatch_get_main_queue()) {
-				handler()
-			}
-		}
-	}
-
 	override func wroteData() {
+		// TODO: might need this for NXT support
+
 		/*
 		if let usbTransport = transport as? IOUSBDeviceTransport {
 			do {
