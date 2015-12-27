@@ -14,11 +14,11 @@ class XPCBackedDeviceTransport: DeviceTransport {
 	private var serviceConnection: NSXPCConnection?
 
 	var serviceName: String {
-		fatalError()
+		fatalError("Subclasses must override this method")
 	}
 
 	var identifier: String {
-		fatalError()
+		fatalError("Subclasses must override this method")
 	}
 
 	override func open() throws {
@@ -28,7 +28,7 @@ class XPCBackedDeviceTransport: DeviceTransport {
 
 		guard let serviceConnection = serviceConnection else {
 			assertionFailure()
-			return
+			throw IOReturn(1)
 		}
 
 		serviceConnection.remoteObjectInterface = NSXPCInterface(withProtocol: XPCTransportServiceProtocol.self)
@@ -37,19 +37,23 @@ class XPCBackedDeviceTransport: DeviceTransport {
 
 		guard let proxy = serviceConnection.remoteObjectProxy as? XPCTransportServiceProtocol else {
 			assertionFailure()
-			return
+			throw IOReturn(1)
 		}
 
 		proxy.open(identifier) { result in
 			dispatch_async(dispatch_get_main_queue()) {
-				print(result)
-				self.opened()
+				if result == 0 {
+					self.opened()
+				} else {
+					self.failedToOpenWithError(IOReturn(result))
+				}
 			}
 		}
 	}
 
 	override func close() {
 		guard let serviceConnection = serviceConnection else {
+			debugPrint("Tried to close a device even though we have no XPC connection.")
 			return
 		}
 
@@ -60,7 +64,6 @@ class XPCBackedDeviceTransport: DeviceTransport {
 
 		proxy.close { result in
 			dispatch_async(dispatch_get_main_queue()) {
-				print(result)
 				self.closed()
 			}
 		}
@@ -68,6 +71,7 @@ class XPCBackedDeviceTransport: DeviceTransport {
 
 	override func writeData(data: NSData, handler: NSData -> ()) throws {
 		guard let serviceConnection = serviceConnection else {
+			debugPrint("Tried to write to a device even though we have no XPC connection.")
 			return
 		}
 
@@ -78,7 +82,11 @@ class XPCBackedDeviceTransport: DeviceTransport {
 
 		proxy.writeData(data) { data, result in
 			dispatch_async(dispatch_get_main_queue()) {
-				print(result)
+				guard result == 0 else {
+					debugPrint("An error occured during write.")
+					return
+				}
+
 				self.wroteData()
 
 				if let data = data {
@@ -90,5 +98,3 @@ class XPCBackedDeviceTransport: DeviceTransport {
 }
 
 #endif
-
-
