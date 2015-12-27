@@ -8,10 +8,10 @@
 import Foundation
 import IOKit.hid
 
-// This object implements the protocol which we have defined. It provides the actual behavior for the service. It is 'exported' by the service to make it available to the process hosting the service over an NSXPCConnection.
 final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 	private var device: IOHIDDeviceRef?
 	private var inputReportBuffer = [UInt8](count: 1024, repeatedValue: 0)
+
 	private var writeSemaphore = dispatch_semaphore_create(0)
 	private var receivedData: NSData?
 
@@ -22,7 +22,6 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 		super.init()
 	}
 
-	// This implements the example protocol. Replace the body of this class with the implementation of this service's protocol.
 	func open(identifier: NSString, handler: Int -> ()) {
 		dispatch_sync(dispatch_get_main_queue()) {
 			let matching = IOServiceMatching(kIOHIDDeviceKey) as NSMutableDictionary
@@ -30,7 +29,12 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 
 			let service = IOServiceGetMatchingService(kIOMasterPortDefault, matching as CFDictionaryRef)
 
-			self.device = IOHIDDeviceCreate(kCFAllocatorDefault, service)!.takeRetainedValue()
+			guard let hidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, service)?.takeRetainedValue() else {
+				handler(1)
+				return
+			}
+
+			self.device = hidDevice
 
 			IOHIDDeviceRegisterInputReportCallback(self.device, &self.inputReportBuffer, self.inputReportBuffer.count, { context, result, interface, reportType, index, bytes, length in
 
@@ -45,9 +49,9 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 				handler(Int(result))
 				return
 			}
-
-			handler(Int(kIOReturnSuccess))
 		}
+
+		handler(Int(kIOReturnSuccess))
 	}
 
 	func writeData(data: NSData, handler: (NSData?, Int) -> ()) {
@@ -60,11 +64,17 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 			}
 		}
 
-		dispatch_semaphore_wait(writeSemaphore, DISPATCH_TIME_FOREVER)
+		guard dispatch_semaphore_wait(writeSemaphore, dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC) * 10)) == 0 else {
+			handler(receivedData, Int(1))
+			return
+		}
+
 		handler(receivedData, Int(kIOReturnSuccess))
 	}
 
 	private func receivedReport() {
+		assert(NSThread.isMainThread())
+
 		receivedData = NSData(bytes: &inputReportBuffer, length: inputReportBuffer.count)
 		dispatch_semaphore_signal(writeSemaphore)
 	}
@@ -72,7 +82,8 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 	func close(handler: Int -> ()) {
 		dispatch_sync(dispatch_get_main_queue()) {
 			IOHIDDeviceClose(self.device, 0)
-			handler(Int(kIOReturnSuccess))
 		}
+
+		handler(Int(kIOReturnSuccess))
 	}
 }
