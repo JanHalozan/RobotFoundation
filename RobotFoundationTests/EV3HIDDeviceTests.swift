@@ -133,7 +133,7 @@ final class EV3HIDDeviceTests: XCTestCase, RobotDeviceManagerDelegate {
 		responseExpectation = expectationWithDescription("command response")
 		activeTest = { [unowned self] in
 			// Put the light sensor in 'Color' mode before we read the 'raw' value.
-			let modeCommand = EV3GetOSVersionCommand()
+			let modeCommand = EV3GetVersionCommand(version: .OS)
 			self.device.enqueueCommand(modeCommand) { response in
 				let ev3Response = response as! EV3StringResponse
 				XCTAssertEqual(ev3Response.string, "Linux 2.6.33-rc4")
@@ -189,6 +189,38 @@ final class EV3HIDDeviceTests: XCTestCase, RobotDeviceManagerDelegate {
 			self.device.enqueueCommand(command) { response in
 				let ev3Response = response as! EV3ListingResponse
 				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
+				self.responseExpectation.fulfill()
+			}
+		}
+
+		manager.beginDiscovery()
+		waitForExpectationsWithTimeout(10, handler: nil)
+	}
+
+	func testFirmwareVersionCommand() {
+		responseExpectation = expectationWithDescription("command response")
+		activeTest = { [unowned self] in
+			let command = EV3GetVersionCommand(version: .Firmware)
+			self.device.enqueueCommand(command) { response in
+				let ev3Response = response as! EV3StringResponse
+				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
+				XCTAssertEqual(ev3Response.string, "V1.06H")
+				self.responseExpectation.fulfill()
+			}
+		}
+
+		manager.beginDiscovery()
+		waitForExpectationsWithTimeout(10, handler: nil)
+	}
+
+	func testHardwareVersionCommand() {
+		responseExpectation = expectationWithDescription("command response")
+		activeTest = { [unowned self] in
+			let command = EV3GetVersionCommand(version: .Hardware)
+			self.device.enqueueCommand(command) { response in
+				let ev3Response = response as! EV3StringResponse
+				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
+				XCTAssertEqual(ev3Response.string, "V0.60")
 				self.responseExpectation.fulfill()
 			}
 		}

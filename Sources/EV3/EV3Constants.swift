@@ -37,10 +37,6 @@ enum EV3SoundOpSubcode: UInt8 {
 	case PlayTone = 1
 }
 
-enum EV3UIReadOpSubcode: UInt8 {
-	case GetOSVersion = 3
-}
-
 enum EV3UIWriteOpSubcode: UInt8 {
 	case LED = 27
 }
