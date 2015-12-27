@@ -66,7 +66,7 @@ extension NSData {
 	}
 
 	func readStringAtIndex(index: Int, length: Int) -> String {
-		var stringBuffer = [Int8](count: length, repeatedValue: 0)
+		var stringBuffer = [Int8](count: length + 1 /* null terminated */, repeatedValue: 0)
 		getBytes(&stringBuffer, range: NSMakeRange(index, length))
 
 		return NSString(UTF8String: stringBuffer) as? String ?? ""
