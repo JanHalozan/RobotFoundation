@@ -26,6 +26,8 @@ final class EV3HIDDeviceTests: XCTestCase, RobotDeviceManagerDelegate {
 		super.tearDown()
 	}
 
+	func robotDeviceManagerDidLoseDevice(device: MetaDevice) { }
+
 	func robotDeviceManagerDidFindDevice(device: MetaDevice) {
 		assert(NSThread.isMainThread())
 
