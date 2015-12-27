@@ -23,7 +23,9 @@ struct NXTCloseCommand: NXTCommand {
 	}
 
 	var payloadData: NSData {
-		var handleCopy = handle
-		return NSData(bytes: &handleCopy, length: sizeof(UInt8))
+		let mutableData = NSMutableData()
+		mutableData.appendUInt8(handle)
+
+		return mutableData.copy() as! NSData
 	}
 }

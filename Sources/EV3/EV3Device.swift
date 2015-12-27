@@ -20,19 +20,7 @@ public final class EV3Device: Device {
 		operationQueue.addOperation(operation)
 	}
 
-	override func wroteData() {
-		// TODO: might need this for NXT support
-
-		/*
-		if let usbTransport = transport as? IOUSBDeviceTransport {
-			do {
-				try usbTransport.scheduleRead()
-			} catch {
-				print("Cannot schedule read: \(error)")
-			}
-		}
-		*/
-	}
+	override func wroteData() { }
 
 	private var currentlyExecutingOperation: EV3CommandOperation? {
 		for operation in operationQueue.operations {
@@ -49,16 +37,6 @@ public final class EV3Device: Device {
 			operation.willChangeValueForKey("isReady")
 			operation.didChangeValueForKey("isReady")
 		}
-	}
-
-	override func receivedData(data: NSData) {
-		// TODO: validate the message counter
-		guard let operation = currentlyExecutingOperation else {
-			assertionFailure("How did we get data if an operation isn't executing?")
-			return
-		}
-
-		operation.handleResponseData(data)
 	}
 }
 

@@ -9,6 +9,7 @@ import Foundation
 
 public protocol RobotDeviceManagerDelegate: class {
 	func robotDeviceManagerDidFindDevice(device: MetaDevice)
+	func robotDeviceManagerDidLoseDevice(device: MetaDevice)
 }
 
 public let RobotDeviceManagerDidFindDeviceNotificationName = "notification.DeviceDiscovery.RobotDeviceManager.DidFindDevice"
@@ -29,7 +30,7 @@ public final class RobotDeviceManager: RobotDeviceSourceClient {
 
 		for sourceType in sourceTypes {
 			let source = sourceType.init(client: self)
-			self.sources.append(source)
+			sources.append(source)
 		}
 	}
 
@@ -51,6 +52,7 @@ public final class RobotDeviceManager: RobotDeviceSourceClient {
 		if let index = foundDevices.indexOf(device) {
 			foundDevices.removeAtIndex(index)
 		}
+		delegate?.robotDeviceManagerDidLoseDevice(device)
 
 		let userInfo = [DeviceKey: device] as [String: AnyObject]
 		NSNotificationCenter.defaultCenter().postNotificationName(RobotDeviceManagerDidLoseDeviceNotificationName, object: self, userInfo: userInfo)

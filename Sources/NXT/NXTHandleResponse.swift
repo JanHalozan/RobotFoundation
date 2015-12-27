@@ -22,9 +22,6 @@ struct NXTHandleResponse: NXTResponse {
 			return nil
 		}
 
-		var handle = UInt8()
-		payloadData.getBytes(&handle, range: NSMakeRange(0, 1))
-
-		self.handle = handle
+		self.handle = payloadData.readUInt8AtIndex(0)
 	}
 }

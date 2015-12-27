@@ -8,7 +8,7 @@
 import Foundation
 
 final class NXTCommandOperation: NSOperation {
-	let transport: DeviceTransport
+	private let transport: DeviceTransport
 	private let command: NXTCommand
 	private let responseHandler: NXTResponseHandler?
 
@@ -53,12 +53,7 @@ final class NXTCommandOperation: NSOperation {
 		}
 	}
 
-	func handleResponseData(data: NSData) {
-		// Response handlers are optional.
-		guard let responseHandler = self.responseHandler else {
-			return
-		}
-
+	private func handleResponseData(data: NSData) {
 		let fullData: NSData
 
 		/*
@@ -85,6 +80,7 @@ final class NXTCommandOperation: NSOperation {
 			return
 		}
 
-		responseHandler(response)
+		// Response handlers are optional.
+		responseHandler?(response)
 	}
 }

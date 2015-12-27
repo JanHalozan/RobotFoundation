@@ -24,10 +24,7 @@ struct NXTFileResponse: NXTResponse {
 			return nil
 		}
 
-		var handle = UInt8()
-		payloadData.getBytes(&handle, range: NSMakeRange(0, 1))
-
-		self.handle = handle
+		self.handle = payloadData.readUInt8AtIndex(0)
 
 		var name = [Int8](count: 20, repeatedValue: 0)
 		data.getBytes(&name, range: NSMakeRange(1, 20))
@@ -37,10 +34,6 @@ struct NXTFileResponse: NXTResponse {
 		}
 
 		self.filename = filename as String
-
-		var size = UInt32()
-		data.getBytes(&size, range: NSMakeRange(21, 4))
-
-		self.size = NSSwapLittleIntToHost(size)
+		self.size = data.readUInt32AtIndex(21)
 	}
 }

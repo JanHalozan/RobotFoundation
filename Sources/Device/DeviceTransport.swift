@@ -9,7 +9,6 @@ import Foundation
 
 protocol DeviceTransportDelegate: class {
 	func deviceTransportDidWriteData(transport: DeviceTransport)
-	func deviceTransport(transport: DeviceTransport, didReceiveData data: NSData)
 
 	func deviceTransportDidOpen(transport: DeviceTransport)
 	func deviceTransport(transport: DeviceTransport, didFailToOpenWithError error: ErrorType)

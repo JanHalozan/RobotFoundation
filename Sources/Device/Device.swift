@@ -44,10 +44,6 @@ public class Device: DeviceTransportDelegate {
 		wroteData()
 	}
 
-	func deviceTransport(transport: DeviceTransport, didReceiveData data: NSData) {
-		receivedData(data)
-	}
-
 	func deviceTransportDidClose(transport: DeviceTransport) {
 		delegate?.deviceDidClose()
 	}
@@ -67,10 +63,6 @@ public class Device: DeviceTransportDelegate {
 	}
 
 	func wroteData() {
-		fatalError("Subclasses must override")
-	}
-
-	func receivedData(data: NSData) {
 		fatalError("Subclasses must override")
 	}
 }

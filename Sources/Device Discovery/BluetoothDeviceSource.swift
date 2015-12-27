@@ -48,8 +48,6 @@ public final class BluetoothDeviceSource: RobotDeviceSource, IOBluetoothDeviceIn
 	}
 
 	@objc public func deviceInquiryComplete(sender: IOBluetoothDeviceInquiry!, error: IOReturn, aborted: Bool) {
-		debugPrint("Device inquiry complete.")
-
 		// Check for found devices that aren't in device inquiry's set of results.
 		// These disappeared since the last scan.
 

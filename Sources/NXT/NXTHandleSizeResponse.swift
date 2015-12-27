@@ -23,14 +23,7 @@ struct NXTHandleSizeResponse: NXTResponse {
 			return nil
 		}
 
-		var handle = UInt8()
-		payloadData.getBytes(&handle, range: NSMakeRange(0, 1))
-
-		self.handle = handle
-
-		var size = UInt16()
-		payloadData.getBytes(&size, range: NSMakeRange(1, 2))
-
-		self.size = NSSwapLittleShortToHost(size)
+		self.handle = payloadData.readUInt8AtIndex(0)
+		self.size = payloadData.readUInt16AtIndex(1)
 	}
 }
