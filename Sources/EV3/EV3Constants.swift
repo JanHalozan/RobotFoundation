@@ -18,6 +18,7 @@ enum EV3OpCode: UInt8 {
 	case OutputStart = 0xA6
 	case OutputStop = 0xA3
 	case File = 0xC0
+	case MemoryUsage = 0xC5
 }
 
 enum EV3FileOpSubcode: UInt8 {

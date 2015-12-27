@@ -228,4 +228,19 @@ final class EV3HIDDeviceTests: XCTestCase, RobotDeviceManagerDelegate {
 		manager.beginDiscovery()
 		waitForExpectationsWithTimeout(10, handler: nil)
 	}
+
+	func testSDCardCommand() {
+		responseExpectation = expectationWithDescription("command response")
+		activeTest = { [unowned self] in
+			let command = EV3GetStorageInfoCommand()
+			self.device.enqueueCommand(command) { response in
+				let ev3Response = response as! EV3StorageResponse
+				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
+				self.responseExpectation.fulfill()
+			}
+		}
+
+		manager.beginDiscovery()
+		waitForExpectationsWithTimeout(10, handler: nil)
+	}
 }
