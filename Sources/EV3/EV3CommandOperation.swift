@@ -12,7 +12,16 @@ final class EV3CommandOperation: NSOperation {
 	private let command: EV3Command
 	private let responseHandler: NXTResponseHandler?
 
-	private var isExecuting = false
+	private var isExecuting = false {
+		willSet {
+			willChangeValueForKey("isExecuting")
+			willChangeValueForKey("isFinished")
+		}
+		didSet {
+			didChangeValueForKey("isExecuting")
+			didChangeValueForKey("isFinished")
+		}
+	}
 
 	init(transport: DeviceTransport, command: EV3Command, responseHandler: NXTResponseHandler?) {
 		self.transport = transport
@@ -64,34 +73,21 @@ final class EV3CommandOperation: NSOperation {
 			print("Cannot write packet data: \(error)")
 		}
 
-		willChangeValueForKey("isExecuting")
-		willChangeValueForKey("isFinished")
-
 		isExecuting = true
-
-		didChangeValueForKey("isExecuting")
-		didChangeValueForKey("isFinished")
 	}
 
-	func handleResponseData(data: NSData) {
-		// Response handlers are optional.
-		guard let responseHandler = self.responseHandler else {
-			return
-		}
+	private func handleResponseData(data: NSData) {
+		assert(NSThread.isMainThread())
 
 		guard let response = command.responseType.init(data: data) else {
 			print("Could not parse a response")
+			isExecuting = false
 			return
 		}
 
-		responseHandler(response)
-
-		willChangeValueForKey("isExecuting")
-		willChangeValueForKey("isFinished")
+		// Response handlers are optional.
+		responseHandler?(response)
 
 		isExecuting = false
-
-		didChangeValueForKey("isExecuting")
-		didChangeValueForKey("isFinished")
 	}
 }
