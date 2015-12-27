@@ -7,22 +7,18 @@
 
 import Foundation
 
-struct EV3PlayToneCommand: EV3DirectCommand {
-	let frequency: UInt16
-	let duration: UInt16 // ms
+public struct EV3PlayToneCommand: EV3DirectCommand {
+	public let frequency: UInt16
+	public let duration: UInt16 // ms
 
-	var responseType: MindstormsResponse.Type {
+	public var responseType: MindstormsResponse.Type {
 		return EV3GenericResponse.self
 	}
 
-	var payloadData: NSData {
+	public var payloadData: NSData {
 		let mutableData = NSMutableData()
-
-		// Sound op code
-		mutableData.appendUInt8(0x94)
-
-		// Tone command
-		mutableData.appendUInt8(0x1)
+		mutableData.appendUInt8(EV3OpCode.Sound.rawValue)
+		mutableData.appendUInt8(EV3SoundOpSubcode.PlayTone.rawValue)
 
 		// Sound level
 		mutableData.appendLC1(0x2)

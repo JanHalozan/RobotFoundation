@@ -1,5 +1,5 @@
 //
-//  EV3GetFileCommand.swift
+//  EV3ReadFileCommand.swift
 //  RobotFoundation
 //
 //  Created by Matt on 12/24/15.
@@ -26,9 +26,6 @@ public struct EV3ReadFileCommand: EV3SystemCommand {
 
 	public var payloadData: NSData {
 		let mutableData = NSMutableData()
-
-		// max bytes to read
-		// apparently 1000 is the max bytes we can read from a file list
 		mutableData.appendUInt16(bytesToRead)
 		mutableData.appendString(path)
 
@@ -39,9 +36,11 @@ public struct EV3ReadFileCommand: EV3SystemCommand {
 
 public struct EV3ContinueReadFileCommand: EV3SystemCommand {
 	public let handle: UInt8
+	public let bytesToRead: UInt16
 
-	public init(handle: UInt8) {
+	public init(handle: UInt8, bytesToRead: UInt16) {
 		self.handle = handle
+		self.bytesToRead = bytesToRead
 	}
 
 	public var responseType: MindstormsResponse.Type {
@@ -54,12 +53,8 @@ public struct EV3ContinueReadFileCommand: EV3SystemCommand {
 
 	public var payloadData: NSData {
 		let mutableData = NSMutableData()
-
 		mutableData.appendUInt8(handle)
-
-		// max bytes to read
-		// apparently 1000 is the max bytes we can read from a file list
-		mutableData.appendUInt16(1000)
+		mutableData.appendUInt16(bytesToRead)
 
 		return mutableData.copy() as! NSData
 	}

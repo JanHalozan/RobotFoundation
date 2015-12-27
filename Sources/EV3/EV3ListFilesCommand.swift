@@ -52,7 +52,6 @@ public struct EV3ContinueListFilesCommand: EV3SystemCommand {
 
 	public var payloadData: NSData {
 		let mutableData = NSMutableData()
-
 		mutableData.appendUInt8(handle)
 
 		// max bytes to read

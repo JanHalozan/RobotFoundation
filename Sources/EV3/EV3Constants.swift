@@ -9,6 +9,8 @@ import Foundation
 
 enum EV3OpCode: UInt8 {
 	case UIRead = 0x81
+	case UIWrite = 0x82
+	case Sound = 0x94
 	case InputDevice = 0x99
 	case InputRead = 0x9A
 	case InputReadSI = 0x9D
@@ -31,8 +33,16 @@ enum EV3InputDeviceOpSubcode: UInt8 {
 	case ReadySI = 29
 }
 
+enum EV3SoundOpSubcode: UInt8 {
+	case PlayTone = 1
+}
+
 enum EV3UIReadOpSubcode: UInt8 {
 	case GetOSVersion = 3
+}
+
+enum EV3UIWriteOpSubcode: UInt8 {
+	case LED = 27
 }
 
 enum EV3SensorType: UInt8 {
@@ -40,13 +50,13 @@ enum EV3SensorType: UInt8 {
 	case Touch = 16
 }
 
-enum EV3InputPort: UInt8 {
+public enum EV3InputPort: UInt8 {
 	case One = 0, Two, Three, Four
 }
 
-struct EV3OutputPortOptions: OptionSetType {
-	let rawValue: UInt8
-	init(rawValue: UInt8) {
+public struct EV3OutputPortOptions: OptionSetType {
+	public let rawValue: UInt8
+	public init(rawValue: UInt8) {
 		self.rawValue = rawValue
 	}
 

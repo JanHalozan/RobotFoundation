@@ -28,7 +28,7 @@ extension EV3Device {
 	}
 
 	private func continueFileDownloadWithHandle(handle: UInt8, dataSoFar: NSData, handler: EV3DeviceDownloadHandler) {
-		let continueCommand = EV3ContinueReadFileCommand(handle: handle)
+		let continueCommand = EV3ContinueReadFileCommand(handle: handle, bytesToRead: 1000)
 		enqueueCommand(continueCommand) { continueResponse in
 			let listingResponse = continueResponse as! EV3ContinueFileResponse
 			let newDataSoFar = dataSoFar.dataByAppendingData(listingResponse.data)

@@ -7,20 +7,19 @@
 
 import Foundation
 
-struct EV3ReadColorCommand: EV3DirectCommand {
-	let port: EV3InputPort
+public struct EV3ReadColorCommand: EV3DirectCommand {
+	public let port: EV3InputPort
 
-	var responseType: MindstormsResponse.Type {
+	public var responseType: MindstormsResponse.Type {
 		return EV3ColorResponse.self
 	}
 
-	var globalSpaceSize: UInt16 {
+	public var globalSpaceSize: UInt16 {
 		return 1
 	}
 
-	var payloadData: NSData {
+	public var payloadData: NSData {
 		let mutableData = NSMutableData()
-
 		mutableData.appendUInt8(EV3OpCode.InputDevice.rawValue)
 		mutableData.appendUInt8(EV3InputDeviceOpSubcode.GetRaw.rawValue)
 		mutableData.appendUInt8(EV3Layer.ThisBrick.rawValue)

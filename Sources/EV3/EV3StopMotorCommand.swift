@@ -7,20 +7,20 @@
 
 import Foundation
 
-enum EV3StopType: UInt8 {
+public enum EV3StopType: UInt8 {
 	case Coast = 0
 	case Brake = 1
 }
 
-struct EV3StopMotorCommand: EV3DirectCommand {
-	let port: EV3OutputPortOptions
-	let stopType: EV3StopType
+public struct EV3StopMotorCommand: EV3DirectCommand {
+	public let port: EV3OutputPortOptions
+	public let stopType: EV3StopType
 
-	var responseType: MindstormsResponse.Type {
+	public var responseType: MindstormsResponse.Type {
 		return EV3GenericResponse.self
 	}
 
-	var payloadData: NSData {
+	public var payloadData: NSData {
 		let mutableData = NSMutableData()
 		mutableData.appendUInt8(EV3OpCode.OutputStop.rawValue)
 		mutableData.appendUInt8(EV3Layer.ThisBrick.rawValue)

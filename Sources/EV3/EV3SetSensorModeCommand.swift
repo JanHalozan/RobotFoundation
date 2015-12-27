@@ -7,21 +7,20 @@
 
 import Foundation
 
-struct EV3SetSensorModeCommand: EV3DirectCommand {
-	let port: EV3InputPort
-	let mode: UInt8
+public struct EV3SetSensorModeCommand: EV3DirectCommand {
+	public let port: EV3InputPort
+	public let mode: UInt8
 
-	var responseType: MindstormsResponse.Type {
+	public var responseType: MindstormsResponse.Type {
 		return EV3GenericResponse.self
 	}
 
-	var globalSpaceSize: UInt16 {
+	public var globalSpaceSize: UInt16 {
 		return 1
 	}
 
-	var payloadData: NSData {
+	public var payloadData: NSData {
 		let mutableData = NSMutableData()
-
 		mutableData.appendUInt8(EV3OpCode.InputReadSI.rawValue)
 		mutableData.appendUInt8(EV3Layer.ThisBrick.rawValue)
 		mutableData.appendUInt8(port.rawValue)

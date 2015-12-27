@@ -7,20 +7,19 @@
 
 import Foundation
 
-struct EV3ReadTouchSensorCommand: EV3DirectCommand {
-	let port: EV3InputPort
+public struct EV3ReadTouchSensorCommand: EV3DirectCommand {
+	public let port: EV3InputPort
 
-	var responseType: MindstormsResponse.Type {
+	public var responseType: MindstormsResponse.Type {
 		return EV3PercentByteResponse.self
 	}
 
-	var globalSpaceSize: UInt16 {
+	public var globalSpaceSize: UInt16 {
 		return 1
 	}
 
-	var payloadData: NSData {
+	public var payloadData: NSData {
 		let mutableData = NSMutableData()
-
 		mutableData.appendUInt8(EV3OpCode.InputRead.rawValue)
 		mutableData.appendUInt8(EV3Layer.ThisBrick.rawValue)
 		mutableData.appendUInt8(port.rawValue)

@@ -7,15 +7,15 @@
 
 import Foundation
 
-struct EV3SetMotorSpeedCommand: EV3DirectCommand {
-	let port: EV3OutputPortOptions
-	let speed: UInt8
+public struct EV3SetMotorSpeedCommand: EV3DirectCommand {
+	public let port: EV3OutputPortOptions
+	public let speed: UInt8
 
-	var responseType: MindstormsResponse.Type {
+	public var responseType: MindstormsResponse.Type {
 		return EV3GenericResponse.self
 	}
 
-	var payloadData: NSData {
+	public var payloadData: NSData {
 		let mutableData = NSMutableData()
 		mutableData.appendUInt8(EV3OpCode.OutputSpeed.rawValue)
 		mutableData.appendUInt8(EV3Layer.ThisBrick.rawValue)

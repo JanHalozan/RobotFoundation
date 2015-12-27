@@ -7,27 +7,23 @@
 
 import Foundation
 
-enum EV3LEDPattern: UInt8 {
+public enum EV3LEDPattern: UInt8 {
 	case None = 0, Green, Red, Orange
 	case FlashingGreen, FlashingRed, FlashingOrange
 	case PulsingGreen, PulsingRed, PulsingOrange
 }
 
-struct EV3SetLEDCommand: EV3DirectCommand {
-	let pattern: EV3LEDPattern
+public struct EV3SetLEDCommand: EV3DirectCommand {
+	public let pattern: EV3LEDPattern
 
-	var responseType: MindstormsResponse.Type {
+	public var responseType: MindstormsResponse.Type {
 		return EV3GenericResponse.self
 	}
 
-	var payloadData: NSData {
+	public var payloadData: NSData {
 		let mutableData = NSMutableData()
-
-		// UI write op code
-		mutableData.appendUInt8(0x82)
-
-		// LED command
-		mutableData.appendUInt8(27)
+		mutableData.appendUInt8(EV3OpCode.UIWrite.rawValue)
+		mutableData.appendUInt8(EV3UIWriteOpSubcode.LED.rawValue)
 
 		mutableData.appendUInt8(pattern.rawValue)
 		mutableData.appendUInt8(0x1)
