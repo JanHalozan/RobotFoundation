@@ -51,8 +51,8 @@ public final class MetaDevice {
 	init(hidDevice: IOHIDDeviceRef) {
 		internalType = .HIDDevice(hidDevice)
 		type = .HIDDevice
-		name = IOHIDDeviceGetProperty(hidDevice, kIOHIDProductKey)?.takeRetainedValue() as? String
-		uniqueIdentifier = IOHIDDeviceGetProperty(hidDevice, kIOHIDSerialNumberKey)?.takeRetainedValue() as? String
+		name = IOHIDDeviceGetProperty(hidDevice, kIOHIDProductKey)?.takeUnretainedValue() as? String
+		uniqueIdentifier = IOHIDDeviceGetProperty(hidDevice, kIOHIDSerialNumberKey)?.takeUnretainedValue() as? String
 	}
 
 	init(bluetoothDevice: IOBluetoothDevice) {

@@ -9,7 +9,7 @@ import Foundation
 import IOKit.hid
 
 final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
-	private var device: IOHIDDeviceRef?
+	private var device: IOHIDDevice?
 	private var activeClients = 0
 	private var inputReportBuffer = [UInt8](count: 1024, repeatedValue: 0)
 
@@ -27,11 +27,14 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 		assert(NSThread.isMainThread())
 
 		guard let device = device else {
-			assertionFailure()
 			return nil
 		}
 
-		return IOHIDDeviceGetProperty(device, kIOHIDSerialNumberKey)?.takeRetainedValue() as? String
+		guard let property = IOHIDDeviceGetProperty(device, kIOHIDSerialNumberKey) else {
+			return nil
+		}
+
+		return property.takeUnretainedValue() as? String
 	}
 
 	func open(identifier: NSString, handler: Int -> ()) {
@@ -90,6 +93,13 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 		dispatch_sync(dispatch_get_main_queue()) {
 			self.actuallyWriteDataWithIdentifier(identifier, data: data, handler: handler)
 		}
+
+		guard dispatch_semaphore_wait(writeSemaphore, dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC) * 10)) == 0 else {
+			handler(receivedData, Int(1))
+			return
+		}
+
+		handler(receivedData, Int(kIOReturnSuccess))
 	}
 
 	private func actuallyWriteDataWithIdentifier(identifier: NSString, data: NSData, handler: (NSData?, Int) -> ()) {
@@ -111,13 +121,6 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 			handler(nil, Int(result))
 			return
 		}
-
-		guard dispatch_semaphore_wait(writeSemaphore, dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC) * 10)) == 0 else {
-			handler(receivedData, Int(1))
-			return
-		}
-
-		handler(receivedData, Int(kIOReturnSuccess))
 	}
 
 	private func receivedReport() {
