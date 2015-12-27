@@ -9,7 +9,6 @@ import Foundation
 import IOBluetooth
 
 final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol {
-	/* use with care */
 	private let connection: NSXPCConnection
 	private var bluetoothDevice: IOBluetoothDevice?
 
