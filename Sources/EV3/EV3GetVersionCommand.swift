@@ -11,6 +11,8 @@ public enum EV3Version: UInt8 {
 	case OS = 3
 	case Hardware = 9
 	case Firmware = 10
+	case FirmwareBuild = 11
+	case OSBuild = 12
 }
 
 public struct EV3GetVersionCommand: EV3DirectCommand {
