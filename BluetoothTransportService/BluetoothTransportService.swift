@@ -39,7 +39,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol {
 		handler(Int(openStatus!))
 	}
 
-	func close(handler: Int -> ()) {
+	func close(identifier: NSString, handler: Int -> ()) {
 		dispatch_sync(dispatch_get_main_queue()) {
 			assert(self.channel != nil)
 			self.channel?.closeChannel()
@@ -49,7 +49,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol {
 		handler(Int(kIOReturnSuccess))
 	}
 
-	func writeData(data: NSData, handler: (NSData?, Int) -> ()) {
+	func writeData(identifier: NSString, data: NSData, handler: (NSData?, Int) -> ()) {
 		dispatch_sync(dispatch_get_main_queue()) {
 			guard let channel = self.channel else {
 				handler(nil, 1)

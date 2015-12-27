@@ -62,7 +62,7 @@ class XPCBackedDeviceTransport: DeviceTransport {
 			return
 		}
 
-		proxy.close { result in
+		proxy.close(identifier) { result in
 			dispatch_async(dispatch_get_main_queue()) {
 				self.closed()
 			}
@@ -80,7 +80,7 @@ class XPCBackedDeviceTransport: DeviceTransport {
 			return
 		}
 
-		proxy.writeData(data) { data, result in
+		proxy.writeData(identifier, data: data) { data, result in
 			dispatch_async(dispatch_get_main_queue()) {
 				guard result == 0 else {
 					debugPrint("An error occured during write.")
