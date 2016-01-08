@@ -41,6 +41,32 @@ public struct EV3FileResponse: EV3Response {
 }
 
 
+public struct EV3HandleResponse: EV3Response {
+	public let length: UInt16
+	public let messageCounter: UInt16
+	public let replyType: EV3ReplyType
+
+	public let systemCommand: UInt8
+	public let returnStatus: EV3SystemReturnStatus
+	public let handle: UInt8
+
+	public init?(data: NSData) {
+		guard let (length, messageCounter, replyType) = processGenericResponseForData(data) else {
+			assertionFailure()
+			return nil
+		}
+
+		self.length = length
+		self.messageCounter = messageCounter
+		self.replyType = replyType
+
+		self.systemCommand = data.readUInt8AtIndex(5)
+		self.returnStatus = EV3SystemReturnStatus(rawValue: data.readUInt8AtIndex(6)) ?? EV3SystemReturnStatus.UnknownError
+		self.handle = data.readUInt8AtIndex(7)
+	}
+}
+
+
 public struct EV3ContinueFileResponse: EV3Response {
 	public let length: UInt16
 	public let messageCounter: UInt16

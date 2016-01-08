@@ -17,6 +17,11 @@ extension NSMutableData {
 		appendBytes(&value, length: sizeof(UInt16))
 	}
 
+	func appendUInt32(var value: UInt32) {
+		value = NSSwapHostIntToLittle(value)
+		appendBytes(&value, length: sizeof(UInt32))
+	}
+
 	func appendString(string: String) {
 		for unit in string.utf8 {
 			appendUInt8(unit)
