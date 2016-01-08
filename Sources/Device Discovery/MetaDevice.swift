@@ -19,7 +19,7 @@ import ExternalAccessory
 public enum RobotDeviceType {
 	#if os(OSX)
 	case HIDDevice
-	case BluetoothDevice
+	case BluetoothDevice(IOBluetoothDevice)
 	#endif
 
 	#if os(iOS)
@@ -57,7 +57,7 @@ public final class MetaDevice {
 
 	init(bluetoothDevice: IOBluetoothDevice) {
 		internalType = .BluetoothDevice(bluetoothDevice)
-		type = .BluetoothDevice
+		type = .BluetoothDevice(bluetoothDevice)
 		name = bluetoothDevice.name
 		uniqueIdentifier = bluetoothDevice.addressString
 	}
