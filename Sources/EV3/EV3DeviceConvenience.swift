@@ -27,11 +27,18 @@ extension EV3Device {
 
 		let command = EV3ContinueUploadFileCommand(handle: handle, data: chunk)
 		enqueueCommand(command) { response in
+			let handleResponse = response as! EV3HandleResponse
 
 			if moreToUpload {
-				let dataLeft = dataLeft.subdataWithRange(NSMakeRange(1000, dataLeft.length - 1000))
-				self.continueFileUploadWithHandler(handle, dataLeft: dataLeft, handler: handler)
+				let moreDataLeft = dataLeft.subdataWithRange(NSMakeRange(1000, dataLeft.length - 1000))
+				self.continueFileUploadWithHandler(handle, dataLeft: moreDataLeft, handler: handler)
 			} else {
+				let closeCommand = EV3CloseHandleCommand(handle: handleResponse.handle)
+
+				self.enqueueCommand(closeCommand) { closeResponse in
+
+				}
+
 				handler(true)
 			}
 		}
