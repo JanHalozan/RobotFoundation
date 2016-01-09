@@ -39,8 +39,22 @@ public final class BluetoothDeviceSource: RobotDeviceSource, IOBluetoothDeviceIn
 		deviceInquiry.start()
 	}
 
+	private func hasBluetoothDeviceWithAddress(address: String) -> Bool {
+		for metaDevice in foundDevices {
+			if case RobotDeviceTypeInternal.BluetoothDevice(let bluetoothDevice) = metaDevice.internalType where bluetoothDevice.addressString == address {
+				return true
+			}
+		}
+
+		return false
+	}
+
 	@objc public func deviceInquiryDeviceFound(sender: IOBluetoothDeviceInquiry!, device: IOBluetoothDevice!) {
 		assert(NSThread.isMainThread())
+
+		guard !hasBluetoothDeviceWithAddress(device.addressString) else {
+			return
+		}
 
 		let robotDevice = MetaDevice(bluetoothDevice: device)
 		foundDevices.append(robotDevice)
