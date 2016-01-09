@@ -25,6 +25,7 @@ enum EV3FileOpSubcode: UInt8 {
 	case OpenRead = 1
 	case Close = 7
 	case ReadBytes = 28
+	case WriteBytes = 29
 }
 
 enum EV3InputDeviceOpSubcode: UInt8 {

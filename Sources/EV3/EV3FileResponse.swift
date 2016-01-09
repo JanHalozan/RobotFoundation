@@ -46,8 +46,6 @@ public struct EV3HandleResponse: EV3Response {
 	public let messageCounter: UInt16
 	public let replyType: EV3ReplyType
 
-	public let systemCommand: UInt8
-	public let returnStatus: EV3SystemReturnStatus
 	public let handle: UInt8
 
 	public init?(data: NSData) {
@@ -60,9 +58,7 @@ public struct EV3HandleResponse: EV3Response {
 		self.messageCounter = messageCounter
 		self.replyType = replyType
 
-		self.systemCommand = data.readUInt8AtIndex(5)
-		self.returnStatus = EV3SystemReturnStatus(rawValue: data.readUInt8AtIndex(6)) ?? EV3SystemReturnStatus.UnknownError
-		self.handle = data.readUInt8AtIndex(7)
+		self.handle = data.readUInt8AtIndex(5)
 	}
 }
 

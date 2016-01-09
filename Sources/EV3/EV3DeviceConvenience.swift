@@ -12,34 +12,33 @@ public typealias EV3DeviceUploadHandler = Bool -> ()
 
 // Offers convenience API for "sequential" commands.
 extension EV3Device {
-	public func uploadFileData(data: NSData, toPath path: String, handler: EV3DeviceUploadHandler) {
-		let command = EV3UploadFileCommand(path: path, bytesToWrite: UInt32(data.length))
-		enqueueCommand(command) { response in
-			let handleResponse = response as! EV3HandleResponse
+	public func uploadFileData(var dataLeft: NSData, toPath path: String, handler: EV3DeviceUploadHandler) {
+		var first = true
 
-			self.continueFileUploadWithHandler(handleResponse.handle, dataLeft: data, handler: handler)
-		}
-	}
+		while dataLeft.length > 0 {
+			let chunk: NSData
+			let type: EV3WriteChainedType
 
-	private func continueFileUploadWithHandler(handle: UInt8, dataLeft: NSData, handler: EV3DeviceUploadHandler) {
-		let chunk = dataLeft.length > 1000 ? dataLeft.subdataWithRange(NSMakeRange(0, 1000)) : dataLeft
-		let moreToUpload = dataLeft.length > 1000
-
-		let command = EV3ContinueUploadFileCommand(handle: handle, data: chunk)
-		enqueueCommand(command) { response in
-			let handleResponse = response as! EV3HandleResponse
-
-			if moreToUpload {
-				let moreDataLeft = dataLeft.subdataWithRange(NSMakeRange(1000, dataLeft.length - 1000))
-				self.continueFileUploadWithHandler(handle, dataLeft: moreDataLeft, handler: handler)
+			if first {
+				type = .Write
+				first = false
 			} else {
-				let closeCommand = EV3CloseHandleCommand(handle: handleResponse.handle)
+				type = .Append
+			}
 
-				self.enqueueCommand(closeCommand) { closeResponse in
+			let kMaxChunk = 64
+			if dataLeft.length > kMaxChunk {
+				chunk = dataLeft.subdataWithRange(NSMakeRange(0, kMaxChunk))
+				dataLeft = dataLeft.subdataWithRange(NSMakeRange(kMaxChunk, dataLeft.length - kMaxChunk))
+			} else {
+				chunk = dataLeft
+				dataLeft = NSData()
+			}
 
-				}
-
-				handler(true)
+			let command = EV3WriteChainedCommand(path: path, data: chunk, type: type)
+			enqueueCommand(command) { response in
+				let handleResponse = response as! EV3GenericResponse
+				//TODO: handle responses
 			}
 		}
 	}
