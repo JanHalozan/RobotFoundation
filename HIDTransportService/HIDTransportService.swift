@@ -48,10 +48,10 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 
 		if currentIdentifier == nil {
 			assert(activeClients == 0)
-			activeClients++
+			activeClients += 1
 			openNewDevice(identifier, handler: handler)
 		} else if currentIdentifier! == identifier {
-			activeClients++
+			activeClients += 1
 		} else {
 			debugPrint("Tried to open a device while one was already open.")
 			handler(Int(1))
@@ -151,7 +151,7 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 			return
 		}
 
-		activeClients--
+		activeClients -= 1
 		assert(activeClients >= 0)
 
 		if activeClients == 0 {
