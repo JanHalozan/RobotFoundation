@@ -14,6 +14,7 @@ public typealias EV3DeviceUploadHandler = Bool -> ()
 extension EV3Device {
 	public func uploadFileData(var dataLeft: NSData, toPath path: String, handler: EV3DeviceUploadHandler) {
 		var first = true
+		var anyFailed = false
 
 		while dataLeft.length > 0 {
 			let chunk: NSData
@@ -38,8 +39,14 @@ extension EV3Device {
 			let command = EV3WriteChainedCommand(path: path, data: chunk, type: type)
 			enqueueCommand(command) { response in
 				let handleResponse = response as! EV3GenericResponse
-				//TODO: handle responses
+				if handleResponse.replyType == .Error {
+					anyFailed = true
+				}
 			}
+		}
+
+		enqueueBarrier {
+			handler(!anyFailed)
 		}
 	}
 

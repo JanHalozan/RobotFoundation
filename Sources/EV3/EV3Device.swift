@@ -20,6 +20,12 @@ public final class EV3Device: Device {
 		operationQueue.addOperation(operation)
 	}
 
+	public func enqueueBarrier(handler: () -> ()) {
+		operationQueue.addOperationWithBlock {
+			NSOperationQueue.mainQueue().addOperationWithBlock(handler)
+		}
+	}
+
 	override func wroteData() { }
 
 	private var currentlyExecutingOperation: EV3CommandOperation? {
