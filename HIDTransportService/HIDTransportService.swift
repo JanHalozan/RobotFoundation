@@ -79,7 +79,7 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 			let selfPointer = unsafeBitCast(context, HIDTransportService.self)
 			selfPointer.receivedReport()
 
-			}, UnsafeMutablePointer(unsafeAddressOf(self)))
+		}, UnsafeMutablePointer(unsafeAddressOf(self)))
 		IOHIDDeviceScheduleWithRunLoop(device, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode)
 
 		let result = IOHIDDeviceOpen(device, 0)
@@ -156,6 +156,7 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 
 		if activeClients == 0 {
 			IOHIDDeviceClose(device, 0)
+			device = nil
 		}
 
 		handler(Int(kIOReturnSuccess))
