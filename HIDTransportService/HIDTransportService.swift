@@ -72,21 +72,21 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 			return
 		}
 
-		device = hidDevice
-
-		IOHIDDeviceRegisterInputReportCallback(device, &inputReportBuffer, inputReportBuffer.count, { context, result, interface, reportType, index, bytes, length in
+		IOHIDDeviceRegisterInputReportCallback(hidDevice, &inputReportBuffer, inputReportBuffer.count, { context, result, interface, reportType, index, bytes, length in
 
 			let selfPointer = unsafeBitCast(context, HIDTransportService.self)
 			selfPointer.receivedReport()
 
 		}, UnsafeMutablePointer(unsafeAddressOf(self)))
-		IOHIDDeviceScheduleWithRunLoop(device, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode)
+		IOHIDDeviceScheduleWithRunLoop(hidDevice, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode)
 
-		let result = IOHIDDeviceOpen(device, 0)
+		let result = IOHIDDeviceOpen(hidDevice, 0)
 		guard result == kIOReturnSuccess else {
 			handler(Int(result))
 			return
 		}
+
+		device = hidDevice
 	}
 
 	func writeData(identifier: NSString, data: NSData, handler: (NSData?, Int) -> ()) {
