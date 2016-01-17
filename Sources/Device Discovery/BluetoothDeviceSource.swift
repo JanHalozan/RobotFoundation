@@ -74,11 +74,16 @@ public final class BluetoothDeviceSource: RobotDeviceSource, IOBluetoothDeviceIn
 
 		// Check for found devices that aren't in device inquiry's set of results.
 		// These disappeared since the last scan.
+		var devicesToRemove = Set<MetaDevice>()
+
 		for foundDevice in foundDevices {
 			if !bluetoothDevicesContainRobotDevice(bluetoothDevices, foundDevice) {
 				client.robotDeviceSourceDidLoseDevice(foundDevice)
+				devicesToRemove.insert(foundDevice)
 			}
 		}
+
+		foundDevices.subtractInPlace(devicesToRemove)
 
 		scanTimer = NSTimer.scheduledTimerWithTimeInterval(30, target: self, selector: "scanAgain:", userInfo: nil, repeats: false)
 	}
