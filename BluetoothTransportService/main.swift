@@ -8,10 +8,10 @@
 import Foundation
 
 final class ServiceDelegate : NSObject, NSXPCListenerDelegate {
+	private let exportedObject = BluetoothTransportService()
+	
 	func listener(listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
 		newConnection.exportedInterface = NSXPCInterface(withProtocol: XPCTransportServiceProtocol.self)
-
-		let exportedObject = BluetoothTransportService(connection: newConnection)
 		newConnection.exportedObject = exportedObject
 		newConnection.resume()
 

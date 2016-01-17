@@ -16,13 +16,6 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 	private var writeSemaphore = dispatch_semaphore_create(0)
 	private var receivedData: NSData?
 
-	private let connection: NSXPCConnection
-
-	init(connection: NSXPCConnection) {
-		self.connection = connection
-		super.init()
-	}
-
 	private var currentIdentifier: String? {
 		assert(NSThread.isMainThread())
 

@@ -24,7 +24,6 @@ private enum BluetoothAsyncWriteState {
 }
 
 final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, IOBluetoothRFCOMMChannelDelegate {
-	private let connection: NSXPCConnection
 	private var bluetoothDevice: IOBluetoothDevice?
 	private var channel: IOBluetoothRFCOMMChannel?
 
@@ -37,11 +36,6 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 
 	private var writeSemaphore = dispatch_semaphore_create(0)
 	private var receivedData: NSData?
-
-	init(connection: NSXPCConnection) {
-		self.connection = connection
-		super.init()
-	}
 
 	private var currentIdentifier: String? {
 		assert(NSThread.isMainThread())
