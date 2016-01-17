@@ -65,7 +65,10 @@ public final class BluetoothDeviceSource: RobotDeviceSource, IOBluetoothDeviceIn
 		// Check for found devices that aren't in device inquiry's set of results.
 		// These disappeared since the last scan.
 
-		let bluetoothDevices = deviceInquiry.foundDevices() as! [IOBluetoothDevice]
+		guard let bluetoothDevices = deviceInquiry.foundDevices() as? [IOBluetoothDevice] else {
+			assertionFailure()
+			return
+		}
 
 		for foundDevice in foundDevices {
 			if !bluetoothDevicesContainRobotDevice(bluetoothDevices, foundDevice) {
