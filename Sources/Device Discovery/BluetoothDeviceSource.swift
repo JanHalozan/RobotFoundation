@@ -12,7 +12,7 @@ import IOBluetooth
 
 public final class BluetoothDeviceSource: RobotDeviceSource, IOBluetoothDeviceInquiryDelegate {
 	private let deviceInquiry: IOBluetoothDeviceInquiry
-	private var foundDevices = [MetaDevice]()
+	private var foundDevices = Set<MetaDevice>()
 	private var scanTimer: NSTimer?
 
 	private unowned var client: RobotDeviceSourceClient
@@ -57,7 +57,7 @@ public final class BluetoothDeviceSource: RobotDeviceSource, IOBluetoothDeviceIn
 		}
 
 		let robotDevice = MetaDevice(bluetoothDevice: device)
-		foundDevices.append(robotDevice)
+		foundDevices.insert(robotDevice)
 		client.robotDeviceSourceDidFindDevice(robotDevice)
 	}
 
