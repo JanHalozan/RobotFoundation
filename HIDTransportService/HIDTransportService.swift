@@ -56,15 +56,14 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 			}
 
 			activeClients += 1
+			handler(Int(kIOReturnSuccess))
 		} else if currentIdentifier! == identifier {
 			activeClients += 1
+			handler(Int(kIOReturnSuccess))
 		} else {
 			debugPrint("Tried to open a device while one was already open.")
 			handler(Int(1))
-			return
 		}
-
-		handler(Int(kIOReturnSuccess))
 	}
 
 	private func openNewDevice(identifier: NSString) -> Int {
