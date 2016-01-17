@@ -48,8 +48,14 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 
 		if currentIdentifier == nil {
 			assert(activeClients == 0)
+
+			let openResult = openNewDevice(identifier)
+			guard openResult == Int(kIOReturnSuccess) else {
+				handler(openResult)
+				return
+			}
+
 			activeClients += 1
-			openNewDevice(identifier, handler: handler)
 		} else if currentIdentifier! == identifier {
 			activeClients += 1
 		} else {
@@ -61,15 +67,14 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 		handler(Int(kIOReturnSuccess))
 	}
 
-	private func openNewDevice(identifier: NSString, handler: Int -> ()) {
+	private func openNewDevice(identifier: NSString) -> Int {
 		let matching = IOServiceMatching(kIOHIDDeviceKey) as NSMutableDictionary
 		matching[kIOHIDSerialNumberKey] = identifier
 
 		let service = IOServiceGetMatchingService(kIOMasterPortDefault, matching as CFDictionaryRef)
 
 		guard let hidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, service)?.takeRetainedValue() else {
-			handler(1)
-			return
+			return 1
 		}
 
 		IOHIDDeviceRegisterInputReportCallback(hidDevice, &inputReportBuffer, inputReportBuffer.count, { context, result, interface, reportType, index, bytes, length in
@@ -82,11 +87,12 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 
 		let result = IOHIDDeviceOpen(hidDevice, 0)
 		guard result == kIOReturnSuccess else {
-			handler(Int(result))
-			return
+			return Int(result)
 		}
 
 		device = hidDevice
+
+		return Int(kIOReturnSuccess)
 	}
 
 	func writeData(identifier: NSString, data: NSData, handler: (NSData?, Int) -> ()) {
