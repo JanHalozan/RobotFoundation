@@ -72,17 +72,29 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol {
 
 	@objc func connectionComplete(device: IOBluetoothDevice, var status: IOReturn) {
 		assert(NSThread.isMainThread())
+		
+		guard let bluetoothDevice = bluetoothDevice else {
+			assertionFailure("How are we opening a BL device if we don't have one?")
+			return
+		}
+		
+		guard bluetoothDevice === device else {
+			assertionFailure()
+			return
+		}
 
 		guard status == kIOReturnSuccess else {
 			//failedToOpenWithError(status)
 			return
 		}
 
-		var channelID = BluetoothRFCOMMChannelID()
-
 		let uuid = IOBluetoothSDPUUID(UUID16: BluetoothSDPUUID16(kBluetoothSDPUUID16ServiceClassSerialPort.rawValue))
-		let record = bluetoothDevice!.getServiceRecordForUUID(uuid)
+		guard let record = bluetoothDevice.getServiceRecordForUUID(uuid) else {
+			//failToOpenWithError(...)
+			return
+		}
 
+		var channelID = BluetoothRFCOMMChannelID()
 		status = record.getRFCOMMChannelID(&channelID)
 
 		guard status == kIOReturnSuccess else {
@@ -91,7 +103,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol {
 		}
 
 		var channel: IOBluetoothRFCOMMChannel?
-		status = bluetoothDevice!.openRFCOMMChannelAsync(&channel, withChannelID: channelID, delegate: self)
+		status = bluetoothDevice.openRFCOMMChannelAsync(&channel, withChannelID: channelID, delegate: self)
 
 		guard status == kIOReturnSuccess else {
 			self.channel = nil
