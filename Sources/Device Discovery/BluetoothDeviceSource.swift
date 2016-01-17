@@ -62,14 +62,18 @@ public final class BluetoothDeviceSource: RobotDeviceSource, IOBluetoothDeviceIn
 	}
 
 	@objc public func deviceInquiryComplete(sender: IOBluetoothDeviceInquiry!, error: IOReturn, aborted: Bool) {
-		// Check for found devices that aren't in device inquiry's set of results.
-		// These disappeared since the last scan.
+		// If the inquiry was aborted we don't have any interesting new information.
+		guard !aborted else {
+			return
+		}
 
 		guard let bluetoothDevices = deviceInquiry.foundDevices() as? [IOBluetoothDevice] else {
 			assertionFailure()
 			return
 		}
 
+		// Check for found devices that aren't in device inquiry's set of results.
+		// These disappeared since the last scan.
 		for foundDevice in foundDevices {
 			if !bluetoothDevicesContainRobotDevice(bluetoothDevices, foundDevice) {
 				client.robotDeviceSourceDidLoseDevice(foundDevice)
