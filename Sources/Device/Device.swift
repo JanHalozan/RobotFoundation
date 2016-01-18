@@ -36,7 +36,7 @@ public class Device: DeviceTransportDelegate {
 		try transport.open()
 	}
 
-	func close() {
+	public func close() {
 		transport.close()
 	}
 
