@@ -21,9 +21,15 @@ public final class EV3Device: Device {
 	}
 
 	public func enqueueBarrier(handler: () -> ()) {
-		operationQueue.addOperationWithBlock {
+		let blockOperation = NSBlockOperation(block: {
 			NSOperationQueue.mainQueue().addOperationWithBlock(handler)
+		})
+
+		for operation in operationQueue.operations {
+			blockOperation.addDependency(operation)
 		}
+
+		operationQueue.addOperation(blockOperation)
 	}
 
 	override func wroteData() { }
