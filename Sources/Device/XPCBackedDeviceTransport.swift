@@ -22,7 +22,9 @@ class XPCBackedDeviceTransport: DeviceTransport {
 	}
 
 	override func open() throws {
-		guard !isOpen else {
+		assert(NSThread.isMainThread())
+
+		guard openState == .Closed else {
 			return
 		}
 
@@ -43,6 +45,8 @@ class XPCBackedDeviceTransport: DeviceTransport {
 			assertionFailure()
 			throw IOReturn(1)
 		}
+
+		beganOpening()
 
 		proxy.open(identifier) { result in
 			dispatch_async(dispatch_get_main_queue()) {
@@ -98,6 +102,14 @@ class XPCBackedDeviceTransport: DeviceTransport {
 				}
 			}
 		}
+	}
+
+	override func closed() {
+		super.closed()
+
+		serviceConnection?.suspend()
+		serviceConnection?.invalidate()
+		serviceConnection = nil
 	}
 }
 

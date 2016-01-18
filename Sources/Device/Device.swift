@@ -18,7 +18,7 @@ public class Device: DeviceTransportDelegate {
 	let transport: DeviceTransport
 
 	var isOpen: Bool {
-		return transport.isOpen
+		return transport.openState == .Opened
 	}
 
 	weak var delegate: DeviceDelegate?

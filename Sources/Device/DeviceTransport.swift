@@ -16,8 +16,14 @@ protocol DeviceTransportDelegate: class {
 	func deviceTransportDidClose(transport: DeviceTransport)
 }
 
+enum DeviceTransportOpenState {
+	case Closed
+	case Opening
+	case Opened
+}
+
 class DeviceTransport {
-	private(set) var isOpen = false
+	private(set) var openState = DeviceTransportOpenState.Closed
 
 	weak var delegate: DeviceTransportDelegate?
 
@@ -38,25 +44,38 @@ class DeviceTransport {
 		assert(NSThread.isMainThread())
 		delegate?.deviceTransportDidWriteData(self)
 	}
+
+	func beganOpening() {
+		assert(NSThread.isMainThread())
+		
+		assert(openState == .Closed)
+		openState = .Opening
+	}
 	
 	func opened() {
 		assert(NSThread.isMainThread())
 
-		isOpen = true
+		assert(openState == .Opening)
+		openState = .Opened
+
 		delegate?.deviceTransportDidOpen(self)
 	}
 
 	func failedToOpenWithError(error: ErrorType) {
 		assert(NSThread.isMainThread())
 
-		isOpen = false
+		assert(openState == .Opening)
+		openState = .Closed
+
 		delegate?.deviceTransport(self, didFailToOpenWithError: error)
 	}
 
 	func closed() {
 		assert(NSThread.isMainThread())
 
-		isOpen = false
+		assert(openState == .Opened)
+		openState = .Closed
+
 		delegate?.deviceTransportDidClose(self)
 	}
 }

@@ -43,7 +43,7 @@ final class EV3CommandOperation: NSOperation {
 	}
 
 	override var ready: Bool {
-		return super.ready && transport.isOpen
+		return super.ready && transport.openState == .Opened
 	}
 
 	override func start() {
