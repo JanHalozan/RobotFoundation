@@ -22,6 +22,10 @@ class XPCBackedDeviceTransport: DeviceTransport {
 	}
 
 	override func open() throws {
+		guard !isOpen else {
+			return
+		}
+
 		if serviceConnection == nil {
 			serviceConnection = NSXPCConnection(serviceName: serviceName)
 		}
