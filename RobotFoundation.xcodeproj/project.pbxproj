@@ -356,6 +356,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C947517B1C540EDE00A30AA6 /* Drawing */ = {
+			isa = PBXGroup;
+			children = (
+				C94751781C5408EB00A30AA6 /* EV3DrawRectCommand.swift */,
+				C94751721C54056200A30AA6 /* EV3DrawTextCommand.swift */,
+				C94751751C54083700A30AA6 /* EV3FillRectCommand.swift */,
+				C947516C1C53FFB600A30AA6 /* EV3FillWindowCommand.swift */,
+				C947516F1C54024B00A30AA6 /* EV3UpdateDisplayCommand.swift */,
+			);
+			name = Drawing;
+			sourceTree = "<group>";
+		};
 		C96945681C28F9690030DEB3 /* Device Discovery */ = {
 			isa = PBXGroup;
 			children = (
@@ -515,13 +527,10 @@
 		C9C561211C2E1F3E00E61C28 /* Commands */ = {
 			isa = PBXGroup;
 			children = (
+				C947517B1C540EDE00A30AA6 /* Drawing */,
 				C96FFD3C1C417A86006AA973 /* EV3ButtonCommand.swift */,
 				C9EDF44D1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift */,
 				C9EDF4501C2B56B600879F00 /* EV3DeleteItemCommand.swift */,
-				C94751781C5408EB00A30AA6 /* EV3DrawRectCommand.swift */,
-				C94751721C54056200A30AA6 /* EV3DrawTextCommand.swift */,
-				C94751751C54083700A30AA6 /* EV3FillRectCommand.swift */,
-				C947516C1C53FFB600A30AA6 /* EV3FillWindowCommand.swift */,
 				C96026481C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift */,
 				C9D378E31C3062F1005385D5 /* EV3GetVersionCommand.swift */,
 				C9B138761C2B09650018812F /* EV3ListFilesCommand.swift */,
@@ -536,7 +545,6 @@
 				C978686F1C28DF5A0099BB82 /* EV3SetSensorModeCommand.swift */,
 				C907C25E1C2A28B000647531 /* EV3StartMotorCommand.swift */,
 				C907C2641C2A2F0300647531 /* EV3StopMotorCommand.swift */,
-				C947516F1C54024B00A30AA6 /* EV3UpdateDisplayCommand.swift */,
 				C933B3EA1C406A12002B8464 /* EV3WriteChainedCommand.swift */,
 			);
 			name = Commands;
