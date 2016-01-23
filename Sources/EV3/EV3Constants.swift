@@ -47,6 +47,9 @@ enum EV3UIWriteOpSubcode: UInt8 {
 
 enum EV3UIDrawOpSubcode: UInt8 {
 	case Update = 0
+	case Text = 5
+	case FillRect = 9
+	case Rect = 10
 	case FillWindow = 19
 }
 
