@@ -299,4 +299,32 @@ final class EV3HIDDeviceTests: XCTestCase, RobotDeviceManagerDelegate {
 		manager.beginDiscovery()
 		waitForExpectationsWithTimeout(10, handler: nil)
 	}
+
+	func testInvertRectCommand() {
+		responseExpectation = expectationWithDescription("command response")
+		activeTest = { [unowned self] in
+			let command = EV3FillWindowCommand(color: EV3FillColor.White)
+			self.device.enqueueCommand(command) { response in
+				let ev3Response = response as! EV3GenericResponse
+				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
+			}
+
+			let drawRect = EV3InvertRectCommand(x: 6, y: 52, width: 166, height: 24)
+			self.device.enqueueCommand(drawRect) { response in
+				let ev3Response = response as! EV3GenericResponse
+				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
+			}
+
+			// no drawing happens until this call
+			let updateCommand = EV3UpdateDisplayCommand()
+			self.device.enqueueCommand(updateCommand) { response in
+				let ev3Response = response as! EV3GenericResponse
+				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
+				self.responseExpectation.fulfill()
+			}
+		}
+
+		manager.beginDiscovery()
+		waitForExpectationsWithTimeout(10, handler: nil)
+	}
 }

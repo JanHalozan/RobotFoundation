@@ -50,6 +50,7 @@ enum EV3UIDrawOpSubcode: UInt8 {
 	case Text = 5
 	case FillRect = 9
 	case Rect = 10
+	case InverseRect = 16
 	case FillWindow = 19
 }
 
