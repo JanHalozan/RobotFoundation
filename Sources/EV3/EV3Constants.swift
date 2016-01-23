@@ -47,11 +47,15 @@ enum EV3UIWriteOpSubcode: UInt8 {
 
 enum EV3UIDrawOpSubcode: UInt8 {
 	case Update = 0
+	case Clean = 1
+	case Pixel = 2
+	case Line = 3
 	case Text = 5
 	case FillRect = 9
 	case Rect = 10
 	case InverseRect = 16
 	case FillWindow = 19
+	case DotLine = 21
 }
 
 enum EV3SensorType: UInt8 {
