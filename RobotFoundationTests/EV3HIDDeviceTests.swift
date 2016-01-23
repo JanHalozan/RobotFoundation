@@ -303,6 +303,12 @@ final class EV3HIDDeviceTests: XCTestCase, RobotDeviceManagerDelegate {
 	func testInvertRectCommand() {
 		responseExpectation = expectationWithDescription("command response")
 		activeTest = { [unowned self] in
+			let disableTopline = EV3EnableToplineCommand(enable: false)
+			self.device.enqueueCommand(disableTopline) { response in
+				let ev3Response = response as! EV3GenericResponse
+				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
+			}
+
 			let command = EV3FillWindowCommand(color: EV3FillColor.Background)
 			self.device.enqueueCommand(command) { response in
 				let ev3Response = response as! EV3GenericResponse
