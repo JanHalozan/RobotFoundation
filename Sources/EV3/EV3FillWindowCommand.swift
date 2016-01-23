@@ -8,8 +8,8 @@
 import Foundation
 
 public enum EV3FillColor: UInt8 {
-	case White = 0
-	case Black = 1
+	case Background = 0
+	case Foreground = 1
 }
 
 public struct EV3FillWindowCommand: EV3DirectCommand {

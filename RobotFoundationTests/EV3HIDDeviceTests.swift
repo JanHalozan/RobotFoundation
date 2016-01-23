@@ -247,7 +247,7 @@ final class EV3HIDDeviceTests: XCTestCase, RobotDeviceManagerDelegate {
 	func testFillWindowCommand() {
 		responseExpectation = expectationWithDescription("command response")
 		activeTest = { [unowned self] in
-			let command = EV3FillWindowCommand(color: EV3FillColor.White)
+			let command = EV3FillWindowCommand(color: EV3FillColor.Background)
 			self.device.enqueueCommand(command) { response in
 				let ev3Response = response as! EV3GenericResponse
 				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
@@ -269,19 +269,19 @@ final class EV3HIDDeviceTests: XCTestCase, RobotDeviceManagerDelegate {
 	func testDrawTextCommand() {
 		responseExpectation = expectationWithDescription("command response")
 		activeTest = { [unowned self] in
-			let command = EV3FillWindowCommand(color: EV3FillColor.White)
+			let command = EV3FillWindowCommand(color: EV3FillColor.Background)
 			self.device.enqueueCommand(command) { response in
 				let ev3Response = response as! EV3GenericResponse
 				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
 			}
 
-			let drawRect = EV3DrawRectCommand(color: EV3FillColor.Black, x: 6, y: 52, width: 166, height: 24)
+			let drawRect = EV3DrawRectCommand(color: EV3FillColor.Foreground, x: 6, y: 52, width: 166, height: 24)
 			self.device.enqueueCommand(drawRect) { response in
 				let ev3Response = response as! EV3GenericResponse
 				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
 			}
 
-			let textCommand = EV3DrawTextCommand(color: EV3FillColor.Black, x: 13, y: 60, string: "Alex is awesome!")
+			let textCommand = EV3DrawTextCommand(color: EV3FillColor.Foreground, x: 13, y: 60, string: "Alex is awesome!")
 			self.device.enqueueCommand(textCommand) { response in
 				let ev3Response = response as! EV3GenericResponse
 				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
@@ -303,7 +303,7 @@ final class EV3HIDDeviceTests: XCTestCase, RobotDeviceManagerDelegate {
 	func testInvertRectCommand() {
 		responseExpectation = expectationWithDescription("command response")
 		activeTest = { [unowned self] in
-			let command = EV3FillWindowCommand(color: EV3FillColor.White)
+			let command = EV3FillWindowCommand(color: EV3FillColor.Background)
 			self.device.enqueueCommand(command) { response in
 				let ev3Response = response as! EV3GenericResponse
 				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
@@ -331,37 +331,37 @@ final class EV3HIDDeviceTests: XCTestCase, RobotDeviceManagerDelegate {
 	func testPrimitiveDrawingCommands() {
 		responseExpectation = expectationWithDescription("command response")
 		activeTest = { [unowned self] in
-			let command = EV3FillWindowCommand(color: EV3FillColor.White)
+			let command = EV3FillWindowCommand(color: .Background)
 			self.device.enqueueCommand(command) { response in
 				let ev3Response = response as! EV3GenericResponse
 				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
 			}
 
-			let drawPixel = EV3DrawPixelCommand(color: .Black, x: 40, y: 40)
+			let drawPixel = EV3DrawPixelCommand(color: .Foreground, x: 40, y: 40)
 			self.device.enqueueCommand(drawPixel) { response in
 				let ev3Response = response as! EV3GenericResponse
 				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
 			}
 
-			let drawLine = EV3DrawLineCommand(color: .Black, x1: 20, y1: 20, x2: 40, y2: 20)
+			let drawLine = EV3DrawLineCommand(color: .Foreground, x1: 20, y1: 20, x2: 40, y2: 20)
 			self.device.enqueueCommand(drawLine) { response in
 				let ev3Response = response as! EV3GenericResponse
 				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
 			}
 
-			let drawDotline = EV3DrawDotlineCommand(color: .Black, x1: 60, y1: 20, x2: 80, y2: 20, onPixels: 1, offPixels: 1)
+			let drawDotline = EV3DrawDotlineCommand(color: .Foreground, x1: 60, y1: 20, x2: 80, y2: 20, onPixels: 1, offPixels: 1)
 			self.device.enqueueCommand(drawDotline) { response in
 				let ev3Response = response as! EV3GenericResponse
 				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
 			}
 
-			let circle = EV3DrawCircleCommand(color: .Black, x: 100, y: 100, radius: 8)
+			let circle = EV3DrawCircleCommand(color: .Foreground, x: 100, y: 100, radius: 8)
 			self.device.enqueueCommand(circle) { response in
 				let ev3Response = response as! EV3GenericResponse
 				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
 			}
 
-			let filledCircle = EV3FillCircleCommand(color: .Black, x: 40, y: 100, radius: 8)
+			let filledCircle = EV3FillCircleCommand(color: .Foreground, x: 40, y: 100, radius: 8)
 			self.device.enqueueCommand(filledCircle) { response in
 				let ev3Response = response as! EV3GenericResponse
 				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
