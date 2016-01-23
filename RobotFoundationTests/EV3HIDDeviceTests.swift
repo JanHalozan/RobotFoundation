@@ -355,6 +355,18 @@ final class EV3HIDDeviceTests: XCTestCase, RobotDeviceManagerDelegate {
 				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
 			}
 
+			let circle = EV3DrawCircleCommand(color: .Black, x: 100, y: 100, radius: 8)
+			self.device.enqueueCommand(circle) { response in
+				let ev3Response = response as! EV3GenericResponse
+				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
+			}
+
+			let filledCircle = EV3FillCircleCommand(color: .Black, x: 40, y: 100, radius: 8)
+			self.device.enqueueCommand(filledCircle) { response in
+				let ev3Response = response as! EV3GenericResponse
+				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
+			}
+
 			// no drawing happens until this call
 			let updateCommand = EV3UpdateDisplayCommand()
 			self.device.enqueueCommand(updateCommand) { response in
