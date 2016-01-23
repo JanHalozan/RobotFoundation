@@ -11,6 +11,7 @@ enum EV3OpCode: UInt8 {
 	case UIRead = 0x81
 	case UIWrite = 0x82
 	case UIButton = 0x83
+	case UIDraw = 0x84
 	case Sound = 0x94
 	case InputDevice = 0x99
 	case InputRead = 0x9A
@@ -42,6 +43,11 @@ enum EV3SoundOpSubcode: UInt8 {
 
 enum EV3UIWriteOpSubcode: UInt8 {
 	case LED = 27
+}
+
+enum EV3UIDrawOpSubcode: UInt8 {
+	case Update = 0
+	case FillWindow = 19
 }
 
 enum EV3SensorType: UInt8 {
