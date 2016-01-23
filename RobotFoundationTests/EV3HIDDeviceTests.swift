@@ -349,6 +349,12 @@ final class EV3HIDDeviceTests: XCTestCase, RobotDeviceManagerDelegate {
 				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
 			}
 
+			let drawDotline = EV3DrawDotlineCommand(color: .Black, x1: 60, y1: 20, x2: 80, y2: 20, onPixels: 1, offPixels: 1)
+			self.device.enqueueCommand(drawDotline) { response in
+				let ev3Response = response as! EV3GenericResponse
+				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
+			}
+
 			// no drawing happens until this call
 			let updateCommand = EV3UpdateDisplayCommand()
 			self.device.enqueueCommand(updateCommand) { response in
