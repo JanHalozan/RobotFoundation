@@ -52,6 +52,8 @@
 		C94FA9B21C541FE6008242C8 /* EV3FillCircleCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94FA9B01C541FE6008242C8 /* EV3FillCircleCommand.swift */; };
 		C94FA9B41C542050008242C8 /* EV3DrawCircleCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94FA9B31C542050008242C8 /* EV3DrawCircleCommand.swift */; };
 		C94FA9B51C542050008242C8 /* EV3DrawCircleCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94FA9B31C542050008242C8 /* EV3DrawCircleCommand.swift */; };
+		C94FA9B71C5422EB008242C8 /* EV3SelectFontCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94FA9B61C5422EB008242C8 /* EV3SelectFontCommand.swift */; };
+		C94FA9B81C5422EB008242C8 /* EV3SelectFontCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94FA9B61C5422EB008242C8 /* EV3SelectFontCommand.swift */; };
 		C96026491C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96026481C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift */; };
 		C960264A1C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96026481C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift */; };
 		C960264C1C307096007BCF93 /* EV3StorageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C960264B1C307096007BCF93 /* EV3StorageResponse.swift */; };
@@ -253,6 +255,7 @@
 		C94A9F3A1C2CF5660031642F /* EV3ReadChainedCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ReadChainedCommand.swift; sourceTree = "<group>"; };
 		C94FA9B01C541FE6008242C8 /* EV3FillCircleCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3FillCircleCommand.swift; sourceTree = "<group>"; };
 		C94FA9B31C542050008242C8 /* EV3DrawCircleCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3DrawCircleCommand.swift; sourceTree = "<group>"; };
+		C94FA9B61C5422EB008242C8 /* EV3SelectFontCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3SelectFontCommand.swift; sourceTree = "<group>"; };
 		C96026481C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3GetStorageInfoCommand.swift; sourceTree = "<group>"; };
 		C960264B1C307096007BCF93 /* EV3StorageResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3StorageResponse.swift; sourceTree = "<group>"; };
 		C96945571C28F3760030DEB3 /* NXTHandleResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTHandleResponse.swift; sourceTree = "<group>"; };
@@ -391,6 +394,7 @@
 				C94751751C54083700A30AA6 /* EV3FillRectCommand.swift */,
 				C947516C1C53FFB600A30AA6 /* EV3FillWindowCommand.swift */,
 				C947517C1C540F1400A30AA6 /* EV3InvertRectCommand.swift */,
+				C94FA9B61C5422EB008242C8 /* EV3SelectFontCommand.swift */,
 				C947516F1C54024B00A30AA6 /* EV3UpdateDisplayCommand.swift */,
 			);
 			name = Drawing;
@@ -901,6 +905,7 @@
 				C98C34E91C264532006840C3 /* EV3SetLEDCommand.swift in Sources */,
 				C947517D1C540F1400A30AA6 /* EV3InvertRectCommand.swift in Sources */,
 				C907C2651C2A2F0300647531 /* EV3StopMotorCommand.swift in Sources */,
+				C94FA9B71C5422EB008242C8 /* EV3SelectFontCommand.swift in Sources */,
 				C9B1387D1C2B1C5C0018812F /* EV3ListingParser.swift in Sources */,
 				C97551C11C29D74D002A5796 /* DeviceEV3Extras.swift in Sources */,
 			);
@@ -1002,6 +1007,7 @@
 				C98C351C1C26544D006840C3 /* NXTTypes.swift in Sources */,
 				C947517E1C540F1400A30AA6 /* EV3InvertRectCommand.swift in Sources */,
 				C907C2661C2A2F0300647531 /* EV3StopMotorCommand.swift in Sources */,
+				C94FA9B81C5422EB008242C8 /* EV3SelectFontCommand.swift in Sources */,
 				C9B1387E1C2B1C5C0018812F /* EV3ListingParser.swift in Sources */,
 				C97551C21C29D74D002A5796 /* DeviceEV3Extras.swift in Sources */,
 			);

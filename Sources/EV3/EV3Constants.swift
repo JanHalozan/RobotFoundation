@@ -55,6 +55,7 @@ enum EV3UIDrawOpSubcode: UInt8 {
 	case FillRect = 9
 	case Rect = 10
 	case InverseRect = 16
+	case SelectFont = 17
 	case FillWindow = 19
 	case DotLine = 21
 	case FillCircle = 24
@@ -95,3 +96,7 @@ enum EV3Layer: UInt8 {
 
 let EV3ColorMode = UInt8(2)
 let EV3MaxFileLength = UInt16(64)
+
+let EV3TopLineHeight = UInt16(10)
+let EV3DisplayWidth = UInt16(178)
+let EV3DisplayHeight = UInt16(128)
