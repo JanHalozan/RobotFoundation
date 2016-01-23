@@ -54,6 +54,8 @@
 		C94FA9B51C542050008242C8 /* EV3DrawCircleCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94FA9B31C542050008242C8 /* EV3DrawCircleCommand.swift */; };
 		C94FA9B71C5422EB008242C8 /* EV3SelectFontCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94FA9B61C5422EB008242C8 /* EV3SelectFontCommand.swift */; };
 		C94FA9B81C5422EB008242C8 /* EV3SelectFontCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94FA9B61C5422EB008242C8 /* EV3SelectFontCommand.swift */; };
+		C94FA9BA1C5424EE008242C8 /* EV3EnableToplineCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94FA9B91C5424EE008242C8 /* EV3EnableToplineCommand.swift */; };
+		C94FA9BB1C5424EE008242C8 /* EV3EnableToplineCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94FA9B91C5424EE008242C8 /* EV3EnableToplineCommand.swift */; };
 		C96026491C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96026481C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift */; };
 		C960264A1C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96026481C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift */; };
 		C960264C1C307096007BCF93 /* EV3StorageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C960264B1C307096007BCF93 /* EV3StorageResponse.swift */; };
@@ -256,6 +258,7 @@
 		C94FA9B01C541FE6008242C8 /* EV3FillCircleCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3FillCircleCommand.swift; sourceTree = "<group>"; };
 		C94FA9B31C542050008242C8 /* EV3DrawCircleCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3DrawCircleCommand.swift; sourceTree = "<group>"; };
 		C94FA9B61C5422EB008242C8 /* EV3SelectFontCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3SelectFontCommand.swift; sourceTree = "<group>"; };
+		C94FA9B91C5424EE008242C8 /* EV3EnableToplineCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3EnableToplineCommand.swift; sourceTree = "<group>"; };
 		C96026481C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3GetStorageInfoCommand.swift; sourceTree = "<group>"; };
 		C960264B1C307096007BCF93 /* EV3StorageResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3StorageResponse.swift; sourceTree = "<group>"; };
 		C96945571C28F3760030DEB3 /* NXTHandleResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTHandleResponse.swift; sourceTree = "<group>"; };
@@ -390,6 +393,7 @@
 				C947517F1C5410C000A30AA6 /* EV3DrawPixelCommand.swift */,
 				C94751781C5408EB00A30AA6 /* EV3DrawRectCommand.swift */,
 				C94751721C54056200A30AA6 /* EV3DrawTextCommand.swift */,
+				C94FA9B91C5424EE008242C8 /* EV3EnableToplineCommand.swift */,
 				C94FA9B01C541FE6008242C8 /* EV3FillCircleCommand.swift */,
 				C94751751C54083700A30AA6 /* EV3FillRectCommand.swift */,
 				C947516C1C53FFB600A30AA6 /* EV3FillWindowCommand.swift */,
@@ -859,6 +863,7 @@
 				C96026491C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift in Sources */,
 				C91381301C2F5C6000BB2C67 /* EV3Response.swift in Sources */,
 				C98C34D11C25F893006840C3 /* NSDataEV3Extras.swift in Sources */,
+				C94FA9BA1C5424EE008242C8 /* EV3EnableToplineCommand.swift in Sources */,
 				C905867D1C2C605F0068E560 /* EV3FileResponse.swift in Sources */,
 				C94751831C54114F00A30AA6 /* EV3CleanDisplayCommand.swift in Sources */,
 				C9C561281C2E21F700E61C28 /* EV3DisplayFramebuffer.swift in Sources */,
@@ -961,6 +966,7 @@
 				C960264A1C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift in Sources */,
 				C91381311C2F5C6000BB2C67 /* EV3Response.swift in Sources */,
 				C97551B21C29D094002A5796 /* EV3StringResponse.swift in Sources */,
+				C94FA9BB1C5424EE008242C8 /* EV3EnableToplineCommand.swift in Sources */,
 				C905867E1C2C605F0068E560 /* EV3FileResponse.swift in Sources */,
 				C94751841C54114F00A30AA6 /* EV3CleanDisplayCommand.swift in Sources */,
 				C9C561291C2E21F700E61C28 /* EV3DisplayFramebuffer.swift in Sources */,

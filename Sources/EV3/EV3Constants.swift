@@ -56,6 +56,7 @@ enum EV3UIDrawOpSubcode: UInt8 {
 	case Rect = 10
 	case InverseRect = 16
 	case SelectFont = 17
+	case Topline = 18
 	case FillWindow = 19
 	case DotLine = 21
 	case FillCircle = 24
