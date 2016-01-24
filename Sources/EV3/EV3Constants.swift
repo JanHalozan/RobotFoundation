@@ -60,6 +60,8 @@ enum EV3UIDrawOpSubcode: UInt8 {
 	case FillWindow = 19
 	case DotLine = 21
 	case FillCircle = 24
+	case Store = 25
+	case Restore = 26
 }
 
 enum EV3SensorType: UInt8 {
