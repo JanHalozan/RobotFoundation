@@ -28,6 +28,8 @@
 		C933B3EC1C406A12002B8464 /* EV3WriteChainedCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C933B3EA1C406A12002B8464 /* EV3WriteChainedCommand.swift */; };
 		C93AAEB11C553759008B7758 /* EV3DrawIconCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93AAEB01C553759008B7758 /* EV3DrawIconCommand.swift */; };
 		C93AAEB21C553759008B7758 /* EV3DrawIconCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93AAEB01C553759008B7758 /* EV3DrawIconCommand.swift */; };
+		C93AAEB41C553C3F008B7758 /* EV3DrawBitmapCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93AAEB31C553C3F008B7758 /* EV3DrawBitmapCommand.swift */; };
+		C93AAEB51C553C3F008B7758 /* EV3DrawBitmapCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93AAEB31C553C3F008B7758 /* EV3DrawBitmapCommand.swift */; };
 		C947516D1C53FFB600A30AA6 /* EV3FillWindowCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C947516C1C53FFB600A30AA6 /* EV3FillWindowCommand.swift */; };
 		C947516E1C53FFB600A30AA6 /* EV3FillWindowCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C947516C1C53FFB600A30AA6 /* EV3FillWindowCommand.swift */; };
 		C94751701C54024B00A30AA6 /* EV3UpdateDisplayCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C947516F1C54024B00A30AA6 /* EV3UpdateDisplayCommand.swift */; };
@@ -249,6 +251,7 @@
 		C917F68E1C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RobotDeviceDescriptorEV3Extras.swift; sourceTree = "<group>"; };
 		C933B3EA1C406A12002B8464 /* EV3WriteChainedCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3WriteChainedCommand.swift; sourceTree = "<group>"; };
 		C93AAEB01C553759008B7758 /* EV3DrawIconCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3DrawIconCommand.swift; sourceTree = "<group>"; };
+		C93AAEB31C553C3F008B7758 /* EV3DrawBitmapCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3DrawBitmapCommand.swift; sourceTree = "<group>"; };
 		C947516C1C53FFB600A30AA6 /* EV3FillWindowCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3FillWindowCommand.swift; sourceTree = "<group>"; };
 		C947516F1C54024B00A30AA6 /* EV3UpdateDisplayCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3UpdateDisplayCommand.swift; sourceTree = "<group>"; };
 		C94751721C54056200A30AA6 /* EV3DrawTextCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3DrawTextCommand.swift; sourceTree = "<group>"; };
@@ -394,6 +397,7 @@
 			children = (
 				C94751821C54114F00A30AA6 /* EV3CleanDisplayCommand.swift */,
 				C9A9B1261C552E4E004AC1F0 /* EV3DisplayRestorationCommands.swift */,
+				C93AAEB31C553C3F008B7758 /* EV3DrawBitmapCommand.swift */,
 				C94FA9B31C542050008242C8 /* EV3DrawCircleCommand.swift */,
 				C94751881C54187D00A30AA6 /* EV3DrawDotlineCommand.swift */,
 				C93AAEB01C553759008B7758 /* EV3DrawIconCommand.swift */,
@@ -913,6 +917,7 @@
 				C98C34B01C25D1D1006840C3 /* NXTTypes.swift in Sources */,
 				C98C34AC1C25D1D1006840C3 /* NXTFileResponse.swift in Sources */,
 				C94751861C5411B500A30AA6 /* EV3DrawLineCommand.swift in Sources */,
+				C93AAEB41C553C3F008B7758 /* EV3DrawBitmapCommand.swift in Sources */,
 				C98C34B31C25D24B006840C3 /* IOBluetoothDeviceTransport.swift in Sources */,
 				C98C34A91C25D1D1006840C3 /* NXTCloseCommand.swift in Sources */,
 				C98C34DD1C260EA6006840C3 /* MindstormsType.swift in Sources */,
@@ -1018,6 +1023,7 @@
 				C98C35171C26544D006840C3 /* NXTFindFirstCommand.swift in Sources */,
 				C98C35181C26544D006840C3 /* NXTFindNextCommand.swift in Sources */,
 				C94751871C5411B500A30AA6 /* EV3DrawLineCommand.swift in Sources */,
+				C93AAEB51C553C3F008B7758 /* EV3DrawBitmapCommand.swift in Sources */,
 				C98C35191C26544D006840C3 /* NXTGenericResponse.swift in Sources */,
 				C98C351A1C26544D006840C3 /* NXTStartProgramCommand.swift in Sources */,
 				C98C351B1C26544D006840C3 /* NXTResponse.swift in Sources */,
