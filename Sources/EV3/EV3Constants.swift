@@ -46,6 +46,7 @@ enum EV3UIWriteOpSubcode: UInt8 {
 }
 
 enum EV3ButtonOpSubcode: UInt8 {
+	case WaitForPress = 3
 	case Pressed = 9
 }
 
