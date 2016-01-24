@@ -52,6 +52,7 @@ enum EV3UIDrawOpSubcode: UInt8 {
 	case Line = 3
 	case Circle = 4
 	case Text = 5
+	case Icon = 6
 	case FillRect = 9
 	case Rect = 10
 	case InverseRect = 16
