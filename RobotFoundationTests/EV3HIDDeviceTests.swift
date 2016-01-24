@@ -244,6 +244,22 @@ final class EV3HIDDeviceTests: XCTestCase, RobotDeviceManagerDelegate {
 		waitForExpectationsWithTimeout(10, handler: nil)
 	}
 
+	func testButtonPress() {
+		responseExpectation = expectationWithDescription("command response")
+		activeTest = { [unowned self] in
+			let command = EV3IsButtonPressedCommand(button: .Left)
+			self.device.enqueueCommand(command) { response in
+				let ev3Response = response as! EV3ButtonPressedResponse
+				XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)
+				XCTAssertTrue(ev3Response.pressed)
+				self.responseExpectation.fulfill()
+			}
+		}
+
+		manager.beginDiscovery()
+		waitForExpectationsWithTimeout(10, handler: nil)
+	}
+
 	func testFillWindowCommand() {
 		responseExpectation = expectationWithDescription("command response")
 		activeTest = { [unowned self] in

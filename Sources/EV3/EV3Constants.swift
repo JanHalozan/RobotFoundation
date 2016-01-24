@@ -45,6 +45,10 @@ enum EV3UIWriteOpSubcode: UInt8 {
 	case LED = 27
 }
 
+enum EV3ButtonOpSubcode: UInt8 {
+	case Pressed = 9
+}
+
 enum EV3UIDrawOpSubcode: UInt8 {
 	case Update = 0
 	case Clean = 1
@@ -69,6 +73,15 @@ enum EV3UIDrawOpSubcode: UInt8 {
 enum EV3SensorType: UInt8 {
 	case KeepType = 0
 	case Touch = 16
+}
+
+public enum EV3Button: UInt8 {
+	case Up = 1
+	case Enter = 2
+	case Down = 3
+	case Right = 4
+	case Left = 5
+	case Back = 6
 }
 
 public enum EV3InputPort: UInt8 {

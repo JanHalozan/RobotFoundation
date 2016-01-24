@@ -7,15 +7,6 @@
 
 import Foundation
 
-public enum EV3Button: UInt8 {
-	case Up = 1
-	case Enter = 2
-	case Down = 3
-	case Right = 4
-	case Left = 5
-	case Back = 6
-}
-
 public enum EV3ButtonType: UInt8 {
 	case Press = 5
 	case Release = 6
