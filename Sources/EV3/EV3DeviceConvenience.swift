@@ -12,9 +12,10 @@ public typealias EV3DeviceUploadHandler = Bool -> ()
 
 // Offers convenience API for "sequential" commands.
 extension EV3Device {
-	public func uploadFileData(var dataLeft: NSData, toPath path: String, handler: EV3DeviceUploadHandler) {
+	public func uploadFileData(wholeData: NSData, toPath path: String, handler: EV3DeviceUploadHandler) {
 		var first = true
 		var anyFailed = false
+		var dataLeft = wholeData
 
 		while dataLeft.length > 0 {
 			let chunk: NSData

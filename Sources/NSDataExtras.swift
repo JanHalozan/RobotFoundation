@@ -8,18 +8,19 @@
 import Foundation
 
 extension NSMutableData {
-	func appendUInt8(var value: UInt8) {
-		appendBytes(&value, length: sizeof(UInt8))
+	func appendUInt8(value: UInt8) {
+		var mutableValue = value
+		appendBytes(&mutableValue, length: sizeof(UInt8))
 	}
 
-	func appendUInt16(var value: UInt16) {
-		value = NSSwapHostShortToLittle(value)
-		appendBytes(&value, length: sizeof(UInt16))
+	func appendUInt16(value: UInt16) {
+		var mutableValue = NSSwapHostShortToLittle(value)
+		appendBytes(&mutableValue, length: sizeof(UInt16))
 	}
 
-	func appendUInt32(var value: UInt32) {
-		value = NSSwapHostIntToLittle(value)
-		appendBytes(&value, length: sizeof(UInt32))
+	func appendUInt32(value: UInt32) {
+		var mutableValue = NSSwapHostIntToLittle(value)
+		appendBytes(&mutableValue, length: sizeof(UInt32))
 	}
 
 	func appendString(string: String) {
