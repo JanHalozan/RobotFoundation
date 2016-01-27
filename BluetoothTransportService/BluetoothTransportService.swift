@@ -83,7 +83,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 			// We actually did it.
 			dispatch_sync(dispatch_get_main_queue()) {
 				self.bluetoothDevice = device
-				self.activeClients++
+				self.activeClients += 1
 			}
 		}
 
