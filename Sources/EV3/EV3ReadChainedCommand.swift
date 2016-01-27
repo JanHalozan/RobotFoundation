@@ -40,7 +40,7 @@ public struct EV3ReadChainedCommand: EV3DirectCommand {
 		mutableData.appendUInt8(EV3Variables.GlobalVar0.rawValue)
 		mutableData.appendUInt8(EV3Variables.GlobalVar4.rawValue)
 
-		for var x = Int(offset); x > 0; x -= 1000 {
+		for x in Int(offset).stride(to: 0, by: -1000) {
 			mutableData.appendUInt8(EV3OpCode.File.rawValue)
 			mutableData.appendUInt8(EV3FileOpSubcode.ReadBytes.rawValue)
 			mutableData.appendUInt8(EV3Variables.GlobalVar0.rawValue)
