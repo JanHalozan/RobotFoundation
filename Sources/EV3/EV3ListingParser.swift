@@ -25,7 +25,7 @@ public func parseEV3FileListingWithString(string: String) -> [EV3Entry] {
 		} else {
 			// File
 			let md5 = line.substringToIndex(line.startIndex.advancedBy(32))
-			let fileSizeHex = line.substringWithRange(Range<String.Index>(start: line.startIndex.advancedBy(33), end: line.startIndex.advancedBy(41)))
+			let fileSizeHex = line.substringWithRange(line.startIndex.advancedBy(33)..<line.startIndex.advancedBy(41))
 			let fileSize = Int(fileSizeHex, radix: 16) ?? 0
 			let name = line.substringFromIndex(line.startIndex.advancedBy(42))
 			entries.append(.File(name: name, md5: md5, fileSize: fileSize))
