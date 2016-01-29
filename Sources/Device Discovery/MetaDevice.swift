@@ -71,6 +71,38 @@ public final class MetaDevice {
 		internalType = .ExternalAccessory(externalAccessory)
 	}
 	#endif
+
+	public convenience init?(stringDictionary: [String: String]) {
+		guard let type = stringDictionary["type"] else {
+			return nil
+		}
+
+		switch type {
+		case "bl":
+			guard let address = stringDictionary["address"] else {
+				return nil
+			}
+
+			let bluetoothDevice = IOBluetoothDevice(addressString: address)
+			self.init(bluetoothDevice: bluetoothDevice)
+		default:
+			fatalError("Unimplemented")
+			return nil
+		}
+	}
+
+	public var stringDictionary: [String: String] {
+		switch internalType {
+		case .BluetoothDevice(let bluetoothDevice):
+			return [
+				"type": "bl",
+				"address": bluetoothDevice.addressString
+			]
+		case .HIDDevice(let hidDevice):
+			fatalError("Unimplemented")
+			return [:]
+		}
+	}
 }
 
 extension MetaDevice: Hashable {
