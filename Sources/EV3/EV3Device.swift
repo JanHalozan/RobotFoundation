@@ -34,16 +34,6 @@ public final class EV3Device: Device {
 
 	override func wroteData() { }
 
-	private var currentlyExecutingOperation: EV3CommandOperation? {
-		for operation in operationQueue.operations {
-			if operation.executing {
-				return operation as? EV3CommandOperation
-			}
-		}
-
-		return nil
-	}
-
 	override func openedTransport() {
 		for operation in operationQueue.operations {
 			operation.willChangeValueForKey("isReady")
