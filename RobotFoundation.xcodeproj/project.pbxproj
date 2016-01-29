@@ -214,6 +214,8 @@
 		C9EDF44F1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF44D1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift */; };
 		C9EDF4511C2B56B600879F00 /* EV3DeleteItemCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF4501C2B56B600879F00 /* EV3DeleteItemCommand.swift */; };
 		C9EDF4521C2B56B600879F00 /* EV3DeleteItemCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF4501C2B56B600879F00 /* EV3DeleteItemCommand.swift */; };
+		C9F58A5C1C5BC07D000B3F09 /* RobotDisplayFramebuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F58A5B1C5BC07D000B3F09 /* RobotDisplayFramebuffer.swift */; };
+		C9F58A5D1C5BC07D000B3F09 /* RobotDisplayFramebuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F58A5B1C5BC07D000B3F09 /* RobotDisplayFramebuffer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -374,6 +376,7 @@
 		C9E4B0AF1C5B0D1B008C8D01 /* NXTConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTConstants.swift; sourceTree = "<group>"; };
 		C9EDF44D1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3CreateFolderCommand.swift; sourceTree = "<group>"; };
 		C9EDF4501C2B56B600879F00 /* EV3DeleteItemCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3DeleteItemCommand.swift; sourceTree = "<group>"; };
+		C9F58A5B1C5BC07D000B3F09 /* RobotDisplayFramebuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RobotDisplayFramebuffer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -577,6 +580,7 @@
 				C98C34CC1C25F1EA006840C3 /* MindstormsCommand.swift */,
 				C98C34DA1C260E72006840C3 /* MindstormsResponse.swift */,
 				C98C34DC1C260EA6006840C3 /* MindstormsType.swift */,
+				C9F58A5B1C5BC07D000B3F09 /* RobotDisplayFramebuffer.swift */,
 			);
 			path = Mindstorms;
 			sourceTree = "<group>";
@@ -904,6 +908,7 @@
 				C97868701C28DF5A0099BB82 /* EV3SetSensorModeCommand.swift in Sources */,
 				C9EDF44E1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift in Sources */,
 				C94751701C54024B00A30AA6 /* EV3UpdateDisplayCommand.swift in Sources */,
+				C9F58A5C1C5BC07D000B3F09 /* RobotDisplayFramebuffer.swift in Sources */,
 				C98C34DB1C260E72006840C3 /* MindstormsResponse.swift in Sources */,
 				C9A9B1271C552E4E004AC1F0 /* EV3DisplayRestorationCommands.swift in Sources */,
 				C98C34BB1C25E1E3006840C3 /* NXTDevice.swift in Sources */,
@@ -1018,6 +1023,7 @@
 				C907C25D1C2A239400647531 /* EV3SetMotorSpeedCommand.swift in Sources */,
 				C9EDF44F1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift in Sources */,
 				C94751711C54024B00A30AA6 /* EV3UpdateDisplayCommand.swift in Sources */,
+				C9F58A5D1C5BC07D000B3F09 /* RobotDisplayFramebuffer.swift in Sources */,
 				C97868711C28DF5A0099BB82 /* EV3SetSensorModeCommand.swift in Sources */,
 				C9A9B1281C552E4E004AC1F0 /* EV3DisplayRestorationCommands.swift in Sources */,
 				C98C35031C26544D006840C3 /* EV3CommandOperation.swift in Sources */,
