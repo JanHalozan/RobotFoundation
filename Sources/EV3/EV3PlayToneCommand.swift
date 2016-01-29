@@ -11,6 +11,11 @@ public struct EV3PlayToneCommand: EV3DirectCommand {
 	public let frequency: UInt16
 	public let duration: UInt16 // ms
 
+	public init(frequency: UInt16, duration: UInt16) {
+		self.frequency = frequency
+		self.duration = duration
+	}
+
 	public var responseType: MindstormsResponse.Type {
 		return EV3GenericResponse.self
 	}
