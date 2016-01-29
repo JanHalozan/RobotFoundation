@@ -448,8 +448,23 @@
 			children = (
 				C9229E551C5C206E001E74ED /* NXTDataResponse.swift */,
 				C9229E521C5C1EFC001E74ED /* NXTDeviceInfoResponse.swift */,
+				C98C34A31C25D1D1006840C3 /* NXTFileResponse.swift */,
+				C98C34A51C25D1D1006840C3 /* NXTGenericResponse.swift */,
+				C96945571C28F3760030DEB3 /* NXTHandleResponse.swift */,
+				C969455A1C28F3C50030DEB3 /* NXTHandleSizeResponse.swift */,
+				C9E4B09D1C5B08CC008C8D01 /* NXTIOMapResponse.swift */,
+				C98C34A61C25D1D1006840C3 /* NXTResponse.swift */,
 			);
 			name = Responses;
+			sourceTree = "<group>";
+		};
+		C9229E581C5C2150001E74ED /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				C98C349F1C25D1D1006840C3 /* NSDataNXTExtras.swift */,
+				C9E4B0AC1C5B0CB6008C8D01 /* NXTDisplayFramebuffer.swift */,
+			);
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 		C947517B1C540EDE00A30AA6 /* Drawing */ = {
@@ -553,18 +568,11 @@
 			children = (
 				C9229E4D1C5C1B3C001E74ED /* Commands */,
 				C9229E511C5C1EE8001E74ED /* Responses */,
-				C98C349F1C25D1D1006840C3 /* NSDataNXTExtras.swift */,
+				C9229E581C5C2150001E74ED /* Utilities */,
 				C98C34BC1C25E28A006840C3 /* NXTCommandOperation.swift */,
 				C9E4B0AF1C5B0D1B008C8D01 /* NXTConstants.swift */,
 				C98C34BA1C25E1E3006840C3 /* NXTDevice.swift */,
 				C9E4B0A01C5B0A09008C8D01 /* NXTDeviceConvenience.swift */,
-				C9E4B0AC1C5B0CB6008C8D01 /* NXTDisplayFramebuffer.swift */,
-				C98C34A31C25D1D1006840C3 /* NXTFileResponse.swift */,
-				C98C34A51C25D1D1006840C3 /* NXTGenericResponse.swift */,
-				C96945571C28F3760030DEB3 /* NXTHandleResponse.swift */,
-				C969455A1C28F3C50030DEB3 /* NXTHandleSizeResponse.swift */,
-				C9E4B09D1C5B08CC008C8D01 /* NXTIOMapResponse.swift */,
-				C98C34A61C25D1D1006840C3 /* NXTResponse.swift */,
 				C98C34A71C25D1D1006840C3 /* NXTTypes.swift */,
 			);
 			path = NXT;
