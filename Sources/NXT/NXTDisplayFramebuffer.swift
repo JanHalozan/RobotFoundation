@@ -17,9 +17,9 @@ public func BitmapImageRepForNXTDisplayFramebuffer(data: NSData) -> NSBitmapImag
 	for y in 0..<kNXTScreenHeight {
 		for x in 0..<kNXTScreenWidth {
 			if bytes[y/8 * kNXTScreenWidth + x] & UInt8(1 << (y % 8)) > 0 {
-				imageRep.setColor(NSColor.blackColor(), atX: x, y: y)
+				imageRep.set1BitValue(true, atY: y, x: x)
 			} else {
-				imageRep.setColor(NSColor.whiteColor(), atX: x, y: y)
+				imageRep.set1BitValue(false, atY: y, x: x)
 			}
 		}
 	}
