@@ -32,13 +32,10 @@ public final class NXTDevice: Device {
 		*/
 	}
 
-	private var currentlyExecutingOperation: NXTCommandOperation? {
+	override func openedTransport() {
 		for operation in operationQueue.operations {
-			if operation.executing {
-				return operation as? NXTCommandOperation
-			}
+			operation.willChangeValueForKey("isReady")
+			operation.didChangeValueForKey("isReady")
 		}
-
-		return nil
 	}
 }
