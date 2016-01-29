@@ -24,6 +24,12 @@
 		C917F68A1C272D6A00AE980B /* EV3HIDDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917F6891C272D6A00AE980B /* EV3HIDDeviceTests.swift */; };
 		C917F68F1C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917F68E1C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift */; };
 		C917F6901C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917F68E1C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift */; };
+		C9229E4F1C5C1B6F001E74ED /* NXTGetDeviceInfoCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229E4E1C5C1B6F001E74ED /* NXTGetDeviceInfoCommand.swift */; };
+		C9229E501C5C1B6F001E74ED /* NXTGetDeviceInfoCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229E4E1C5C1B6F001E74ED /* NXTGetDeviceInfoCommand.swift */; };
+		C9229E531C5C1EFC001E74ED /* NXTDeviceInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229E521C5C1EFC001E74ED /* NXTDeviceInfoResponse.swift */; };
+		C9229E541C5C1EFC001E74ED /* NXTDeviceInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229E521C5C1EFC001E74ED /* NXTDeviceInfoResponse.swift */; };
+		C9229E561C5C206E001E74ED /* NXTDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229E551C5C206E001E74ED /* NXTDataResponse.swift */; };
+		C9229E571C5C206E001E74ED /* NXTDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229E551C5C206E001E74ED /* NXTDataResponse.swift */; };
 		C933B3EB1C406A12002B8464 /* EV3WriteChainedCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C933B3EA1C406A12002B8464 /* EV3WriteChainedCommand.swift */; };
 		C933B3EC1C406A12002B8464 /* EV3WriteChainedCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C933B3EA1C406A12002B8464 /* EV3WriteChainedCommand.swift */; };
 		C93436821C5548C500CD93EC /* EV3WaitForButtonCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93436811C5548C500CD93EC /* EV3WaitForButtonCommand.swift */; };
@@ -267,6 +273,9 @@
 		C913812F1C2F5C6000BB2C67 /* EV3Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3Response.swift; sourceTree = "<group>"; };
 		C917F6891C272D6A00AE980B /* EV3HIDDeviceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3HIDDeviceTests.swift; sourceTree = "<group>"; };
 		C917F68E1C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RobotDeviceDescriptorEV3Extras.swift; sourceTree = "<group>"; };
+		C9229E4E1C5C1B6F001E74ED /* NXTGetDeviceInfoCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTGetDeviceInfoCommand.swift; sourceTree = "<group>"; };
+		C9229E521C5C1EFC001E74ED /* NXTDeviceInfoResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTDeviceInfoResponse.swift; sourceTree = "<group>"; };
+		C9229E551C5C206E001E74ED /* NXTDataResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTDataResponse.swift; sourceTree = "<group>"; };
 		C933B3EA1C406A12002B8464 /* EV3WriteChainedCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3WriteChainedCommand.swift; sourceTree = "<group>"; };
 		C93436811C5548C500CD93EC /* EV3WaitForButtonCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3WaitForButtonCommand.swift; sourceTree = "<group>"; };
 		C93AAEB01C553759008B7758 /* EV3DrawIconCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3DrawIconCommand.swift; sourceTree = "<group>"; };
@@ -419,6 +428,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C9229E4D1C5C1B3C001E74ED /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				C98C34A01C25D1D1006840C3 /* NXTCloseCommand.swift */,
+				C98C34A11C25D1D1006840C3 /* NXTCommand.swift */,
+				C98C34A21C25D1D1006840C3 /* NXTDeleteCommand.swift */,
+				C98C34A41C25D1D1006840C3 /* NXTFindFirstCommand.swift */,
+				C98C34E21C262BC6006840C3 /* NXTFindNextCommand.swift */,
+				C9229E4E1C5C1B6F001E74ED /* NXTGetDeviceInfoCommand.swift */,
+				C9E4B09A1C5B0813008C8D01 /* NXTReadIOMapCommand.swift */,
+				C98C34E41C262CF3006840C3 /* NXTStartProgramCommand.swift */,
+			);
+			name = Commands;
+			sourceTree = "<group>";
+		};
+		C9229E511C5C1EE8001E74ED /* Responses */ = {
+			isa = PBXGroup;
+			children = (
+				C9229E551C5C206E001E74ED /* NXTDataResponse.swift */,
+				C9229E521C5C1EFC001E74ED /* NXTDeviceInfoResponse.swift */,
+			);
+			name = Responses;
+			sourceTree = "<group>";
+		};
 		C947517B1C540EDE00A30AA6 /* Drawing */ = {
 			isa = PBXGroup;
 			children = (
@@ -518,25 +551,20 @@
 		C98C349E1C25D1D1006840C3 /* NXT */ = {
 			isa = PBXGroup;
 			children = (
+				C9229E4D1C5C1B3C001E74ED /* Commands */,
+				C9229E511C5C1EE8001E74ED /* Responses */,
 				C98C349F1C25D1D1006840C3 /* NSDataNXTExtras.swift */,
-				C98C34A01C25D1D1006840C3 /* NXTCloseCommand.swift */,
-				C98C34A11C25D1D1006840C3 /* NXTCommand.swift */,
 				C98C34BC1C25E28A006840C3 /* NXTCommandOperation.swift */,
 				C9E4B0AF1C5B0D1B008C8D01 /* NXTConstants.swift */,
-				C98C34A21C25D1D1006840C3 /* NXTDeleteCommand.swift */,
 				C98C34BA1C25E1E3006840C3 /* NXTDevice.swift */,
 				C9E4B0A01C5B0A09008C8D01 /* NXTDeviceConvenience.swift */,
 				C9E4B0AC1C5B0CB6008C8D01 /* NXTDisplayFramebuffer.swift */,
 				C98C34A31C25D1D1006840C3 /* NXTFileResponse.swift */,
-				C98C34A41C25D1D1006840C3 /* NXTFindFirstCommand.swift */,
-				C98C34E21C262BC6006840C3 /* NXTFindNextCommand.swift */,
 				C98C34A51C25D1D1006840C3 /* NXTGenericResponse.swift */,
 				C96945571C28F3760030DEB3 /* NXTHandleResponse.swift */,
 				C969455A1C28F3C50030DEB3 /* NXTHandleSizeResponse.swift */,
 				C9E4B09D1C5B08CC008C8D01 /* NXTIOMapResponse.swift */,
-				C9E4B09A1C5B0813008C8D01 /* NXTReadIOMapCommand.swift */,
 				C98C34A61C25D1D1006840C3 /* NXTResponse.swift */,
-				C98C34E41C262CF3006840C3 /* NXTStartProgramCommand.swift */,
 				C98C34A71C25D1D1006840C3 /* NXTTypes.swift */,
 			);
 			path = NXT;
@@ -911,6 +939,7 @@
 				C9F58A5C1C5BC07D000B3F09 /* RobotDisplayFramebuffer.swift in Sources */,
 				C98C34DB1C260E72006840C3 /* MindstormsResponse.swift in Sources */,
 				C9A9B1271C552E4E004AC1F0 /* EV3DisplayRestorationCommands.swift in Sources */,
+				C9229E4F1C5C1B6F001E74ED /* NXTGetDeviceInfoCommand.swift in Sources */,
 				C98C34BB1C25E1E3006840C3 /* NXTDevice.swift in Sources */,
 				C97551B11C29D094002A5796 /* EV3StringResponse.swift in Sources */,
 				C9E4B0B01C5B0D1B008C8D01 /* NXTConstants.swift in Sources */,
@@ -950,6 +979,8 @@
 				C94751801C5410C000A30AA6 /* EV3DrawPixelCommand.swift in Sources */,
 				C98C34E51C262CF3006840C3 /* NXTStartProgramCommand.swift in Sources */,
 				C9D378E41C3062F1005385D5 /* EV3GetVersionCommand.swift in Sources */,
+				C9229E561C5C206E001E74ED /* NXTDataResponse.swift in Sources */,
+				C9229E531C5C1EFC001E74ED /* NXTDeviceInfoResponse.swift in Sources */,
 				C97868671C28BFC10099BB82 /* EV3Constants.swift in Sources */,
 				C9C561241C2E1FC700E61C28 /* EV3HandleDataResponse.swift in Sources */,
 				C917F68F1C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift in Sources */,
@@ -1026,6 +1057,7 @@
 				C9F58A5D1C5BC07D000B3F09 /* RobotDisplayFramebuffer.swift in Sources */,
 				C97868711C28DF5A0099BB82 /* EV3SetSensorModeCommand.swift in Sources */,
 				C9A9B1281C552E4E004AC1F0 /* EV3DisplayRestorationCommands.swift in Sources */,
+				C9229E501C5C1B6F001E74ED /* NXTGetDeviceInfoCommand.swift in Sources */,
 				C98C35031C26544D006840C3 /* EV3CommandOperation.swift in Sources */,
 				C98C35041C26544D006840C3 /* EV3CommandSerialization.swift in Sources */,
 				C9E4B0B11C5B0D1B008C8D01 /* NXTConstants.swift in Sources */,
@@ -1065,6 +1097,8 @@
 				C94751811C5410C000A30AA6 /* EV3DrawPixelCommand.swift in Sources */,
 				C97868681C28BFC10099BB82 /* EV3Constants.swift in Sources */,
 				C9D378E51C3062F1005385D5 /* EV3GetVersionCommand.swift in Sources */,
+				C9229E571C5C206E001E74ED /* NXTDataResponse.swift in Sources */,
+				C9229E541C5C1EFC001E74ED /* NXTDeviceInfoResponse.swift in Sources */,
 				C917F6901C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift in Sources */,
 				C9C561251C2E1FC700E61C28 /* EV3HandleDataResponse.swift in Sources */,
 				C98C35151C26544D006840C3 /* NXTDevice.swift in Sources */,
