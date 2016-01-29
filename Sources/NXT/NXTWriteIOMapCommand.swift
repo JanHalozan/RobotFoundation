@@ -7,24 +7,30 @@
 
 import Foundation
 
-struct NXTWriteIOMapCommand: NXTCommand {
-	let moduleID: UInt32
-	let offset: UInt16
-	let contents: NSData
+public struct NXTWriteIOMapCommand: NXTCommand {
+	public let moduleID: UInt32
+	public let offset: UInt16
+	public let contents: NSData
 
-	var responseType: MindstormsResponse.Type {
+	public init(moduleID: UInt32, offset: UInt16, contents: NSData) {
+		self.moduleID = moduleID
+		self.offset = offset
+		self.contents = contents
+	}
+
+	public var responseType: MindstormsResponse.Type {
 		return NXTGenericResponse.self
 	}
 
-	var type: MindstormsCommandType {
+	public var type: MindstormsCommandType {
 		return .System
 	}
 
-	var identifier: UInt8 {
+	public var identifier: UInt8 {
 		return 0x95
 	}
 
-	var payloadData: NSData {
+	public var payloadData: NSData {
 		let data = NSMutableData()
 		data.appendUInt32(moduleID)
 		data.appendUInt16(offset)

@@ -14,7 +14,7 @@ public final class NXTDevice: Device {
 		return operationQueue
 	}()
 
-	func enqueueCommand(command: NXTCommand, responseHandler: NXTResponseHandler) {
+	public func enqueueCommand(command: NXTCommand, responseHandler: NXTResponseHandler) {
 		let operation = NXTCommandOperation(transport: transport, command: command, responseHandler: responseHandler)
 		operationQueue.addOperation(operation)
 	}
