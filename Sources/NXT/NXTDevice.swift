@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class NXTDevice: Device {
+public final class NXTDevice: Device {
 	private lazy var operationQueue: NSOperationQueue = {
 		let operationQueue = NSOperationQueue()
 		operationQueue.maxConcurrentOperationCount = 1
