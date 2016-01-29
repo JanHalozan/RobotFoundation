@@ -12,18 +12,6 @@ import AppKit
 private let displayHeight = 128
 private let displayWidth = 178
 
-private extension NSBitmapImageRep {
-	func set1BitValue(value: Bool, atY y: Int, x: Int) {
-		if value {
-			var pixel = [0, 0, 0, 255]
-			setPixel(&pixel, atX: x, y: y)
-		} else {
-			var pixel = [255, 255, 255, 255]
-			setPixel(&pixel, atX: x, y: y)
-		}
-	}
-}
-
 public func BitmapImageRepForEV3DisplayFramebuffer(data: NSData) -> NSBitmapImageRep {
 	guard let imageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: displayWidth, pixelsHigh: displayHeight, bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSCalibratedRGBColorSpace, bitmapFormat: [], bytesPerRow: 0, bitsPerPixel: 32) else {
 		fatalError()
