@@ -36,6 +36,10 @@
 		C91E1A181C5C28BF00D5154A /* NXTWriteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91E1A161C5C28BF00D5154A /* NXTWriteCommand.swift */; };
 		C91E1A1A1C5C291700D5154A /* NXTWriteIOMapCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91E1A191C5C291700D5154A /* NXTWriteIOMapCommand.swift */; };
 		C91E1A1B1C5C291700D5154A /* NXTWriteIOMapCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91E1A191C5C291700D5154A /* NXTWriteIOMapCommand.swift */; };
+		C91E1A1D1C5C2A1100D5154A /* NXTResetMotorPositionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91E1A1C1C5C2A1100D5154A /* NXTResetMotorPositionCommand.swift */; };
+		C91E1A1E1C5C2A1100D5154A /* NXTResetMotorPositionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91E1A1C1C5C2A1100D5154A /* NXTResetMotorPositionCommand.swift */; };
+		C91E1A201C5C2A9B00D5154A /* NXTSetOutputStateCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91E1A1F1C5C2A9B00D5154A /* NXTSetOutputStateCommand.swift */; };
+		C91E1A211C5C2A9B00D5154A /* NXTSetOutputStateCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91E1A1F1C5C2A9B00D5154A /* NXTSetOutputStateCommand.swift */; };
 		C9229E4F1C5C1B6F001E74ED /* NXTGetDeviceInfoCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229E4E1C5C1B6F001E74ED /* NXTGetDeviceInfoCommand.swift */; };
 		C9229E501C5C1B6F001E74ED /* NXTGetDeviceInfoCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229E4E1C5C1B6F001E74ED /* NXTGetDeviceInfoCommand.swift */; };
 		C9229E531C5C1EFC001E74ED /* NXTDeviceInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229E521C5C1EFC001E74ED /* NXTDeviceInfoResponse.swift */; };
@@ -291,6 +295,8 @@
 		C91E1A131C5C27FA00D5154A /* NXTReadCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTReadCommand.swift; sourceTree = "<group>"; };
 		C91E1A161C5C28BF00D5154A /* NXTWriteCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTWriteCommand.swift; sourceTree = "<group>"; };
 		C91E1A191C5C291700D5154A /* NXTWriteIOMapCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTWriteIOMapCommand.swift; sourceTree = "<group>"; };
+		C91E1A1C1C5C2A1100D5154A /* NXTResetMotorPositionCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTResetMotorPositionCommand.swift; sourceTree = "<group>"; };
+		C91E1A1F1C5C2A9B00D5154A /* NXTSetOutputStateCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTSetOutputStateCommand.swift; sourceTree = "<group>"; };
 		C9229E4E1C5C1B6F001E74ED /* NXTGetDeviceInfoCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTGetDeviceInfoCommand.swift; sourceTree = "<group>"; };
 		C9229E521C5C1EFC001E74ED /* NXTDeviceInfoResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTDeviceInfoResponse.swift; sourceTree = "<group>"; };
 		C9229E551C5C206E001E74ED /* NXTDataResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTDataResponse.swift; sourceTree = "<group>"; };
@@ -460,6 +466,8 @@
 				C91E1A101C5C278300D5154A /* NXTPlaySoundFileCommand.swift */,
 				C91E1A131C5C27FA00D5154A /* NXTReadCommand.swift */,
 				C9E4B09A1C5B0813008C8D01 /* NXTReadIOMapCommand.swift */,
+				C91E1A1C1C5C2A1100D5154A /* NXTResetMotorPositionCommand.swift */,
+				C91E1A1F1C5C2A9B00D5154A /* NXTSetOutputStateCommand.swift */,
 				C98C34E41C262CF3006840C3 /* NXTStartProgramCommand.swift */,
 				C91E1A161C5C28BF00D5154A /* NXTWriteCommand.swift */,
 				C91E1A191C5C291700D5154A /* NXTWriteIOMapCommand.swift */,
@@ -980,6 +988,7 @@
 				C97551B11C29D094002A5796 /* EV3StringResponse.swift in Sources */,
 				C9E4B0B01C5B0D1B008C8D01 /* NXTConstants.swift in Sources */,
 				C96026491C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift in Sources */,
+				C91E1A201C5C2A9B00D5154A /* NXTSetOutputStateCommand.swift in Sources */,
 				C91381301C2F5C6000BB2C67 /* EV3Response.swift in Sources */,
 				C98C34D11C25F893006840C3 /* NSDataEV3Extras.swift in Sources */,
 				C94FA9BA1C5424EE008242C8 /* EV3EnableToplineCommand.swift in Sources */,
@@ -1014,6 +1023,7 @@
 				C98C34E31C262BC6006840C3 /* NXTFindNextCommand.swift in Sources */,
 				C98C34C21C25EADB006840C3 /* EV3Device.swift in Sources */,
 				C94751801C5410C000A30AA6 /* EV3DrawPixelCommand.swift in Sources */,
+				C91E1A1D1C5C2A1100D5154A /* NXTResetMotorPositionCommand.swift in Sources */,
 				C98C34E51C262CF3006840C3 /* NXTStartProgramCommand.swift in Sources */,
 				C9D378E41C3062F1005385D5 /* EV3GetVersionCommand.swift in Sources */,
 				C9229E561C5C206E001E74ED /* NXTDataResponse.swift in Sources */,
@@ -1104,6 +1114,7 @@
 				C98C35041C26544D006840C3 /* EV3CommandSerialization.swift in Sources */,
 				C9E4B0B11C5B0D1B008C8D01 /* NXTConstants.swift in Sources */,
 				C960264A1C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift in Sources */,
+				C91E1A211C5C2A9B00D5154A /* NXTSetOutputStateCommand.swift in Sources */,
 				C91381311C2F5C6000BB2C67 /* EV3Response.swift in Sources */,
 				C97551B21C29D094002A5796 /* EV3StringResponse.swift in Sources */,
 				C94FA9BB1C5424EE008242C8 /* EV3EnableToplineCommand.swift in Sources */,
@@ -1138,6 +1149,7 @@
 				C98C35131C26544D006840C3 /* NXTCommandOperation.swift in Sources */,
 				C98C35141C26544D006840C3 /* NXTDeleteCommand.swift in Sources */,
 				C94751811C5410C000A30AA6 /* EV3DrawPixelCommand.swift in Sources */,
+				C91E1A1E1C5C2A1100D5154A /* NXTResetMotorPositionCommand.swift in Sources */,
 				C97868681C28BFC10099BB82 /* EV3Constants.swift in Sources */,
 				C9D378E51C3062F1005385D5 /* EV3GetVersionCommand.swift in Sources */,
 				C9229E571C5C206E001E74ED /* NXTDataResponse.swift in Sources */,

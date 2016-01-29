@@ -13,6 +13,11 @@ extension NSMutableData {
 		appendBytes(&mutableValue, length: sizeof(UInt8))
 	}
 
+	func appendInt8(value: Int8) {
+		var mutableValue = value
+		appendBytes(&mutableValue, length: sizeof(Int8))
+	}
+
 	func appendUInt16(value: UInt16) {
 		var mutableValue = NSSwapHostShortToLittle(value)
 		appendBytes(&mutableValue, length: sizeof(UInt16))
