@@ -90,6 +90,12 @@
 		C94FA9BB1C5424EE008242C8 /* EV3EnableToplineCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94FA9B91C5424EE008242C8 /* EV3EnableToplineCommand.swift */; };
 		C94FE8FC1C5D611E0037838A /* EV3WaitForSoundCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94FE8FB1C5D611E0037838A /* EV3WaitForSoundCommand.swift */; };
 		C94FE8FD1C5D611E0037838A /* EV3WaitForSoundCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94FE8FB1C5D611E0037838A /* EV3WaitForSoundCommand.swift */; };
+		C94FE8FF1C5D68F10037838A /* EV3StopSoundCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94FE8FE1C5D68F10037838A /* EV3StopSoundCommand.swift */; };
+		C94FE9001C5D68F10037838A /* EV3StopSoundCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94FE8FE1C5D68F10037838A /* EV3StopSoundCommand.swift */; };
+		C94FE9021C5D6B830037838A /* EV3TestSoundCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94FE9011C5D6B830037838A /* EV3TestSoundCommand.swift */; };
+		C94FE9031C5D6B830037838A /* EV3TestSoundCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94FE9011C5D6B830037838A /* EV3TestSoundCommand.swift */; };
+		C94FE9051C5D6BDC0037838A /* EV3BooleanResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94FE9041C5D6BDC0037838A /* EV3BooleanResponse.swift */; };
+		C94FE9061C5D6BDC0037838A /* EV3BooleanResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94FE9041C5D6BDC0037838A /* EV3BooleanResponse.swift */; };
 		C96026491C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96026481C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift */; };
 		C960264A1C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96026481C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift */; };
 		C960264C1C307096007BCF93 /* EV3StorageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C960264B1C307096007BCF93 /* EV3StorageResponse.swift */; };
@@ -324,6 +330,9 @@
 		C94FA9B61C5422EB008242C8 /* EV3SelectFontCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3SelectFontCommand.swift; sourceTree = "<group>"; };
 		C94FA9B91C5424EE008242C8 /* EV3EnableToplineCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3EnableToplineCommand.swift; sourceTree = "<group>"; };
 		C94FE8FB1C5D611E0037838A /* EV3WaitForSoundCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3WaitForSoundCommand.swift; sourceTree = "<group>"; };
+		C94FE8FE1C5D68F10037838A /* EV3StopSoundCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3StopSoundCommand.swift; sourceTree = "<group>"; };
+		C94FE9011C5D6B830037838A /* EV3TestSoundCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3TestSoundCommand.swift; sourceTree = "<group>"; };
+		C94FE9041C5D6BDC0037838A /* EV3BooleanResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3BooleanResponse.swift; sourceTree = "<group>"; };
 		C96026481C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3GetStorageInfoCommand.swift; sourceTree = "<group>"; };
 		C960264B1C307096007BCF93 /* EV3StorageResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3StorageResponse.swift; sourceTree = "<group>"; };
 		C96945571C28F3760030DEB3 /* NXTHandleResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTHandleResponse.swift; sourceTree = "<group>"; };
@@ -698,6 +707,8 @@
 				C978686F1C28DF5A0099BB82 /* EV3SetSensorModeCommand.swift */,
 				C907C25E1C2A28B000647531 /* EV3StartMotorCommand.swift */,
 				C907C2641C2A2F0300647531 /* EV3StopMotorCommand.swift */,
+				C94FE8FE1C5D68F10037838A /* EV3StopSoundCommand.swift */,
+				C94FE9011C5D6B830037838A /* EV3TestSoundCommand.swift */,
 				C93436811C5548C500CD93EC /* EV3WaitForButtonCommand.swift */,
 				C94FE8FB1C5D611E0037838A /* EV3WaitForSoundCommand.swift */,
 				C933B3EA1C406A12002B8464 /* EV3WriteChainedCommand.swift */,
@@ -708,6 +719,7 @@
 		C9C561221C2E1F4300E61C28 /* Responses */ = {
 			isa = PBXGroup;
 			children = (
+				C94FE9041C5D6BDC0037838A /* EV3BooleanResponse.swift */,
 				C93AAEB91C553F8E008B7758 /* EV3ButtonPressedResponse.swift */,
 				C97868721C28E89F0099BB82 /* EV3ColorResponse.swift */,
 				C905867C1C2C605F0068E560 /* EV3FileResponse.swift */,
@@ -966,6 +978,7 @@
 				C9CFFC291C2F393800E75768 /* HIDDeviceTransport.swift in Sources */,
 				C98C34D71C260E0A006840C3 /* EV3Types.swift in Sources */,
 				C97868731C28E89F0099BB82 /* EV3ColorResponse.swift in Sources */,
+				C94FE9021C5D6B830037838A /* EV3TestSoundCommand.swift in Sources */,
 				C9E4B09B1C5B0813008C8D01 /* NXTReadIOMapCommand.swift in Sources */,
 				C98C34AB1C25D1D1006840C3 /* NXTDeleteCommand.swift in Sources */,
 				C94A9F3B1C2CF5660031642F /* EV3ReadChainedCommand.swift in Sources */,
@@ -998,6 +1011,7 @@
 				C98C34D11C25F893006840C3 /* NSDataEV3Extras.swift in Sources */,
 				C94FA9BA1C5424EE008242C8 /* EV3EnableToplineCommand.swift in Sources */,
 				C9E4B0A11C5B0A09008C8D01 /* NXTDeviceConvenience.swift in Sources */,
+				C94FE8FF1C5D68F10037838A /* EV3StopSoundCommand.swift in Sources */,
 				C905867D1C2C605F0068E560 /* EV3FileResponse.swift in Sources */,
 				C94751831C54114F00A30AA6 /* EV3CleanDisplayCommand.swift in Sources */,
 				C9C561281C2E21F700E61C28 /* EV3DisplayFramebuffer.swift in Sources */,
@@ -1042,6 +1056,7 @@
 				C98C34CF1C25F644006840C3 /* EV3CommandSerialization.swift in Sources */,
 				C9B138771C2B09650018812F /* EV3ListFilesCommand.swift in Sources */,
 				C94751731C54056200A30AA6 /* EV3DrawTextCommand.swift in Sources */,
+				C94FE9051C5D6BDC0037838A /* EV3BooleanResponse.swift in Sources */,
 				C98C34B01C25D1D1006840C3 /* NXTTypes.swift in Sources */,
 				C98C34AC1C25D1D1006840C3 /* NXTFileResponse.swift in Sources */,
 				C94751861C5411B500A30AA6 /* EV3DrawLineCommand.swift in Sources */,
@@ -1093,6 +1108,7 @@
 				C9CFFC2A1C2F393800E75768 /* HIDDeviceTransport.swift in Sources */,
 				C98C34FF1C26544D006840C3 /* IOKitUtilities.swift in Sources */,
 				C97868741C28E89F0099BB82 /* EV3ColorResponse.swift in Sources */,
+				C94FE9031C5D6B830037838A /* EV3TestSoundCommand.swift in Sources */,
 				C9E4B09C1C5B0813008C8D01 /* NXTReadIOMapCommand.swift in Sources */,
 				C98C35001C26544D006840C3 /* XPCBackedDeviceTransport.swift in Sources */,
 				C94A9F3C1C2CF5660031642F /* EV3ReadChainedCommand.swift in Sources */,
@@ -1125,6 +1141,7 @@
 				C97551B21C29D094002A5796 /* EV3StringResponse.swift in Sources */,
 				C94FA9BB1C5424EE008242C8 /* EV3EnableToplineCommand.swift in Sources */,
 				C9E4B0A21C5B0A09008C8D01 /* NXTDeviceConvenience.swift in Sources */,
+				C94FE9001C5D68F10037838A /* EV3StopSoundCommand.swift in Sources */,
 				C905867E1C2C605F0068E560 /* EV3FileResponse.swift in Sources */,
 				C94751841C54114F00A30AA6 /* EV3CleanDisplayCommand.swift in Sources */,
 				C9C561291C2E21F700E61C28 /* EV3DisplayFramebuffer.swift in Sources */,
@@ -1169,6 +1186,7 @@
 				C98C35161C26544D006840C3 /* NXTFileResponse.swift in Sources */,
 				C9B138781C2B09650018812F /* EV3ListFilesCommand.swift in Sources */,
 				C94751741C54056200A30AA6 /* EV3DrawTextCommand.swift in Sources */,
+				C94FE9061C5D6BDC0037838A /* EV3BooleanResponse.swift in Sources */,
 				C98C35171C26544D006840C3 /* NXTFindFirstCommand.swift in Sources */,
 				C98C35181C26544D006840C3 /* NXTFindNextCommand.swift in Sources */,
 				C94751871C5411B500A30AA6 /* EV3DrawLineCommand.swift in Sources */,

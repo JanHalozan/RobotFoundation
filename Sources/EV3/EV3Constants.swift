@@ -13,6 +13,7 @@ enum EV3OpCode: UInt8 {
 	case UIButton = 0x83
 	case UIDraw = 0x84
 	case Sound = 0x94
+	case SoundTest = 0x95
 	case SoundReady = 0x96
 	case InputDevice = 0x99
 	case InputRead = 0x9A
@@ -39,6 +40,7 @@ enum EV3InputDeviceOpSubcode: UInt8 {
 }
 
 enum EV3SoundOpSubcode: UInt8 {
+	case Break = 0
 	case PlayTone = 1
 }
 
