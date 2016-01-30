@@ -32,6 +32,12 @@ public final class EV3Device: Device {
 		operationQueue.addOperation(blockOperation)
 	}
 
+	public func waitForOperations() {
+		while operationQueue.operationCount > 0 {
+			NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate.distantFuture())
+		}
+	}
+
 	override func wroteData() { }
 
 	override func openedTransport() {
@@ -42,10 +48,7 @@ public final class EV3Device: Device {
 	}
 
 	public override func close() {
-		while operationQueue.operationCount > 0 {
-			NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate.distantFuture())
-		}
-
+		waitForOperations()
 		super.close()
 	}
 }
