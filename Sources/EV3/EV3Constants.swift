@@ -42,6 +42,7 @@ enum EV3InputDeviceOpSubcode: UInt8 {
 enum EV3SoundOpSubcode: UInt8 {
 	case Break = 0
 	case PlayTone = 1
+	case Play = 2
 }
 
 enum EV3UIWriteOpSubcode: UInt8 {
