@@ -40,5 +40,13 @@ public final class EV3Device: Device {
 			operation.didChangeValueForKey("isReady")
 		}
 	}
+
+	public override func close() {
+		while operationQueue.operationCount > 0 {
+			NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate.distantFuture())
+		}
+
+		super.close()
+	}
 }
 
