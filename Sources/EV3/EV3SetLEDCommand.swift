@@ -16,6 +16,10 @@ public enum EV3LEDPattern: UInt8 {
 public struct EV3SetLEDCommand: EV3DirectCommand {
 	public let pattern: EV3LEDPattern
 
+	public init(pattern: EV3LEDPattern) {
+		self.pattern = pattern
+	}
+
 	public var responseType: MindstormsResponse.Type {
 		return EV3GenericResponse.self
 	}
