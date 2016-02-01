@@ -30,7 +30,6 @@ public struct EV3SetLEDCommand: EV3DirectCommand {
 		mutableData.appendUInt8(EV3UIWriteOpSubcode.LED.rawValue)
 
 		mutableData.appendUInt8(pattern.rawValue)
-		mutableData.appendUInt8(0x1)
 
 		return mutableData.copy() as! NSData
 	}
