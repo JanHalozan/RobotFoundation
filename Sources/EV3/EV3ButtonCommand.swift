@@ -13,10 +13,10 @@ public enum EV3ButtonType: UInt8 {
 }
 
 public struct EV3ButtonCommand: EV3DirectCommand {
-	public let button: EV3Button
+	public let button: EV3ButtonConst
 	public let type: EV3ButtonType
 
-	public init(button: EV3Button, type: EV3ButtonType) {
+	public init(button: EV3ButtonConst, type: EV3ButtonType) {
 		self.button = button
 		self.type = type
 	}

@@ -80,7 +80,7 @@ enum EV3SensorType: UInt8 {
 	case Touch = 16
 }
 
-public enum EV3Button: UInt8 {
+public enum EV3ButtonConst: UInt8 {
 	case Up = 1
 	case Enter = 2
 	case Down = 3

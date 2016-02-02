@@ -8,9 +8,9 @@
 import Foundation
 
 public struct EV3IsButtonPressedCommand: EV3DirectCommand {
-	public let button: EV3Button
+	public let button: EV3ButtonConst
 
-	public init(button: EV3Button) {
+	public init(button: EV3ButtonConst) {
 		self.button = button
 	}
 
