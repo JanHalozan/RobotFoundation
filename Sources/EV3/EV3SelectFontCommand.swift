@@ -7,16 +7,16 @@
 
 import Foundation
 
-public enum EV3Font: UInt8 {
+public enum EV3FontConst: UInt8 {
 	case Small = 0
 	case Medium = 1
 	case Large = 2
 }
 
 public struct EV3SelectFontCommand: EV3DirectCommand {
-	private let font: EV3Font
+	public let font: EV3FontConst
 
-	public init(font: EV3Font) {
+	public init(font: EV3FontConst) {
 		self.font = font
 	}
 
