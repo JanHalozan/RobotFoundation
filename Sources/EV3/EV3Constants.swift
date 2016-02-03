@@ -120,6 +120,6 @@ enum EV3Layer: UInt8 {
 let EV3ColorMode = UInt8(2)
 let EV3MaxFileLength = UInt16(64)
 
-let EV3TopLineHeight = UInt16(10)
-let EV3DisplayWidth = UInt16(178)
-let EV3DisplayHeight = UInt16(128)
+public let EV3TopLineHeight = UInt16(10)
+public let EV3DisplayWidth = UInt16(178)
+public let EV3DisplayHeight = UInt16(128)
