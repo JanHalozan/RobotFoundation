@@ -7,15 +7,15 @@
 
 import Foundation
 
-public enum EV3FillColor: UInt8 {
+public enum EV3FillColorConst: UInt8 {
 	case Background = 0
 	case Foreground = 1
 }
 
 public struct EV3FillWindowCommand: EV3DirectCommand {
-	private let color: EV3FillColor
+	private let color: EV3FillColorConst
 
-	public init(color: EV3FillColor) {
+	public init(color: EV3FillColorConst) {
 		self.color = color
 	}
 

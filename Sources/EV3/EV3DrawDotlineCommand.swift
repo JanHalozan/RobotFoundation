@@ -8,7 +8,7 @@
 import Foundation
 
 public struct EV3DrawDotlineCommand: EV3DirectCommand {
-	private let color: EV3FillColor
+	private let color: EV3FillColorConst
 	private let x1: UInt16
 	private let y1: UInt16
 	private let x2: UInt16
@@ -16,7 +16,7 @@ public struct EV3DrawDotlineCommand: EV3DirectCommand {
 	private let onPixels: UInt16
 	private let offPixels: UInt16
 
-	public init(color: EV3FillColor, x1: UInt16, y1: UInt16, x2: UInt16, y2: UInt16, onPixels: UInt16, offPixels: UInt16) {
+	public init(color: EV3FillColorConst, x1: UInt16, y1: UInt16, x2: UInt16, y2: UInt16, onPixels: UInt16, offPixels: UInt16) {
 		self.color = color
 		self.x1 = x1
 		self.y1 = y1

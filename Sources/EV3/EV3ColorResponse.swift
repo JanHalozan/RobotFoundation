@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum EV3Color: UInt8 {
+public enum EV3SensorColor: UInt8 {
 	case None = 0, Black, Blue, Green, Yellow, Red, White, Brown
 }
 
@@ -16,7 +16,7 @@ public struct EV3ColorResponse: EV3Response {
 	public let messageCounter: UInt16
 	public let replyType: EV3ReplyType
 
-	public let color: EV3Color
+	public let color: EV3SensorColor
 
 	public init?(data: NSData) {
 		guard let (length, messageCounter, replyType) = processGenericResponseForData(data) else {
@@ -29,6 +29,6 @@ public struct EV3ColorResponse: EV3Response {
 		self.messageCounter = messageCounter
 
 		let index = data.readUInt8AtIndex(5)
-		self.color = EV3Color(rawValue: index) ?? EV3Color.None
+		self.color = EV3SensorColor(rawValue: index) ?? EV3SensorColor.None
 	}
 }

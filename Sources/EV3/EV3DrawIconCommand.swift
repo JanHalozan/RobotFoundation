@@ -120,13 +120,13 @@ public enum EV3ArrowIconNumber: UInt8 {
 }
 
 public struct EV3DrawIconCommand: EV3DirectCommand {
-	private let color: EV3FillColor
+	private let color: EV3FillColorConst
 	private let x: UInt16
 	private let y: UInt16
 	private let type: EV3IconType
 	private let number: UInt8
 
-	public init(color: EV3FillColor, x: UInt16, y: UInt16, type: EV3IconType, number: UInt8) {
+	public init(color: EV3FillColorConst, x: UInt16, y: UInt16, type: EV3IconType, number: UInt8) {
 		self.color = color
 		self.x = x
 		self.y = y

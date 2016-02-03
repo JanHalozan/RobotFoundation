@@ -8,12 +8,12 @@
 import Foundation
 
 public struct EV3DrawBitmapCommand: EV3DirectCommand {
-	private let color: EV3FillColor
+	private let color: EV3FillColorConst
 	private let x: UInt16
 	private let y: UInt16
 	private let name: String
 
-	public init(color: EV3FillColor, x: UInt16, y: UInt16, name: String) {
+	public init(color: EV3FillColorConst, x: UInt16, y: UInt16, name: String) {
 		self.color = color
 		self.x = x
 		self.y = y
