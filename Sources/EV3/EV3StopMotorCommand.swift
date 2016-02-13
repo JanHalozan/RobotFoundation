@@ -16,6 +16,11 @@ public struct EV3StopMotorCommand: EV3DirectCommand {
 	public let port: EV3OutputPortOptions
 	public let stopType: EV3StopType
 
+	public init(port: EV3OutputPortOptions, stopType: EV3StopType) {
+		self.port = port
+		self.stopType = stopType
+	}
+
 	public var responseType: MindstormsResponse.Type {
 		return EV3GenericResponse.self
 	}
