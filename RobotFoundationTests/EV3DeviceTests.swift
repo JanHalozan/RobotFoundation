@@ -31,7 +31,7 @@ final class EV3DeviceTests: XCTestCase {
 	func testPlayToneCommand() {
 		let responseExpectation = expectationWithDescription("command response")
 
-		let command = EV3PlayToneCommand(frequency: 1000, duration: 1000)
+		let command = EV3PlayToneCommand(volume: 3, frequency: 1000, duration: 1000)
 		device.enqueueCommand(command) { response in
 			let ev3Response = response as! EV3GenericResponse
 			XCTAssertEqual(ev3Response.replyType, EV3ReplyType.Success)

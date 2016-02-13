@@ -1,17 +1,19 @@
 //
-//  EV3StartMotorCommand.swift
+//  EV3SetMotorPowerCommand.swift
 //  RobotFoundation
 //
-//  Created by Matt on 12/22/15.
+//  Created by Matt on 2/13/16.
 //
 
 import Foundation
 
-public struct EV3StartMotorCommand: EV3DirectCommand {
+public struct EV3SetMotorPowerCommand: EV3DirectCommand {
 	public let ports: EV3OutputPortOptions
+	public let power: Int8
 
-	public init(ports: EV3OutputPortOptions) {
+	public init(ports: EV3OutputPortOptions, power: Int8) {
 		self.ports = ports
+		self.power = power
 	}
 
 	public var responseType: MindstormsResponse.Type {
@@ -20,9 +22,10 @@ public struct EV3StartMotorCommand: EV3DirectCommand {
 
 	public var payloadData: NSData {
 		let mutableData = NSMutableData()
-		mutableData.appendUInt8(EV3OpCode.OutputStart.rawValue)
+		mutableData.appendUInt8(EV3OpCode.OutputPower.rawValue)
 		mutableData.appendUInt8(EV3Layer.ThisBrick.rawValue)
 		mutableData.appendUInt8(ports.rawValue)
+		mutableData.appendUInt8(unsafeBitCast(power, UInt8.self))
 
 		return mutableData.copy() as! NSData
 	}

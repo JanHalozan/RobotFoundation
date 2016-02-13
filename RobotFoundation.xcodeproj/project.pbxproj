@@ -118,6 +118,8 @@
 		C969457A1C28FCA30030DEB3 /* BluetoothDeviceSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96945781C28FCA30030DEB3 /* BluetoothDeviceSource.swift */; };
 		C96E23231C6FA09A00E3B073 /* EV3TimedDriveCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96E23221C6FA09A00E3B073 /* EV3TimedDriveCommand.swift */; };
 		C96E23241C6FA09A00E3B073 /* EV3TimedDriveCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96E23221C6FA09A00E3B073 /* EV3TimedDriveCommand.swift */; };
+		C96E23341C6FB16500E3B073 /* EV3SetMotorPowerCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96E23331C6FB16500E3B073 /* EV3SetMotorPowerCommand.swift */; };
+		C96E23351C6FB16500E3B073 /* EV3SetMotorPowerCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96E23331C6FB16500E3B073 /* EV3SetMotorPowerCommand.swift */; };
 		C96FFD3D1C417A86006AA973 /* EV3ButtonCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96FFD3C1C417A86006AA973 /* EV3ButtonCommand.swift */; };
 		C96FFD3E1C417A86006AA973 /* EV3ButtonCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96FFD3C1C417A86006AA973 /* EV3ButtonCommand.swift */; };
 		C97551B11C29D094002A5796 /* EV3StringResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97551B01C29D094002A5796 /* EV3StringResponse.swift */; };
@@ -346,6 +348,7 @@
 		C96945751C28FC200030DEB3 /* MetaDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetaDevice.swift; sourceTree = "<group>"; };
 		C96945781C28FCA30030DEB3 /* BluetoothDeviceSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothDeviceSource.swift; sourceTree = "<group>"; };
 		C96E23221C6FA09A00E3B073 /* EV3TimedDriveCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3TimedDriveCommand.swift; sourceTree = "<group>"; };
+		C96E23331C6FB16500E3B073 /* EV3SetMotorPowerCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3SetMotorPowerCommand.swift; sourceTree = "<group>"; };
 		C96FFD3C1C417A86006AA973 /* EV3ButtonCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ButtonCommand.swift; sourceTree = "<group>"; };
 		C97551B01C29D094002A5796 /* EV3StringResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3StringResponse.swift; sourceTree = "<group>"; };
 		C97551C01C29D74D002A5796 /* DeviceEV3Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceEV3Extras.swift; sourceTree = "<group>"; };
@@ -706,6 +709,7 @@
 				C98C34EA1C264DD5006840C3 /* EV3ReadLightCommand.swift */,
 				C97868631C28BF960099BB82 /* EV3ReadTouchSensorCommand.swift */,
 				C98C34E81C264532006840C3 /* EV3SetLEDCommand.swift */,
+				C96E23331C6FB16500E3B073 /* EV3SetMotorPowerCommand.swift */,
 				C907C25B1C2A239400647531 /* EV3SetMotorSpeedCommand.swift */,
 				C978686F1C28DF5A0099BB82 /* EV3SetSensorModeCommand.swift */,
 				C907C25E1C2A28B000647531 /* EV3StartMotorCommand.swift */,
@@ -1075,6 +1079,7 @@
 				C947517D1C540F1400A30AA6 /* EV3InvertRectCommand.swift in Sources */,
 				C907C2651C2A2F0300647531 /* EV3StopMotorCommand.swift in Sources */,
 				C9B1387D1C2B1C5C0018812F /* EV3ListingParser.swift in Sources */,
+				C96E23341C6FB16500E3B073 /* EV3SetMotorPowerCommand.swift in Sources */,
 				C91E1A0B1C5C264F00D5154A /* NXTOpenReadCommand.swift in Sources */,
 				C97551C11C29D74D002A5796 /* DeviceEV3Extras.swift in Sources */,
 			);
@@ -1206,6 +1211,7 @@
 				C947517E1C540F1400A30AA6 /* EV3InvertRectCommand.swift in Sources */,
 				C907C2661C2A2F0300647531 /* EV3StopMotorCommand.swift in Sources */,
 				C9B1387E1C2B1C5C0018812F /* EV3ListingParser.swift in Sources */,
+				C96E23351C6FB16500E3B073 /* EV3SetMotorPowerCommand.swift in Sources */,
 				C91E1A0C1C5C264F00D5154A /* NXTOpenReadCommand.swift in Sources */,
 				C97551C21C29D74D002A5796 /* DeviceEV3Extras.swift in Sources */,
 			);

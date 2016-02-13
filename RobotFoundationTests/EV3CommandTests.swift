@@ -21,7 +21,7 @@ final class EV3CommandTests: XCTestCase {
 	}
 
 	func testPlayToneCommand() {
-		let command = EV3PlayToneCommand(frequency: 1000, duration: 1000)
+		let command = EV3PlayToneCommand(volume: 3, frequency: 1000, duration: 1000)
 
 		// From the EV3 Communication docs, the payload should be:
 		// 0F00xxxx8000009401810282E80382E803
