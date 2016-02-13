@@ -21,6 +21,7 @@ enum EV3OpCode: UInt8 {
 	case OutputSpeed = 0xA5
 	case OutputStart = 0xA6
 	case OutputStop = 0xA3
+	case OutputTimeSync = 0xB1
 	case File = 0xC0
 	case MemoryUsage = 0xC5
 }

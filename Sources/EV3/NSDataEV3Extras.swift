@@ -17,4 +17,9 @@ extension NSMutableData {
 		appendUInt8(0x82)
 		appendUInt16(value)
 	}
+
+	func appendLC4(value: UInt32) {
+		appendUInt8(0x83)
+		appendUInt32(value)
+	}
 }
