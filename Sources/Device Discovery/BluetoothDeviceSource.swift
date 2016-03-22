@@ -36,7 +36,11 @@ public final class BluetoothDeviceSource: RobotDeviceSource, IOBluetoothDeviceIn
 
 		// TODO: get these fields on search criteria structs
 		deviceInquiry.setSearchCriteria(BluetoothServiceClassMajor(kBluetoothServiceClassMajorAny), majorDeviceClass: BluetoothDeviceClassMajor(kBluetoothDeviceClassMajorToy), minorDeviceClass: BluetoothDeviceClassMinor(kBluetoothDeviceClassMinorToyRobot))
-		deviceInquiry.start()
+		let result = deviceInquiry.start()
+
+		if result != kIOReturnSuccess {
+			print("Could not start looking for Bluetooth devices: \(result)")
+		}
 	}
 
 	private func hasBluetoothDeviceWithAddress(address: String) -> Bool {
