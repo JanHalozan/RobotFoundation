@@ -31,7 +31,7 @@ enum NXTRunState: UInt8 {
 	case RampDown = 0x40
 }
 
-enum NXTStatus: UInt8 {
+public enum NXTStatus: UInt8 {
 	case StatusSuccess = 0x0
 	case NoMoreHandles = 0x81
 	case NoSpace = 0x82

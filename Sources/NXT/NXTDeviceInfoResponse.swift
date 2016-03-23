@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct NXTDeviceInfoResponse: NXTResponse {
-	let status: NXTStatus
+public struct NXTDeviceInfoResponse: NXTResponse {
+	public let status: NXTStatus
 
-	let brickName: String
-	let freeSpace: UInt32 // bytes
+	public let brickName: String
+	public let freeSpace: UInt32 // bytes
 
-	init?(data: NSData) {
+	public init?(data: NSData) {
 		guard let status = NXTStatus(responseData: data) else {
 			return nil
 		}

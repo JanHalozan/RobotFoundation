@@ -19,6 +19,18 @@ public final class NXTDevice: Device {
 		operationQueue.addOperation(operation)
 	}
 
+	public func enqueueBarrier(handler: () -> ()) {
+		let blockOperation = NSBlockOperation(block: {
+			NSOperationQueue.mainQueue().addOperationWithBlock(handler)
+		})
+
+		for operation in operationQueue.operations {
+			blockOperation.addDependency(operation)
+		}
+
+		operationQueue.addOperation(blockOperation)
+	}
+
 	override func wroteData() {
 		// TODO: might need this for NXT support
 		/*

@@ -8,5 +8,5 @@
 import Foundation
 
 public enum MindstormsCommandType: UInt8 {
-	case Direct = 0x0, System
+	case Direct = 0x0, System = 0x1
 }

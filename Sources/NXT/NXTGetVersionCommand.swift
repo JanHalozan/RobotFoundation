@@ -1,17 +1,17 @@
 //
-//  NXTGetDeviceInfoCommand.swift
+//  NXTGetVersionCommand.swift
 //  RobotFoundation
 //
-//  Created by Matt on 1/29/16.
+//  Created by Matt on 3/23/16.
 //
 
 import Foundation
 
-public struct NXTGetDeviceInfoCommand: NXTCommand {
+public struct NXTGetVersionCommand: NXTCommand {
 	public init() {}
 
 	public var responseType: MindstormsResponse.Type {
-		return NXTDeviceInfoResponse.self
+		return NXTVersionResponse.self
 	}
 
 	public var type: MindstormsCommandType {
@@ -19,7 +19,7 @@ public struct NXTGetDeviceInfoCommand: NXTCommand {
 	}
 
 	public var identifier: UInt8 {
-		return 0x9B
+		return 0x88
 	}
 
 	public var payloadData: NSData {

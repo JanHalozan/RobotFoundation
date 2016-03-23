@@ -14,7 +14,7 @@ protocol NXTResponse: MindstormsResponse, CustomDebugStringConvertible {
 }
 
 extension NXTResponse {
-	var debugDescription: String {
+	public var debugDescription: String {
 		return "MRNXTResponse [status=\(status)]"
 	}
 }
