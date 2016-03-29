@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct NXTGenericResponse: NXTResponse {
-	let status: NXTStatus
+public struct NXTGenericResponse: NXTResponse {
+	public let status: NXTStatus
 
-	init?(data: NSData) {
+	public init?(data: NSData) {
 		guard let status = NXTStatus(responseData: data) else {
 			return nil
 		}

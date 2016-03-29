@@ -31,6 +31,12 @@ public final class NXTDevice: Device {
 		operationQueue.addOperation(blockOperation)
 	}
 
+	public func waitForOperations() {
+		while operationQueue.operationCount > 0 {
+			NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate.distantFuture())
+		}
+	}
+
 	override func wroteData() {
 		// TODO: might need this for NXT support
 		/*

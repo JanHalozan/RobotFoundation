@@ -248,6 +248,8 @@
 		C9E4B0AE1C5B0CB6008C8D01 /* NXTDisplayFramebuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E4B0AC1C5B0CB6008C8D01 /* NXTDisplayFramebuffer.swift */; };
 		C9E4B0B01C5B0D1B008C8D01 /* NXTConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E4B0AF1C5B0D1B008C8D01 /* NXTConstants.swift */; };
 		C9E4B0B11C5B0D1B008C8D01 /* NXTConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E4B0AF1C5B0D1B008C8D01 /* NXTConstants.swift */; };
+		C9EB12E51CAAD44800E41D4D /* NXTPlayToneCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EB12E41CAAD44800E41D4D /* NXTPlayToneCommand.swift */; };
+		C9EB12E61CAAD44800E41D4D /* NXTPlayToneCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EB12E41CAAD44800E41D4D /* NXTPlayToneCommand.swift */; };
 		C9EDF44E1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF44D1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift */; };
 		C9EDF44F1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF44D1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift */; };
 		C9EDF4511C2B56B600879F00 /* EV3DeleteItemCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF4501C2B56B600879F00 /* EV3DeleteItemCommand.swift */; };
@@ -435,6 +437,7 @@
 		C9E4B0A01C5B0A09008C8D01 /* NXTDeviceConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTDeviceConvenience.swift; sourceTree = "<group>"; };
 		C9E4B0AC1C5B0CB6008C8D01 /* NXTDisplayFramebuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTDisplayFramebuffer.swift; sourceTree = "<group>"; };
 		C9E4B0AF1C5B0D1B008C8D01 /* NXTConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTConstants.swift; sourceTree = "<group>"; };
+		C9EB12E41CAAD44800E41D4D /* NXTPlayToneCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTPlayToneCommand.swift; sourceTree = "<group>"; };
 		C9EDF44D1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3CreateFolderCommand.swift; sourceTree = "<group>"; };
 		C9EDF4501C2B56B600879F00 /* EV3DeleteItemCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3DeleteItemCommand.swift; sourceTree = "<group>"; };
 		C9F197C61CA2E10E009703E7 /* NXTGetVersionCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTGetVersionCommand.swift; sourceTree = "<group>"; };
@@ -495,6 +498,7 @@
 				C91E1A0A1C5C264F00D5154A /* NXTOpenReadCommand.swift */,
 				C91E1A0D1C5C26E800D5154A /* NXTOpenWriteCommand.swift */,
 				C91E1A101C5C278300D5154A /* NXTPlaySoundFileCommand.swift */,
+				C9EB12E41CAAD44800E41D4D /* NXTPlayToneCommand.swift */,
 				C91E1A131C5C27FA00D5154A /* NXTReadCommand.swift */,
 				C9E4B09A1C5B0813008C8D01 /* NXTReadIOMapCommand.swift */,
 				C91E1A1C1C5C2A1100D5154A /* NXTResetMotorPositionCommand.swift */,
@@ -1008,6 +1012,7 @@
 				C98C34AB1C25D1D1006840C3 /* NXTDeleteCommand.swift in Sources */,
 				C94A9F3B1C2CF5660031642F /* EV3ReadChainedCommand.swift in Sources */,
 				C97868641C28BF960099BB82 /* EV3ReadTouchSensorCommand.swift in Sources */,
+				C9EB12E51CAAD44800E41D4D /* NXTPlayToneCommand.swift in Sources */,
 				C91E1A141C5C27FA00D5154A /* NXTReadCommand.swift in Sources */,
 				C9EDF4511C2B56B600879F00 /* EV3DeleteItemCommand.swift in Sources */,
 				C96945731C28FB420030DEB3 /* RobotDeviceDescriptor.swift in Sources */,
@@ -1144,6 +1149,7 @@
 				C98C35001C26544D006840C3 /* XPCBackedDeviceTransport.swift in Sources */,
 				C94A9F3C1C2CF5660031642F /* EV3ReadChainedCommand.swift in Sources */,
 				C98C35011C26544D006840C3 /* EV3Device.swift in Sources */,
+				C9EB12E61CAAD44800E41D4D /* NXTPlayToneCommand.swift in Sources */,
 				C91E1A151C5C27FA00D5154A /* NXTReadCommand.swift in Sources */,
 				C9EDF4521C2B56B600879F00 /* EV3DeleteItemCommand.swift in Sources */,
 				C97868651C28BF960099BB82 /* EV3ReadTouchSensorCommand.swift in Sources */,
