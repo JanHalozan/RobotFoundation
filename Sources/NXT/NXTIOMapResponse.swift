@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct NXTIOMapResponse: NXTResponse {
-	let status: NXTStatus
-	let module: UInt32
-	let bytesRead: UInt16
-	let contents: NSData
+public struct NXTIOMapResponse: NXTResponse {
+	public let status: NXTStatus
+	public let module: UInt32
+	public let bytesRead: UInt16
+	public let contents: NSData
 
-	init?(data: NSData) {
+	public init?(data: NSData) {
 		guard let status = NXTStatus(responseData: data) else {
 			return nil
 		}

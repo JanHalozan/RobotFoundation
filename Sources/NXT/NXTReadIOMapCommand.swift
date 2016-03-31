@@ -7,24 +7,30 @@
 
 import Foundation
 
-struct NXTReadIOMapCommand: NXTCommand {
-	let module: UInt32
-	let offset: UInt16
-	let bytesToRead: UInt16 // max seems to be 64 bytes
+public struct NXTReadIOMapCommand: NXTCommand {
+	public let module: UInt32
+	public let offset: UInt16
+	public let bytesToRead: UInt16 // max seems to be 64 bytes
 
-	var responseType: MindstormsResponse.Type {
+	public init(module: UInt32, offset: UInt16, bytesToRead: UInt16) {
+		self.module = module
+		self.offset = offset
+		self.bytesToRead = bytesToRead
+	}
+
+	public var responseType: MindstormsResponse.Type {
 		return NXTIOMapResponse.self
 	}
 
-	var type: MindstormsCommandType {
+	public var type: MindstormsCommandType {
 		return .System
 	}
 
-	var identifier: UInt8 {
+	public var identifier: UInt8 {
 		return 0x94
 	}
 
-	var payloadData: NSData {
+	public var payloadData: NSData {
 		let mutableData = NSMutableData()
 		mutableData.appendUInt32(module)
 		mutableData.appendUInt16(offset)
