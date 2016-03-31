@@ -8,7 +8,7 @@
 import Foundation
 
 extension NSMutableData {
-	func appendUInt8(value: UInt8) {
+	public func appendUInt8(value: UInt8) {
 		var mutableValue = value
 		appendBytes(&mutableValue, length: sizeof(UInt8))
 	}
