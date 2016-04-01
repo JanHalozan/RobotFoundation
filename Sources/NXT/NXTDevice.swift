@@ -50,6 +50,11 @@ public final class NXTDevice: Device {
 		*/
 	}
 
+	public override func close() {
+		waitForOperations()
+		super.close()
+	}
+
 	override func openedTransport() {
 		for operation in operationQueue.operations {
 			operation.willChangeValueForKey("isReady")
