@@ -49,7 +49,11 @@ class XPCBackedDeviceTransport: DeviceTransport {
 		beganOpening()
 
 		proxy.open(identifier) { result in
-			dispatch_async(dispatch_get_main_queue()) {
+			assert(!NSThread.isMainThread())
+
+			NSLog("WE GET A RESPONSE")
+			dispatch_sync(dispatch_get_main_queue()) {
+				NSLog("BUT THIS IS NEVER CALLED")
 				if result == 0 {
 					self.opened()
 				} else {

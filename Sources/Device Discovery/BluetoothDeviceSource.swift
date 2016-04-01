@@ -35,7 +35,7 @@ public final class BluetoothDeviceSource: RobotDeviceSource, IOBluetoothDeviceIn
 		deviceInquiry.clearFoundDevices()
 
 		// TODO: get these fields on search criteria structs
-		deviceInquiry.setSearchCriteria(BluetoothServiceClassMajor(kBluetoothServiceClassMajorAny), majorDeviceClass: BluetoothDeviceClassMajor(kBluetoothDeviceClassMajorToy), minorDeviceClass: BluetoothDeviceClassMinor(kBluetoothDeviceClassMinorToyRobot))
+//		deviceInquiry.setSearchCriteria(BluetoothServiceClassMajor(kBluetoothServiceClassMajorAny), majorDeviceClass: BluetoothDeviceClassMajor(kBluetoothDeviceClassMajorToy), minorDeviceClass: BluetoothDeviceClassMinor(kBluetoothDeviceClassMinorToyRobot))
 		let result = deviceInquiry.start()
 
 		if result != kIOReturnSuccess {
