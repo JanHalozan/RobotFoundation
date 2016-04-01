@@ -81,7 +81,7 @@ class XPCBackedDeviceTransport: DeviceTransport {
 		}
 	}
 
-	override func writeData(data: NSData, handler: NSData -> ()) throws {
+	override func writeData(data: NSData, handler: NSData -> (), errorHandler: () -> ()) throws {
 		guard let serviceConnection = serviceConnection else {
 			debugPrint("Tried to write to a device even though we have no XPC connection.")
 			return
@@ -96,6 +96,7 @@ class XPCBackedDeviceTransport: DeviceTransport {
 			dispatch_async(dispatch_get_main_queue()) {
 				guard result == 0 else {
 					debugPrint("An error occured during write.")
+					errorHandler()
 					return
 				}
 

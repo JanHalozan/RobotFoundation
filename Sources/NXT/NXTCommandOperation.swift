@@ -73,14 +73,21 @@ final class NXTCommandOperation: NSOperation {
 		packet.appendData(data)
 
 		do {
-			try transport.writeData(packet) { responseData in
+			try transport.writeData(packet, handler: { responseData in
 				self.handleResponseData(responseData)
-			}
+			}, errorHandler: {
+				self.handleErrorResponse()
+			})
 		} catch {
 			print("Cannot write packet data: \(error)")
 		}
 
 		isExecuting = true
+	}
+
+	private func handleErrorResponse() {
+		assert(NSThread.isMainThread())
+		isExecuting = false
 	}
 
 	private func handleResponseData(data: NSData) {

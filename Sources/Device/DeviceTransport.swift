@@ -35,7 +35,7 @@ class DeviceTransport {
 		fatalError("Must be overriden")
 	}
 
-	func writeData(data: NSData, handler: NSData -> ()) throws {
+	func writeData(data: NSData, handler: NSData -> (), errorHandler: () -> ()) throws {
 		fatalError("Must be overriden")
 	}
 

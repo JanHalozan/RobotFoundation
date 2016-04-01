@@ -66,14 +66,21 @@ final class EV3CommandOperation: NSOperation {
 		}
 
 		do {
-			try transport.writeData(data) { resultData in
+			try transport.writeData(data, handler: { resultData in
 				self.handleResponseData(resultData)
-			}
+			}, errorHandler: {
+				self.handleErrorResponse()
+			})
 		} catch {
 			print("Cannot write packet data: \(error)")
 		}
 
 		isExecuting = true
+	}
+
+	private func handleErrorResponse() {
+		assert(NSThread.isMainThread())
+		isExecuting = false
 	}
 
 	private func handleResponseData(data: NSData) {
