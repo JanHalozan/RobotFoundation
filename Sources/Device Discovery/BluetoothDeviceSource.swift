@@ -91,7 +91,7 @@ public final class BluetoothDeviceSource: RobotDeviceSource, IOBluetoothDeviceIn
 
 		foundDevices.subtractInPlace(devicesToRemove)
 
-		scanTimer = NSTimer.scheduledTimerWithTimeInterval(30, target: self, selector: #selector(BluetoothDeviceSource.scanAgain(_:)), userInfo: nil, repeats: false)
+		scanTimer = NSTimer.scheduledTimerWithTimeInterval(30, target: self, selector: #selector(scanAgain), userInfo: nil, repeats: false)
 	}
 
 	@objc private func scanAgain(sender: AnyObject) {
