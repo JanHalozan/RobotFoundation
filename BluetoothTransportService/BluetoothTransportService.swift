@@ -68,14 +68,12 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		}
 
 		guard dispatch_semaphore_wait(openSemaphore, tenSecondTimeout()) == 0 else {
-			// Should be kIOReturnTimeout which Swift can't import
-			handler(Int(1))
+			handler(Int(kIOReturnTimeout))
 			return
 		}
 
 		guard let openStatus = openStatus else {
-			// Should be kIOReturnNotFound which Swift can't import
-			handler(Int(1))
+			handler(Int(kIOReturnNotFound))
 			return
 		}
 
@@ -125,13 +123,13 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 
 		guard let currentIdentifier = currentIdentifier else {
 			debugPrint("No open device; nothing to close.")
-			handler(Int(1))
+			handler(Int(kIOReturnNotOpen))
 			return
 		}
 
 		guard currentIdentifier == identifier else {
 			debugPrint("Device mismatch.")
-			handler(Int(1))
+			handler(Int(kIOReturnInternalError))
 			return
 		}
 
@@ -151,8 +149,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 	}
 
 	func writeData(identifier: NSString, data: NSData, handler: (NSData?, Int) -> ()) {
-		// Should be kIOReturnInvalid which Swift doesn't import
-		var writeState = BluetoothAsyncWriteState.Error(1)
+		var writeState = BluetoothAsyncWriteState.Error(Int(kIOReturnInvalid))
 
 		dispatch_sync(dispatch_get_main_queue()) {
 			writeState = self.actuallyWriteData(identifier, data: data)
@@ -168,14 +165,12 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		}
 
 		guard dispatch_semaphore_wait(writeSemaphore, tenSecondTimeout()) == 0 else {
-			// Should be kIOReturnTimeout which Swift doesn't import
-			handler(nil, Int(1))
+			handler(nil, Int(kIOReturnTimeout))
 			return
 		}
 
 		guard let receivedData = receivedData else {
-			// Should be kIOReturnNotFound which Swift doesn't import
-			handler(nil, Int(1))
+			handler(nil, Int(kIOReturnNotFound))
 			return
 		}
 
@@ -208,8 +203,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 
 		let uuid = IOBluetoothSDPUUID(UUID16: BluetoothSDPUUID16(kBluetoothSDPUUID16ServiceClassSerialPort.rawValue))
 		guard let record = device.getServiceRecordForUUID(uuid) else {
-			// Should be kIOReturnNotFound which Swift doesn't import
-			finishedOpenWithError(IOReturn(1))
+			finishedOpenWithError(kIOReturnNotFound)
 			return
 		}
 
@@ -230,8 +224,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		}
 
 		guard let theNewChannel = newChannel else {
-			// Should be kIOReturnNotFound which Swift doesn't import
-			finishedOpenWithError(IOReturn(1))
+			finishedOpenWithError(kIOReturnNotFound)
 			return
 		}
 

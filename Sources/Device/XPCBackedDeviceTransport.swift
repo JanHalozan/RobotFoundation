@@ -34,7 +34,7 @@ class XPCBackedDeviceTransport: DeviceTransport {
 
 		guard let serviceConnection = serviceConnection else {
 			assertionFailure()
-			throw IOReturn(1)
+			throw kIOReturnInternalError
 		}
 
 		serviceConnection.remoteObjectInterface = NSXPCInterface(withProtocol: XPCTransportServiceProtocol.self)
@@ -43,14 +43,14 @@ class XPCBackedDeviceTransport: DeviceTransport {
 
 		guard let proxy = serviceConnection.remoteObjectProxy as? XPCTransportServiceProtocol else {
 			assertionFailure()
-			throw IOReturn(1)
+			throw kIOReturnInternalError
 		}
 
 		beganOpening()
 
 		proxy.open(identifier) { result in
 			dispatch_async(dispatch_get_main_queue()) {
-				if result == 0 {
+				if result == Int(kIOReturnSuccess) {
 					self.opened()
 				} else {
 					self.failedToOpenWithError(IOReturn(result))

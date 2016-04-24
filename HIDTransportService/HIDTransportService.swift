@@ -55,7 +55,7 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 			handler(Int(kIOReturnSuccess))
 		} else {
 			debugPrint("Tried to open a device while one was already open.")
-			handler(Int(1))
+			handler(Int(kIOReturnStillOpen))
 		}
 	}
 
@@ -93,7 +93,7 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 		}
 
 		guard dispatch_semaphore_wait(writeSemaphore, dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC) * 10)) == 0 else {
-			handler(receivedData, Int(1))
+			handler(receivedData, Int(kIOReturnTimeout))
 			return
 		}
 
@@ -103,13 +103,13 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 	private func actuallyWriteDataWithIdentifier(identifier: NSString, data: NSData, handler: (NSData?, Int) -> ()) {
 		guard let currentIdentifier = currentIdentifier else {
 			debugPrint("No open device; nowhere to write to.")
-			handler(nil, Int(1))
+			handler(nil, Int(kIOReturnNotOpen))
 			return
 		}
 
 		guard currentIdentifier == identifier else {
 			debugPrint("Device mismatch.")
-			handler(nil, Int(1))
+			handler(nil, Int(kIOReturnInternalError))
 			return
 		}
 
@@ -139,13 +139,13 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 
 		guard let currentIdentifier = currentIdentifier else {
 			debugPrint("No open device; nothing to close.")
-			handler(Int(1))
+			handler(Int(kIOReturnNotOpen))
 			return
 		}
 
 		guard currentIdentifier == identifier else {
 			debugPrint("Device mismatch.")
-			handler(Int(1))
+			handler(Int(kIOReturnInternalError))
 			return
 		}
 
