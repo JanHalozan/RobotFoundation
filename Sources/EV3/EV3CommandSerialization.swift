@@ -10,6 +10,7 @@ import Foundation
 private let headerLength = sizeof(UInt16)
 private let typeLength = sizeof(UInt8)
 private let messageCounterLength = sizeof(UInt16)
+private let commandLength = sizeof(UInt8)
 private let packetLengthLength = sizeof(UInt16)
 
 extension EV3DirectCommand {
@@ -35,7 +36,7 @@ extension EV3DirectCommand {
 
 extension EV3SystemCommand {
 	func formEV3PacketData(messageCounter: UInt16) -> NSData {
-		let dataLength = UInt16(payloadData.length + headerLength + typeLength + messageCounterLength)
+		let dataLength = UInt16(messageCounterLength + typeLength + commandLength + payloadData.length)
 
 		let packet = NSMutableData()
 		packet.appendUInt16(dataLength)

@@ -33,4 +33,14 @@ final class EV3CommandTests: XCTestCase {
 		let data = command.formEV3PacketData(0, prependTotalLength: false)
 		XCTAssertTrue(data.isEqualToData(expectedData))
 	}
+
+	func testFileListingCommand() {
+		let command = EV3ListFilesCommand(path: "/home/root/lms2012/apps/")
+
+		var expectedBytes: [UInt8] = [ 31, 0, 0, 0, 1, 153, 232, 3, 47, 104, 111, 109, 101, 47, 114, 111, 111, 116, 47, 108, 109, 115, 50, 48, 49, 50, 47, 97, 112, 112, 115, 47, 0 ]
+		assert(expectedBytes.count == 33)
+		let expectedData = NSData(bytes: &expectedBytes, length: expectedBytes.count)
+		let data = command.formEV3PacketData(0)
+		XCTAssertTrue(data.isEqualToData(expectedData))
+	}
 }
