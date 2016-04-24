@@ -91,7 +91,7 @@ class XPCBackedDeviceTransport: DeviceTransport {
 		proxy.writeData(identifier, data: data) { data, result in
 			dispatch_async(dispatch_get_main_queue()) {
 				guard result == 0 else {
-					debugPrint("An error occured during write.")
+					debugPrint("An error occured during write (\(result)).")
 					errorHandler()
 					return
 				}
