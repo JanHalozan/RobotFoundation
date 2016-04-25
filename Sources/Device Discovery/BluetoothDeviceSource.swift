@@ -62,8 +62,30 @@ public final class BluetoothDeviceSource: RobotDeviceSource, IOBluetoothDeviceIn
 			return
 		}
 
+		device.performSDPQuery(self)
+
+		// Insert this to the set of local devices immediately so device removal still works, but delay
+		// telling the client until we have service information.
 		let robotDevice = MetaDevice(bluetoothDevice: device)
 		foundDevices.insert(robotDevice)
+	}
+
+	private func metaDeviceForBluetoothDevice(device: IOBluetoothDevice) -> MetaDevice? {
+		for foundDevice in foundDevices {
+			if case RobotDeviceType.BluetoothDevice(let bd) = foundDevice.type where bd === device {
+				return foundDevice
+			}
+		}
+
+		return nil
+	}
+
+	@objc private func sdpQueryComplete(device: IOBluetoothDevice!, status: IOReturn) {
+		guard let robotDevice = metaDeviceForBluetoothDevice(device) else {
+			assertionFailure()
+			return
+		}
+
 		client.robotDeviceSourceDidFindDevice(robotDevice)
 	}
 

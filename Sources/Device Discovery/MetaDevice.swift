@@ -127,8 +127,6 @@ public func ==(lhs: MetaDevice, rhs: MetaDevice) -> Bool {
 
 // MARK: - Device Class Retrieval
 
-private let DeviceClassKey = "deviceClass"
-
 public enum DeviceClass {
 	case NXT20
 	case EV3
@@ -137,37 +135,26 @@ public enum DeviceClass {
 
 extension MetaDevice {
 	private func deviceClassForBluetoothDevice(bluetoothDevice: IOBluetoothDevice) -> DeviceClass {
-		userInfo.removeValueForKey(DeviceClassKey)
-		bluetoothDevice.performSDPQuery(self)
-
-		// TODO: avoid blocking
-		while userInfo[DeviceClassKey] == nil {
-			NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate.distantFuture())
+		guard let services = bluetoothDevice.services as? [IOBluetoothSDPServiceRecord] else {
+			assertionFailure()
+			return .Unknown
 		}
 
-		return userInfo[DeviceClassKey] as! DeviceClass
-	}
-
-	@objc private func sdpQueryComplete(device: IOBluetoothDevice!, status: IOReturn) {
-		let services = device.services as! [IOBluetoothSDPServiceRecord]
 		guard let firstService = services.first else {
-			userInfo[DeviceClassKey] = DeviceClass.Unknown
 			assertionFailure()
-			return
+			return .Unknown
 		}
 
 		guard let platform = firstService.attributes[258] as? IOBluetoothSDPDataElement else {
 			// Hacky, but the NXTs don't have this key.
-			userInfo[DeviceClassKey] = DeviceClass.NXT20
-			return
+			return .NXT20
 		}
 
 		guard platform.getStringValue().containsString("BlueZ") else {
-			userInfo[DeviceClassKey] = DeviceClass.NXT20
-			return
+			return .NXT20
 		}
 
-		userInfo[DeviceClassKey] = DeviceClass.EV3
+		return .EV3
 	}
 
 	public var deviceClass: DeviceClass {
