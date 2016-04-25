@@ -38,6 +38,12 @@ enum RobotDeviceTypeInternal {
 	#endif
 }
 
+private let kDictionaryTypeKey = "type"
+	private let kDictionaryBluetoothType = "bl"
+	private let kDictionaryUSBType = "usb"
+
+private let kDictionaryAddressKey = "address"
+
 // A meta device can't be used to make connections. Rather, it describes a device's name, unique
 // identifier, and other parameters and can be used to initialize concrete Devices (or subclasses thereof).
 public final class MetaDevice {
@@ -73,13 +79,13 @@ public final class MetaDevice {
 	#endif
 
 	public convenience init?(stringDictionary: [String: String]) {
-		guard let type = stringDictionary["type"] else {
+		guard let type = stringDictionary[kDictionaryTypeKey] else {
 			return nil
 		}
 
 		switch type {
-		case "bl":
-			guard let address = stringDictionary["address"] else {
+		case kDictionaryBluetoothType:
+			guard let address = stringDictionary[kDictionaryAddressKey] else {
 				return nil
 			}
 
@@ -95,8 +101,8 @@ public final class MetaDevice {
 		switch internalType {
 		case .BluetoothDevice(let bluetoothDevice):
 			return [
-				"type": "bl",
-				"address": bluetoothDevice.addressString
+				kDictionaryTypeKey: kDictionaryBluetoothType,
+				kDictionaryAddressKey: bluetoothDevice.addressString
 			]
 		case .HIDDevice(let hidDevice):
 			fatalError("Unimplemented")
