@@ -168,8 +168,9 @@ extension MetaDevice {
 		switch internalType {
 		case .BluetoothDevice(let bluetoothDevice):
 			return deviceClassForBluetoothDevice(bluetoothDevice)
-		case .HIDDevice(let hidDevice):
-			fatalError()
+		case .HIDDevice:
+			// The NXTs don't talk over HID so this must be an EV3.
+			return DeviceClass.EV3
 		}
 	}
 }
