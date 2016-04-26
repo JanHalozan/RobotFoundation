@@ -10,15 +10,11 @@ import Foundation
 extension Device {
 	public convenience init?(metaDevice: MetaDevice) {
 		#if os(OSX)
-		switch metaDevice.internalType {
-		case .BluetoothDevice(let bld):
-			self.init(transport: IOBluetoothDeviceTransport(address: bld.addressString))
-		case .HIDDevice(let hid):
-			if let serialNumber = IOHIDDeviceGetProperty(hid, kIOHIDSerialNumberKey)?.takeUnretainedValue() as? String {
-				self.init(transport: HIDDeviceTransport(serialNumber: serialNumber))
-			} else {
-				return nil
-			}
+		switch metaDevice.type {
+		case .BluetoothDevice:
+			self.init(transport: IOBluetoothDeviceTransport(address: metaDevice.uniqueIdentifier))
+		case .HIDDevice:
+			self.init(transport: HIDDeviceTransport(serialNumber: metaDevice.uniqueIdentifier))
 		}
 		#endif
 

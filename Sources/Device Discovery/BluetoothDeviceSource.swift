@@ -47,7 +47,7 @@ public final class BluetoothDeviceSource: RobotDeviceSource, IOBluetoothDeviceIn
 
 	private func hasBluetoothDeviceWithAddress(address: String) -> Bool {
 		for metaDevice in foundDevices {
-			if case RobotDeviceTypeInternal.BluetoothDevice(let bluetoothDevice) = metaDevice.internalType where bluetoothDevice.addressString == address {
+			if case RobotDeviceType.BluetoothDevice = metaDevice.type where metaDevice.uniqueIdentifier == address {
 				return true
 			}
 		}
@@ -66,14 +66,18 @@ public final class BluetoothDeviceSource: RobotDeviceSource, IOBluetoothDeviceIn
 
 		// Insert this to the set of local devices immediately so device removal still works, but delay
 		// telling the client until we have service information.
-		let robotDevice = MetaDevice(bluetoothDevice: device)
-		foundDevices.insert(robotDevice)
+
+		// We'll fill in the device class when the SDP query completes.
+		let metaDevice = MetaDevice(type: .BluetoothDevice, deviceClass: .Unknown, uniqueIdentifier: device.addressString, name: device.name ?? "Bluetooth Device")
+		foundDevices.insert(metaDevice)
 	}
 
 	private func metaDeviceForBluetoothDevice(device: IOBluetoothDevice) -> MetaDevice? {
 		for foundDevice in foundDevices {
-			if case RobotDeviceType.BluetoothDevice(let bd) = foundDevice.type where bd === device {
-				return foundDevice
+			if case RobotDeviceType.BluetoothDevice = foundDevice.type {
+				if foundDevice.uniqueIdentifier == device.addressString {
+					return foundDevice
+				}
 			}
 		}
 
@@ -81,12 +85,16 @@ public final class BluetoothDeviceSource: RobotDeviceSource, IOBluetoothDeviceIn
 	}
 
 	@objc private func sdpQueryComplete(device: IOBluetoothDevice!, status: IOReturn) {
-		guard let robotDevice = metaDeviceForBluetoothDevice(device) else {
+		assert(NSThread.isMainThread())
+
+		guard let metaDevice = metaDeviceForBluetoothDevice(device) else {
 			assertionFailure()
 			return
 		}
 
-		client.robotDeviceSourceDidFindDevice(robotDevice)
+		metaDevice.deviceClass = deviceClassForBluetoothDevice(device)
+
+		client.robotDeviceSourceDidFindDevice(metaDevice)
 	}
 
 	@objc public func deviceInquiryComplete(sender: IOBluetoothDeviceInquiry!, error: IOReturn, aborted: Bool) {
@@ -124,13 +132,36 @@ public final class BluetoothDeviceSource: RobotDeviceSource, IOBluetoothDeviceIn
 	}
 }
 
+private func deviceClassForBluetoothDevice(bluetoothDevice: IOBluetoothDevice) -> DeviceClass {
+	guard let services = bluetoothDevice.services as? [IOBluetoothSDPServiceRecord] else {
+		assertionFailure()
+		return .Unknown
+	}
+
+	guard let firstService = services.first else {
+		assertionFailure()
+		return .Unknown
+	}
+
+	guard let platform = firstService.attributes[258] as? IOBluetoothSDPDataElement else {
+		// Hacky, but the NXTs don't have this key.
+		return .NXT20
+	}
+
+	guard platform.getStringValue().containsString("BlueZ") else {
+		return .NXT20
+	}
+
+	return .EV3
+}
+
 private func bluetoothDevicesContainRobotDevice(bluetoothDevices: [IOBluetoothDevice], _ robotDevice: MetaDevice) -> Bool {
-	guard case RobotDeviceTypeInternal.BluetoothDevice(let device) = robotDevice.internalType else {
+	guard case RobotDeviceType.BluetoothDevice = robotDevice.type else {
 		return false
 	}
 
 	for bluetoothDevice in bluetoothDevices {
-		if bluetoothDevice.addressString == device.addressString {
+		if bluetoothDevice.addressString == robotDevice.uniqueIdentifier {
 			return true
 		}
 	}

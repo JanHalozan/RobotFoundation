@@ -19,7 +19,7 @@ import ExternalAccessory
 public enum RobotDeviceType {
 	#if os(OSX)
 	case HIDDevice
-	case BluetoothDevice(IOBluetoothDevice)
+	case BluetoothDevice
 	#endif
 
 	#if os(iOS)
@@ -27,56 +27,37 @@ public enum RobotDeviceType {
 	#endif
 }
 
-enum RobotDeviceTypeInternal {
-	#if os(OSX)
-	case HIDDevice(IOHIDDeviceRef)
-	case BluetoothDevice(IOBluetoothDevice)
-	#endif
-
-	#if os(iOS)
-	case ExternalAccessory(EAAccessory)
-	#endif
+public enum DeviceClass: String {
+	case NXT20 = "nxt20"
+	case EV3 = "ev3"
+	case Unknown = "unknown"
 }
 
 private let kDictionaryTypeKey = "type"
-	private let kDictionaryBluetoothType = "bl"
-	private let kDictionaryUSBType = "usb"
+	private let kDictionaryTypeBluetooth = "bl"
+	private let kDictionaryTypeHID = "hid"
 
-private let kDictionaryAddressKey = "address"
+private let kDictionaryClassKey = "class"
+private let kDictionaryIdentifierKey = "identifier"
+private let kDictionaryNameKey = "name"
 
 // A meta device can't be used to make connections. Rather, it describes a device's name, unique
 // identifier, and other parameters and can be used to initialize concrete Devices (or subclasses thereof).
 public final class MetaDevice {
-	let internalType: RobotDeviceTypeInternal
 	public let type: RobotDeviceType
+	public var deviceClass: DeviceClass
 
-	public private(set) var name: String?
-	private(set) var uniqueIdentifier: String?
+	public let name: String
+	public let uniqueIdentifier: String
 
 	private(set) var userInfo = [String: Any]()
 
-	#if os(OSX)
-	init(hidDevice: IOHIDDeviceRef) {
-		internalType = .HIDDevice(hidDevice)
-		type = .HIDDevice
-		name = IOHIDDeviceGetProperty(hidDevice, kIOHIDProductKey)?.takeUnretainedValue() as? String
-		uniqueIdentifier = IOHIDDeviceGetProperty(hidDevice, kIOHIDSerialNumberKey)?.takeUnretainedValue() as? String
+	init(type: RobotDeviceType, deviceClass: DeviceClass, uniqueIdentifier: String, name: String) {
+		self.type = type
+		self.name = name
+		self.uniqueIdentifier = uniqueIdentifier
+		self.deviceClass = deviceClass
 	}
-
-	init(bluetoothDevice: IOBluetoothDevice) {
-		internalType = .BluetoothDevice(bluetoothDevice)
-		type = .BluetoothDevice(bluetoothDevice)
-		name = bluetoothDevice.name
-		uniqueIdentifier = bluetoothDevice.addressString
-	}
-	#endif
-
-	#if os(iOS)
-	init(externalAccessory: EAAccessory) {
-		type = .ExternalAccessory
-		internalType = .ExternalAccessory(externalAccessory)
-	}
-	#endif
 
 	public convenience init?(stringDictionary: [String: String]) {
 		guard let type = stringDictionary[kDictionaryTypeKey] else {
@@ -84,86 +65,66 @@ public final class MetaDevice {
 		}
 
 		switch type {
-		case kDictionaryBluetoothType:
-			guard let address = stringDictionary[kDictionaryAddressKey] else {
+		case kDictionaryTypeBluetooth:
+			guard let identifier = stringDictionary[kDictionaryIdentifierKey] else {
 				return nil
 			}
 
-			let bluetoothDevice = IOBluetoothDevice(addressString: address)
-			self.init(bluetoothDevice: bluetoothDevice)
+			guard let name = stringDictionary[kDictionaryNameKey] else {
+				return nil
+			}
+
+			guard let deviceClassString = stringDictionary[kDictionaryClassKey] else {
+				return nil
+			}
+
+			guard let deviceClass = DeviceClass(rawValue: deviceClassString) else {
+				return nil
+			}
+
+			self.init(type: .BluetoothDevice, deviceClass: deviceClass, uniqueIdentifier: identifier, name: name)
+		case kDictionaryTypeHID:
+			guard let identifier = stringDictionary[kDictionaryIdentifierKey] else {
+				return nil
+			}
+
+			guard let name = stringDictionary[kDictionaryNameKey] else {
+				return nil
+			}
+
+			self.init(type: .HIDDevice, deviceClass: .EV3, uniqueIdentifier: identifier, name: name)
 		default:
-			fatalError("Unimplemented")
+			fatalError("Unimplemented type")
 			return nil
 		}
 	}
 
 	public var stringDictionary: [String: String] {
-		switch internalType {
-		case .BluetoothDevice(let bluetoothDevice):
+		switch type {
+		case .BluetoothDevice:
 			return [
-				kDictionaryTypeKey: kDictionaryBluetoothType,
-				kDictionaryAddressKey: bluetoothDevice.addressString
+				kDictionaryTypeKey: kDictionaryTypeBluetooth,
+				kDictionaryIdentifierKey: uniqueIdentifier,
+				kDictionaryNameKey: name,
+				kDictionaryClassKey: deviceClass.rawValue
 			]
-		case .HIDDevice(let hidDevice):
-			fatalError("Unimplemented")
-			return [:]
+		case .HIDDevice:
+			return [
+				kDictionaryTypeKey: kDictionaryTypeHID,
+				kDictionaryIdentifierKey: uniqueIdentifier,
+				kDictionaryNameKey: name,
+				kDictionaryClassKey: deviceClass.rawValue
+			]
 		}
 	}
 }
 
 extension MetaDevice: Hashable {
 	public var hashValue: Int {
-		return uniqueIdentifier?.hashValue ?? 1984
+		return uniqueIdentifier.hashValue
 	}
 }
 
 public func ==(lhs: MetaDevice, rhs: MetaDevice) -> Bool {
-	if let uq1 = lhs.uniqueIdentifier, uq2 = rhs.uniqueIdentifier where uq1 == uq2 {
-		return true
-	}
-
-	return false
-}
-
-// MARK: - Device Class Retrieval
-
-public enum DeviceClass {
-	case NXT20
-	case EV3
-	case Unknown
-}
-
-extension MetaDevice {
-	private func deviceClassForBluetoothDevice(bluetoothDevice: IOBluetoothDevice) -> DeviceClass {
-		guard let services = bluetoothDevice.services as? [IOBluetoothSDPServiceRecord] else {
-			assertionFailure()
-			return .Unknown
-		}
-
-		guard let firstService = services.first else {
-			assertionFailure()
-			return .Unknown
-		}
-
-		guard let platform = firstService.attributes[258] as? IOBluetoothSDPDataElement else {
-			// Hacky, but the NXTs don't have this key.
-			return .NXT20
-		}
-
-		guard platform.getStringValue().containsString("BlueZ") else {
-			return .NXT20
-		}
-
-		return .EV3
-	}
-
-	public var deviceClass: DeviceClass {
-		switch internalType {
-		case .BluetoothDevice(let bluetoothDevice):
-			return deviceClassForBluetoothDevice(bluetoothDevice)
-		case .HIDDevice:
-			// The NXTs don't talk over HID so this must be an EV3.
-			return DeviceClass.EV3
-		}
-	}
+	return lhs.uniqueIdentifier == rhs.uniqueIdentifier
 }
