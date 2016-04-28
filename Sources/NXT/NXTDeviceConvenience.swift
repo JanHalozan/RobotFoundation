@@ -11,6 +11,9 @@ private let kDisplayModule: UInt32 = 0x000A0001
 private let kDisplayNormalOffset: UInt16 = 119
 private let kMaxBytes: UInt16 = 50
 
+// 64 bytes is the max over Bluetooth.
+private let kMaxChunk = 64
+
 public typealias NXTDeviceDownloadHandler = NSData -> ()
 public typealias NXTDeviceUploadHandler = Bool -> ()
 
@@ -36,8 +39,57 @@ extension NXTDevice {
 		}
 	}
 
+	public func uploadFileData(wholeData: NSData, toPath path: String, handler: NXTDeviceUploadHandler) {
+		let openCommand = NXTOpenWriteCommand(filename: path, size: UInt32(wholeData.length))
+		enqueueCommand(openCommand) { response in
+			guard let handleResponse = response as? NXTHandleResponse else {
+				assertionFailure()
+				return
+			}
+
+			if handleResponse.status == .StatusSuccess {
+				self.actuallyUploadFileData(wholeData, toFileAtHandle: handleResponse.handle, handler: handler)
+			} else {
+				handler(false)
+			}
+		}
+	}
+
+	private func actuallyUploadFileData(wholeData: NSData, toFileAtHandle handle: UInt8, handler: NXTDeviceUploadHandler) {
+		var anyFailed = false
+		var dataLeft = wholeData
+
+		while dataLeft.length > 0 {
+			let chunk: NSData
+			if dataLeft.length > kMaxChunk {
+				chunk = dataLeft.subdataWithRange(NSMakeRange(0, kMaxChunk))
+				dataLeft = dataLeft.subdataWithRange(NSMakeRange(kMaxChunk, dataLeft.length - kMaxChunk))
+			} else {
+				chunk = dataLeft
+				dataLeft = NSData()
+			}
+
+			let command = NXTWriteCommand(handle: handle, contents: chunk)
+			enqueueCommand(command) { response in
+				guard let handleResponse = response as? NXTHandleSizeResponse else {
+					assertionFailure()
+					return
+				}
+				
+				if handleResponse.status != .StatusSuccess {
+					anyFailed = true
+				}
+			}
+		}
+
+		closeHandle(handle)
+
+		enqueueBarrier {
+			handler(!anyFailed)
+		}
+	}
+
 	public func downloadFileAtPath(path: String, handler: NXTDeviceDownloadHandler) {
-		// 64 is the max over Bluetooth.
 		let command = NXTOpenReadCommand(filename: path)
 		enqueueCommand(command) { response in
 			let openResponse = response as! NXTHandleSizeResponse
@@ -52,7 +104,7 @@ extension NXTDevice {
 	}
 
 	private func continueFileDownloadWithHandle(handle: UInt8, bytesLeft: UInt32, dataSoFar: NSData, handler: EV3DeviceDownloadHandler) {
-		let bytesToRead = bytesLeft > 64 ? UInt16(64) : UInt16(bytesLeft)
+		let bytesToRead = bytesLeft > UInt32(kMaxChunk) ? UInt16(kMaxChunk) : UInt16(bytesLeft)
 		let continueCommand = NXTReadCommand(handle: handle, bytesToRead: bytesToRead)
 		enqueueCommand(continueCommand) { continueResponse in
 			let dataResponse = continueResponse as! NXTDataResponse
