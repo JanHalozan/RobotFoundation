@@ -10,7 +10,7 @@ import Foundation
 public struct NXTHandleSizeResponse: NXTResponse {
 	public let status: NXTStatus
 	public let handle: UInt8
-	public let size: UInt32
+	public let size: UInt16
 
 	public init?(data: NSData) {
 		guard let status = NXTStatus(responseData: data) else {
@@ -24,6 +24,6 @@ public struct NXTHandleSizeResponse: NXTResponse {
 		}
 
 		self.handle = payloadData.readUInt8AtIndex(0)
-		self.size = payloadData.readUInt32AtIndex(1)
+		self.size = payloadData.readUInt16AtIndex(1)
 	}
 }

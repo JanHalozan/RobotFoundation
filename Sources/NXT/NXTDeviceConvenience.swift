@@ -103,15 +103,15 @@ extension NXTDevice {
 		}
 	}
 
-	private func continueFileDownloadWithHandle(handle: UInt8, bytesLeft: UInt32, dataSoFar: NSData, handler: EV3DeviceDownloadHandler) {
-		let bytesToRead = bytesLeft > UInt32(kMaxChunk) ? UInt16(kMaxChunk) : UInt16(bytesLeft)
+	private func continueFileDownloadWithHandle(handle: UInt8, bytesLeft: UInt16, dataSoFar: NSData, handler: EV3DeviceDownloadHandler) {
+		let bytesToRead = bytesLeft > UInt16(kMaxChunk) ? UInt16(kMaxChunk) : UInt16(bytesLeft)
 		let continueCommand = NXTReadCommand(handle: handle, bytesToRead: bytesToRead)
 		enqueueCommand(continueCommand) { continueResponse in
 			let dataResponse = continueResponse as! NXTDataResponse
 			let newDataSoFar = dataSoFar.dataByAppendingData(dataResponse.contents)
 
 			if dataResponse.status == .StatusSuccess {
-				let newBytesLeft = bytesLeft - UInt32(bytesToRead)
+				let newBytesLeft = bytesLeft - bytesToRead
 				if newBytesLeft == 0 {
 					handler(newDataSoFar)
 					self.closeHandle(handle)
