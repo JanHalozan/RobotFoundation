@@ -7,22 +7,26 @@
 
 import Foundation
 
-struct NXTFindNextCommand: NXTCommand {
-	let handle: UInt8
+public struct NXTFindNextCommand: NXTCommand {
+	public let handle: UInt8
 
-	var responseType: MindstormsResponse.Type {
+	public init(handle: UInt8) {
+		self.handle = handle
+	}
+
+	public var responseType: MindstormsResponse.Type {
 		return NXTFileResponse.self
 	}
 
-	var type: MindstormsCommandType {
+	public var type: MindstormsCommandType {
 		return .System
 	}
 
-	var identifier: UInt8 {
+	public var identifier: UInt8 {
 		return 0x87
 	}
 
-	var payloadData: NSData {
+	public var payloadData: NSData {
 		var handleLocal = handle
 		return NSData(bytes: &handleLocal, length: sizeof(UInt8))
 	}

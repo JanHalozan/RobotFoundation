@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct NXTFileResponse: NXTResponse {
-	let status: NXTStatus
-	let handle: UInt8
-	let filename: String
-	let size: UInt32
+public struct NXTFileResponse: NXTResponse {
+	public let status: NXTStatus
+	public let handle: UInt8
+	public let filename: String
+	public let size: UInt32
 
-	init?(data: NSData) {
+	public init?(data: NSData) {
 		guard let status = NXTStatus(responseData: data) else {
 			return nil
 		}
@@ -27,13 +27,13 @@ struct NXTFileResponse: NXTResponse {
 		self.handle = payloadData.readUInt8AtIndex(0)
 
 		var name = [Int8](count: 20, repeatedValue: 0)
-		data.getBytes(&name, range: NSMakeRange(1, 20))
+		payloadData.getBytes(&name, range: NSMakeRange(1, 20))
 
 		guard let filename = NSString(UTF8String: &name) else {
 			return nil
 		}
 
 		self.filename = filename as String
-		self.size = data.readUInt32AtIndex(21)
+		self.size = payloadData.readUInt32AtIndex(21)
 	}
 }
