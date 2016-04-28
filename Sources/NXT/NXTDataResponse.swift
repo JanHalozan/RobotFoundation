@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct NXTDataResponse: NXTResponse {
-	let status: NXTStatus
-	let handle: UInt8
-	let size: UInt16
-	let contents: NSData
+public struct NXTDataResponse: NXTResponse {
+	public let status: NXTStatus
+	public let handle: UInt8
+	public let size: UInt16
+	public let contents: NSData
 
-	init?(data: NSData) {
+	public init?(data: NSData) {
 		guard let status = NXTStatus(responseData: data) else {
 			return nil
 		}

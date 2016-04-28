@@ -7,23 +7,28 @@
 
 import Foundation
 
-struct NXTReadCommand: NXTCommand {
-	let handle: UInt8
-	let bytesToRead: UInt16 // max size: 64 bytes
+public struct NXTReadCommand: NXTCommand {
+	public let handle: UInt8
+	public let bytesToRead: UInt16 // max size: 64 bytes
 
-	var responseType: MindstormsResponse.Type {
+	public init(handle: UInt8, bytesToRead: UInt16) {
+		self.handle = handle
+		self.bytesToRead = bytesToRead
+	}
+
+	public var responseType: MindstormsResponse.Type {
 		return NXTDataResponse.self
 	}
 
-	var type: MindstormsCommandType {
+	public var type: MindstormsCommandType {
 		return .System
 	}
 
-	var identifier: UInt8 {
+	public var identifier: UInt8 {
 		return 0x82
 	}
 
-	var payloadData: NSData {
+	public var payloadData: NSData {
 		let data = NSMutableData()
 		data.appendUInt8(handle)
 		data.appendUInt16(bytesToRead)

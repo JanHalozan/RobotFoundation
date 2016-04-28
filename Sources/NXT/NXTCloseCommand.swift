@@ -7,22 +7,26 @@
 
 import Foundation
 
-struct NXTCloseCommand: NXTCommand {
-	let handle: UInt8
+public struct NXTCloseCommand: NXTCommand {
+	public let handle: UInt8
 
-	var responseType: MindstormsResponse.Type {
+	public init(handle: UInt8) {
+		self.handle = handle
+	}
+
+	public var responseType: MindstormsResponse.Type {
 		return NXTGenericResponse.self
 	}
 
-	var type: MindstormsCommandType {
+	public var type: MindstormsCommandType {
 		return .System
 	}
 
-	var identifier: UInt8 {
+	public var identifier: UInt8 {
 		return 0x84
 	}
 
-	var payloadData: NSData {
+	public var payloadData: NSData {
 		let mutableData = NSMutableData()
 		mutableData.appendUInt8(handle)
 
