@@ -7,22 +7,26 @@
 
 import Foundation
 
-struct NXTDeleteCommand: NXTCommand {
-	let filename: String
+public struct NXTDeleteCommand: NXTCommand {
+	public let filename: String
 
-	var responseType: MindstormsResponse.Type {
+	public init(filename: String) {
+		self.filename = filename
+	}
+
+	public var responseType: MindstormsResponse.Type {
 		return NXTGenericResponse.self
 	}
 
-	var type: MindstormsCommandType {
+	public var type: MindstormsCommandType {
 		return .System
 	}
 
-	var identifier: UInt8 {
+	public var identifier: UInt8 {
 		return 0x85
 	}
 
-	var payloadData: NSData {
+	public var payloadData: NSData {
 		return (filename as NSString).dataForFilename
 	}
 }
