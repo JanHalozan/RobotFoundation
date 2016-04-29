@@ -104,10 +104,10 @@ public struct EV3OutputPortOptions: OptionSetType {
 		self.rawValue = rawValue
 	}
 
-	static let A = EV3OutputPortOptions(rawValue: 1)
-	static let B = EV3OutputPortOptions(rawValue: 2)
-	static let C = EV3OutputPortOptions(rawValue: 4)
-	static let D = EV3OutputPortOptions(rawValue: 8)
+	public static let A = EV3OutputPortOptions(rawValue: 1)
+	public static let B = EV3OutputPortOptions(rawValue: 2)
+	public static let C = EV3OutputPortOptions(rawValue: 4)
+	public static let D = EV3OutputPortOptions(rawValue: 8)
 }
 
 enum EV3Variables: UInt8 {
