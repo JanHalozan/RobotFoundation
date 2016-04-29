@@ -55,6 +55,13 @@ extension NSData {
 		return singleData
 	}
 
+	public func readInt8AtIndex(index: Int) -> Int8 {
+		var value = Int8()
+		getBytes(&value, range: NSMakeRange(index, 1))
+
+		return value
+	}
+
 	public func readUInt8AtIndex(index: Int) -> UInt8 {
 		var value = UInt8()
 		getBytes(&value, range: NSMakeRange(index, 1))

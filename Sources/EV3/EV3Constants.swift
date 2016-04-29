@@ -22,6 +22,7 @@ enum EV3OpCode: UInt8 {
 	case OutputSpeed = 0xA5
 	case OutputStart = 0xA6
 	case OutputStop = 0xA3
+	case OutputRead = 0xA8
 	case OutputTest = 0xA9
 	case OutputReady = 0xAA
 	case OutputTimeSync = 0xB1
