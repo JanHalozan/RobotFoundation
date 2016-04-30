@@ -10,7 +10,7 @@
 import Foundation
 import IOKit.hid
 
-class XPCBackedDeviceTransport: DeviceTransport {
+class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
 	private var serviceConnection: NSXPCConnection?
 
 	var serviceName: String {
@@ -39,6 +39,7 @@ class XPCBackedDeviceTransport: DeviceTransport {
 
 		serviceConnection.remoteObjectInterface = NSXPCInterface(withProtocol: XPCTransportServiceProtocol.self)
 		serviceConnection.exportedObject = self
+		serviceConnection.exportedInterface = NSXPCInterface(withProtocol: XPCTransportClientProtocol.self)
 		serviceConnection.resume()
 
 		guard let proxy = serviceConnection.remoteObjectProxy as? XPCTransportServiceProtocol else {
@@ -88,7 +89,7 @@ class XPCBackedDeviceTransport: DeviceTransport {
 			return
 		}
 
-		proxy.writeData(identifier, data: data) { data, result in
+		proxy.writeData(identifier, data: data) { result in
 			dispatch_async(dispatch_get_main_queue()) {
 				guard result == 0 else {
 					debugPrint("An error occured during write (\(result)).")
@@ -97,11 +98,13 @@ class XPCBackedDeviceTransport: DeviceTransport {
 				}
 
 				self.wroteData()
-
-				if let data = data {
-					handler(data)
-				}
 			}
+		}
+	}
+
+	@objc func handleTransportData(data: NSData) {
+		dispatch_async(dispatch_get_main_queue()) {
+			self.handleData(data)
 		}
 	}
 

@@ -9,6 +9,7 @@ import Foundation
 
 protocol DeviceTransportDelegate: class {
 	func deviceTransportDidWriteData(transport: DeviceTransport)
+	func deviceTransportHandleData(transport: DeviceTransport, data: NSData)
 
 	func deviceTransportDidOpen(transport: DeviceTransport)
 	func deviceTransport(transport: DeviceTransport, didFailToOpenWithError error: ErrorType)
@@ -43,6 +44,11 @@ class DeviceTransport {
 	func wroteData() {
 		assert(NSThread.isMainThread())
 		delegate?.deviceTransportDidWriteData(self)
+	}
+
+	func handleData(data: NSData) {
+		assert(NSThread.isMainThread())
+		delegate?.deviceTransportHandleData(self, data: data)
 	}
 
 	func beganOpening() {

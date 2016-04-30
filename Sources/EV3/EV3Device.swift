@@ -40,6 +40,14 @@ public final class EV3Device: Device {
 
 	override func wroteData() { }
 
+	override func handleData(data: NSData) {
+		for operation in operationQueue.operations {
+			if let commandOperation = operation as? EV3CommandOperation where commandOperation.canHandleResponseData(data) {
+				commandOperation.handleResponseData(data)
+			}
+		}
+	}
+
 	override func openedTransport() {
 		for operation in operationQueue.operations {
 			operation.willChangeValueForKey("isReady")

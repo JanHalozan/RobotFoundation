@@ -30,6 +30,10 @@ private enum BluetoothAsyncWriteState {
 	case Error(Int)
 }
 
+protocol BluetoothTransportServiceDelegate: class {
+	func handleData(data: NSData)
+}
+
 final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, IOBluetoothRFCOMMChannelDelegate {
 	private var state: BluetoothState = .Ready
 	private var channel: IOBluetoothRFCOMMChannel?
@@ -40,9 +44,13 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 
 	private var openSemaphores = [dispatch_semaphore_t]()
 	private var openStatus: IOReturn?
+	private var writeStatus: IOReturn?
 
-	private var writeSemaphore = dispatch_semaphore_create(0)
-	private var receivedData: NSData?
+	private weak var delegate: BluetoothTransportServiceDelegate?
+
+	init(delegate: BluetoothTransportServiceDelegate) {
+		self.delegate = delegate
+	}
 
 	func open(identifier: NSString, handler: Int -> ()) {
 		let semaphore = dispatch_semaphore_create(0)
@@ -205,49 +213,66 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		handler(Int(kIOReturnSuccess))
 	}
 
-	func writeData(identifier: NSString, data: NSData, handler: (NSData?, Int) -> ()) {
+	func writeData(identifier: NSString, data: NSData, handler: Int -> ()) {
 		var writeState = BluetoothAsyncWriteState.Error(Int(kIOReturnInvalid))
 
+		let semaphore = dispatch_semaphore_create(0)
+
 		dispatch_sync(dispatch_get_main_queue()) {
-			writeState = self.actuallyWriteData(identifier, data: data)
+			writeState = self.actuallyWriteData(identifier, data: data, semaphore: semaphore)
 		}
 
 		switch writeState {
 		case .Error(let errorCode):
-			handler(nil, errorCode)
+			handler(errorCode)
 			return
 		case .Writing:
 			// continue on
 			break
 		}
 
-		guard dispatch_semaphore_wait(writeSemaphore, tenSecondTimeout()) == 0 else {
-			handler(nil, Int(kIOReturnTimeout))
+		guard dispatch_semaphore_wait(semaphore, tenSecondTimeout()) == 0 else {
+			handler(Int(kIOReturnTimeout))
 			return
 		}
 
-		guard let receivedData = receivedData else {
-			handler(nil, Int(kIOReturnNotFound))
+		guard let writeStatus = writeStatus else {
+			assertionFailure()
+			handler(Int(kIOReturnInternalError))
 			return
 		}
 
-		handler(receivedData, Int(kIOReturnSuccess))
+		dispatch_sync(dispatch_get_main_queue()) {
+			self.writeStatus = nil
+		}
+
+		handler(Int(writeStatus))
 	}
 
-	private func actuallyWriteData(identifier: NSString, data: NSData) -> BluetoothAsyncWriteState {
+	private func actuallyWriteData(identifier: NSString, data: NSData, semaphore: dispatch_semaphore_t) -> BluetoothAsyncWriteState {
 		guard let channel = channel else {
 			return .Error(Int(kIOReturnNoMedia))
 		}
 
 		var array = [UInt8](count: data.length, repeatedValue: 0)
 		data.getBytes(&array, length: data.length)
-		let status = channel.writeAsync(&array, length: UInt16(data.length), refcon: nil)
+		let status = channel.writeAsync(&array, length: UInt16(data.length), refcon: unsafeBitCast(semaphore, UnsafeMutablePointer<Void>.self))
 
 		guard status == kIOReturnSuccess else {
 			return .Error(Int(status))
 		}
 
 		return .Writing
+	}
+
+	@objc func rfcommChannelWriteComplete(rfcommChannel: IOBluetoothRFCOMMChannel!, refcon: UnsafeMutablePointer<Void>, status error: IOReturn) {
+		assert(NSThread.isMainThread())
+		assert(writeStatus == nil)
+
+		writeStatus = error
+
+		let semaphore = unsafeBitCast(refcon, dispatch_semaphore_t.self)
+		dispatch_semaphore_signal(semaphore)
 	}
 
 	@objc func connectionComplete(device: IOBluetoothDevice, status: IOReturn) {
@@ -317,8 +342,8 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 	@objc func rfcommChannelData(rfcommChannel: IOBluetoothRFCOMMChannel!, data dataPointer: UnsafeMutablePointer<Void>, length dataLength: Int) {
 		assert(NSThread.isMainThread())
 
-		receivedData = NSData(bytes: dataPointer, length: dataLength)
-		dispatch_semaphore_signal(writeSemaphore)
+		let receivedData = NSData(bytes: dataPointer, length: dataLength)
+		delegate?.handleData(receivedData)
 	}
 
 	@objc func rfcommChannelClosed(rfcommChannel: IOBluetoothRFCOMMChannel!) {

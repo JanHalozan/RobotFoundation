@@ -11,6 +11,9 @@ final class EV3CommandOperation: NSOperation {
 	private let transport: DeviceTransport
 	private let command: EV3Command
 	private let responseHandler: NXTResponseHandler?
+	private let messageIndex: UInt16
+
+	private static var messageCounter = UInt16()
 
 	private var isExecuting = false {
 		willSet {
@@ -27,6 +30,8 @@ final class EV3CommandOperation: NSOperation {
 		self.transport = transport
 		self.command = command
 		self.responseHandler = responseHandler
+		self.messageIndex = EV3CommandOperation.messageCounter
+		EV3CommandOperation.messageCounter = EV3CommandOperation.messageCounter &+ 1
 		super.init()
 	}
 
@@ -58,9 +63,9 @@ final class EV3CommandOperation: NSOperation {
 
 		// TODO: actually increment the message counter
 		if let directCommand = command as? EV3DirectCommand {
-			data = directCommand.formEV3PacketData(0, prependTotalLength: false)
+			data = directCommand.formEV3PacketData(messageIndex, prependTotalLength: false)
 		} else if let systemCommand = command as? EV3SystemCommand {
-			data = systemCommand.formEV3PacketData(0)
+			data = systemCommand.formEV3PacketData(messageIndex)
 		} else {
 			fatalError()
 		}
@@ -83,7 +88,15 @@ final class EV3CommandOperation: NSOperation {
 		isExecuting = false
 	}
 
-	private func handleResponseData(data: NSData) {
+	func canHandleResponseData(data: NSData) -> Bool {
+		guard let response = EV3GenericResponse(data: data) else {
+			return false
+		}
+
+		return response.messageCounter == messageIndex
+	}
+
+	func handleResponseData(data: NSData) {
 		assert(NSThread.isMainThread())
 
 		guard let response = command.responseType.init(data: data) else {

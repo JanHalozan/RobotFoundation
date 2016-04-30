@@ -9,9 +9,13 @@
 
 import Foundation
 
+@objc protocol XPCTransportClientProtocol {
+	func handleTransportData(data: NSData)
+}
+
 @objc protocol XPCTransportServiceProtocol {
 	func open(identifier: NSString, handler: Int -> ())
-	func writeData(identifier: NSString, data: NSData, handler: (NSData?, Int) -> ())
+	func writeData(identifier: NSString, data: NSData, handler: Int -> ())
 	func close(identifier: NSString, handler: Int -> ())
 }
 
