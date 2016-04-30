@@ -9,27 +9,39 @@ import Foundation
 
 final class ServiceDelegate : NSObject, NSXPCListenerDelegate, HIDTransportServiceDelegate {
 	private lazy var exportedObject: HIDTransportService = {
-		return HIDTransportService(delegate: self)
+		HIDTransportService(delegate: self)
 	}()
 
-	private var clients = [XPCTransportClientProtocol]()
+	private var connections = Set<NSXPCConnection>()
 	
 	func listener(listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
+		connections.insert(newConnection)
+
 		newConnection.exportedInterface = NSXPCInterface(withProtocol: XPCTransportServiceProtocol.self)
 		newConnection.remoteObjectInterface = NSXPCInterface(withProtocol: XPCTransportClientProtocol.self)
 		newConnection.exportedObject = exportedObject
-		newConnection.resume()
+		newConnection.invalidationHandler = { [unowned self] in
+			dispatch_async(dispatch_get_main_queue()) {
+				self.connections.remove(newConnection)
 
-		if let client = newConnection.remoteObjectProxy as? XPCTransportClientProtocol {
-			clients.append(client)
+				if self.connections.isEmpty {
+					// Exit if no more connections...
+					exit(0)
+				}
+			}
 		}
+		newConnection.resume()
 
 		return true
 	}
 
 	func handleData(data: NSData) {
-		for client in clients {
-			client.handleTransportData(data)
+		for connection in connections {
+			if let client = connection.remoteObjectProxy as? XPCTransportClientProtocol {
+				client.handleTransportData(data)
+			} else {
+				assertionFailure()
+			}
 		}
 	}
 }
