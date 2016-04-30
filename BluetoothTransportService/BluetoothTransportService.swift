@@ -348,7 +348,8 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 
 	@objc func rfcommChannelClosed(rfcommChannel: IOBluetoothRFCOMMChannel!) {
 		assert(NSThread.isMainThread())
-		
+
+		// TODO: better handle this
 		//close()
 
 		if let rfcommChannel = rfcommChannel {
