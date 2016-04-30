@@ -8,13 +8,20 @@
 import Foundation
 import IOKit.hid
 
+protocol HIDTransportServiceDelegate: class {
+	func handleData(data: NSData)
+}
+
 final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 	private var device: IOHIDDevice?
 	private var activeClients = 0
 	private var inputReportBuffer = [UInt8](count: 1024, repeatedValue: 0)
 
-	private var writeSemaphore = dispatch_semaphore_create(0)
-	private var receivedData: NSData?
+	private weak var delegate: HIDTransportServiceDelegate?
+
+	init(delegate: HIDTransportServiceDelegate) {
+		self.delegate = delegate
+	}
 
 	private var currentIdentifier: String? {
 		assert(NSThread.isMainThread())
@@ -87,45 +94,43 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 		return Int(kIOReturnSuccess)
 	}
 
-	func writeData(identifier: NSString, data: NSData, handler: (NSData?, Int) -> ()) {
+	func writeData(identifier: NSString, data: NSData, handler: Int -> ()) {
+		var result: IOReturn?
+
 		dispatch_sync(dispatch_get_main_queue()) {
-			self.actuallyWriteDataWithIdentifier(identifier, data: data, handler: handler)
+			result = self.actuallyWriteDataWithIdentifier(identifier, data: data)
 		}
 
-		guard dispatch_semaphore_wait(writeSemaphore, dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC) * 10)) == 0 else {
-			handler(receivedData, Int(kIOReturnTimeout))
+		guard let theResult = result else {
+			assertionFailure()
+			handler(Int(kIOReturnInternalError))
 			return
 		}
 
-		handler(receivedData, Int(kIOReturnSuccess))
+		handler(Int(theResult))
 	}
 
-	private func actuallyWriteDataWithIdentifier(identifier: NSString, data: NSData, handler: (NSData?, Int) -> ()) {
+	private func actuallyWriteDataWithIdentifier(identifier: NSString, data: NSData) -> IOReturn {
 		guard let currentIdentifier = currentIdentifier else {
 			debugPrint("No open device; nowhere to write to.")
-			handler(nil, Int(kIOReturnNotOpen))
-			return
+			return kIOReturnNotOpen
 		}
 
 		guard currentIdentifier == identifier else {
 			debugPrint("Device mismatch.")
-			handler(nil, Int(kIOReturnInternalError))
-			return
+			return kIOReturnInternalError
 		}
 
 		let bytes = unsafeBitCast(data.bytes, UnsafePointer<UInt8>.self)
 		let result = IOHIDDeviceSetReport(device, kIOHIDReportTypeOutput, 0, bytes, data.length)
-		guard result == kIOReturnSuccess else {
-			handler(nil, Int(result))
-			return
-		}
+		return result
 	}
 
 	private func receivedReport() {
 		assert(NSThread.isMainThread())
 
-		receivedData = NSData(bytes: &inputReportBuffer, length: inputReportBuffer.count)
-		dispatch_semaphore_signal(writeSemaphore)
+		let receivedData = NSData(bytes: &inputReportBuffer, length: inputReportBuffer.count)
+		delegate?.handleData(receivedData)
 	}
 
 	func close(identifier: NSString, handler: Int -> ()) {
