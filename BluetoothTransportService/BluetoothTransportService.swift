@@ -102,6 +102,8 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 	}
 
 	private func openNewDevice(identifier: NSString) -> BluetoothAsyncOpenState {
+		assert(NSThread.isMainThread())
+
 		let device = IOBluetoothDevice(addressString: identifier as String)
 		let openResult = Int(device.openConnection(self))
 
