@@ -12,9 +12,16 @@ private func tenSecondTimeout() -> dispatch_time_t {
 	return dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC) * 10)
 }
 
-private enum BluetoothAsyncOpenState {
+private enum BluetoothState {
+	case Ready
 	case Opening(IOBluetoothDevice)
+	case Open(IOBluetoothDevice)
+}
+
+private enum BluetoothAsyncOpenState {
+	case Opening
 	case AlreadyConnected
+	case AlreadyOpening
 	case Error(Int)
 }
 
@@ -24,30 +31,35 @@ private enum BluetoothAsyncWriteState {
 }
 
 final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, IOBluetoothRFCOMMChannelDelegate {
-	private var bluetoothDevice: IOBluetoothDevice?
+	private var state: BluetoothState = .Ready
 	private var channel: IOBluetoothRFCOMMChannel?
 
 	private var connectingChannels = Set<IOBluetoothRFCOMMChannel>()
 
 	private var activeClients = 0
 
-	private var openSemaphore = dispatch_semaphore_create(0)
+	private var openSemaphores = [dispatch_semaphore_t]()
 	private var openStatus: IOReturn?
 
 	private var writeSemaphore = dispatch_semaphore_create(0)
 	private var receivedData: NSData?
 
-	private var currentIdentifier: String? {
-		assert(NSThread.isMainThread())
-		return bluetoothDevice?.addressString
-	}
-
 	func open(identifier: NSString, handler: Int -> ()) {
-		// Should be kIOReturnInvalid which Swift doesn't import
-		var openState = BluetoothAsyncOpenState.Error(1)
+		let semaphore = dispatch_semaphore_create(0)
+
+		var openState = BluetoothAsyncOpenState.Error(Int(kIOReturnInvalid))
 
 		dispatch_sync(dispatch_get_main_queue()) {
 			openState = self.actuallyOpenWithIdentifier(identifier)
+
+			switch openState {
+			case .AlreadyOpening:
+				fallthrough
+			case .Opening:
+				self.openSemaphores.append(semaphore)
+			default:
+				break
+			}
 		}
 
 		switch openState {
@@ -57,19 +69,23 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		case .Error(let errorCode):
 			handler(errorCode)
 			return
+		case .AlreadyOpening:
+			// continue on
+			break
 		case .Opening:
 			// continue on
 			break
 		}
 
-		guard case BluetoothAsyncOpenState.Opening(let device) = openState else {
-			assertionFailure()
+		guard dispatch_semaphore_wait(semaphore, tenSecondTimeout()) == 0 else {
+			handler(Int(kIOReturnTimeout))
 			return
 		}
 
-		guard dispatch_semaphore_wait(openSemaphore, tenSecondTimeout()) == 0 else {
-			handler(Int(kIOReturnTimeout))
-			return
+		dispatch_sync(dispatch_get_main_queue()) {
+			if let index = self.openSemaphores.indexOf({ return $0 === semaphore }) {
+				self.openSemaphores.removeAtIndex(index)
+			}
 		}
 
 		guard let openStatus = openStatus else {
@@ -80,8 +96,15 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		if openStatus == kIOReturnSuccess {
 			// We actually did it.
 			dispatch_sync(dispatch_get_main_queue()) {
-				self.bluetoothDevice = device
-				self.activeClients += 1
+				switch self.state {
+				case .Opening(let device):
+					self.state = .Open(device)
+					self.activeClients += 1
+				case .Open:
+					self.activeClients += 1
+				default:
+					assertionFailure()
+				}
 			}
 		}
 
@@ -89,29 +112,41 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 	}
 
 	private func actuallyOpenWithIdentifier(identifier: NSString) -> BluetoothAsyncOpenState {
-		if currentIdentifier == nil {
+		switch state {
+		case .Ready:
 			assert(activeClients == 0)
 			return openNewDevice(identifier)
-		} else if currentIdentifier! == identifier {
-			activeClients += 1
-			return .AlreadyConnected
-		} else {
-			debugPrint("Tried to open a device while one was already open.")
-			return .Error(1)
+		case .Open(let device):
+			if device.addressString == identifier {
+				activeClients += 1
+				return .AlreadyConnected
+			}
+			break
+		case .Opening(let device):
+			if device.addressString == identifier {
+				return .AlreadyOpening
+			}
+			break
 		}
+
+		debugPrint("Tried to open a device while one was already open.")
+		return .Error(Int(kIOReturnBusy))
 	}
 
 	private func openNewDevice(identifier: NSString) -> BluetoothAsyncOpenState {
 		assert(NSThread.isMainThread())
 
 		let device = IOBluetoothDevice(addressString: identifier as String)
+
+		state = .Opening(device)
+
 		let openResult = Int(device.openConnection(self))
 
 		guard openResult == Int(kIOReturnSuccess) else {
 			return .Error(openResult)
 		}
 
-		return .Opening(device)
+		return .Opening
 	}
 
 	func close(identifier: NSString, handler: Int -> ()) {
@@ -123,16 +158,25 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 	private func actuallyCloseWithIdentifier(identifier: NSString, handler: Int -> ()) {
 		assert(NSThread.isMainThread())
 
-		guard let currentIdentifier = currentIdentifier else {
+		switch state {
+		case .Ready:
 			debugPrint("No open device; nothing to close.")
 			handler(Int(kIOReturnNotOpen))
 			return
-		}
-
-		guard currentIdentifier == identifier else {
-			debugPrint("Device mismatch.")
-			handler(Int(kIOReturnInternalError))
-			return
+		case .Open(let device):
+			if device.addressString != identifier {
+				debugPrint("Device mismatch.")
+				handler(Int(kIOReturnInternalError))
+				return
+			}
+			break
+		case .Opening(let device):
+			if device.addressString != identifier {
+				debugPrint("Device mismatch.")
+				handler(Int(kIOReturnInternalError))
+				return
+			}
+			break
 		}
 
 		activeClients -= 1
@@ -141,10 +185,21 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		if activeClients == 0 {
 			assert(channel != nil)
 			channel?.closeChannel()
-			bluetoothDevice?.closeConnection()
-
 			channel = nil
-			bluetoothDevice = nil
+
+			switch state {
+			case .Open(let device):
+				device.closeConnection()
+				break
+			case .Opening(let device):
+				device.closeConnection()
+				break
+			case .Ready:
+				assertionFailure()
+				break
+			}
+
+			state = .Ready
 		}
 
 		handler(Int(kIOReturnSuccess))
@@ -237,7 +292,10 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		assert(NSThread.isMainThread())
 
 		openStatus = error
-		dispatch_semaphore_signal(openSemaphore)
+
+		for semaphore in openSemaphores {
+			dispatch_semaphore_signal(semaphore)
+		}
 	}
 
 	@objc func rfcommChannelOpenComplete(rfcommChannel: IOBluetoothRFCOMMChannel!, status error: IOReturn) {
