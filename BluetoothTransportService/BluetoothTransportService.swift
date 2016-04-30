@@ -179,7 +179,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 
 	private func actuallyWriteData(identifier: NSString, data: NSData) -> BluetoothAsyncWriteState {
 		guard let channel = channel else {
-			return .Error(1)
+			return .Error(Int(kIOReturnNoMedia))
 		}
 
 		var array = [UInt8](count: data.length, repeatedValue: 0)
