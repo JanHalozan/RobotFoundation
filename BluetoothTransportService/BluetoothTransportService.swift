@@ -232,6 +232,8 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 	}
 
 	private func finishedOpenWithError(error: IOReturn) {
+		assert(NSThread.isMainThread())
+
 		openStatus = error
 		dispatch_semaphore_signal(openSemaphore)
 	}
