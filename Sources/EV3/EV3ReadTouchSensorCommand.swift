@@ -13,6 +13,10 @@ private let kEV3TouchSensorBooleanMode = UInt8(0)
 public struct EV3ReadTouchSensorCommand: EV3DirectCommand {
 	public let port: EV3InputPort
 
+	public init(port: EV3InputPort) {
+		self.port = port
+	}
+
 	public var responseType: MindstormsResponse.Type {
 		return EV3BooleanResponse.self
 	}
