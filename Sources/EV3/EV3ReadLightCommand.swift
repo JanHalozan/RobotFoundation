@@ -8,7 +8,6 @@
 import Foundation
 
 public enum EV3ReadLightType: UInt8 {
-	// Returns a percentage (0-100)
 	case Reflected = 0
 	case Ambient = 1
 }
