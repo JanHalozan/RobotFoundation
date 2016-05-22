@@ -16,6 +16,11 @@ public struct EV3ReadLightCommand: EV3DirectCommand {
 	public let port: EV3InputPort
 	public let lightType: EV3ReadLightType
 
+	public init(port: EV3InputPort, lightType: EV3ReadLightType) {
+		self.port = port
+		self.lightType = lightType
+	}
+
 	public var responseType: MindstormsResponse.Type {
 		return EV3PercentByteResponse.self
 	}
