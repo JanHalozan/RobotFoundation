@@ -10,6 +10,10 @@ import Foundation
 public struct EV3ReadColorCommand: EV3DirectCommand {
 	public let port: EV3InputPort
 
+	public init(port: EV3InputPort) {
+		self.port = port
+	}
+
 	public var responseType: MindstormsResponse.Type {
 		return EV3ColorResponse.self
 	}
