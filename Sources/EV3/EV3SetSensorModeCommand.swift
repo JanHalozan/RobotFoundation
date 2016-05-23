@@ -19,7 +19,7 @@ public struct EV3SetSensorModeCommand: EV3DirectCommand {
 		return 1
 	}
 
-	public var payloadData: NSData {
+	public func payloadDataWithGlobalOffset(offset: UInt8) -> NSData {
 		let mutableData = NSMutableData()
 		mutableData.appendUInt8(EV3OpCode.InputReadSI.rawValue)
 		mutableData.appendUInt8(EV3Layer.ThisBrick.rawValue)
@@ -27,7 +27,7 @@ public struct EV3SetSensorModeCommand: EV3DirectCommand {
 
 		mutableData.appendUInt8(0)
 		mutableData.appendUInt8(mode)
-		mutableData.appendUInt8(EV3Variables.GlobalVar0.rawValue)
+		mutableData.appendUInt8(offset)
 
 		return mutableData.copy() as! NSData
 	}

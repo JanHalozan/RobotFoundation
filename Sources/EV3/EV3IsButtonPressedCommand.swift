@@ -22,12 +22,12 @@ public struct EV3IsButtonPressedCommand: EV3DirectCommand {
 		return EV3ButtonPressedResponse.self
 	}
 
-	public var payloadData: NSData {
+	public func payloadDataWithGlobalOffset(offset: UInt8) -> NSData {
 		let mutableData = NSMutableData()
 		mutableData.appendUInt8(EV3OpCode.UIButton.rawValue)
 		mutableData.appendUInt8(EV3ButtonOpSubcode.Pressed.rawValue)
 		mutableData.appendUInt8(button.rawValue)
-		mutableData.appendUInt8(EV3Variables.GlobalVar0.rawValue)
+		mutableData.appendUInt8(offset)
 
 		return mutableData.copy() as! NSData
 	}

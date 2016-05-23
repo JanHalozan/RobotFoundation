@@ -11,6 +11,8 @@ public protocol EV3Command: MindstormsCommand { }
 
 public protocol EV3DirectCommand: EV3Command {
 	var globalSpaceSize: UInt16 { get } // 0-1023
+
+	func payloadDataWithGlobalOffset(offset: UInt8) -> NSData
 }
 
 extension EV3DirectCommand {
@@ -25,6 +27,8 @@ extension EV3DirectCommand {
 
 public protocol EV3SystemCommand: EV3Command {
 	var systemCommand: UInt8 { get }
+
+	var payloadData: NSData { get }
 }
 
 extension EV3SystemCommand {

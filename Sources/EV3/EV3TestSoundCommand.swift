@@ -18,10 +18,10 @@ public struct EV3TestSoundCommand: EV3DirectCommand {
 		return 1
 	}
 
-	public var payloadData: NSData {
+	public func payloadDataWithGlobalOffset(offset: UInt8) -> NSData {
 		let mutableData = NSMutableData()
 		mutableData.appendUInt8(EV3OpCode.SoundTest.rawValue)
-		mutableData.appendUInt8(EV3Variables.GlobalVar0.rawValue)
+		mutableData.appendUInt8(offset)
 
 		return mutableData.copy() as! NSData
 	}

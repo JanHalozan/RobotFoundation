@@ -14,7 +14,7 @@ public struct EV3WaitForSoundCommand: EV3DirectCommand {
 		return EV3GenericResponse.self
 	}
 
-	public var payloadData: NSData {
+	public func payloadDataWithGlobalOffset(offset: UInt8) -> NSData {
 		let mutableData = NSMutableData()
 		mutableData.appendUInt8(EV3OpCode.SoundReady.rawValue)
 

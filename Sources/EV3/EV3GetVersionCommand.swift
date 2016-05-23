@@ -30,12 +30,12 @@ public struct EV3GetVersionCommand: EV3DirectCommand {
 		return EV3MaxFileLength
 	}
 
-	public var payloadData: NSData {
+	public func payloadDataWithGlobalOffset(offset: UInt8) -> NSData {
 		let mutableData = NSMutableData()
 		mutableData.appendUInt8(EV3OpCode.UIRead.rawValue)
 		mutableData.appendUInt8(version.rawValue)
 		mutableData.appendLC2(UInt16(EV3MaxFileLength))
-		mutableData.appendUInt8(EV3Variables.GlobalVar0.rawValue)
+		mutableData.appendUInt8(offset)
 
 		return mutableData.copy() as! NSData
 	}

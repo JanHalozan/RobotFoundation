@@ -20,7 +20,7 @@ public struct EV3SetMotorPowerCommand: EV3DirectCommand {
 		return EV3GenericResponse.self
 	}
 
-	public var payloadData: NSData {
+	public func payloadDataWithGlobalOffset(offset: UInt8) -> NSData {
 		let mutableData = NSMutableData()
 		mutableData.appendUInt8(EV3OpCode.OutputPower.rawValue)
 		mutableData.appendUInt8(EV3Layer.ThisBrick.rawValue)

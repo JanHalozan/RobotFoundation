@@ -22,14 +22,14 @@ public struct EV3ReadOutputCommand: EV3DirectCommand {
 		return 5
 	}
 
-	public var payloadData: NSData {
+	public func payloadDataWithGlobalOffset(offset: UInt8) -> NSData {
 		let mutableData = NSMutableData()
 		mutableData.appendUInt8(EV3OpCode.OutputRead.rawValue)
 		mutableData.appendUInt8(EV3Layer.ThisBrick.rawValue)
 		mutableData.appendUInt8(ports.rawValue)
 
-		mutableData.appendUInt8(EV3Variables.GlobalVar0.rawValue)
-		mutableData.appendUInt8(EV3Variables.GlobalVar4.rawValue)
+		mutableData.appendUInt8(offset)
+		mutableData.appendUInt8(offset + 4)
 
 		return mutableData.copy() as! NSData
 	}

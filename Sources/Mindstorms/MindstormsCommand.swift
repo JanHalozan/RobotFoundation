@@ -13,7 +13,6 @@ public let kSystemTelegramType = UInt8(0x1)
 public protocol MindstormsCommand {
 	var responseType: MindstormsResponse.Type { get }
 	var type: MindstormsCommandType { get }
-	var payloadData: NSData { get }
 
 	// Info dictionary that is passed to MindstormsResponses.
 	var responseInfo: [String : Any] { get }
