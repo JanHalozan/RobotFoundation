@@ -22,14 +22,14 @@ public struct EV3ReadColorCommand: EV3DirectCommand {
 		return 1
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt8) -> NSData {
+	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
 		let mutableData = NSMutableData()
 		mutableData.appendUInt8(EV3OpCode.InputDevice.rawValue)
 		mutableData.appendUInt8(EV3InputDeviceOpSubcode.GetRaw.rawValue)
 		mutableData.appendUInt8(EV3Layer.ThisBrick.rawValue)
 		mutableData.appendUInt8(port.rawValue)
 
-		mutableData.appendUInt8(offset)
+		mutableData.appendGV2(offset)
 
 		return mutableData.copy() as! NSData
 	}

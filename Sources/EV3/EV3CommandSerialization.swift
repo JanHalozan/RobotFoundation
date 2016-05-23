@@ -19,15 +19,13 @@ func formEV3PacketDataForCommands(commands: [EV3DirectCommand], messageCounter: 
 	}
 
 	var totalPayloadLength = headerLength + typeLength + messageCounterLength
-	var totalGlobalSpace = UInt16()
-	var currentGlobalOffset = EV3Variables.GlobalVar0.rawValue
+	var currentGlobalOffset = UInt16()
 	let entirePayload = NSMutableData()
 
 	for command in commands {
 		let payload = command.payloadDataWithGlobalOffset(currentGlobalOffset)
 		totalPayloadLength += payload.length
-		totalGlobalSpace += command.globalSpaceSize
-		currentGlobalOffset += UInt8(command.globalSpaceSize)
+		currentGlobalOffset += command.globalSpaceSize
 		entirePayload.appendData(payload)
 	}
 
@@ -35,7 +33,7 @@ func formEV3PacketDataForCommands(commands: [EV3DirectCommand], messageCounter: 
 	packet.appendUInt16(UInt16(totalPayloadLength))
 	packet.appendUInt16(messageCounter)
 	packet.appendUInt8(kDirectTelegramType)
-	packet.appendUInt16(totalGlobalSpace)
+	packet.appendUInt16(currentGlobalOffset)
 	packet.appendData(entirePayload)
 
 	return packet

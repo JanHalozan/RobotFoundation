@@ -26,7 +26,7 @@ public struct EV3TimedDriveCommand: EV3DirectCommand {
 		return EV3GenericResponse.self
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt8) -> NSData {
+	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
 		let mutableData = NSMutableData()
 		mutableData.appendUInt8(EV3OpCode.OutputTimeSync.rawValue)
 		mutableData.appendUInt8(EV3Layer.ThisBrick.rawValue)

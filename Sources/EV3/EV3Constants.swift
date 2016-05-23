@@ -110,14 +110,6 @@ public struct EV3OutputPortOptions: OptionSetType {
 	public static let D = EV3OutputPortOptions(rawValue: 8)
 }
 
-enum EV3Variables: UInt8 {
-	case GlobalVar0 = 0x60
-	case GlobalVar1 = 0x61
-	case GlobalVar2 = 0x62
-	case GlobalVar3 = 0x63
-	case GlobalVar4 = 0x64
-}
-
 enum EV3Layer: UInt8 {
 	case ThisBrick = 0
 }

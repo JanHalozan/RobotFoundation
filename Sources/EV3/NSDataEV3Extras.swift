@@ -22,4 +22,9 @@ extension NSMutableData {
 		appendUInt8(0x83)
 		appendUInt32(value)
 	}
+
+	func appendGV2(index: UInt16) {
+		appendUInt8(0x80  | 0x40 | 0x20 | 2)
+		appendUInt16(index)
+	}
 }

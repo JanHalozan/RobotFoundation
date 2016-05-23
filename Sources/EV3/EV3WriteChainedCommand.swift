@@ -31,7 +31,7 @@ public struct EV3WriteChainedCommand: EV3DirectCommand {
 		return 2
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt8) -> NSData {
+	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
 		let mutableData = NSMutableData()
 
 		// Open write
@@ -42,13 +42,13 @@ public struct EV3WriteChainedCommand: EV3DirectCommand {
 		mutableData.appendString(path)
 
 		// Handle is in GV(0)
-		mutableData.appendUInt8(offset)
+		mutableData.appendGV2(offset)
 
 		// Write bytes, one at a time (unfortunately)
 		for i in 0..<data.length {
 			mutableData.appendUInt8(EV3OpCode.File.rawValue)
 			mutableData.appendUInt8(EV3FileOpSubcode.WriteBytes.rawValue)
-			mutableData.appendUInt8(offset)
+			mutableData.appendGV2(offset)
 			mutableData.appendLC2(1)
 			mutableData.appendLC1(data.readUInt8AtIndex(i))
 		}
@@ -56,7 +56,7 @@ public struct EV3WriteChainedCommand: EV3DirectCommand {
 		// Close
 		mutableData.appendUInt8(EV3OpCode.File.rawValue)
 		mutableData.appendUInt8(EV3FileOpSubcode.Close.rawValue)
-		mutableData.appendUInt8(offset)
+		mutableData.appendGV2(offset)
 
 		return mutableData.copy() as! NSData
 	}
