@@ -14,8 +14,11 @@ public enum EV3SensorColor: UInt8 {
 public struct EV3ColorResponse: EV3Response {
 	public let color: EV3SensorColor
 
+	public let responseLength: Int
+
 	public init?(data: NSData, userInfo: [String : Any]) {
 		let index = data.readUInt8AtIndex(0)
 		self.color = EV3SensorColor(rawValue: index) ?? EV3SensorColor.None
+		responseLength = 1
 	}
 }

@@ -16,7 +16,12 @@ public final class EV3Device: Device {
 	}()
 
 	public func enqueueCommand(command: EV3Command, responseHandler: EV3ResponseHandler) {
-		let operation = EV3CommandOperation(transport: transport, command: command, responseHandler: responseHandler)
+		enqueueCommands([command], responseHandler: responseHandler)
+	}
+
+	public func enqueueCommands(commands: [EV3Command], responseHandler: EV3ResponseHandler) {
+		// TODO: system commands cannot be grouped
+		let operation = EV3CommandGroupOperation(transport: transport, commands: commands, responseHandler: responseHandler)
 		operationQueue.addOperation(operation)
 	}
 
@@ -42,7 +47,7 @@ public final class EV3Device: Device {
 
 	override func handleData(data: NSData) {
 		for operation in operationQueue.operations {
-			if let commandOperation = operation as? EV3CommandOperation where commandOperation.canHandleResponseData(data) {
+			if let commandOperation = operation as? EV3CommandGroupOperation where commandOperation.canHandleResponseData(data) {
 				commandOperation.handleResponseData(data)
 			}
 		}

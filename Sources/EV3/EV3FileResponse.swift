@@ -18,6 +18,8 @@ public struct EV3FileResponse: EV3Response {
 
 	public let data: NSData
 
+	public let responseLength: Int
+
 	public init?(data: NSData, userInfo: [String : Any]) {
 		guard let length = userInfo[kEV3FileLengthInfo] as? Int else {
 			assertionFailure()
@@ -34,6 +36,7 @@ public struct EV3FileResponse: EV3Response {
 		fileSize = data.readUInt32AtIndex(2)
 		handle = data.readUInt8AtIndex(6)
 		self.data = data.subdataWithRange(NSMakeRange(7, length))
+		responseLength = 7 + length
 	}
 }
 
@@ -41,8 +44,11 @@ public struct EV3FileResponse: EV3Response {
 public struct EV3HandleResponse: EV3Response {
 	public let handle: UInt8
 
+	public let responseLength: Int
+
 	public init?(data: NSData, userInfo: [String : Any]) {
 		handle = data.readUInt8AtIndex(0)
+		responseLength = 1
 	}
 }
 
@@ -53,6 +59,8 @@ public struct EV3ContinueFileResponse: EV3Response {
 	public let handle: UInt8
 
 	public let data: NSData
+
+	public let responseLength: Int
 
 	public init?(data: NSData, userInfo: [String : Any]) {
 		guard let length = userInfo[kEV3FileLengthInfo] as? Int else {
@@ -69,5 +77,6 @@ public struct EV3ContinueFileResponse: EV3Response {
 		returnStatus = EV3SystemReturnStatus(rawValue: data.readUInt8AtIndex(1)) ?? EV3SystemReturnStatus.UnknownError
 		handle = data.readUInt8AtIndex(2)
 		self.data = data.subdataWithRange(NSMakeRange(3, length))
+		responseLength = 3 + length
 	}
 }

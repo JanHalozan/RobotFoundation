@@ -9,9 +9,9 @@ import Foundation
 
 public typealias EV3ResponseHandler = EV3ResponseGroup -> ()
 
-final class EV3CommandOperation: NSOperation {
+final class EV3CommandGroupOperation: NSOperation {
 	private let transport: DeviceTransport
-	private let command: EV3Command
+	private let commands: [EV3Command]
 	private let responseHandler: EV3ResponseHandler?
 	private let messageIndex: UInt16
 
@@ -28,12 +28,12 @@ final class EV3CommandOperation: NSOperation {
 		}
 	}
 
-	init(transport: DeviceTransport, command: EV3Command, responseHandler: EV3ResponseHandler?) {
+	init(transport: DeviceTransport, commands: [EV3Command], responseHandler: EV3ResponseHandler?) {
 		self.transport = transport
-		self.command = command
+		self.commands = commands
 		self.responseHandler = responseHandler
-		self.messageIndex = EV3CommandOperation.messageCounter
-		EV3CommandOperation.messageCounter = EV3CommandOperation.messageCounter &+ 1
+		self.messageIndex = EV3CommandGroupOperation.messageCounter
+		EV3CommandGroupOperation.messageCounter = EV3CommandGroupOperation.messageCounter &+ 1
 		super.init()
 	}
 
@@ -63,14 +63,21 @@ final class EV3CommandOperation: NSOperation {
 
 		let data: NSData
 
-		// TODO: actually increment the message counter
-		if let directCommand = command as? EV3DirectCommand {
-			data = directCommand.formEV3PacketData(messageIndex, prependTotalLength: false)
-		} else if let systemCommand = command as? EV3SystemCommand {
+		if let systemCommand = commands.first as? EV3SystemCommand {
+			// If the first command is a system command, it should be the only command as we can't batch system commands.
+			assert(commands.count == 1)
 			data = systemCommand.formEV3PacketData(messageIndex)
+		} else if commands.first is EV3DirectCommand {
+			if let directCommands = commands as? [EV3DirectCommand] {
+				data = formEV3PacketDataForCommands(directCommands, messageCounter: messageIndex)
+			} else {
+				fatalError()
+			}
 		} else {
 			fatalError()
 		}
+
+		// TODO: actually increment the message counter
 
 		do {
 			try transport.writeData(data, handler: { resultData in
@@ -101,7 +108,7 @@ final class EV3CommandOperation: NSOperation {
 	func handleResponseData(data: NSData) {
 		assert(NSThread.isMainThread())
 
-		guard data.length >= 0 else {
+		guard data.length >= 5 else {
 			debugPrint("Responses should be at least 5 in length")
 			isExecuting = false
 			return
@@ -116,15 +123,22 @@ final class EV3CommandOperation: NSOperation {
 		assert(messageCounter == messageIndex)
 		assert(data.length >= 5)
 
-		let restOfData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
+		var restOfData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
+		var responses = [EV3Response]()
 
-		guard let response = command.responseType.init(data: restOfData, userInfo: command.responseInfo) as? EV3Response else {
-			print("Could not parse a response")
-			isExecuting = false
-			return
+		for command in commands {
+			guard let response = command.responseType.init(data: restOfData, userInfo: command.responseInfo) as? EV3Response else {
+				print("Could not parse a response")
+				isExecuting = false
+				return
+			}
+
+			responses.append(response)
+
+			restOfData = restOfData.subdataWithRange(NSMakeRange(response.responseLength, data.length - response.responseLength))
 		}
 
-		let responseGroup = EV3ResponseGroup(length: length, replyType: replyType, messageCounter: messageCounter, responses: [response])
+		let responseGroup = EV3ResponseGroup(length: length, replyType: replyType, messageCounter: messageCounter, responses: responses)
 
 		// Response handlers are optional.
 		responseHandler?(responseGroup)

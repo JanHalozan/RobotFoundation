@@ -30,7 +30,10 @@ func processGenericResponseForData(data: NSData) -> (UInt16, UInt16, EV3ReplyTyp
 }
 
 public struct EV3GenericResponse: EV3Response {
+	public let responseLength: Int
+
 	public init?(data: NSData, userInfo: [String : Any]) {
 		// Deliberate no-op.
+		responseLength = 0
 	}
 }

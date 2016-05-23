@@ -7,6 +7,9 @@
 
 import Foundation
 
+public let kDirectTelegramType = UInt8(0x0)
+public let kSystemTelegramType = UInt8(0x1)
+
 public protocol MindstormsCommand {
 	var responseType: MindstormsResponse.Type { get }
 	var type: MindstormsCommandType { get }
@@ -20,10 +23,10 @@ extension MindstormsCommand {
 	// TODO: support no-reply variants
 	var telegramType: UInt8 {
 		if type == .Direct {
-			return 0x0
+			return kDirectTelegramType
 		}
 
-		return 0x01
+		return kSystemTelegramType
 	}
 
 	public var responseInfo: [String : Any] {

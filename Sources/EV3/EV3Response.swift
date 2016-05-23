@@ -5,4 +5,6 @@
 //  Created by Matt on 12/26/15.
 //
 
-public protocol EV3Response: MindstormsResponse {}
+public protocol EV3Response: MindstormsResponse {
+	var responseLength: Int { get }
+}
