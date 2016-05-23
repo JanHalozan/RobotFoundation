@@ -80,6 +80,8 @@
 		C94751871C5411B500A30AA6 /* EV3DrawLineCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94751851C5411B500A30AA6 /* EV3DrawLineCommand.swift */; };
 		C94751891C54187D00A30AA6 /* EV3DrawDotlineCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94751881C54187D00A30AA6 /* EV3DrawDotlineCommand.swift */; };
 		C947518A1C54187D00A30AA6 /* EV3DrawDotlineCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94751881C54187D00A30AA6 /* EV3DrawDotlineCommand.swift */; };
+		C9485C1F1CF3180E00275798 /* EV3ResponseGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9485C1E1CF3180E00275798 /* EV3ResponseGroup.swift */; };
+		C9485C201CF3180E00275798 /* EV3ResponseGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9485C1E1CF3180E00275798 /* EV3ResponseGroup.swift */; };
 		C94A9F3B1C2CF5660031642F /* EV3ReadChainedCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94A9F3A1C2CF5660031642F /* EV3ReadChainedCommand.swift */; };
 		C94A9F3C1C2CF5660031642F /* EV3ReadChainedCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94A9F3A1C2CF5660031642F /* EV3ReadChainedCommand.swift */; };
 		C94FA9B11C541FE6008242C8 /* EV3FillCircleCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94FA9B01C541FE6008242C8 /* EV3FillCircleCommand.swift */; };
@@ -347,6 +349,7 @@
 		C94751821C54114F00A30AA6 /* EV3CleanDisplayCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3CleanDisplayCommand.swift; sourceTree = "<group>"; };
 		C94751851C5411B500A30AA6 /* EV3DrawLineCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3DrawLineCommand.swift; sourceTree = "<group>"; };
 		C94751881C54187D00A30AA6 /* EV3DrawDotlineCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3DrawDotlineCommand.swift; sourceTree = "<group>"; };
+		C9485C1E1CF3180E00275798 /* EV3ResponseGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ResponseGroup.swift; sourceTree = "<group>"; };
 		C94A9F3A1C2CF5660031642F /* EV3ReadChainedCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ReadChainedCommand.swift; sourceTree = "<group>"; };
 		C94FA9B01C541FE6008242C8 /* EV3FillCircleCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3FillCircleCommand.swift; sourceTree = "<group>"; };
 		C94FA9B31C542050008242C8 /* EV3DrawCircleCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3DrawCircleCommand.swift; sourceTree = "<group>"; };
@@ -774,6 +777,7 @@
 				C913812F1C2F5C6000BB2C67 /* EV3Response.swift */,
 				C960264B1C307096007BCF93 /* EV3StorageResponse.swift */,
 				C97551B01C29D094002A5796 /* EV3StringResponse.swift */,
+				C9485C1E1CF3180E00275798 /* EV3ResponseGroup.swift */,
 			);
 			name = Responses;
 			sourceTree = "<group>";
@@ -1083,6 +1087,7 @@
 				C9E4B09E1C5B08CC008C8D01 /* NXTIOMapResponse.swift in Sources */,
 				C94FA9B41C542050008242C8 /* EV3DrawCircleCommand.swift in Sources */,
 				C96FFD3D1C417A86006AA973 /* EV3ButtonCommand.swift in Sources */,
+				C9485C1F1CF3180E00275798 /* EV3ResponseGroup.swift in Sources */,
 				C969455B1C28F3C50030DEB3 /* NXTHandleSizeResponse.swift in Sources */,
 				C98C34AF1C25D1D1006840C3 /* NXTResponse.swift in Sources */,
 				C96945761C28FC200030DEB3 /* MetaDevice.swift in Sources */,
@@ -1224,6 +1229,7 @@
 				C9E4B09F1C5B08CC008C8D01 /* NXTIOMapResponse.swift in Sources */,
 				C94FA9B51C542050008242C8 /* EV3DrawCircleCommand.swift in Sources */,
 				C96FFD3E1C417A86006AA973 /* EV3ButtonCommand.swift in Sources */,
+				C9485C201CF3180E00275798 /* EV3ResponseGroup.swift in Sources */,
 				C98C350E1C26544D006840C3 /* MindstormsResponse.swift in Sources */,
 				C98C350F1C26544D006840C3 /* MindstormsType.swift in Sources */,
 				C96945771C28FC200030DEB3 /* MetaDevice.swift in Sources */,

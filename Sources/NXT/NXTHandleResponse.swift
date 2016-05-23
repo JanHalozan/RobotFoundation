@@ -11,7 +11,7 @@ struct NXTHandleResponse: NXTResponse {
 	let status: NXTStatus
 	let handle: UInt8
 
-	init?(data: NSData) {
+	init?(data: NSData, userInfo: [String : Any]) {
 		guard let status = NXTStatus(responseData: data) else {
 			return nil
 		}

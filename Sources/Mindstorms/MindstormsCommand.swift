@@ -11,6 +11,9 @@ public protocol MindstormsCommand {
 	var responseType: MindstormsResponse.Type { get }
 	var type: MindstormsCommandType { get }
 	var payloadData: NSData { get }
+
+	// Info dictionary that is passed to MindstormsResponses.
+	var responseInfo: [String : Any] { get }
 }
 
 extension MindstormsCommand {
@@ -21,5 +24,9 @@ extension MindstormsCommand {
 		}
 
 		return 0x01
+	}
+
+	public var responseInfo: [String : Any] {
+		return [:]
 	}
 }

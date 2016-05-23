@@ -7,10 +7,12 @@
 
 import Foundation
 
+public typealias EV3ResponseHandler = EV3ResponseGroup -> ()
+
 final class EV3CommandOperation: NSOperation {
 	private let transport: DeviceTransport
 	private let command: EV3Command
-	private let responseHandler: NXTResponseHandler?
+	private let responseHandler: EV3ResponseHandler?
 	private let messageIndex: UInt16
 
 	private static var messageCounter = UInt16()
@@ -26,7 +28,7 @@ final class EV3CommandOperation: NSOperation {
 		}
 	}
 
-	init(transport: DeviceTransport, command: EV3Command, responseHandler: NXTResponseHandler?) {
+	init(transport: DeviceTransport, command: EV3Command, responseHandler: EV3ResponseHandler?) {
 		self.transport = transport
 		self.command = command
 		self.responseHandler = responseHandler
@@ -89,24 +91,43 @@ final class EV3CommandOperation: NSOperation {
 	}
 
 	func canHandleResponseData(data: NSData) -> Bool {
-		guard let response = EV3GenericResponse(data: data) else {
+		guard let (_, messageCounter, _) = processGenericResponseForData(data) else {
 			return false
 		}
 
-		return response.messageCounter == messageIndex
+		return messageCounter == messageIndex
 	}
 
 	func handleResponseData(data: NSData) {
 		assert(NSThread.isMainThread())
 
-		guard let response = command.responseType.init(data: data) else {
+		guard data.length >= 0 else {
+			debugPrint("Responses should be at least 5 in length")
+			isExecuting = false
+			return
+		}
+
+		guard let (length, messageCounter, replyType) = processGenericResponseForData(data) else {
+			debugPrint("Could not parse the generic response header")
+			isExecuting = false
+			return
+		}
+
+		assert(messageCounter == messageIndex)
+		assert(data.length >= 5)
+
+		let restOfData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
+
+		guard let response = command.responseType.init(data: restOfData, userInfo: command.responseInfo) as? EV3Response else {
 			print("Could not parse a response")
 			isExecuting = false
 			return
 		}
 
+		let responseGroup = EV3ResponseGroup(length: length, replyType: replyType, messageCounter: messageCounter, responses: [response])
+
 		// Response handlers are optional.
-		responseHandler?(response)
+		responseHandler?(responseGroup)
 
 		isExecuting = false
 	}

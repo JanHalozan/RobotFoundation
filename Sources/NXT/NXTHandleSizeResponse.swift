@@ -12,7 +12,7 @@ public struct NXTHandleSizeResponse: NXTResponse {
 	public let handle: UInt8
 	public let size: UInt16
 
-	public init?(data: NSData) {
+	public init?(data: NSData, userInfo: [String : Any]) {
 		guard let status = NXTStatus(responseData: data) else {
 			return nil
 		}

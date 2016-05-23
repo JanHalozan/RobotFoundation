@@ -15,7 +15,7 @@ public struct NXTVersionResponse: NXTResponse {
 	public let minorFirmwareVersion: UInt8
 	public let majorFirmwareVersion: UInt8
 
-	public init?(data: NSData) {
+	public init?(data: NSData, userInfo: [String : Any]) {
 		guard let status = NXTStatus(responseData: data) else {
 			return nil
 		}

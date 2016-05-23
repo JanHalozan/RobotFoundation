@@ -13,7 +13,7 @@ public struct NXTDeviceInfoResponse: NXTResponse {
 	public let brickName: String
 	public let freeSpace: UInt32 // bytes
 
-	public init?(data: NSData) {
+	public init?(data: NSData, userInfo: [String : Any]) {
 		guard let status = NXTStatus(responseData: data) else {
 			return nil
 		}

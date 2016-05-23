@@ -38,9 +38,8 @@ extension EV3Device {
 			}
 
 			let command = EV3WriteChainedCommand(path: path, data: chunk, type: type)
-			enqueueCommand(command) { response in
-				let handleResponse = response as! EV3GenericResponse
-				if handleResponse.replyType == .Error {
+			enqueueCommand(command) { responseGroup in
+				if responseGroup.replyType == .Error {
 					anyFailed = true
 				}
 			}
@@ -53,8 +52,11 @@ extension EV3Device {
 
 	public func downloadFileAtPath(path: String, handler: EV3DeviceDownloadHandler) {
 		let command = EV3ReadFileCommand(path: path, bytesToRead: 1000)
-		enqueueCommand(command) { response in
-			let listingResponse = response as! EV3FileResponse
+		enqueueCommand(command) { responseGroup in
+			guard let listingResponse = responseGroup.firstResponse as? EV3FileResponse else {
+				assertionFailure()
+				return
+			}
 
 			if listingResponse.returnStatus == .EndOfFile {
 				handler(listingResponse.data)
@@ -69,8 +71,12 @@ extension EV3Device {
 
 	private func continueFileDownloadWithHandle(handle: UInt8, dataSoFar: NSData, handler: EV3DeviceDownloadHandler) {
 		let continueCommand = EV3ContinueReadFileCommand(handle: handle, bytesToRead: 1000)
-		enqueueCommand(continueCommand) { continueResponse in
-			let listingResponse = continueResponse as! EV3ContinueFileResponse
+		enqueueCommand(continueCommand) { responseGroup in
+			guard let listingResponse = responseGroup.firstResponse as? EV3ContinueFileResponse else {
+				assertionFailure()
+				return
+			}
+			
 			let newDataSoFar = dataSoFar.dataByAppendingData(listingResponse.data)
 
 			if listingResponse.returnStatus == .EndOfFile {

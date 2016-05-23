@@ -13,7 +13,7 @@ public struct NXTDataResponse: NXTResponse {
 	public let size: UInt16
 	public let contents: NSData
 
-	public init?(data: NSData) {
+	public init?(data: NSData, userInfo: [String : Any]) {
 		guard let status = NXTStatus(responseData: data) else {
 			return nil
 		}

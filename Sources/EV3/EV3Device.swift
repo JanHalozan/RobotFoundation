@@ -15,7 +15,7 @@ public final class EV3Device: Device {
 		return operationQueue
 	}()
 
-	public func enqueueCommand(command: EV3Command, responseHandler: NXTResponseHandler) {
+	public func enqueueCommand(command: EV3Command, responseHandler: EV3ResponseHandler) {
 		let operation = EV3CommandOperation(transport: transport, command: command, responseHandler: responseHandler)
 		operationQueue.addOperation(operation)
 	}

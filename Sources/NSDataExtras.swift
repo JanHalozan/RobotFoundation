@@ -89,4 +89,11 @@ extension NSData {
 
 		return NSString(UTF8String: stringBuffer) as? String ?? ""
 	}
+
+	func readStringOfUnknownLengthAtIndex(index: Int, maxLength: Int) -> String {
+		var stringBuffer = [Int8](count: maxLength, repeatedValue: 0)
+		getBytes(&stringBuffer, range: NSMakeRange(index, maxLength))
+
+		return NSString(UTF8String: stringBuffer) as? String ?? ""
+	}
 }

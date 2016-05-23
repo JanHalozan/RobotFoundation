@@ -112,7 +112,7 @@ final class NXTCommandOperation: NSOperation {
 			fullData = data
 //		}
 
-		guard let response = command.responseType.init(data: fullData) else {
+		guard let response = command.responseType.init(data: fullData, userInfo: command.responseInfo) else {
 			print("Could not parse a response")
 			isExecuting = false
 			return

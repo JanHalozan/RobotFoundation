@@ -13,7 +13,7 @@ public struct NXTIOMapResponse: NXTResponse {
 	public let bytesRead: UInt16
 	public let contents: NSData
 
-	public init?(data: NSData) {
+	public init?(data: NSData, userInfo: [String : Any]) {
 		guard let status = NXTStatus(responseData: data) else {
 			return nil
 		}

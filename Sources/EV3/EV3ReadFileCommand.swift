@@ -24,6 +24,10 @@ public struct EV3ReadFileCommand: EV3SystemCommand {
 		return 0x94
 	}
 
+	public var responseInfo: [String : Any] {
+		return [kEV3FileLengthInfo: Int(bytesToRead)]
+	}
+
 	public var payloadData: NSData {
 		let mutableData = NSMutableData()
 		mutableData.appendUInt16(bytesToRead)
@@ -49,6 +53,10 @@ public struct EV3ContinueReadFileCommand: EV3SystemCommand {
 
 	public var systemCommand: UInt8 {
 		return 0x95
+	}
+
+	public var responseInfo: [String : Any] {
+		return [kEV3FileLengthInfo: Int(bytesToRead)]
 	}
 
 	public var payloadData: NSData {
