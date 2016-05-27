@@ -28,6 +28,7 @@ enum EV3OpCode: UInt8 {
 	case OutputTimeSync = 0xB1
 	case File = 0xC0
 	case MemoryUsage = 0xC5
+	case COMGet = 0xD3
 }
 
 enum EV3FileOpSubcode: UInt8 {
@@ -78,6 +79,10 @@ enum EV3UIDrawOpSubcode: UInt8 {
 	case Store = 25
 	case Restore = 26
 	case BMPFile = 28
+}
+
+enum EV3COMGetSubcode: UInt8 {
+	case GetBrickName = 13
 }
 
 enum EV3SensorType: UInt8 {

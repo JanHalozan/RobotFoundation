@@ -40,6 +40,8 @@
 		C91E1A1E1C5C2A1100D5154A /* NXTResetMotorPositionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91E1A1C1C5C2A1100D5154A /* NXTResetMotorPositionCommand.swift */; };
 		C91E1A201C5C2A9B00D5154A /* NXTSetOutputStateCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91E1A1F1C5C2A9B00D5154A /* NXTSetOutputStateCommand.swift */; };
 		C91E1A211C5C2A9B00D5154A /* NXTSetOutputStateCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91E1A1F1C5C2A9B00D5154A /* NXTSetOutputStateCommand.swift */; };
+		C92068181CF872FD0075067F /* EV3GetBrickNameCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92068171CF872FD0075067F /* EV3GetBrickNameCommand.swift */; };
+		C92068191CF872FD0075067F /* EV3GetBrickNameCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92068171CF872FD0075067F /* EV3GetBrickNameCommand.swift */; };
 		C9229E4F1C5C1B6F001E74ED /* NXTGetDeviceInfoCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229E4E1C5C1B6F001E74ED /* NXTGetDeviceInfoCommand.swift */; };
 		C9229E501C5C1B6F001E74ED /* NXTGetDeviceInfoCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229E4E1C5C1B6F001E74ED /* NXTGetDeviceInfoCommand.swift */; };
 		C9229E531C5C1EFC001E74ED /* NXTDeviceInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229E521C5C1EFC001E74ED /* NXTDeviceInfoResponse.swift */; };
@@ -329,6 +331,7 @@
 		C91E1A191C5C291700D5154A /* NXTWriteIOMapCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTWriteIOMapCommand.swift; sourceTree = "<group>"; };
 		C91E1A1C1C5C2A1100D5154A /* NXTResetMotorPositionCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTResetMotorPositionCommand.swift; sourceTree = "<group>"; };
 		C91E1A1F1C5C2A9B00D5154A /* NXTSetOutputStateCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTSetOutputStateCommand.swift; sourceTree = "<group>"; };
+		C92068171CF872FD0075067F /* EV3GetBrickNameCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3GetBrickNameCommand.swift; sourceTree = "<group>"; };
 		C9229E4E1C5C1B6F001E74ED /* NXTGetDeviceInfoCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTGetDeviceInfoCommand.swift; sourceTree = "<group>"; };
 		C9229E521C5C1EFC001E74ED /* NXTDeviceInfoResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTDeviceInfoResponse.swift; sourceTree = "<group>"; };
 		C9229E551C5C206E001E74ED /* NXTDataResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTDataResponse.swift; sourceTree = "<group>"; };
@@ -731,6 +734,7 @@
 				C96FFD3C1C417A86006AA973 /* EV3ButtonCommand.swift */,
 				C9EDF44D1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift */,
 				C9EDF4501C2B56B600879F00 /* EV3DeleteItemCommand.swift */,
+				C92068171CF872FD0075067F /* EV3GetBrickNameCommand.swift */,
 				C96026481C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift */,
 				C9D378E31C3062F1005385D5 /* EV3GetVersionCommand.swift */,
 				C93AAEB61C553E55008B7758 /* EV3IsButtonPressedCommand.swift */,
@@ -1049,6 +1053,7 @@
 				C9F197CA1CA2E15E009703E7 /* NXTVersionResponse.swift in Sources */,
 				C9EDF44E1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift in Sources */,
 				C94751701C54024B00A30AA6 /* EV3UpdateDisplayCommand.swift in Sources */,
+				C92068181CF872FD0075067F /* EV3GetBrickNameCommand.swift in Sources */,
 				C9F58A5C1C5BC07D000B3F09 /* RobotDisplayFramebuffer.swift in Sources */,
 				C98C34DB1C260E72006840C3 /* MindstormsResponse.swift in Sources */,
 				C91E1A111C5C278300D5154A /* NXTPlaySoundFileCommand.swift in Sources */,
@@ -1191,6 +1196,7 @@
 				C9F197CB1CA2E15E009703E7 /* NXTVersionResponse.swift in Sources */,
 				C9EDF44F1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift in Sources */,
 				C94751711C54024B00A30AA6 /* EV3UpdateDisplayCommand.swift in Sources */,
+				C92068191CF872FD0075067F /* EV3GetBrickNameCommand.swift in Sources */,
 				C9F58A5D1C5BC07D000B3F09 /* RobotDisplayFramebuffer.swift in Sources */,
 				C97868711C28DF5A0099BB82 /* EV3SetSensorModeCommand.swift in Sources */,
 				C91E1A121C5C278300D5154A /* NXTPlaySoundFileCommand.swift in Sources */,
