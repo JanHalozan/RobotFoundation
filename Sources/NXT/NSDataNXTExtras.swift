@@ -9,8 +9,10 @@ import Foundation
 
 extension NSString {
 	var dataForFilename: NSData {
-		let clippedName = self.length > 19 ? substringToIndex(20) : self
-		return NSData(bytes: clippedName.UTF8String, length: 20)
+		let clippedName = length > 19 ? substringToIndex(19) : self
+		let paddedName = clippedName.stringByAppendingString("\0")
+
+		return paddedName.dataUsingEncoding(NSUTF8StringEncoding) ?? NSData()
 	}
 }
 
