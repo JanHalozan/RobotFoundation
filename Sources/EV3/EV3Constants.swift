@@ -29,6 +29,7 @@ enum EV3OpCode: UInt8 {
 	case File = 0xC0
 	case MemoryUsage = 0xC5
 	case COMGet = 0xD3
+	case COMSet = 0xD4
 }
 
 enum EV3FileOpSubcode: UInt8 {
@@ -83,6 +84,10 @@ enum EV3UIDrawOpSubcode: UInt8 {
 
 enum EV3COMGetSubcode: UInt8 {
 	case GetBrickName = 13
+}
+
+enum EV3COMSetSubcode: UInt8 {
+	case SetBrickName = 8
 }
 
 enum EV3SensorType: UInt8 {
