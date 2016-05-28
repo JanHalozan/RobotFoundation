@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C901F6DD1CF9831F00150890 /* NXTSetBrickNameCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C901F6DC1CF9831F00150890 /* NXTSetBrickNameCommand.swift */; };
+		C901F6DE1CF9831F00150890 /* NXTSetBrickNameCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C901F6DC1CF9831F00150890 /* NXTSetBrickNameCommand.swift */; };
 		C905867A1C2C5FDB0068E560 /* EV3ReadFileCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90586791C2C5FDB0068E560 /* EV3ReadFileCommand.swift */; };
 		C905867B1C2C5FDB0068E560 /* EV3ReadFileCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90586791C2C5FDB0068E560 /* EV3ReadFileCommand.swift */; };
 		C905867D1C2C605F0068E560 /* EV3FileResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C905867C1C2C605F0068E560 /* EV3FileResponse.swift */; };
@@ -314,6 +316,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C901F6DC1CF9831F00150890 /* NXTSetBrickNameCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTSetBrickNameCommand.swift; sourceTree = "<group>"; };
 		C90586791C2C5FDB0068E560 /* EV3ReadFileCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ReadFileCommand.swift; sourceTree = "<group>"; };
 		C905867C1C2C605F0068E560 /* EV3FileResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3FileResponse.swift; sourceTree = "<group>"; };
 		C907C25B1C2A239400647531 /* EV3SetMotorSpeedCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3SetMotorSpeedCommand.swift; sourceTree = "<group>"; };
@@ -520,6 +523,7 @@
 				C91E1A131C5C27FA00D5154A /* NXTReadCommand.swift */,
 				C9E4B09A1C5B0813008C8D01 /* NXTReadIOMapCommand.swift */,
 				C91E1A1C1C5C2A1100D5154A /* NXTResetMotorPositionCommand.swift */,
+				C901F6DC1CF9831F00150890 /* NXTSetBrickNameCommand.swift */,
 				C91E1A1F1C5C2A9B00D5154A /* NXTSetOutputStateCommand.swift */,
 				C98C34E41C262CF3006840C3 /* NXTStartProgramCommand.swift */,
 				C92618F21CAEDAE600B52B8D /* NXTStopPlaybackCommand.swift */,
@@ -1064,6 +1068,7 @@
 				C97551B11C29D094002A5796 /* EV3StringResponse.swift in Sources */,
 				C9E4B0B01C5B0D1B008C8D01 /* NXTConstants.swift in Sources */,
 				C96026491C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift in Sources */,
+				C901F6DD1CF9831F00150890 /* NXTSetBrickNameCommand.swift in Sources */,
 				C91E1A201C5C2A9B00D5154A /* NXTSetOutputStateCommand.swift in Sources */,
 				C91381301C2F5C6000BB2C67 /* EV3Response.swift in Sources */,
 				C98C34D11C25F893006840C3 /* NSDataEV3Extras.swift in Sources */,
@@ -1207,6 +1212,7 @@
 				C98C35041C26544D006840C3 /* EV3CommandSerialization.swift in Sources */,
 				C9E4B0B11C5B0D1B008C8D01 /* NXTConstants.swift in Sources */,
 				C960264A1C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift in Sources */,
+				C901F6DE1CF9831F00150890 /* NXTSetBrickNameCommand.swift in Sources */,
 				C91E1A211C5C2A9B00D5154A /* NXTSetOutputStateCommand.swift in Sources */,
 				C91381311C2F5C6000BB2C67 /* EV3Response.swift in Sources */,
 				C97551B21C29D094002A5796 /* EV3StringResponse.swift in Sources */,

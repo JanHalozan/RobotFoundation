@@ -20,4 +20,16 @@ extension NSMutableData {
 	func appendNXTFilename(filename: NSString) {
 		appendData(filename.dataForFilename)
 	}
+
+	func appendNXTBrickName(name: NSString) {
+		let clippedName = name.length > 15 ? name.substringToIndex(15) : name
+		let paddedName = clippedName.stringByAppendingString("\0")
+
+		guard let data = paddedName.dataUsingEncoding(NSUTF8StringEncoding) else {
+			assertionFailure()
+			return
+		}
+
+		appendData(data)
+	}
 }
