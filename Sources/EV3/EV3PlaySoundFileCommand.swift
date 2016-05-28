@@ -25,8 +25,7 @@ public struct EV3PlaySoundFileCommand: EV3DirectCommand {
 		mutableData.appendUInt8(EV3OpCode.Sound.rawValue)
 		mutableData.appendUInt8(EV3SoundOpSubcode.Play.rawValue)
 		mutableData.appendLC1(volume)
-		mutableData.appendUInt8(0x84)
-		mutableData.appendString(path)
+		mutableData.appendLCS(path)
 
 		return mutableData.copy() as! NSData
 	}

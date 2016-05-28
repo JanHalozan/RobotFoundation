@@ -37,9 +37,7 @@ public struct EV3WriteChainedCommand: EV3DirectCommand {
 		// Open write
 		mutableData.appendUInt8(EV3OpCode.File.rawValue)
 		mutableData.appendUInt8(type.rawValue)
-
-		mutableData.appendUInt8(0x84)
-		mutableData.appendString(path)
+		mutableData.appendLCS(path)
 
 		// Handle is in GV(0)
 		mutableData.appendGV2(offset)

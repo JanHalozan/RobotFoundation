@@ -31,8 +31,7 @@ public struct EV3DrawBitmapCommand: EV3DirectCommand {
 		mutableData.appendUInt8(color.rawValue)
 		mutableData.appendLC2(x)
 		mutableData.appendLC2(y)
-		mutableData.appendUInt8(0x84)
-		mutableData.appendString(name)
+		mutableData.appendLCS(name)
 
 		return mutableData.copy() as! NSData
 	}

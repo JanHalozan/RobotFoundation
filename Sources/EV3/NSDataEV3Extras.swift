@@ -27,4 +27,9 @@ extension NSMutableData {
 		appendUInt8(0x80  | 0x40 | 0x20 | 2)
 		appendUInt16(index)
 	}
+
+	func appendLCS(string: String) {
+		appendUInt8(0x84)
+		appendString(string)
+	}
 }

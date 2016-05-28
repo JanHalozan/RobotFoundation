@@ -32,9 +32,7 @@ public struct EV3ReadChainedCommand: EV3DirectCommand {
 		// Open read
 		mutableData.appendUInt8(EV3OpCode.File.rawValue)
 		mutableData.appendUInt8(EV3FileOpSubcode.OpenRead.rawValue)
-
-		mutableData.appendUInt8(0x84)
-		mutableData.appendString(path)
+		mutableData.appendLCS(path)
 
 		// Handle is in GV(0)
 		mutableData.appendGV2(offset)

@@ -42,8 +42,7 @@ public struct EV3DrawTextCommand: EV3DirectCommand {
 		mutableData.appendUInt8(color.rawValue)
 		mutableData.appendLC2(x)
 		mutableData.appendLC2(y)
-		mutableData.appendUInt8(0x84)
-		mutableData.appendString(string)
+		mutableData.appendLCS(string)
 
 		return mutableData.copy() as! NSData
 	}

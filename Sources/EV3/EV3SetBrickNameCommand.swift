@@ -22,8 +22,7 @@ public struct EV3SetBrickNameCommand: EV3DirectCommand {
 		let mutableData = NSMutableData()
 		mutableData.appendUInt8(EV3OpCode.COMSet.rawValue)
 		mutableData.appendUInt8(EV3COMSetSubcode.SetBrickName.rawValue)
-		mutableData.appendUInt8(0x84)
-		mutableData.appendString(name)
+		mutableData.appendLCS(name)
 
 		return mutableData.copy() as! NSData
 	}
