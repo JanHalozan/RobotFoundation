@@ -134,7 +134,6 @@ public final class BluetoothDeviceSource: RobotDeviceSource, IOBluetoothDeviceIn
 
 private func deviceClassForBluetoothDevice(bluetoothDevice: IOBluetoothDevice) -> DeviceClass {
 	guard let services = bluetoothDevice.services as? [IOBluetoothSDPServiceRecord] else {
-		assertionFailure()
 		return .Unknown
 	}
 
