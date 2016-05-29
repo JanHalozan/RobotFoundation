@@ -17,7 +17,7 @@ protocol DeviceDelegate: class {
 public class Device: DeviceTransportDelegate {
 	let transport: DeviceTransport
 
-	var isOpen: Bool {
+	public var isOpen: Bool {
 		return transport.openState == .Opened
 	}
 
