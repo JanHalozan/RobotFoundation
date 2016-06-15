@@ -17,7 +17,7 @@ public final class HIDDeviceSource: RobotDeviceSource {
 	private unowned var client: RobotDeviceSourceClient
 
 	public init(client: RobotDeviceSourceClient) {
-		manager = IOHIDManagerCreate(nil, 0).takeRetainedValue()
+		manager = IOHIDManagerCreate(nil, 0)
 		self.client = client
 	}
 
@@ -64,8 +64,8 @@ public final class HIDDeviceSource: RobotDeviceSource {
 	}
 
 	private func foundDevice(device: IOHIDDeviceRef) {
-		let name = IOHIDDeviceGetProperty(device, kIOHIDProductKey)?.takeUnretainedValue() as? String ?? "HID Device"
-		let uniqueIdentifier = IOHIDDeviceGetProperty(device, kIOHIDSerialNumberKey)?.takeUnretainedValue() as? String ?? ""
+		let name = IOHIDDeviceGetProperty(device, kIOHIDProductKey) as? String ?? "HID Device"
+		let uniqueIdentifier = IOHIDDeviceGetProperty(device, kIOHIDSerialNumberKey) as? String ?? ""
 
 		let robotDevice = MetaDevice(type: .HIDDevice, deviceClass: .EV3, uniqueIdentifier: uniqueIdentifier, name: name)
 		foundDevices.insert(robotDevice)
@@ -79,7 +79,7 @@ public final class HIDDeviceSource: RobotDeviceSource {
 	}
 
 	private func findHIDRobotDevice(deviceRef: IOHIDDeviceRef) -> MetaDevice? {
-		let uniqueIdentifier = IOHIDDeviceGetProperty(deviceRef, kIOHIDSerialNumberKey)?.takeUnretainedValue() as? String ?? ""
+		let uniqueIdentifier = IOHIDDeviceGetProperty(deviceRef, kIOHIDSerialNumberKey) as? String ?? ""
 
 		for foundDevice in foundDevices {
 			if case RobotDeviceType.HIDDevice = foundDevice.type {
