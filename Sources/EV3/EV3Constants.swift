@@ -25,6 +25,8 @@ enum EV3OpCode: UInt8 {
 	case OutputRead = 0xA8
 	case OutputTest = 0xA9
 	case OutputReady = 0xAA
+	case OutputTimePower = 0xAD
+	case OutputTimeSpeed = 0xAF
 	case OutputTimeSync = 0xB1
 	case File = 0xC0
 	case MemoryUsage = 0xC5
@@ -122,6 +124,11 @@ public struct EV3OutputPortOptions: OptionSetType {
 
 enum EV3Layer: UInt8 {
 	case ThisBrick = 0
+}
+
+public enum EV3StopType: UInt8 {
+	case Coast = 0
+	case Brake = 1
 }
 
 let EV3ColorMode = UInt8(2)
