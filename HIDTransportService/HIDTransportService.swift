@@ -30,11 +30,7 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 			return nil
 		}
 
-		guard let property = IOHIDDeviceGetProperty(device, kIOHIDSerialNumberKey) else {
-			return nil
-		}
-
-		return property.takeUnretainedValue() as? String
+		return IOHIDDeviceGetProperty(device, kIOHIDSerialNumberKey) as? String
 	}
 
 	func open(identifier: NSString, handler: Int -> ()) {
@@ -72,7 +68,7 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 
 		let service = IOServiceGetMatchingService(kIOMasterPortDefault, matching as CFDictionaryRef)
 
-		guard let hidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, service)?.takeRetainedValue() else {
+		guard let hidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, service) else {
 			return 1
 		}
 
@@ -122,8 +118,13 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 		}
 
 		let bytes = unsafeBitCast(data.bytes, UnsafePointer<UInt8>.self)
-		let result = IOHIDDeviceSetReport(device, kIOHIDReportTypeOutput, 0, bytes, data.length)
-		return result
+
+		if let existingDevice = device {
+			return IOHIDDeviceSetReport(existingDevice, kIOHIDReportTypeOutput, 0, bytes, data.length)
+		} else {
+			assertionFailure()
+			return kIOReturnNoDevice
+		}
 	}
 
 	private func receivedReport() {
@@ -158,7 +159,12 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 		assert(activeClients >= 0)
 
 		if activeClients == 0 {
-			IOHIDDeviceClose(device, 0)
+			if let existingDevice = device {
+				IOHIDDeviceClose(existingDevice, 0)
+			} else {
+				assertionFailure()
+			}
+
 			device = nil
 		}
 
