@@ -7,11 +7,6 @@
 
 import Foundation
 
-public enum EV3StopType: UInt8 {
-	case Coast = 0
-	case Brake = 1
-}
-
 public struct EV3StopMotorCommand: EV3DirectCommand {
 	public let port: EV3OutputPortOptions
 	public let stopType: EV3StopType
