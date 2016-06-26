@@ -93,7 +93,7 @@ enum EV3COMSetSubcode: UInt8 {
 	case SetBrickName = 8
 }
 
-enum EV3SensorType: UInt8 {
+public enum EV3SensorType: UInt8 {
 	case KeepType = 0
 	case Touch = 16
 }
