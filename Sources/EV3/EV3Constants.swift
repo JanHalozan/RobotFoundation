@@ -96,6 +96,9 @@ enum EV3COMSetSubcode: UInt8 {
 public enum EV3SensorType: UInt8 {
 	case KeepType = 0
 	case Touch = 16
+	case Light = 29
+	case Ultrasound = 30
+	case IR = 33
 }
 
 public enum EV3ButtonConst: UInt8 {
