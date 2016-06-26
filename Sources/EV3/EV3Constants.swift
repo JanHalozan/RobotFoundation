@@ -44,6 +44,7 @@ enum EV3FileOpSubcode: UInt8 {
 enum EV3InputDeviceOpSubcode: UInt8 {
 	case GetTypeMode = 5
 	case GetRaw = 11
+	case GetName = 21
 	case ReadyPct = 27
 	case ReadyRaw = 28
 	case ReadySI = 29

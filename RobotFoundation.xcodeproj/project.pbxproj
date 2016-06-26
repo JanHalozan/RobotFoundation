@@ -23,6 +23,8 @@
 		C9115B531C2EF69600BCE9BC /* EV3DeviceConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9115B511C2EF69600BCE9BC /* EV3DeviceConvenience.swift */; };
 		C91381301C2F5C6000BB2C67 /* EV3Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = C913812F1C2F5C6000BB2C67 /* EV3Response.swift */; };
 		C91381311C2F5C6000BB2C67 /* EV3Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = C913812F1C2F5C6000BB2C67 /* EV3Response.swift */; };
+		C917BC711D202AF600DFE0AD /* EV3GetSensorNameCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917BC701D202AF600DFE0AD /* EV3GetSensorNameCommand.swift */; };
+		C917BC721D202AF600DFE0AD /* EV3GetSensorNameCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917BC701D202AF600DFE0AD /* EV3GetSensorNameCommand.swift */; };
 		C917F68A1C272D6A00AE980B /* EV3HIDDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917F6891C272D6A00AE980B /* EV3HIDDeviceTests.swift */; };
 		C917F68F1C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917F68E1C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift */; };
 		C917F6901C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917F68E1C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift */; };
@@ -338,6 +340,7 @@
 		C907C2641C2A2F0300647531 /* EV3StopMotorCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3StopMotorCommand.swift; sourceTree = "<group>"; };
 		C9115B511C2EF69600BCE9BC /* EV3DeviceConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3DeviceConvenience.swift; sourceTree = "<group>"; };
 		C913812F1C2F5C6000BB2C67 /* EV3Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3Response.swift; sourceTree = "<group>"; };
+		C917BC701D202AF600DFE0AD /* EV3GetSensorNameCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3GetSensorNameCommand.swift; sourceTree = "<group>"; };
 		C917F6891C272D6A00AE980B /* EV3HIDDeviceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3HIDDeviceTests.swift; sourceTree = "<group>"; };
 		C917F68E1C2731B700AE980B /* RobotDeviceDescriptorEV3Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RobotDeviceDescriptorEV3Extras.swift; sourceTree = "<group>"; };
 		C91E1A0A1C5C264F00D5154A /* NXTOpenReadCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTOpenReadCommand.swift; sourceTree = "<group>"; };
@@ -760,6 +763,7 @@
 				C9EDF44D1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift */,
 				C9EDF4501C2B56B600879F00 /* EV3DeleteItemCommand.swift */,
 				C92068171CF872FD0075067F /* EV3GetBrickNameCommand.swift */,
+				C917BC701D202AF600DFE0AD /* EV3GetSensorNameCommand.swift */,
 				C9C128D91D1FD854001D1EFD /* EV3GetSensorTypeCommand.swift */,
 				C96026481C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift */,
 				C9D378E31C3062F1005385D5 /* EV3GetVersionCommand.swift */,
@@ -1170,6 +1174,7 @@
 				C98C34DD1C260EA6006840C3 /* MindstormsType.swift in Sources */,
 				C9BC33E11C2F1A2D00E0A41F /* XPCTransportServiceProtocol.swift in Sources */,
 				C98C34E91C264532006840C3 /* EV3SetLEDCommand.swift in Sources */,
+				C917BC711D202AF600DFE0AD /* EV3GetSensorNameCommand.swift in Sources */,
 				C947517D1C540F1400A30AA6 /* EV3InvertRectCommand.swift in Sources */,
 				C907C2651C2A2F0300647531 /* EV3StopMotorCommand.swift in Sources */,
 				C9E12DD51CD2D720002543B1 /* EV3ReadOutputCommand.swift in Sources */,
@@ -1321,6 +1326,7 @@
 				C98C351B1C26544D006840C3 /* NXTResponse.swift in Sources */,
 				C9BC33E21C2F1A2D00E0A41F /* XPCTransportServiceProtocol.swift in Sources */,
 				C98C351C1C26544D006840C3 /* NXTTypes.swift in Sources */,
+				C917BC721D202AF600DFE0AD /* EV3GetSensorNameCommand.swift in Sources */,
 				C947517E1C540F1400A30AA6 /* EV3InvertRectCommand.swift in Sources */,
 				C907C2661C2A2F0300647531 /* EV3StopMotorCommand.swift in Sources */,
 				C9E12DD61CD2D720002543B1 /* EV3ReadOutputCommand.swift in Sources */,
