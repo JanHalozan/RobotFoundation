@@ -1580,7 +1580,7 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = HIDTransportService/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Xrobot.HIDTransportService;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Robotary.HIDTransportService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -1594,7 +1594,7 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = HIDTransportService/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Xrobot.HIDTransportService;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Robotary.HIDTransportService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -1607,7 +1607,7 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = BluetoothTransportService/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Xrobot.BluetoothTransportService;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Robotary.BluetoothTransportService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -1620,7 +1620,7 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = BluetoothTransportService/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Xrobot.BluetoothTransportService;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Robotary.BluetoothTransportService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};

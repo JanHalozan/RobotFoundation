@@ -18,7 +18,7 @@ final class HIDDeviceTransport: XPCBackedDeviceTransport {
 	}
 
 	override var serviceName: String {
-		return "com.Xrobot.HIDTransportService"
+		return "com.Robotary.HIDTransportService"
 	}
 
 	override var identifier: String {

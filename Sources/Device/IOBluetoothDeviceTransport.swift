@@ -19,7 +19,7 @@ final class IOBluetoothDeviceTransport: XPCBackedDeviceTransport {
 	}
 
 	override var serviceName: String {
-		return "com.Xrobot.BluetoothTransportService"
+		return "com.Robotary.BluetoothTransportService"
 	}
 
 	override var identifier: String {
