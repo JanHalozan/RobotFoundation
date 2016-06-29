@@ -34,11 +34,13 @@
 @implementation LegacyUSBTransportService {
 	IOUSBDeviceInterface **_device;
 	IOUSBInterfaceInterface **_interface;
-	IONotificationPortRef _notificationPort;
 	io_object_t _registeredNotification;
 	NSDictionary<NSNumber *, NSMutableArray<NSNumber *> *> *_pipes;
 	io_service_t _service;
 	uint8_t _readBuffer[READ_BUFFER_LEN];
+
+	// Shared
+	IONotificationPortRef _notificationPort;
 }
 
 static dispatch_time_t TenSecondTimeout()
@@ -244,6 +246,8 @@ static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 
 - (void)_setUpInterestNotification
 {
+	NSAssert(NSThread.isMainThread, @"Unexpected thread");
+
 	if (!_notificationPort) {
 		_notificationPort = IONotificationPortCreate(kIOMasterPortDefault);
 		CFRunLoopSourceRef source = IONotificationPortGetRunLoopSource(_notificationPort);
@@ -255,6 +259,8 @@ static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 
 - (void)_cleanUpNotification
 {
+	NSAssert(NSThread.isMainThread, @"Unexpected thread");
+
 	if (_registeredNotification != IO_OBJECT_NULL) {
 		IOObjectRelease(_registeredNotification);
 		_registeredNotification = IO_OBJECT_NULL;
