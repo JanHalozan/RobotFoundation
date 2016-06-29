@@ -380,7 +380,7 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 {
 	NSAssert(NSThread.isMainThread, @"Unexpected thread");
 
-	if (_service == IO_OBJECT_NULL) {
+	if (_service == IO_OBJECT_NULL || _interface == NULL) {
 		return kIOReturnNotOpen;
 	}
 
@@ -402,7 +402,6 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 
 - (void)writeData:(NSData *)data identifier:(NSString *)identifier handler:(void (^)(NSInteger))handler
 {
-	// TODO: check if open
 	__block IOReturn result = kIOReturnError;
 
 	dispatch_sync(dispatch_get_main_queue(), ^{
