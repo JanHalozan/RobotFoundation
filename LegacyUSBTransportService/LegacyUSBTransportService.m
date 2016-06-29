@@ -259,12 +259,12 @@ static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 {
 	NSAssert(NSThread.isMainThread, @"Unexpected thread");
 
-	self.readResult = result;
-	dispatch_semaphore_signal(_readSemaphore);
-
 	if (result == kIOReturnSuccess) {
 		[self.delegate handleData:[NSData dataWithBytes:_readBuffer length:sizeof(_readBuffer)]];
 	}
+	
+	self.readResult = result;
+	dispatch_semaphore_signal(_readSemaphore);
 }
 
 - (void)_didWriteDataWithResult:(IOReturn)result
