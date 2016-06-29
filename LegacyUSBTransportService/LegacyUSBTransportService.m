@@ -13,6 +13,19 @@
 
 #define READ_BUFFER_LEN 64
 
+@interface ServiceAndSemaphore : NSObject
+
+@property (weak) LegacyUSBTransportService *service;
+@property dispatch_semaphore_t semaphore;
+@property ServiceAndSemaphore *selfLoop;
+
+@end
+
+
+@implementation ServiceAndSemaphore
+@end
+
+
 @interface LegacyUSBTransportService ()
 @property IOReturn readResult;
 @property IOReturn writeResult;
@@ -26,9 +39,6 @@
 	NSDictionary<NSNumber *, NSMutableArray<NSNumber *> *> *_pipes;
 	io_service_t _service;
 	uint8_t _readBuffer[READ_BUFFER_LEN];
-
-	dispatch_semaphore_t _readSemaphore;
-	dispatch_semaphore_t _writeSemaphore;
 }
 
 static dispatch_time_t TenSecondTimeout()
@@ -71,8 +81,6 @@ static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 	}
 
 	_delegate = delegate;
-
-	_writeSemaphore = dispatch_semaphore_create(0);
 	_pipes = @{
 		@(kUSBIn): [NSMutableArray array],
 		@(kUSBOut): [NSMutableArray array],
@@ -255,7 +263,7 @@ static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 
 #pragma mark - Utility
 
-- (void)_didReadBytesWithResult:(IOReturn)result number:(UInt32)number
+- (void)_didReadBytesWithResult:(IOReturn)result number:(UInt32)number semaphore:(dispatch_semaphore_t)semaphore
 {
 	NSAssert(NSThread.isMainThread, @"Unexpected thread");
 
@@ -264,29 +272,31 @@ static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 	}
 	
 	self.readResult = result;
-	dispatch_semaphore_signal(_readSemaphore);
+	dispatch_semaphore_signal(semaphore);
 }
 
-- (void)_didWriteDataWithResult:(IOReturn)result
+- (void)_didWriteDataWithResult:(IOReturn)result semaphore:(dispatch_semaphore_t)semaphore
 {
 	NSAssert(NSThread.isMainThread, @"Unexpected thread");
 
 	self.writeResult = result;
-	dispatch_semaphore_signal(_writeSemaphore);
+	dispatch_semaphore_signal(semaphore);
 }
 
 static void ReadCompletion(void *refCon, IOReturn result, void *arg0)
 {
-	LegacyUSBTransportService *const self = (__bridge LegacyUSBTransportService *)refCon;
+	ServiceAndSemaphore *const tuple = (__bridge ServiceAndSemaphore *)refCon;
 	const size_t bytesRead = (size_t)arg0;
 
-	[self _didReadBytesWithResult:result number:(UInt32)bytesRead];
+	[tuple.service _didReadBytesWithResult:result number:(UInt32)bytesRead semaphore:tuple.semaphore];
+	tuple.selfLoop = nil;
 }
 
 static void WriteCompletion(void *refCon, IOReturn result, void *arg0)
 {
-	LegacyUSBTransportService *const self = (__bridge LegacyUSBTransportService *)refCon;
-	[self _didWriteDataWithResult:result];
+	ServiceAndSemaphore *const tuple = (__bridge ServiceAndSemaphore *)refCon;
+	[tuple.service _didWriteDataWithResult:result semaphore:tuple.semaphore];
+	tuple.selfLoop = nil;
 }
 
 static void DeviceNotification(void *refCon, io_service_t service, natural_t messageType, void *messageArgument)
@@ -376,7 +386,7 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 	handler(kIOReturnSuccess);
 }
 
-- (IOReturn)_actuallyWriteData:(NSData *)data identifier:(NSString *)identifier
+- (IOReturn)_actuallyWriteData:(NSData *)data identifier:(NSString *)identifier semaphore:(dispatch_semaphore_t)semaphore
 {
 	NSAssert(NSThread.isMainThread, @"Unexpected thread");
 
@@ -397,15 +407,22 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 	}
 
 	const UInt8 outNum = (UInt8)[outPipes[0] intValue]; // write to first out pipe for now
-	return (*_interface)->WritePipeAsync(_interface, outNum, (void *)data.bytes, (UInt32)data.length, &WriteCompletion, (__bridge void *)self);
+
+	ServiceAndSemaphore *tuple = [[ServiceAndSemaphore alloc] init];
+	tuple.service = self;
+	tuple.semaphore = semaphore;
+	tuple.selfLoop = tuple;
+	return (*_interface)->WritePipeAsync(_interface, outNum, (void *)data.bytes, (UInt32)data.length, &WriteCompletion, (__bridge void *)tuple);
 }
 
 - (void)writeData:(NSData *)data identifier:(NSString *)identifier handler:(void (^)(NSInteger))handler
 {
 	__block IOReturn result = kIOReturnError;
 
+	dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+
 	dispatch_sync(dispatch_get_main_queue(), ^{
-		result = [self _actuallyWriteData:data identifier:identifier];
+		result = [self _actuallyWriteData:data identifier:identifier semaphore:semaphore];
 	});
 
 	if (result != kIOReturnSuccess) {
@@ -413,7 +430,7 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 		return;
 	}
 
-	if (dispatch_semaphore_wait(_writeSemaphore, TenSecondTimeout()) != 0) {
+	if (dispatch_semaphore_wait(semaphore, TenSecondTimeout()) != 0) {
 		handler(kIOReturnTimeout);
 		return;
 	}
@@ -421,7 +438,7 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 	handler(self.writeResult);
 }
 
-- (IOReturn)_actuallyScheduleRead
+- (IOReturn)_actuallyScheduleReadWithSemaphore:(dispatch_semaphore_t)semaphore
 {
 	NSAssert(NSThread.isMainThread, @"Unexpected thread");
 
@@ -434,7 +451,11 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 	const UInt8 inNum = (UInt8)[inPipes[0] intValue]; // read from the first in pipe for now
 	bzero(_readBuffer, sizeof(_readBuffer));
 
-	return (*_interface)->ReadPipeAsync(_interface, inNum, _readBuffer, READ_BUFFER_LEN, &ReadCompletion, (__bridge void *)self);
+	ServiceAndSemaphore *tuple = [[ServiceAndSemaphore alloc] init];
+	tuple.service = self;
+	tuple.semaphore = semaphore;
+	tuple.selfLoop = tuple;
+	return (*_interface)->ReadPipeAsync(_interface, inNum, _readBuffer, READ_BUFFER_LEN, &ReadCompletion, (__bridge void *)tuple);
 }
 
 - (void)scheduleRead:(void (^)(NSInteger))handler
@@ -443,8 +464,10 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 	// TODO: take identifier?
 	__block IOReturn result = kIOReturnError;
 
+	dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+
 	dispatch_sync(dispatch_get_main_queue(), ^{
-		result = [self _actuallyScheduleRead];
+		result = [self _actuallyScheduleReadWithSemaphore:semaphore];
 	});
 
 	if (result != kIOReturnSuccess) {
@@ -452,7 +475,7 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 		return;
 	}
 
-	if (dispatch_semaphore_wait(_readSemaphore, TenSecondTimeout()) != 0) {
+	if (dispatch_semaphore_wait(semaphore, TenSecondTimeout()) != 0) {
 		handler(kIOReturnTimeout);
 		return;
 	}
