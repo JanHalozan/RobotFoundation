@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
+// LegacyUSBTransportService only works with Bulk In/Out transfers.
+// It has also only been tested while talking to devices configured by the AppleUSBComposite driver.
 @interface LegacyUSBTransportService : NSObject <XPCTransportServiceProtocol>
 
 - (instancetype)init NS_UNAVAILABLE;
