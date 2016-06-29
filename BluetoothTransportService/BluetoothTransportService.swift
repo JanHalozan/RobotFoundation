@@ -250,6 +250,8 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 	}
 
 	private func actuallyWriteData(identifier: NSString, data: NSData, semaphore: dispatch_semaphore_t) -> BluetoothAsyncWriteState {
+		// TODO: test the identifier
+		
 		guard let channel = channel else {
 			return .Error(Int(kIOReturnNoMedia))
 		}
