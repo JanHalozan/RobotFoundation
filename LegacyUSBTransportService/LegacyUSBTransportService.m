@@ -171,7 +171,7 @@ static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 		return kIOReturnNotReady;
 	}
 
-	return kIOReturnSuccess;
+	return (*_interface)->USBInterfaceOpen(_interface);
 }
 
 - (void)_cleanUpInterface
@@ -217,13 +217,6 @@ static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 
 	IOObjectRelease(iterator);
 	return kIOReturnSuccess;
-}
-
-- (IOReturn)_openInterface
-{
-	NSAssert(NSThread.isMainThread, @"Unexpected thread");
-
-	return (*_interface)->USBInterfaceOpen(_interface);
 }
 
 - (IOReturn)_openPipes
@@ -365,30 +358,35 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 	result = [self _setUpDevice];
 
 	if (result != kIOReturnSuccess) {
+		[self _cleanUpService];
 		return result;
 	}
 
 	result = [self _setUpInterfaces];
 
 	if (result != kIOReturnSuccess) {
-		return result;
-	}
-
-	result = [self _openInterface];
-
-	if (result != kIOReturnSuccess) {
+		[self _cleanUpDevice];
+		[self _cleanUpService];
 		return result;
 	}
 
 	result = [self _openPipes];
 
 	if (result != kIOReturnSuccess) {
+		[self _cleanUpInterface];
+		[self _cleanUpDevice];
+		[self _cleanUpService];
+		[self _cleanUpPipes];
 		return result;
 	}
 
 	result = [self _setUpAsyncIO];
 
 	if (result != kIOReturnSuccess) {
+		[self _cleanUpInterface];
+		[self _cleanUpDevice];
+		[self _cleanUpService];
+		[self _cleanUpPipes];
 		return result;
 	}
 
