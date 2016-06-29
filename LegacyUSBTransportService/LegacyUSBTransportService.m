@@ -23,7 +23,7 @@
 	IOUSBInterfaceInterface **_interface;
 	IONotificationPortRef _notificationPort;
 	io_object_t _registeredNotification;
-	NSDictionary<NSNumber *, NSMutableArray< NSNumber *> *> *_pipes;
+	NSDictionary<NSNumber *, NSMutableArray<NSNumber *> *> *_pipes;
 	io_service_t _service;
 	uint8_t _readBuffer[READ_BUFFER_LEN];
 
