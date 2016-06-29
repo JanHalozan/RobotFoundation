@@ -48,7 +48,7 @@ static dispatch_time_t TenSecondTimeout()
 	return dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 10);
 }
 
-static NSDictionary *CreateMatchingDictionaryForSerialNumber(NSString *serialNumber)
+static NSDictionary *MatchingDictionaryForSerialNumber(NSString *serialNumber)
 {
 	NSMutableDictionary *matchingDict = CFBridgingRelease(IOServiceMatching(kIOUSBDeviceClassName));
 	matchingDict[(__bridge NSString *)CFSTR(kUSBSerialNumberString)] = serialNumber;
@@ -58,14 +58,14 @@ static NSDictionary *CreateMatchingDictionaryForSerialNumber(NSString *serialNum
 
 static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 {
-	NSDictionary *matchingDict = CreateMatchingDictionaryForSerialNumber(serialNumber);
+	NSDictionary *matchingDict = MatchingDictionaryForSerialNumber(serialNumber);
 
-	io_iterator_t iterator;
+	io_iterator_t iterator = IO_OBJECT_NULL;
 	if (IOServiceGetMatchingServices(kIOMasterPortDefault, (__bridge CFDictionaryRef)matchingDict, &iterator) != kIOReturnSuccess) {
 		return IO_OBJECT_NULL;
 	}
 
-	io_service_t device;
+	io_service_t device = IO_OBJECT_NULL;
 	while ((device = IOIteratorNext(iterator))) {
 		// Returns the first device.
 		return device;
@@ -73,8 +73,6 @@ static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 
 	return IO_OBJECT_NULL;
 }
-
-#pragma mark - Device Setup
 
 - (instancetype)initWithDelegate:(id<LegacyUSBTransportServiceDelegate>)delegate
 {
@@ -93,8 +91,13 @@ static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 	return self;
 }
 
+#pragma mark - Device Setup
+
 - (IOReturn)_createServiceWithIdentifier:(NSString *)identifier
 {
+	NSAssert(NSThread.isMainThread, @"Unexpected thread");
+	NSAssert(_service == IO_OBJECT_NULL, @"We already have a service");
+
 	_service = CreateServiceWithSerialNumber(identifier);
 
 	if (_service == IO_OBJECT_NULL) {
@@ -104,8 +107,20 @@ static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 	return kIOReturnSuccess;
 }
 
+- (void)_cleanUpService
+{
+	NSAssert(NSThread.isMainThread, @"Unexpected thread");
+
+	if (_service != IO_OBJECT_NULL) {
+		IOObjectRelease(_service);
+		_service = IO_OBJECT_NULL;
+	}
+}
+
 - (IOReturn)_setUpDevice
 {
+	NSAssert(NSThread.isMainThread, @"Unexpected thread");
+
 	IOCFPlugInInterface **plugInInterface = NULL;
 	SInt32 score = 0;
 	IOReturn result = IOCreatePlugInInterfaceForService(_service, kIOUSBDeviceUserClientTypeID, kIOCFPlugInInterfaceID, &plugInInterface, &score);
@@ -128,7 +143,9 @@ static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 
 - (void)_cleanUpDevice
 {
-	if (_device) {
+	NSAssert(NSThread.isMainThread, @"Unexpected thread");
+
+	if (_device != NULL) {
 		(*_device)->USBDeviceClose(_device);
 		(*_device)->Release(_device);
 		_device = NULL;
@@ -137,6 +154,8 @@ static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 
 - (IOReturn)_setUpInterfaceWithService:(io_service_t)service
 {
+	NSAssert(NSThread.isMainThread, @"Unexpected thread");
+
 	IOCFPlugInInterface **plugInInterface = NULL;
 	SInt32 score = 0;
 	IOReturn result = IOCreatePlugInInterfaceForService(service, kIOUSBInterfaceUserClientTypeID, kIOCFPlugInInterfaceID, &plugInInterface, &score);
@@ -157,7 +176,9 @@ static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 
 - (void)_cleanUpInterface
 {
-	if (_interface) {
+	NSAssert(NSThread.isMainThread, @"Unexpected thread");
+
+	if (_interface != NULL) {
 		(*_interface)->USBInterfaceClose(_interface);
 		(*_interface)->Release(_interface);
 		_interface = NULL;
@@ -166,6 +187,8 @@ static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 
 - (IOReturn)_setUpInterfaces
 {
+	NSAssert(NSThread.isMainThread, @"Unexpected thread");
+
 	IOUSBFindInterfaceRequest request;
 	bzero(&request, sizeof(request));
 	request.bAlternateSetting = kIOUSBFindInterfaceDontCare;
@@ -193,17 +216,20 @@ static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 	}
 
 	IOObjectRelease(iterator);
-
 	return kIOReturnSuccess;
 }
 
 - (IOReturn)_openInterface
 {
+	NSAssert(NSThread.isMainThread, @"Unexpected thread");
+
 	return (*_interface)->USBInterfaceOpen(_interface);
 }
 
 - (IOReturn)_openPipes
 {
+	NSAssert(NSThread.isMainThread, @"Unexpected thread");
+
 	UInt8 endpoints = 0;
 	IOReturn result = (*_interface)->GetNumEndpoints(_interface, &endpoints);
 
@@ -231,8 +257,19 @@ static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 	return kIOReturnSuccess;
 }
 
+- (void)_cleanUpPipes
+{
+	NSAssert(NSThread.isMainThread, @"Unexpected thread");
+
+	for (NSMutableArray *array in _pipes.allValues) {
+		[array removeAllObjects];
+	}
+}
+
 - (IOReturn)_setUpAsyncIO
 {
+	NSAssert(NSThread.isMainThread, @"Unexpected thread");
+
 	CFRunLoopSourceRef source = NULL;
 	IOReturn result = (*_interface)->CreateInterfaceAsyncEventSource(_interface, &source);
 
@@ -241,6 +278,7 @@ static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 	}
 
 	CFRunLoopAddSource(CFRunLoopGetCurrent(), source, kCFRunLoopCommonModes);
+	// TODO: manage source?
 	return kIOReturnSuccess;
 }
 
@@ -375,13 +413,11 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 {
 	NSAssert(NSThread.isMainThread, @"Unexpected thread");
 
+	[self _cleanUpNotification];
 	[self _cleanUpInterface];
 	[self _cleanUpDevice];
-	[self _cleanUpNotification];
-
-	for (NSMutableArray *array in _pipes.allValues) {
-		[array removeAllObjects];
-	}
+	[self _cleanUpService];
+	[self _cleanUpPipes];
 }
 
 - (void)close:(NSString *)identifier handler:(void (^)(NSInteger))handler
