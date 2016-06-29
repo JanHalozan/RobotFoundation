@@ -367,6 +367,8 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 
 - (void)_actuallyClose
 {
+	NSAssert(NSThread.isMainThread, @"Unexpected thread");
+
 	[self _cleanUpInterface];
 	[self _cleanUpDevice];
 	[self _cleanUpNotification];
