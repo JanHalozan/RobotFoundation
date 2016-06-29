@@ -376,7 +376,7 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 	handler(kIOReturnSuccess);
 }
 
-- (IOReturn)_actuallyWriteData:(NSString *)identifier data:(NSData *)data
+- (IOReturn)_actuallyWriteData:(NSData *)data identifier:(NSString *)identifier
 {
 	NSAssert(NSThread.isMainThread, @"Unexpected thread");
 
@@ -400,14 +400,13 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 	return (*_interface)->WritePipeAsync(_interface, outNum, (void *)data.bytes, (UInt32)data.length, &WriteCompletion, (__bridge void *)self);
 }
 
-- (void)writeData:(NSString *)identifier data:(NSData *)data handler:(void (^)(NSInteger))handler
+- (void)writeData:(NSData *)data identifier:(NSString *)identifier handler:(void (^)(NSInteger))handler
 {
 	// TODO: check if open
-	// TODO: weird name
 	__block IOReturn result = kIOReturnError;
 
 	dispatch_sync(dispatch_get_main_queue(), ^{
-		result = [self _actuallyWriteData:identifier data:data];
+		result = [self _actuallyWriteData:data identifier:identifier];
 	});
 
 	if (result != kIOReturnSuccess) {

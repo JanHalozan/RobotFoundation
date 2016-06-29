@@ -213,13 +213,13 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		handler(Int(kIOReturnSuccess))
 	}
 
-	func writeData(identifier: NSString, data: NSData, handler: Int -> ()) {
+	func writeData(data: NSData, identifier: NSString, handler: Int -> ()) {
 		var writeState = BluetoothAsyncWriteState.Error(Int(kIOReturnInvalid))
 
 		let semaphore = dispatch_semaphore_create(0)
 
 		dispatch_sync(dispatch_get_main_queue()) {
-			writeState = self.actuallyWriteData(identifier, data: data, semaphore: semaphore)
+			writeState = self.actuallyWriteData(data, identifier: identifier, semaphore: semaphore)
 		}
 
 		switch writeState {
@@ -249,7 +249,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		handler(Int(writeStatus))
 	}
 
-	private func actuallyWriteData(identifier: NSString, data: NSData, semaphore: dispatch_semaphore_t) -> BluetoothAsyncWriteState {
+	private func actuallyWriteData(data: NSData, identifier: NSString, semaphore: dispatch_semaphore_t) -> BluetoothAsyncWriteState {
 		// TODO: test the identifier
 		
 		guard let channel = channel else {

@@ -15,7 +15,7 @@ import Foundation
 
 @objc protocol XPCTransportServiceProtocol {
 	func open(identifier: NSString, handler: Int -> ())
-	func writeData(identifier: NSString, data: NSData, handler: Int -> ())
+	func writeData(data: NSData, identifier: NSString, handler: Int -> ())
 	func close(identifier: NSString, handler: Int -> ())
 
 	optional func scheduleRead(handler: Int -> ())

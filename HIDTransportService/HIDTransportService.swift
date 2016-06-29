@@ -90,11 +90,11 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 		return Int(kIOReturnSuccess)
 	}
 
-	func writeData(identifier: NSString, data: NSData, handler: Int -> ()) {
+	func writeData(data: NSData, identifier: NSString, handler: Int -> ()) {
 		var result: IOReturn?
 
 		dispatch_sync(dispatch_get_main_queue()) {
-			result = self.actuallyWriteDataWithIdentifier(identifier, data: data)
+			result = self.actuallyWriteData(data, identifier: identifier)
 		}
 
 		guard let theResult = result else {
@@ -106,7 +106,7 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 		handler(Int(theResult))
 	}
 
-	private func actuallyWriteDataWithIdentifier(identifier: NSString, data: NSData) -> IOReturn {
+	private func actuallyWriteData(data: NSData, identifier: NSString) -> IOReturn {
 		guard let currentIdentifier = currentIdentifier else {
 			debugPrint("No open device; nowhere to write to.")
 			return kIOReturnNotOpen
