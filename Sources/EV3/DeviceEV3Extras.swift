@@ -14,7 +14,14 @@ extension Device {
 		case .BluetoothDevice:
 			self.init(transport: IOBluetoothDeviceTransport(address: metaDevice.uniqueIdentifier))
 		case .HIDDevice:
-			self.init(transport: HIDDeviceTransport(serialNumber: metaDevice.uniqueIdentifier))
+			switch metaDevice.deviceClass {
+			case .EV3:
+				self.init(transport: HIDDeviceTransport(serialNumber: metaDevice.uniqueIdentifier))
+			case .NXT20:
+				self.init(transport: LegacyUSBDeviceTransport(serialNumber: metaDevice.uniqueIdentifier))
+			case .Unknown:
+				return nil
+			}
 		}
 		#endif
 
