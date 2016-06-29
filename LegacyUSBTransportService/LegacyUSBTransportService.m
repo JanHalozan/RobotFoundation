@@ -420,9 +420,10 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 	__block IOReturn result = kIOReturnError;
 
 	dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+	NSString *const safeIdentifier = [identifier copy];
 
 	dispatch_sync(dispatch_get_main_queue(), ^{
-		result = [self _actuallyWriteData:data identifier:identifier semaphore:semaphore];
+		result = [self _actuallyWriteData:data identifier:safeIdentifier semaphore:semaphore];
 	});
 
 	if (result != kIOReturnSuccess) {
