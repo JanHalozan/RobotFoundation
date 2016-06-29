@@ -380,6 +380,16 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 {
 	NSAssert(NSThread.isMainThread, @"Unexpected thread");
 
+	if (_service == IO_OBJECT_NULL) {
+		return kIOReturnNotOpen;
+	}
+
+	NSString *const serialNumber = (__bridge NSString *)IORegistryEntrySearchCFProperty(_service, kIOServicePlane, CFSTR(kUSBSerialNumberString), kCFAllocatorDefault, kIORegistryIterateRecursively);
+
+	if (![serialNumber isEqualToString:identifier]) {
+		return kIOReturnNotFound;
+	}
+
 	NSArray<NSNumber *> *const outPipes = _pipes[@(kUSBOut)];
 
 	if (outPipes.count == 0) {
@@ -393,7 +403,6 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 - (void)writeData:(NSString *)identifier data:(NSData *)data handler:(void (^)(NSInteger))handler
 {
 	// TODO: check if open
-	// TODO: handle identifier
 	// TODO: weird name
 	__block IOReturn result = kIOReturnError;
 
