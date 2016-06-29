@@ -32,11 +32,11 @@
 @end
 
 @implementation LegacyUSBTransportService {
+	io_service_t _service;
 	IOUSBDeviceInterface **_device;
 	IOUSBInterfaceInterface **_interface;
 	io_object_t _registeredNotification;
 	NSDictionary<NSNumber *, NSMutableArray<NSNumber *> *> *_pipes;
-	io_service_t _service;
 	uint8_t _readBuffer[READ_BUFFER_LEN];
 
 	// Shared
