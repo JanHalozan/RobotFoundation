@@ -348,7 +348,7 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 
 #pragma mark -
 
-- (IOReturn)_actuallyOpen:(NSString *)identifier
+- (IOReturn)_runOpenDanceWithIdentifier:(NSString *)identifier
 {
 	NSAssert(NSThread.isMainThread, @"Unexpected thread");
 
@@ -395,8 +395,27 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 
 	[self _setUpInterestNotification];
 
-	_activeClients += 1;
+	return kIOReturnSuccess;
+}
 
+- (IOReturn)_actuallyOpen:(NSString *)identifier
+{
+	NSAssert(NSThread.isMainThread, @"Unexpected thread");
+
+	if (self._isOpen) {
+		if (![self._currentSerialNumberString isEqualToString:identifier]) {
+			// Tried to open a new device while another one was already open.
+			return kIOReturnBusy;
+		}
+	} else {
+		const IOReturn result = [self _runOpenDanceWithIdentifier:identifier];
+
+		if (result != kIOReturnSuccess) {
+			return result;
+		}
+	}
+
+	_activeClients += 1;
 	return kIOReturnSuccess;
 }
 
@@ -416,7 +435,7 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 {
 	NSAssert(NSThread.isMainThread, @"Unexpected thread");
 
-	if (_service == IO_OBJECT_NULL || _interface == NULL) {
+	if (!self._isOpen) {
 		return kIOReturnNotOpen;
 	}
 
@@ -451,6 +470,11 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 	handler(result);
 }
 
+- (BOOL)_isOpen
+{
+	return _service != IO_OBJECT_NULL && _interface != NULL;
+}
+
 - (NSString *)_currentSerialNumberString
 {
 	return (__bridge NSString *)IORegistryEntrySearchCFProperty(_service, kIOServicePlane, CFSTR(kUSBSerialNumberString), kCFAllocatorDefault, kIORegistryIterateRecursively);
@@ -460,7 +484,7 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 {
 	NSAssert(NSThread.isMainThread, @"Unexpected thread");
 
-	if (_service == IO_OBJECT_NULL || _interface == NULL) {
+	if (!self._isOpen) {
 		return kIOReturnNotOpen;
 	}
 
