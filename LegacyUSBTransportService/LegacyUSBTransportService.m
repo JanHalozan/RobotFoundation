@@ -35,6 +35,7 @@
 	io_service_t _service;
 	IOUSBDeviceInterface **_device;
 	IOUSBInterfaceInterface **_interface;
+	CFRunLoopSourceRef _runLoopSource;
 	io_object_t _registeredNotification;
 	NSDictionary<NSNumber *, NSMutableArray<NSNumber *> *> *_pipes;
 	uint8_t _readBuffer[READ_BUFFER_LEN];
@@ -265,15 +266,25 @@ static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 	NSAssert(NSThread.isMainThread, @"Unexpected thread");
 
 	CFRunLoopSourceRef source = NULL;
-	IOReturn result = (*_interface)->CreateInterfaceAsyncEventSource(_interface, &source);
+	const IOReturn result = (*_interface)->CreateInterfaceAsyncEventSource(_interface, &source);
 
 	if (result != kIOReturnSuccess) {
 		return result;
 	}
 
+	_runLoopSource = source;
+
 	CFRunLoopAddSource(CFRunLoopGetCurrent(), source, kCFRunLoopCommonModes);
-	// TODO: manage source?
 	return kIOReturnSuccess;
+}
+
+- (void)_cleanUpAsyncIO
+{
+	if (_runLoopSource != NULL) {
+		CFRunLoopRemoveSource(CFRunLoopGetCurrent(), _runLoopSource, kCFRunLoopCommonModes);
+		CFRelease(_runLoopSource);
+		_runLoopSource = NULL;
+	}
 }
 
 - (void)_setUpInterestNotification
@@ -449,6 +460,7 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 
 	if (_activeClients == 0) {
 		[self _cleanUpNotification];
+		[self _cleanUpAsyncIO];
 		[self _cleanUpInterface];
 		[self _cleanUpDevice];
 		[self _cleanUpService];
