@@ -78,7 +78,7 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
 		}
 	}
 
-	override func writeData(data: NSData, handler: NSData -> (), errorHandler: () -> ()) throws {
+	override func writeData(data: NSData, errorHandler: () -> ()) throws {
 		guard let serviceConnection = serviceConnection else {
 			debugPrint("Tried to write to a device even though we have no XPC connection.")
 			return

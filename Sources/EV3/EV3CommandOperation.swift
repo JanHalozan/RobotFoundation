@@ -80,9 +80,7 @@ final class EV3CommandGroupOperation: NSOperation {
 		// TODO: actually increment the message counter
 
 		do {
-			try transport.writeData(data, handler: { resultData in
-				self.handleResponseData(resultData)
-			}, errorHandler: {
+			try transport.writeData(data, errorHandler: {
 				self.handleErrorResponse()
 			})
 		} catch {
