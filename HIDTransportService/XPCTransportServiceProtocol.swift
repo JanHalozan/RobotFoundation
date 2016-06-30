@@ -18,7 +18,7 @@ import Foundation
 	func writeData(data: NSData, identifier: NSString, handler: Int -> ())
 	func close(identifier: NSString, handler: Int -> ())
 
-	optional func scheduleRead(handler: Int -> ())
+	optional func scheduleRead(identifier: NSString, handler: Int -> ())
 }
 
 #endif

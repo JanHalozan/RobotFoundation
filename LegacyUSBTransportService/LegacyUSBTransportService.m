@@ -531,9 +531,17 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 	handler(self.writeResult);
 }
 
-- (IOReturn)_actuallyScheduleReadWithSemaphore:(dispatch_semaphore_t)semaphore
+- (IOReturn)_actuallyScheduleReadWithIdentifier:(NSString *)identifier semaphore:(dispatch_semaphore_t)semaphore
 {
 	NSAssert(NSThread.isMainThread, @"Unexpected thread");
+
+	if (!self._isOpen) {
+		return kIOReturnNotOpen;
+	}
+
+	if (![self._currentSerialNumberString isEqualToString:identifier]) {
+		return kIOReturnNotFound;
+	}
 
 	NSArray<NSNumber *> *const inPipes = _pipes[@(kUSBIn)];
 
@@ -551,16 +559,15 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 	return (*_interface)->ReadPipeAsync(_interface, inNum, _readBuffer, READ_BUFFER_LEN, &ReadCompletion, (__bridge void *)tuple);
 }
 
-- (void)scheduleRead:(void (^)(NSInteger))handler
+- (void)scheduleRead:(NSString *)identifier handler:(void (^)(NSInteger))handler
 {
-	// TODO: check if open
-	// TODO: take identifier?
 	__block IOReturn result = kIOReturnError;
 
 	dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+	NSString *const safeIdentifier = [identifier copy];
 
 	dispatch_sync(dispatch_get_main_queue(), ^{
-		result = [self _actuallyScheduleReadWithSemaphore:semaphore];
+		result = [self _actuallyScheduleReadWithIdentifier:safeIdentifier semaphore:semaphore];
 	});
 
 	if (result != kIOReturnSuccess) {
