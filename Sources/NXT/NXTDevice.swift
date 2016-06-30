@@ -38,7 +38,11 @@ public final class NXTDevice: Device {
 	}
 
 	override func handleData(data: NSData) {
-
+		for operation in operationQueue.operations {
+			if let commandOperation = operation as? NXTCommandOperation where commandOperation.canHandleResponseData(data) {
+				commandOperation.handleResponseData(data)
+			}
+		}
 	}
 
 	override func wroteData() {

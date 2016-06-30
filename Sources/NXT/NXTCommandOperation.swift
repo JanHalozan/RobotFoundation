@@ -90,7 +90,11 @@ final class NXTCommandOperation: NSOperation {
 		isExecuting = false
 	}
 
-	private func handleResponseData(data: NSData) {
+	func canHandleResponseData(data: NSData) -> Bool {
+		return true
+	}
+
+	func handleResponseData(data: NSData) {
 		let fullData: NSData
 
 		/*
