@@ -22,6 +22,15 @@ extension Device {
 			case .Unknown:
 				return nil
 			}
+		case .LegacyUSBDevice:
+			switch metaDevice.deviceClass {
+			case .NXT20:
+				self.init(transport: LegacyUSBDeviceTransport(serialNumber: metaDevice.uniqueIdentifier))
+			case .EV3:
+				fallthrough
+			case .Unknown:
+				return nil
+			}
 		}
 		#endif
 
