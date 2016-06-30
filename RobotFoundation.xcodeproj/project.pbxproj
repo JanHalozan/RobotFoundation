@@ -114,6 +114,8 @@
 		C94FE9061C5D6BDC0037838A /* EV3BooleanResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94FE9041C5D6BDC0037838A /* EV3BooleanResponse.swift */; };
 		C94FE90A1C5D7FFB0037838A /* EV3PlaySoundFileCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94FE9091C5D7FFB0037838A /* EV3PlaySoundFileCommand.swift */; };
 		C94FE90B1C5D7FFB0037838A /* EV3PlaySoundFileCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94FE9091C5D7FFB0037838A /* EV3PlaySoundFileCommand.swift */; };
+		C959056A1D2584FD00BD5CC7 /* LegacyUSBDeviceSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95905691D2584FD00BD5CC7 /* LegacyUSBDeviceSource.swift */; };
+		C959056B1D2584FD00BD5CC7 /* LegacyUSBDeviceSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95905691D2584FD00BD5CC7 /* LegacyUSBDeviceSource.swift */; };
 		C95CEE681CF2188000FAD5F5 /* EV3ReadIRProximityCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95CEE671CF2188000FAD5F5 /* EV3ReadIRProximityCommand.swift */; };
 		C95CEE691CF2188000FAD5F5 /* EV3ReadIRProximityCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95CEE671CF2188000FAD5F5 /* EV3ReadIRProximityCommand.swift */; };
 		C96026491C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96026481C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift */; };
@@ -400,6 +402,7 @@
 		C94FE9011C5D6B830037838A /* EV3TestSoundCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3TestSoundCommand.swift; sourceTree = "<group>"; };
 		C94FE9041C5D6BDC0037838A /* EV3BooleanResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3BooleanResponse.swift; sourceTree = "<group>"; };
 		C94FE9091C5D7FFB0037838A /* EV3PlaySoundFileCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3PlaySoundFileCommand.swift; sourceTree = "<group>"; };
+		C95905691D2584FD00BD5CC7 /* LegacyUSBDeviceSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacyUSBDeviceSource.swift; sourceTree = "<group>"; };
 		C95CEE671CF2188000FAD5F5 /* EV3ReadIRProximityCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ReadIRProximityCommand.swift; sourceTree = "<group>"; };
 		C96026481C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3GetStorageInfoCommand.swift; sourceTree = "<group>"; };
 		C960264B1C307096007BCF93 /* EV3StorageResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3StorageResponse.swift; sourceTree = "<group>"; };
@@ -652,6 +655,7 @@
 			children = (
 				C96945781C28FCA30030DEB3 /* BluetoothDeviceSource.swift */,
 				C96945691C28F9690030DEB3 /* HIDDeviceSource.swift */,
+				C95905691D2584FD00BD5CC7 /* LegacyUSBDeviceSource.swift */,
 				C96945751C28FC200030DEB3 /* MetaDevice.swift */,
 				C96945721C28FB420030DEB3 /* RobotDeviceDescriptor.swift */,
 				C969456F1C28FA0B0030DEB3 /* RobotDeviceSource.swift */,
@@ -1220,6 +1224,7 @@
 				C96FFD3D1C417A86006AA973 /* EV3ButtonCommand.swift in Sources */,
 				C9485C1F1CF3180E00275798 /* EV3ResponseGroup.swift in Sources */,
 				C969455B1C28F3C50030DEB3 /* NXTHandleSizeResponse.swift in Sources */,
+				C959056A1D2584FD00BD5CC7 /* LegacyUSBDeviceSource.swift in Sources */,
 				C98C34AF1C25D1D1006840C3 /* NXTResponse.swift in Sources */,
 				C96945761C28FC200030DEB3 /* MetaDevice.swift in Sources */,
 				C94751891C54187D00A30AA6 /* EV3DrawDotlineCommand.swift in Sources */,
@@ -1373,6 +1378,7 @@
 				C96FFD3E1C417A86006AA973 /* EV3ButtonCommand.swift in Sources */,
 				C9485C201CF3180E00275798 /* EV3ResponseGroup.swift in Sources */,
 				C98C350E1C26544D006840C3 /* MindstormsResponse.swift in Sources */,
+				C959056B1D2584FD00BD5CC7 /* LegacyUSBDeviceSource.swift in Sources */,
 				C98C350F1C26544D006840C3 /* MindstormsType.swift in Sources */,
 				C96945771C28FC200030DEB3 /* MetaDevice.swift in Sources */,
 				C947518A1C54187D00A30AA6 /* EV3DrawDotlineCommand.swift in Sources */,
@@ -1766,6 +1772,7 @@
 				C9683A1B1D24325C00741EFF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C98C34671C25C160006840C3 /* Build configuration list for PBXProject "RobotFoundation" */ = {
 			isa = XCConfigurationList;

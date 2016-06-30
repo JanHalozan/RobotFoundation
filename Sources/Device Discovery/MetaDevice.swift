@@ -19,6 +19,7 @@ import ExternalAccessory
 public enum RobotDeviceType {
 	#if os(OSX)
 	case HIDDevice
+	case LegacyUSBDevice
 	case BluetoothDevice
 	#endif
 
@@ -36,6 +37,7 @@ public enum DeviceClass: String {
 private let kDictionaryTypeKey = "type"
 	private let kDictionaryTypeBluetooth = "bl"
 	private let kDictionaryTypeHID = "hid"
+	private let kDictionaryTypeLegacyUSB = "lusb"
 
 private let kDictionaryClassKey = "class"
 private let kDictionaryIdentifierKey = "identifier"
@@ -93,6 +95,16 @@ public final class MetaDevice {
 			}
 
 			self.init(type: .HIDDevice, deviceClass: .EV3, uniqueIdentifier: identifier, name: name)
+		case kDictionaryTypeLegacyUSB:
+			guard let identifier = stringDictionary[kDictionaryIdentifierKey] else {
+				return nil
+			}
+
+			guard let name = stringDictionary[kDictionaryNameKey] else {
+				return nil
+			}
+
+			self.init(type: .LegacyUSBDevice, deviceClass: .NXT20, uniqueIdentifier: identifier, name: name)
 		default:
 			fatalError("Unimplemented type")
 			return nil
@@ -111,6 +123,13 @@ public final class MetaDevice {
 		case .HIDDevice:
 			return [
 				kDictionaryTypeKey: kDictionaryTypeHID,
+				kDictionaryIdentifierKey: uniqueIdentifier,
+				kDictionaryNameKey: name,
+				kDictionaryClassKey: deviceClass.rawValue
+			]
+		case .LegacyUSBDevice:
+			return [
+				kDictionaryTypeKey: kDictionaryTypeLegacyUSB,
 				kDictionaryIdentifierKey: uniqueIdentifier,
 				kDictionaryNameKey: name,
 				kDictionaryClassKey: deviceClass.rawValue
