@@ -41,6 +41,7 @@
 
 	// Shared
 	IONotificationPortRef _notificationPort;
+	NSInteger _activeClients;
 }
 
 static dispatch_time_t TenSecondTimeout()
@@ -349,6 +350,8 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 
 - (IOReturn)_actuallyOpen:(NSString *)identifier
 {
+	NSAssert(NSThread.isMainThread, @"Unexpected thread");
+
 	IOReturn result = [self _createServiceWithIdentifier:identifier];
 
 	if (result != kIOReturnSuccess) {
@@ -392,6 +395,8 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 
 	[self _setUpInterestNotification];
 
+	_activeClients += 1;
+
 	return kIOReturnSuccess;
 }
 
@@ -407,25 +412,48 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 	handler(result);
 }
 
-- (void)_actuallyClose
+- (IOReturn)_actuallyCloseWithIdentifier:(NSString *)identifier
 {
 	NSAssert(NSThread.isMainThread, @"Unexpected thread");
 
-	[self _cleanUpNotification];
-	[self _cleanUpInterface];
-	[self _cleanUpDevice];
-	[self _cleanUpService];
-	[self _cleanUpPipes];
+	if (_service == IO_OBJECT_NULL || _interface == NULL) {
+		return kIOReturnNotOpen;
+	}
+
+	if (![self._currentSerialNumberString isEqualToString:identifier]) {
+		// Device mismatch.
+		return kIOReturnInternalError;
+	}
+
+	_activeClients -= 1;
+	NSAssert(_activeClients >= 0, @"Mismatched client counting");
+
+	if (_activeClients == 0) {
+		[self _cleanUpNotification];
+		[self _cleanUpInterface];
+		[self _cleanUpDevice];
+		[self _cleanUpService];
+		[self _cleanUpPipes];
+	}
+
+	return kIOReturnSuccess;
 }
 
 - (void)close:(NSString *)identifier handler:(void (^)(NSInteger))handler
 {
-	// TODO: Handle identifier
+	NSString *const safeIdentifier = [identifier copy];
+	__block IOReturn result = kIOReturnError;
+
 	dispatch_sync(dispatch_get_main_queue(), ^{
-		[self _actuallyClose];
+		result = [self _actuallyCloseWithIdentifier:safeIdentifier];
 	});
 
-	handler(kIOReturnSuccess);
+	handler(result);
+}
+
+- (NSString *)_currentSerialNumberString
+{
+	return (__bridge NSString *)IORegistryEntrySearchCFProperty(_service, kIOServicePlane, CFSTR(kUSBSerialNumberString), kCFAllocatorDefault, kIORegistryIterateRecursively);
 }
 
 - (IOReturn)_actuallyWriteData:(NSData *)data identifier:(NSString *)identifier semaphore:(dispatch_semaphore_t)semaphore
@@ -436,9 +464,7 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 		return kIOReturnNotOpen;
 	}
 
-	NSString *const serialNumber = (__bridge NSString *)IORegistryEntrySearchCFProperty(_service, kIOServicePlane, CFSTR(kUSBSerialNumberString), kCFAllocatorDefault, kIORegistryIterateRecursively);
-
-	if (![serialNumber isEqualToString:identifier]) {
+	if (![self._currentSerialNumberString isEqualToString:identifier]) {
 		return kIOReturnNotFound;
 	}
 
