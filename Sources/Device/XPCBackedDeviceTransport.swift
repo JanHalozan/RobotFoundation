@@ -91,7 +91,7 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
 
 		proxy.writeData(data, identifier: identifier) { result in
 			dispatch_async(dispatch_get_main_queue()) {
-				guard result == 0 else {
+				guard result == Int(kIOReturnSuccess) else {
 					debugPrint("An error occured during write (\(result)).")
 					errorHandler()
 					return
@@ -100,6 +100,27 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
 				self.wroteData()
 			}
 		}
+	}
+
+	override func scheduleRead() {
+		guard let serviceConnection = serviceConnection else {
+			debugPrint("Tried to write to a device even though we have no XPC connection.")
+			return
+		}
+
+		guard let proxy = serviceConnection.remoteObjectProxy as? XPCTransportServiceProtocol else {
+			assertionFailure()
+			return
+		}
+
+		proxy.scheduleRead?(identifier, handler: { result in
+			dispatch_async(dispatch_get_main_queue()) {
+				guard result == Int(kIOReturnSuccess) else {
+					debugPrint("An error occured while scheduling a read (\(result)).")
+					return
+				}
+			}
+		})
 	}
 
 	@objc func handleTransportData(data: NSData) {

@@ -37,17 +37,17 @@ public final class NXTDevice: Device {
 		}
 	}
 
+	override func handleData(data: NSData) {
+
+	}
+
 	override func wroteData() {
-		// TODO: might need this for NXT support
-		/*
-		if let usbTransport = transport as? IOUSBDeviceTransport {
-			do {
-				try usbTransport.scheduleRead()
-			} catch {
-				print("Cannot schedule read: \(error)")
-			}
+		guard let usbTransport = transport as? LegacyUSBDeviceTransport else {
+			assertionFailure()
+			return
 		}
-		*/
+
+		usbTransport.scheduleRead()
 	}
 
 	public override func close() {
