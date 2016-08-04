@@ -43,13 +43,15 @@ private let kDictionaryClassKey = "class"
 private let kDictionaryIdentifierKey = "identifier"
 private let kDictionaryNameKey = "name"
 
+public let MetaDeviceNameDidChangeNotificationName = "MetaDevice.notification.nameDidChange"
+
 // A meta device can't be used to make connections. Rather, it describes a device's name, unique
 // identifier, and other parameters and can be used to initialize concrete Devices (or subclasses thereof).
 public final class MetaDevice {
 	public let type: RobotDeviceType
 	public var deviceClass: DeviceClass
 
-	public let name: String
+	public private(set) var name: String
 	public let uniqueIdentifier: String
 
 	private(set) var userInfo = [String: Any]()
@@ -135,6 +137,11 @@ public final class MetaDevice {
 				kDictionaryClassKey: deviceClass.rawValue
 			]
 		}
+	}
+	
+	public func updateName(newName: String) {
+		name = newName
+		NSNotificationCenter.defaultCenter().postNotificationName(MetaDeviceNameDidChangeNotificationName, object: self)
 	}
 }
 
