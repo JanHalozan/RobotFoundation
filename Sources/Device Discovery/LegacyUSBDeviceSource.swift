@@ -103,31 +103,29 @@ public final class LegacyUSBDeviceSource: RobotDeviceSource {
 		var matchIterator = io_iterator_t()
 		var removeIterator = io_iterator_t()
 
-		var mutableSelf = self
-		withUnsafeMutablePointer(&mutableSelf) { selfPointer in
-			IOServiceAddMatchingNotification(notificationPort, kIOMatchedNotification, matchingDict, { pointer, iterator in
-				let source = unsafeBitCast(pointer, UnsafeMutablePointer<LegacyUSBDeviceSource>.self)
-				iterator.enumerate { device in
-					guard let robotDevice = robotDeviceForService(device) else {
-						assertionFailure()
-						return
-					}
-					source.memory.foundDevices.insert(robotDevice)
-					source.memory.client.robotDeviceSourceDidFindDevice(robotDevice)
+		let selfPointer = UnsafeMutablePointer<Void>(Unmanaged.passUnretained(self).toOpaque())
+		IOServiceAddMatchingNotification(notificationPort, kIOMatchedNotification, matchingDict, { pointer, iterator in
+			let source = Unmanaged<LegacyUSBDeviceSource>.fromOpaque(COpaquePointer(pointer)).takeUnretainedValue()
+			iterator.enumerate { device in
+				guard let robotDevice = robotDeviceForService(device) else {
+					assertionFailure()
+					return
 				}
-			}, selfPointer, &matchIterator);
-			IOServiceAddMatchingNotification(notificationPort, kIOTerminatedNotification, matchingDict, { pointer, iterator in
-				let source = unsafeBitCast(pointer, UnsafeMutablePointer<LegacyUSBDeviceSource>.self)
-				iterator.enumerate { device in
-					guard let robotDevice = robotDeviceForService(device) else {
-						assertionFailure()
-						return
-					}
-					source.memory.foundDevices.remove(robotDevice)
-					source.memory.client.robotDeviceSourceDidLoseDevice(robotDevice)
+				source.foundDevices.insert(robotDevice)
+				source.client.robotDeviceSourceDidFindDevice(robotDevice)
+			}
+		}, selfPointer, &matchIterator);
+		IOServiceAddMatchingNotification(notificationPort, kIOTerminatedNotification, matchingDict, { pointer, iterator in
+			let source = Unmanaged<LegacyUSBDeviceSource>.fromOpaque(COpaquePointer(pointer)).takeUnretainedValue()
+			iterator.enumerate { device in
+				guard let robotDevice = robotDeviceForService(device) else {
+					assertionFailure()
+					return
 				}
-			}, selfPointer, &removeIterator)
-		}
+				source.foundDevices.remove(robotDevice)
+				source.client.robotDeviceSourceDidLoseDevice(robotDevice)
+			}
+		}, selfPointer, &removeIterator)
 
 		matchIterator.enumerate { _ in }
 		removeIterator.enumerate { _ in }
