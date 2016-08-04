@@ -72,8 +72,12 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
 		}
 
 		proxy.close(identifier) { result in
-			dispatch_async(dispatch_get_main_queue()) {
-				self.closed()
+			if result == Int(kIOReturnSuccess) {
+				dispatch_async(dispatch_get_main_queue()) {
+					self.closed()
+				}
+			} else {
+				print("Transport close failed with code: \(result)")
 			}
 		}
 	}
