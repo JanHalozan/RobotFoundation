@@ -9,6 +9,19 @@ import Foundation
 
 public typealias EV3ResponseHandler = EV3ResponseGroup -> ()
 
+private func toDirectCommands(commands: [EV3Command]) -> [EV3DirectCommand] {
+	var directCommands = [EV3DirectCommand]()
+	for command in commands {
+		if let directCommand = command as? EV3DirectCommand {
+			directCommands.append(directCommand)
+		} else {
+			// System commands cannot be grouped, so these must be all direct commands.
+			assertionFailure()
+		}
+	}
+	return directCommands
+}
+
 final class EV3CommandGroupOperation: NSOperation {
 	private let transport: DeviceTransport
 	private let commands: [EV3Command]
@@ -68,11 +81,8 @@ final class EV3CommandGroupOperation: NSOperation {
 			assert(commands.count == 1)
 			data = systemCommand.formEV3PacketData(messageIndex)
 		} else if commands.first is EV3DirectCommand {
-			if let directCommands = commands as? [EV3DirectCommand] {
-				data = formEV3PacketDataForCommands(directCommands, messageCounter: messageIndex)
-			} else {
-				fatalError()
-			}
+			let directCommands = toDirectCommands(commands)
+			data = formEV3PacketDataForCommands(directCommands, messageCounter: messageIndex)
 		} else {
 			fatalError()
 		}
