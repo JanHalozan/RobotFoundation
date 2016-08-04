@@ -18,6 +18,10 @@ public struct EV3GetBrickNameCommand: EV3DirectCommand {
 	public var globalSpaceSize: UInt16 {
 		return UInt16(kEV3MaxBrickNameLength)
 	}
+	
+	public var responseInfo: [String: Any] {
+		return [kResponseMaxLengthKey: Int(kEV3MaxBrickNameLength)]
+	}
 
 	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
 		let mutableData = NSMutableData()

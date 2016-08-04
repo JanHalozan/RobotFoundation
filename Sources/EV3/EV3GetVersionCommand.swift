@@ -29,6 +29,10 @@ public struct EV3GetVersionCommand: EV3DirectCommand {
 	public var globalSpaceSize: UInt16 {
 		return EV3MaxFileLength
 	}
+	
+	public var responseInfo: [String: Any] {
+		return [kResponseMaxLengthKey: Int(EV3MaxFileLength)]
+	}
 
 	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
 		let mutableData = NSMutableData()
