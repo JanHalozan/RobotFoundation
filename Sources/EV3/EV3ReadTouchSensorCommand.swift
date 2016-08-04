@@ -18,7 +18,7 @@ public struct EV3ReadTouchSensorCommand: EV3DirectCommand {
 	}
 
 	public var responseType: MindstormsResponse.Type {
-		return EV3BooleanResponse.self
+		return EV3BooleanSensorResponse.self
 	}
 
 	public var globalSpaceSize: UInt16 {
@@ -27,7 +27,7 @@ public struct EV3ReadTouchSensorCommand: EV3DirectCommand {
 
 	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
 		let mutableData = NSMutableData()
-		mutableData.appendUInt8(EV3OpCode.InputReadSI.rawValue)
+		mutableData.appendUInt8(EV3OpCode.InputRead.rawValue)
 		mutableData.appendUInt8(EV3Layer.ThisBrick.rawValue)
 		mutableData.appendUInt8(port.rawValue)
 
