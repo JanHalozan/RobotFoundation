@@ -133,7 +133,7 @@ final class EV3CommandGroupOperation: NSOperation {
 
 			responses.append(response)
 
-			restOfData = restOfData.subdataWithRange(NSMakeRange(response.responseLength, data.length - response.responseLength))
+			restOfData = restOfData.subdataWithRange(NSMakeRange(response.responseLength, restOfData.length - response.responseLength))
 		}
 
 		let responseGroup = EV3ResponseGroup(length: length, replyType: replyType, messageCounter: messageCounter, responses: responses)
