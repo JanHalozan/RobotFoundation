@@ -17,7 +17,7 @@ public final class HIDDeviceSource: RobotDeviceSource {
 	private unowned var client: RobotDeviceSourceClient
 
 	public init(client: RobotDeviceSourceClient) {
-		manager = IOHIDManagerCreate(nil, 0)
+		manager = IOHIDManagerCreate(nil, 0)!.takeRetainedValue()
 		self.client = client
 	}
 
