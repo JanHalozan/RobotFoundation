@@ -47,7 +47,7 @@ public final class NXTDevice: Device {
 
 	override func wroteData() {
 		guard let usbTransport = transport as? LegacyUSBDeviceTransport else {
-			assertionFailure()
+			// Skip scheduling reads for Bluetooth transports.
 			return
 		}
 
