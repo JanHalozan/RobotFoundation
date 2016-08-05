@@ -58,10 +58,7 @@ static NSDictionary *__nullable MatchingDictionaryForSerialNumber(NSString *seri
 		return nil;
 	}
 
-	NSMutableDictionary *matchingDict = (__bridge NSMutableDictionary *)matchingDictCF;
-	matchingDict[(__bridge NSString *)CFSTR(kUSBSerialNumberString)] = serialNumber;
-
-	return matchingDict;
+	return CFBridgingRelease(matchingDictCF);
 }
 
 static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
@@ -73,15 +70,19 @@ static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 	}
 
 	io_iterator_t iterator = IO_OBJECT_NULL;
-	if (IOServiceGetMatchingServices(kIOMasterPortDefault, (__bridge CFDictionaryRef)matchingDict, &iterator) != kIOReturnSuccess) {
+	if (IOServiceGetMatchingServices(kIOMasterPortDefault, CFBridgingRetain(matchingDict), &iterator) != kIOReturnSuccess) {
 		return IO_OBJECT_NULL;
 	}
 
 	io_service_t device = IO_OBJECT_NULL;
 	while ((device = IOIteratorNext(iterator))) {
-		// Returns the first device.
-		IOObjectRelease(iterator);
-		return device;
+		NSString *deviceSerialNumber = CFBridgingRelease(IORegistryEntrySearchCFProperty(device, kIOServicePlane, CFSTR(kUSBSerialNumberString), kCFAllocatorDefault, kIORegistryIterateRecursively));
+		if ([deviceSerialNumber isEqualToString:serialNumber]) {
+			IOObjectRelease(iterator);
+			return device;
+		}
+
+		IOObjectRelease(device);
 	}
 
 	IOObjectRelease(iterator);
