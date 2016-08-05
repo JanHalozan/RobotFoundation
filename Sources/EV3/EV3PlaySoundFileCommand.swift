@@ -11,8 +11,21 @@ public struct EV3PlaySoundFileCommand: EV3DirectCommand {
 	public let path: String
 	public let volume: UInt8
 
-	public init(path: String, volume: UInt8) {
-		self.path = path
+	public init?(path: String, volume: UInt8) {
+		// Paths to sound files must not have the RSF extension. If it's there, remove it. If there's any other extension, fail.
+		let cocoaPath = path as NSString
+		if cocoaPath.pathExtension.isEmpty {
+			self.path = path
+		}
+		else {
+			if cocoaPath.pathExtension.lowercaseString == "rsf" {
+				self.path = cocoaPath.stringByDeletingPathExtension
+			}
+			else {
+				return nil
+			}
+		}
+
 		self.volume = volume
 	}
 
