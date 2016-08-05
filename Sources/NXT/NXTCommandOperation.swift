@@ -15,10 +15,17 @@ final class NXTCommandOperation: NSOperation {
 	private var isExecuting = false {
 		willSet {
 			willChangeValueForKey("isExecuting")
-			willChangeValueForKey("isFinished")
 		}
 		didSet {
 			didChangeValueForKey("isExecuting")
+		}
+	}
+
+	private var isFinished = false {
+		willSet {
+			willChangeValueForKey("isFinished")
+		}
+		didSet {
 			didChangeValueForKey("isFinished")
 		}
 	}
@@ -39,7 +46,7 @@ final class NXTCommandOperation: NSOperation {
 	}
 
 	override var finished: Bool {
-		return !isExecuting
+		return isFinished
 	}
 
 	override var ready: Bool {
@@ -85,6 +92,7 @@ final class NXTCommandOperation: NSOperation {
 	private func handleErrorResponse() {
 		assert(NSThread.isMainThread())
 		isExecuting = false
+		isFinished = true
 	}
 
 	func canHandleResponseData(data: NSData) -> Bool {
@@ -92,35 +100,30 @@ final class NXTCommandOperation: NSOperation {
 	}
 
 	func handleResponseData(data: NSData) {
-		let fullData: NSData
+		let mainData: NSData
 
-		/*
-		if transport is IOUSBDeviceTransport {
-			// USB packets are missing with some data we have to trim.
-			let fullMutableData = NSMutableData()
+		// Bluetooth responses are padded with the length.
+		if transport is IOBluetoothDeviceTransport {
+			assert(data.length >= 2)
 
-			var bytesRead = data.length
-			var empty = UInt8()
+			let length = Int(data.readUInt16AtIndex(0))
+			mainData = data.subdataWithRange(NSMakeRange(2, data.length - 2))
 
-			//TODO: should this really be a 32-bit int?
-			fullMutableData.appendBytes(&bytesRead, length: sizeof(UInt32))
-			fullMutableData.appendBytes(&empty, length: sizeof(UInt8))
-			fullMutableData.appendData(data)
-
-			fullData = fullMutableData.copy() as! NSData
+			assert(length == mainData.length)
 		} else {
-*/
-			fullData = data
-//		}
+			mainData = data
+		}
 
-		guard let response = command.responseType.init(data: fullData, userInfo: command.responseInfo) else {
+		guard let response = command.responseType.init(data: mainData, userInfo: command.responseInfo) else {
 			print("Could not parse a response")
 			isExecuting = false
+			isFinished = true
 			return
 		}
 
 		// Response handlers are optional.
 		responseHandler?(response)
 		isExecuting = false
+		isFinished = true
 	}
 }

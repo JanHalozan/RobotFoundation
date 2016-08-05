@@ -19,12 +19,14 @@ extension NXTResponse {
 	}
 }
 
+private let kNXTHeaderLength = 3
+
 extension NXTStatus {
 	init?(responseData: NSData) {
-		let headerData = responseData.subdataWithRange(NSMakeRange(2, 3))
+		let headerData = responseData.subdataWithRange(NSMakeRange(0, kNXTHeaderLength))
 
 		var status = NXTStatus.UndefinedError
-		headerData.getBytes(&status, range: NSMakeRange(2, 1))
+		headerData.getBytes(&status, range: NSMakeRange(0, 1))
 
 		self = status
 	}
@@ -32,10 +34,10 @@ extension NXTStatus {
 
 extension NSData {
 	var payloadData: NSData? {
-		guard length > 3 else {
+		guard length >= kNXTHeaderLength else {
 			return nil
 		}
 
-		return subdataWithRange(NSMakeRange(5, length - 5))
+		return subdataWithRange(NSMakeRange(kNXTHeaderLength, length - kNXTHeaderLength))
 	}
 }
