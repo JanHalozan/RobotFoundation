@@ -26,7 +26,7 @@ extension NXTStatus {
 		let headerData = responseData.subdataWithRange(NSMakeRange(0, kNXTHeaderLength))
 
 		var status = NXTStatus.UndefinedError
-		headerData.getBytes(&status, range: NSMakeRange(0, 1))
+		headerData.getBytes(&status, range: NSMakeRange(2, 1))
 
 		self = status
 	}
