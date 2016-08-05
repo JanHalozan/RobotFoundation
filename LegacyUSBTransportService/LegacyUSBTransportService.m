@@ -50,9 +50,15 @@ static dispatch_time_t TenSecondTimeout()
 	return dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 10);
 }
 
-static NSDictionary *MatchingDictionaryForSerialNumber(NSString *serialNumber)
+static NSDictionary *__nullable MatchingDictionaryForSerialNumber(NSString *serialNumber)
 {
-	NSMutableDictionary *matchingDict = CFBridgingRelease(IOServiceMatching(kIOUSBDeviceClassName));
+	CFMutableDictionaryRef matchingDictCF = IOServiceMatching(kIOUSBDeviceClassName);
+
+	if (matchingDictCF == NULL) {
+		return nil;
+	}
+
+	NSMutableDictionary *matchingDict = (__bridge NSMutableDictionary *)matchingDictCF;
 	matchingDict[(__bridge NSString *)CFSTR(kUSBSerialNumberString)] = serialNumber;
 
 	return matchingDict;
@@ -60,7 +66,11 @@ static NSDictionary *MatchingDictionaryForSerialNumber(NSString *serialNumber)
 
 static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 {
-	NSDictionary *matchingDict = MatchingDictionaryForSerialNumber(serialNumber);
+	NSDictionary *__nullable matchingDict = MatchingDictionaryForSerialNumber(serialNumber);
+
+	if (matchingDict == nil) {
+		return IO_OBJECT_NULL;
+	}
 
 	io_iterator_t iterator = IO_OBJECT_NULL;
 	if (IOServiceGetMatchingServices(kIOMasterPortDefault, (__bridge CFDictionaryRef)matchingDict, &iterator) != kIOReturnSuccess) {
@@ -70,8 +80,11 @@ static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 	io_service_t device = IO_OBJECT_NULL;
 	while ((device = IOIteratorNext(iterator))) {
 		// Returns the first device.
+		IOObjectRelease(iterator);
 		return device;
 	}
+
+	IOObjectRelease(iterator);
 
 	return IO_OBJECT_NULL;
 }
