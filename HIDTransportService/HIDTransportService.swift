@@ -170,4 +170,8 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 
 		handler(Int(kIOReturnSuccess))
 	}
+
+	func scheduleRead(identifier: NSString, handler: Int -> ()) {
+		fatalError("Not supported")
+	}
 }

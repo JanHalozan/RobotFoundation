@@ -117,7 +117,7 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
 			return
 		}
 
-		proxy.scheduleRead?(identifier, handler: { result in
+		proxy.scheduleRead(identifier, handler: { result in
 			dispatch_async(dispatch_get_main_queue()) {
 				guard result == Int(kIOReturnSuccess) else {
 					debugPrint("An error occured while scheduling a read (\(result)).")

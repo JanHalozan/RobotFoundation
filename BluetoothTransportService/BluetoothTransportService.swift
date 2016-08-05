@@ -358,4 +358,8 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 			connectingChannels.remove(rfcommChannel)
 		}
 	}
+
+	func scheduleRead(identifier: NSString, handler: Int -> ()) {
+		fatalError("Not supported")
+	}
 }
