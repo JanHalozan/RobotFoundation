@@ -41,6 +41,7 @@ public final class NXTDevice: Device {
 		for operation in operationQueue.operations {
 			if let commandOperation = operation as? NXTCommandOperation where commandOperation.canHandleResponseData(data) {
 				commandOperation.handleResponseData(data)
+				return
 			}
 		}
 	}
