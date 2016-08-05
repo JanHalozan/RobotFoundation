@@ -66,6 +66,30 @@ private func robotDeviceForService(service: io_service_t) -> MetaDevice? {
 	return MetaDevice(type: .LegacyUSBDevice, deviceClass: .NXT20, uniqueIdentifier: uniqueIdentifier, name: name)
 }
 
+private func deviceAdded(pointer: UnsafeMutablePointer<Void>, _ iterator: io_iterator_t) {
+	let source = Unmanaged<LegacyUSBDeviceSource>.fromOpaque(COpaquePointer(pointer)).takeUnretainedValue()
+	iterator.enumerate { device in
+		guard let robotDevice = robotDeviceForService(device) else {
+			assertionFailure()
+			return
+		}
+		source.foundDevices.insert(robotDevice)
+		source.client.robotDeviceSourceDidFindDevice(robotDevice)
+	}
+}
+
+private func deviceRemoved(pointer: UnsafeMutablePointer<Void>, _ iterator: io_iterator_t) {
+	let source = Unmanaged<LegacyUSBDeviceSource>.fromOpaque(COpaquePointer(pointer)).takeUnretainedValue()
+	iterator.enumerate { device in
+		guard let robotDevice = robotDeviceForService(device) else {
+			assertionFailure()
+			return
+		}
+		source.foundDevices.remove(robotDevice)
+		source.client.robotDeviceSourceDidLoseDevice(robotDevice)
+	}
+}
+
 public final class LegacyUSBDeviceSource: RobotDeviceSource {
 	private unowned var client: RobotDeviceSourceClient
 	private var foundDevices = Set<MetaDevice>()
@@ -104,31 +128,11 @@ public final class LegacyUSBDeviceSource: RobotDeviceSource {
 		var removeIterator = io_iterator_t()
 
 		let selfPointer = UnsafeMutablePointer<Void>(Unmanaged.passUnretained(self).toOpaque())
-		IOServiceAddMatchingNotification(notificationPort, kIOMatchedNotification, matchingDict, { pointer, iterator in
-			let source = Unmanaged<LegacyUSBDeviceSource>.fromOpaque(COpaquePointer(pointer)).takeUnretainedValue()
-			iterator.enumerate { device in
-				guard let robotDevice = robotDeviceForService(device) else {
-					assertionFailure()
-					return
-				}
-				source.foundDevices.insert(robotDevice)
-				source.client.robotDeviceSourceDidFindDevice(robotDevice)
-			}
-		}, selfPointer, &matchIterator);
-		IOServiceAddMatchingNotification(notificationPort, kIOTerminatedNotification, matchingDict, { pointer, iterator in
-			let source = Unmanaged<LegacyUSBDeviceSource>.fromOpaque(COpaquePointer(pointer)).takeUnretainedValue()
-			iterator.enumerate { device in
-				guard let robotDevice = robotDeviceForService(device) else {
-					assertionFailure()
-					return
-				}
-				source.foundDevices.remove(robotDevice)
-				source.client.robotDeviceSourceDidLoseDevice(robotDevice)
-			}
-		}, selfPointer, &removeIterator)
+		IOServiceAddMatchingNotification(notificationPort, kIOMatchedNotification, matchingDict, deviceAdded, selfPointer, &matchIterator);
+		IOServiceAddMatchingNotification(notificationPort, kIOTerminatedNotification, matchingDict, deviceRemoved, selfPointer, &removeIterator)
 
-		matchIterator.enumerate { _ in }
-		removeIterator.enumerate { _ in }
+		deviceAdded(selfPointer, matchIterator)
+		deviceRemoved(selfPointer, removeIterator)
 	}
 }
 
