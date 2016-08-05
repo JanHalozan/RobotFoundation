@@ -14,13 +14,14 @@ public struct EV3HandleDataResponse: EV3Response {
 	public let responseLength: Int
 
 	public init?(data: NSData, userInfo: [String : Any]) {
+		guard let maxLength = userInfo[kResponseMaxLengthKey] as? Int else {
+			assertionFailure()
+			return nil
+		}
+
 		self.handle = data.readUInt32AtIndex(0)
+		self.data = data.subdataWithRange(NSMakeRange(4, maxLength))
 
-		//let toEnd = Int(length) - 7 // size (2 bytes) not included
-		//self.data = data.subdataWithRange(NSMakeRange(4, toEnd))
-		self.data = NSData()
-
-		responseLength = 0
-		// TOOD: This is broken but that will not matter if #243 is fixed 
+		responseLength = maxLength + 4
 	}
 }

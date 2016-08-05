@@ -18,6 +18,10 @@ public struct EV3ReadChainedCommand: EV3DirectCommand {
 		self.bytesToRead = bytesToRead
 	}
 
+	public var responseInfo: [String: Any] {
+		return [kResponseMaxLengthKey: Int(bytesToRead)]
+	}
+
 	public var responseType: MindstormsResponse.Type {
 		return EV3HandleDataResponse.self
 	}
