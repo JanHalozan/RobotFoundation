@@ -26,6 +26,7 @@ public struct NXTDataResponse: NXTResponse {
 
 		self.handle = payloadData.readUInt8AtIndex(0)
 		self.size = payloadData.readUInt16AtIndex(1)
-		self.contents = payloadData.subdataWithRange(NSMakeRange(3, payloadData.length - 3))
+		self.contents = payloadData.subdataWithRange(NSMakeRange(3, Int(size)))
+		assert(Int(self.size) <= payloadData.length - 3)
 	}
 }

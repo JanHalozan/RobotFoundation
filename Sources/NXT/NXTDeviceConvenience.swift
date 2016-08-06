@@ -11,8 +11,8 @@ private let kDisplayModule: UInt32 = 0x000A0001
 private let kDisplayNormalOffset: UInt16 = 119
 private let kMaxBytes: UInt16 = 50
 
-// 64 bytes is the max over Bluetooth.
-private let kMaxChunk = 64
+// 64 bytes total is the max over Bluetooth, and there is a 6 byte header, so the max chunk is 58.
+private let kMaxChunk = 58
 
 public typealias NXTDeviceDownloadHandler = NSData -> ()
 public typealias NXTDeviceUploadHandler = Bool -> ()
