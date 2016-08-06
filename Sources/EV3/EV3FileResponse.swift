@@ -35,8 +35,10 @@ public struct EV3FileResponse: EV3Response {
 		returnStatus = EV3SystemReturnStatus(rawValue: data.readUInt8AtIndex(1)) ?? EV3SystemReturnStatus.UnknownError
 		fileSize = data.readUInt32AtIndex(2)
 		handle = data.readUInt8AtIndex(6)
-		self.data = data.subdataWithRange(NSMakeRange(7, length))
+		self.data = data.subdataWithRange(NSMakeRange(7, Int(fileSize)))
 		responseLength = 7 + length
+
+		assert(Int(fileSize) <= length)
 	}
 }
 
