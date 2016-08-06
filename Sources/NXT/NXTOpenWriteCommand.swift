@@ -26,7 +26,7 @@ struct NXTOpenWriteCommand: NXTCommand {
 	var payloadData: NSData {
 		let data = NSMutableData()
 		data.appendNXTFilename(filename)
-		data.appendUInt32(size)
+		data.appendUInt32(CFSwapInt32HostToLittle(size))
 		return data.copy() as! NSData
 	}
 }
