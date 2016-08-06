@@ -10,6 +10,8 @@ import Foundation
 public typealias EV3DeviceDownloadHandler = NSData -> ()
 public typealias EV3DeviceUploadHandler = Bool -> ()
 
+private let kDownloadChunkSize = 1000
+
 // Offers convenience API for "sequential" commands.
 extension EV3Device {
 	public func uploadFileData(wholeData: NSData, toPath path: String, handler: EV3DeviceUploadHandler) {
@@ -51,39 +53,47 @@ extension EV3Device {
 	}
 
 	public func downloadFileAtPath(path: String, handler: EV3DeviceDownloadHandler) {
-		let command = EV3ReadFileCommand(path: path, bytesToRead: 1000)
+		// Try to read more than we might have. We'll sort it out later.
+		let command = EV3ReadFileCommand(path: path, bytesToRead: UInt16(kDownloadChunkSize))
 		enqueueCommand(command) { responseGroup in
 			guard let listingResponse = responseGroup.firstResponse as? EV3FileResponse else {
 				assertionFailure()
 				return
 			}
 
+			let fileSize = Int(listingResponse.fileSize)
+
 			if listingResponse.returnStatus == .EndOfFile {
-				handler(listingResponse.data)
+				assert(fileSize <= kDownloadChunkSize)
+				handler(listingResponse.data.subdataWithRange(NSMakeRange(0, fileSize)))
 			} else if listingResponse.returnStatus == .Success {
 				// We finished reading but there is more!
-				self.continueFileDownloadWithHandle(listingResponse.handle, dataSoFar: listingResponse.data, handler: handler)
+				assert(fileSize > kDownloadChunkSize)
+				self.continueFileDownloadWithHandle(listingResponse.handle, dataSoFar: listingResponse.data, bytesLeft: fileSize - kDownloadChunkSize, handler: handler)
 			} else {
 				assertionFailure()
 			}
 		}
 	}
 
-	private func continueFileDownloadWithHandle(handle: UInt8, dataSoFar: NSData, handler: EV3DeviceDownloadHandler) {
-		let continueCommand = EV3ContinueReadFileCommand(handle: handle, bytesToRead: 1000)
+	private func continueFileDownloadWithHandle(handle: UInt8, dataSoFar: NSData, bytesLeft: Int, handler: EV3DeviceDownloadHandler) {
+		let bytesToReadNow = min(bytesLeft, kDownloadChunkSize)
+		let continueCommand = EV3ContinueReadFileCommand(handle: handle, bytesToRead: UInt16(bytesToReadNow))
 		enqueueCommand(continueCommand) { responseGroup in
 			guard let listingResponse = responseGroup.firstResponse as? EV3ContinueFileResponse else {
 				assertionFailure()
 				return
 			}
-			
-			let newDataSoFar = dataSoFar.dataByAppendingData(listingResponse.data)
 
 			if listingResponse.returnStatus == .EndOfFile {
+				assert(listingResponse.data.length == bytesToReadNow)
+				let newDataSoFar = dataSoFar.dataByAppendingData(listingResponse.data)
 				handler(newDataSoFar)
 			} else if listingResponse.returnStatus == .Success {
 				// We finished reading but there is more!
-				self.continueFileDownloadWithHandle(listingResponse.handle, dataSoFar: newDataSoFar, handler: handler)
+				assert(listingResponse.data.length == bytesToReadNow)
+				let newDataSoFar = dataSoFar.dataByAppendingData(listingResponse.data)
+				self.continueFileDownloadWithHandle(listingResponse.handle, dataSoFar: newDataSoFar, bytesLeft: bytesLeft - bytesToReadNow, handler: handler)
 			} else {
 				assertionFailure()
 			}
