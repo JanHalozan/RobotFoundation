@@ -42,7 +42,12 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
 		serviceConnection.exportedInterface = NSXPCInterface(withProtocol: XPCTransportClientProtocol.self)
 		serviceConnection.resume()
 
-		guard let proxy = serviceConnection.remoteObjectProxy as? XPCTransportServiceProtocol else {
+		guard let proxy = serviceConnection.remoteObjectProxyWithErrorHandler({ error in
+			print("Failed to communicate with the XPC transport service during open: \(error)")
+			dispatch_async(dispatch_get_main_queue()) {
+				self.failedToOpenWithError(kIOReturnNotFound)
+			}
+		}) as? XPCTransportServiceProtocol else {
 			assertionFailure()
 			throw kIOReturnInternalError
 		}
@@ -88,7 +93,12 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
 			return
 		}
 
-		guard let proxy = serviceConnection.remoteObjectProxy as? XPCTransportServiceProtocol else {
+		guard let proxy = serviceConnection.remoteObjectProxyWithErrorHandler({ error in
+			print("Failed to communicate with the XPC transport service during write: \(error)")
+			dispatch_async(dispatch_get_main_queue()) {
+				errorHandler()
+			}
+		}) as? XPCTransportServiceProtocol else {
 			assertionFailure()
 			return
 		}
