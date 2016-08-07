@@ -33,10 +33,17 @@ final class EV3CommandGroupOperation: NSOperation {
 	private var isExecuting = false {
 		willSet {
 			willChangeValueForKey("isExecuting")
-			willChangeValueForKey("isFinished")
 		}
 		didSet {
 			didChangeValueForKey("isExecuting")
+		}
+	}
+
+	private var isFinished = false {
+		willSet {
+			willChangeValueForKey("isFinished")
+		}
+		didSet {
 			didChangeValueForKey("isFinished")
 		}
 	}
@@ -59,7 +66,7 @@ final class EV3CommandGroupOperation: NSOperation {
 	}
 
 	override var finished: Bool {
-		return !isExecuting
+		return isFinished
 	}
 
 	override var ready: Bool {
@@ -73,6 +80,8 @@ final class EV3CommandGroupOperation: NSOperation {
 			}
 			return
 		}
+
+		isExecuting = true
 
 		let data: NSData
 
@@ -96,13 +105,12 @@ final class EV3CommandGroupOperation: NSOperation {
 		} catch {
 			print("Cannot write packet data: \(error)")
 		}
-
-		isExecuting = true
 	}
 
 	private func handleErrorResponse() {
 		assert(NSThread.isMainThread())
 		isExecuting = false
+		isFinished = true
 	}
 
 	func canHandleResponseData(data: NSData) -> Bool {
@@ -119,12 +127,14 @@ final class EV3CommandGroupOperation: NSOperation {
 		guard data.length >= 5 else {
 			debugPrint("Responses should be at least 5 in length")
 			isExecuting = false
+			isFinished = true
 			return
 		}
 
 		guard let (length, messageCounter, replyType) = processGenericResponseForData(data) else {
 			debugPrint("Could not parse the generic response header")
 			isExecuting = false
+			isFinished = true
 			return
 		}
 
@@ -138,6 +148,7 @@ final class EV3CommandGroupOperation: NSOperation {
 			guard let response = command.responseType.init(data: restOfData, userInfo: command.responseInfo) as? EV3Response else {
 				print("Could not parse a response")
 				isExecuting = false
+				isFinished = true
 				return
 			}
 
@@ -152,5 +163,6 @@ final class EV3CommandGroupOperation: NSOperation {
 		responseHandler?(responseGroup)
 
 		isExecuting = false
+		isFinished = true
 	}
 }
