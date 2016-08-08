@@ -12,6 +12,7 @@ import IOKit.hid
 
 class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
 	private var serviceConnection: NSXPCConnection?
+	private let connectionQueue = dispatch_queue_create(nil, nil)
 
 	var serviceName: String {
 		fatalError("Subclasses must override this method")
@@ -21,6 +22,30 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
 		fatalError("Subclasses must override this method")
 	}
 
+	private func accessConnection(errorHandler: () -> (), accessor: (NSXPCConnection) -> Bool) -> Bool {
+		var result = false
+		dispatch_sync(connectionQueue) {
+			guard let connection = self.serviceConnection else {
+				errorHandler()
+				return
+			}
+
+			result = accessor(connection)
+		}
+		return result
+	}
+
+	private func modifyConnection(errorHandler: () -> (), modifier: (NSXPCConnection) -> NSXPCConnection?) {
+		dispatch_barrier_async(connectionQueue) {
+			guard let connection = self.serviceConnection else {
+				errorHandler()
+				return
+			}
+
+			self.serviceConnection = modifier(connection)
+		}
+	}
+
 	override func open() throws {
 		assert(NSThread.isMainThread())
 
@@ -28,113 +53,121 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
 			return
 		}
 
-		if serviceConnection == nil {
-			serviceConnection = NSXPCConnection(serviceName: serviceName)
-		}
-
-		guard let serviceConnection = serviceConnection else {
-			assertionFailure()
-			throw kIOReturnInternalError
-		}
-
-		serviceConnection.remoteObjectInterface = NSXPCInterface(withProtocol: XPCTransportServiceProtocol.self)
-		serviceConnection.exportedObject = self
-		serviceConnection.exportedInterface = NSXPCInterface(withProtocol: XPCTransportClientProtocol.self)
-		serviceConnection.resume()
-
-		guard let proxy = serviceConnection.remoteObjectProxyWithErrorHandler({ error in
-			print("Failed to communicate with the XPC transport service during open: \(error)")
-			dispatch_async(dispatch_get_main_queue()) {
-				self.failedToOpenWithError(kIOReturnNotFound)
-			}
-		}) as? XPCTransportServiceProtocol else {
-			assertionFailure()
-			throw kIOReturnInternalError
-		}
-
 		beganOpening()
 
-		proxy.open(identifier) { result in
-			dispatch_async(dispatch_get_main_queue()) {
-				if result == Int(kIOReturnSuccess) {
-					self.opened()
-				} else {
-					self.failedToOpenWithError(IOReturn(result))
+		dispatch_barrier_async(connectionQueue) {
+			if self.serviceConnection != nil {
+				return
+			}
+
+			let connection = NSXPCConnection(serviceName: self.serviceName)
+			connection.remoteObjectInterface = NSXPCInterface(withProtocol: XPCTransportServiceProtocol.self)
+			connection.exportedObject = self
+			connection.exportedInterface = NSXPCInterface(withProtocol: XPCTransportClientProtocol.self)
+			connection.resume()
+			self.serviceConnection = connection
+		}
+
+		accessConnection({
+			// no need, we just created one.
+		}) { connection in
+			guard let proxy = connection.remoteObjectProxyWithErrorHandler({ error in
+				print("Failed to communicate with the XPC transport service during open: \(error)")
+				dispatch_async(dispatch_get_main_queue()) {
+					self.failedToOpenWithError(kIOReturnNotFound)
+				}
+			}) as? XPCTransportServiceProtocol else {
+				assertionFailure()
+				return false
+			}
+
+			proxy.open(self.identifier) { result in
+				dispatch_async(dispatch_get_main_queue()) {
+					if result == Int(kIOReturnSuccess) {
+						self.opened()
+					} else {
+						self.failedToOpenWithError(IOReturn(result))
+					}
 				}
 			}
+
+			return true
 		}
 	}
 
 	override func close() {
-		guard let serviceConnection = serviceConnection else {
-			debugPrint("Tried to close a device even though we have no XPC connection.")
-			return
-		}
-
-		guard let proxy = serviceConnection.remoteObjectProxy as? XPCTransportServiceProtocol else {
-			assertionFailure()
-			return
-		}
-
-		proxy.close(identifier) { result in
-			if result == Int(kIOReturnSuccess) {
-				dispatch_async(dispatch_get_main_queue()) {
-					self.closed()
-				}
-			} else {
-				print("Transport close failed with code: \(result)")
+		accessConnection({
+			print("Tried to close a device even though we have no XPC connection.")
+		}) { connection in
+			guard let proxy = connection.remoteObjectProxy as? XPCTransportServiceProtocol else {
+				assertionFailure()
+				return false
 			}
+
+			proxy.close(self.identifier) { result in
+				if result == Int(kIOReturnSuccess) {
+					dispatch_async(dispatch_get_main_queue()) {
+						self.closed()
+					}
+				} else {
+					print("Transport close failed with code: \(result)")
+				}
+			}
+
+			return true
 		}
 	}
 
 	override func writeData(data: NSData, errorHandler: () -> ()) throws {
-		guard let serviceConnection = serviceConnection else {
-			debugPrint("Tried to write to a device even though we have no XPC connection.")
-			return
-		}
-
-		guard let proxy = serviceConnection.remoteObjectProxyWithErrorHandler({ error in
-			print("Failed to communicate with the XPC transport service during write: \(error)")
-			dispatch_async(dispatch_get_main_queue()) {
-				errorHandler()
-			}
-		}) as? XPCTransportServiceProtocol else {
-			assertionFailure()
-			return
-		}
-
-		proxy.writeData(data, identifier: identifier) { result in
-			dispatch_async(dispatch_get_main_queue()) {
-				guard result == Int(kIOReturnSuccess) else {
-					debugPrint("An error occured during write (\(result)).")
+		accessConnection({
+			print("Tried to write to a device even though we have no XPC connection.")
+		}) { connection in
+			guard let proxy = connection.remoteObjectProxyWithErrorHandler({ error in
+				print("Failed to communicate with the XPC transport service during write: \(error)")
+				dispatch_async(dispatch_get_main_queue()) {
 					errorHandler()
-					return
 				}
-
-				self.wroteData()
+			}) as? XPCTransportServiceProtocol else {
+				assertionFailure()
+				return false
 			}
+
+			proxy.writeData(data, identifier: self.identifier) { result in
+				dispatch_async(dispatch_get_main_queue()) {
+					guard result == Int(kIOReturnSuccess) else {
+						print("An error occured during write (\(result)).")
+						errorHandler()
+						return
+					}
+
+					self.wroteData()
+				}
+			}
+
+			return true
 		}
 	}
 
 	override func scheduleRead() {
-		guard let serviceConnection = serviceConnection else {
-			debugPrint("Tried to write to a device even though we have no XPC connection.")
-			return
-		}
-
-		guard let proxy = serviceConnection.remoteObjectProxy as? XPCTransportServiceProtocol else {
-			assertionFailure()
-			return
-		}
-
-		proxy.scheduleRead(identifier, handler: { result in
-			dispatch_async(dispatch_get_main_queue()) {
-				guard result == Int(kIOReturnSuccess) else {
-					debugPrint("An error occured while scheduling a read (\(result)).")
-					return
-				}
+		accessConnection({
+			print("Tried to write to a device even though we have no XPC connection.")
+		}) { connection in
+			guard let proxy = connection.remoteObjectProxy as? XPCTransportServiceProtocol else {
+				assertionFailure()
+				return false
 			}
-		})
+
+			proxy.scheduleRead(self.identifier, handler: { result in
+				dispatch_async(dispatch_get_main_queue()) {
+					guard result == Int(kIOReturnSuccess) else {
+						print("An error occured while scheduling a read (\(result)).")
+						return
+					}
+				}
+			})
+
+			return true
+		}
 	}
 
 	@objc func handleTransportData(data: NSData) {
@@ -146,9 +179,13 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
 	override func closed() {
 		super.closed()
 
-		serviceConnection?.suspend()
-		serviceConnection?.invalidate()
-		serviceConnection = nil
+		modifyConnection ({
+			// no-op
+		}) { connection in
+			connection.suspend()
+			connection.invalidate()
+			return nil
+		}
 	}
 }
 

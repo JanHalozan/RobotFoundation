@@ -72,13 +72,6 @@ final class EV3CommandGroupOperation: NSOperation {
 			return
 		}
 
-		guard NSThread.isMainThread() else {
-			dispatch_sync(dispatch_get_main_queue()) {
-				self.start()
-			}
-			return
-		}
-
 		setExecuting(true)
 
 		let data: NSData
