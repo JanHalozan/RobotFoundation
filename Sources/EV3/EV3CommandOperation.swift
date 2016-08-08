@@ -121,7 +121,6 @@ final class EV3CommandGroupOperation: NSOperation {
 	}
 
 	private func handleErrorResponse() {
-		assert(NSThread.isMainThread())
 		setExecuting(false)
 		setFinished(true)
 	}
