@@ -56,11 +56,12 @@ final class NXTCommandOperation: NSOperation {
 
 	override var ready: Bool {
 		assert(NSThread.isMainThread())
-		return super.ready && transport.openState == .Opened
+		return super.ready && (transport.openState == .Opened || transport.openState == .Closed)
 	}
 
 	override func start() {
 		if cancelled {
+			finishWithResult(.Error(.TransportError(kIOReturnAborted)))
 			return
 		}
 

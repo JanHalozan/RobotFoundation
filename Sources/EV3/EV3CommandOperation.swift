@@ -69,7 +69,7 @@ final class EV3CommandGroupOperation: NSOperation {
 
 	override var ready: Bool {
 		assert(NSThread.isMainThread())
-		return super.ready && transport.openState == .Opened
+		return super.ready && (transport.openState == .Opened || transport.openState == .Closed)
 	}
 
 	private func setExecuting(value: Bool) {
@@ -86,6 +86,7 @@ final class EV3CommandGroupOperation: NSOperation {
 
 	override func start() {
 		if cancelled {
+			finishWithResult(.Error(.TransportError(kIOReturnAborted)))
 			return
 		}
 
