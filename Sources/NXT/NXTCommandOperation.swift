@@ -51,7 +51,7 @@ final class NXTCommandOperation: NSOperation {
 		if cancelled {
 			return
 		}
-		
+
 		guard NSThread.isMainThread() else {
 			dispatch_sync(dispatch_get_main_queue()) {
 				self.start()
@@ -89,7 +89,6 @@ final class NXTCommandOperation: NSOperation {
 	}
 
 	private func handleErrorResponse() {
-		assert(NSThread.isMainThread())
 		setExecuting(false)
 		setFinished(true)
 	}
