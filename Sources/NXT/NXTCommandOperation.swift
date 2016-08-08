@@ -12,22 +12,45 @@ final class NXTCommandOperation: NSOperation {
 	private let command: NXTCommand
 	private let responseHandler: NXTResponseHandler?
 
-	private var isExecuting = false {
-		willSet {
-			willChangeValueForKey("isExecuting")
-		}
-		didSet {
-			didChangeValueForKey("isExecuting")
-		}
+	private let isExecuting = AtomicBool()
+	private let isFinished = AtomicBool()
+	private let isCancelled = AtomicBool()
+	
+	override var executing: Bool {
+		return isExecuting.get()
 	}
 
-	private var isFinished = false {
-		willSet {
-			willChangeValueForKey("isFinished")
-		}
-		didSet {
-			didChangeValueForKey("isFinished")
-		}
+	override var finished: Bool {
+		return isFinished.get()
+	}
+
+	override var cancelled: Bool {
+		return isCancelled.get()
+	}
+
+	override func cancel() {
+		super.cancel()
+		setExecuting(false)
+		setFinished(false)
+		setCancelled(true)
+	}
+
+	private func setExecuting(value: Bool) {
+		willChangeValueForKey("isExecuting")
+		isExecuting.set(value)
+		didChangeValueForKey("isExecuting")
+	}
+
+	private func setFinished(value: Bool) {
+		willChangeValueForKey("isFinished")
+		isFinished.set(value)
+		didChangeValueForKey("isFinished")
+	}
+
+	private func setCancelled(value: Bool) {
+		willChangeValueForKey("isCancelled")
+		isCancelled.set(value)
+		didChangeValueForKey("isCancelled")
 	}
 
 	init(transport: DeviceTransport, command: NXTCommand, responseHandler: NXTResponseHandler?) {
@@ -37,19 +60,8 @@ final class NXTCommandOperation: NSOperation {
 		super.init()
 	}
 
-	override var concurrent: Bool {
-		return true
-	}
-
-	override var executing: Bool {
-		return isExecuting
-	}
-
-	override var finished: Bool {
-		return isFinished
-	}
-
 	override var ready: Bool {
+		assert(NSThread.isMainThread())
 		return super.ready && transport.openState == .Opened
 	}
 
@@ -60,6 +72,8 @@ final class NXTCommandOperation: NSOperation {
 			}
 			return
 		}
+
+		setExecuting(true)
 
 		let data = command.payloadData
 		var dataLength = NSSwapHostShortToLittle(2 + UInt16(data.length))
@@ -84,15 +98,14 @@ final class NXTCommandOperation: NSOperation {
 			})
 		} catch {
 			print("Cannot write packet data: \(error)")
+			handleErrorResponse()
 		}
-
-		isExecuting = true
 	}
 
 	private func handleErrorResponse() {
 		assert(NSThread.isMainThread())
-		isExecuting = false
-		isFinished = true
+		setExecuting(false)
+		setFinished(true)
 	}
 
 	func canHandleResponseData(data: NSData) -> Bool {
@@ -116,14 +129,14 @@ final class NXTCommandOperation: NSOperation {
 
 		guard let response = command.responseType.init(data: mainData, userInfo: command.responseInfo) else {
 			print("Could not parse a response")
-			isExecuting = false
-			isFinished = true
+			setExecuting(false)
+			setFinished(true)
 			return
 		}
 
 		// Response handlers are optional.
 		responseHandler?(response)
-		isExecuting = false
-		isFinished = true
+		setExecuting(false)
+		setFinished(true)
 	}
 }

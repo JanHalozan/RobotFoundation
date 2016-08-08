@@ -15,6 +15,11 @@ public final class NXTDevice: Device {
 	}()
 
 	public func enqueueCommand(command: NXTCommand, responseHandler: NXTResponseHandler) {
+		if transport.openState == .Closed {
+			print("No open transport, won't bother enqueuing the command.")
+			return
+		}
+
 		let operation = NXTCommandOperation(transport: transport, command: command, responseHandler: responseHandler)
 		operationQueue.addOperation(operation)
 	}
@@ -31,9 +36,17 @@ public final class NXTDevice: Device {
 		operationQueue.addOperation(blockOperation)
 	}
 
+	private var activeOperations: Int {
+		var operationCount = 0
+		for operation in operationQueue.operations where !operation.cancelled {
+			operationCount += 1
+		}
+		return operationCount
+	}
+	
 	public func waitForOperations() {
-		while operationQueue.operationCount > 0 {
-			NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate.distantFuture())
+		while activeOperations > 0 {
+			NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: .distantFuture())
 		}
 	}
 
@@ -58,6 +71,11 @@ public final class NXTDevice: Device {
 	public override func close() {
 		waitForOperations()
 		super.close()
+	}
+
+	override func failedToOpenTransport() {
+		assert(NSThread.isMainThread())
+		operationQueue.cancelAllOperations()
 	}
 
 	override func openedTransport() {
