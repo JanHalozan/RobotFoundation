@@ -72,7 +72,7 @@ public class Device: DeviceTransportDelegate {
 	}
 
 	func wroteData() {
-		fatalError("Subclasses must override")
+		// no-op by default
 	}
 
 	func handleData(data: NSData) {

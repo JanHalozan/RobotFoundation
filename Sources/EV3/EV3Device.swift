@@ -57,8 +57,6 @@ public final class EV3Device: Device {
 		}
 	}
 
-	override func wroteData() { }
-
 	override func handleData(data: NSData) {
 		for operation in operationQueue.operations {
 			if let commandOperation = operation as? EV3CommandGroupOperation where commandOperation.canHandleResponseData(data) {
