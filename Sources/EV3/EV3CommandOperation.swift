@@ -117,8 +117,12 @@ final class EV3CommandGroupOperation: NSOperation {
 	}
 
 	private func finishWithResult(result: EV3CommandResult) {
-		dispatch_async(dispatch_get_main_queue()) {
-			self.responseHandler(result)
+		if NSThread.isMainThread() {
+			responseHandler(result)
+		} else {
+			dispatch_sync(dispatch_get_main_queue()) {
+				self.responseHandler(result)
+			}
 		}
 
 		setExecuting(false)

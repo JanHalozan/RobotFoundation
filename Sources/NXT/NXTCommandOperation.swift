@@ -94,8 +94,12 @@ final class NXTCommandOperation: NSOperation {
 	}
 
 	private func finishWithResult(result: NXTCommandResult) {
-		dispatch_async(dispatch_get_main_queue()) {
-			self.responseHandler(result)
+		if NSThread.isMainThread() {
+			responseHandler(result)
+		} else {
+			dispatch_sync(dispatch_get_main_queue()) {
+				self.responseHandler(result)
+			}
 		}
 
 		setExecuting(false)
