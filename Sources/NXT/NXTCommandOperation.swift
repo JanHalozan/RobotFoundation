@@ -52,13 +52,6 @@ final class NXTCommandOperation: NSOperation {
 			return
 		}
 
-		guard NSThread.isMainThread() else {
-			dispatch_sync(dispatch_get_main_queue()) {
-				self.start()
-			}
-			return
-		}
-
 		setExecuting(true)
 
 		let data = command.payloadData
