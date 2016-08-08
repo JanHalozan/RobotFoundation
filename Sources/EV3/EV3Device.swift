@@ -66,7 +66,6 @@ public final class EV3Device: Device {
 	}
 
 	override func failedToOpenTransport() {
-		assert(NSThread.isMainThread())
 		operationQueue.cancelAllOperations()
 	}
 

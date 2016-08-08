@@ -143,8 +143,6 @@ final class EV3CommandGroupOperation: NSOperation {
 	}
 
 	func handleResponseData(data: NSData) {
-		assert(NSThread.isMainThread())
-
 		guard data.length >= 5 else {
 			print("Responses should be at least 5 bytes in length")
 			finishWithResult(.Error(.ResponseError(EV3ResponseError.IncompleteResponse)))
