@@ -12,6 +12,7 @@ public typealias NXTCommandHandler = (NXTCommandResult) -> ()
 public enum NXTCommandError {
 	case TransportError(ErrorType)
 	case CommandError(NXTStatus)
+	case ResponseParseError
 }
 
 public enum NXTCommandResult {
@@ -128,8 +129,7 @@ final class NXTCommandOperation: NSOperation {
 
 		guard let response = command.responseType.init(data: mainData, userInfo: command.responseInfo) as? NXTResponse else {
 			print("Could not parse a response")
-			setExecuting(false)
-			setFinished(true)
+			finishWithResult(.Error(.ResponseParseError))
 			return
 		}
 
