@@ -116,6 +116,7 @@ final class EV3CommandGroupOperation: NSOperation {
 			})
 		} catch {
 			print("Cannot write packet data: \(error)")
+			handleErrorResponse()
 		}
 	}
 
