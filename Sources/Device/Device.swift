@@ -7,21 +7,12 @@
 
 import Foundation
 
-protocol DeviceDelegate: class {
-	func deviceDidOpen(device: Device)
-	func device(device: Device, didFailToOpenWithError error: ErrorType)
-
-	func deviceDidClose()
-}
-
 public class Device: DeviceTransportDelegate {
 	let transport: DeviceTransport
 
 	public var isOpen: Bool {
 		return transport.openState.get() == .Opened
 	}
-
-	weak var delegate: DeviceDelegate?
 
 	init(transport: DeviceTransport) {
 		self.transport = transport
@@ -40,22 +31,22 @@ public class Device: DeviceTransportDelegate {
 		transport.close()
 	}
 
+	// MARK: - Device Transport Delegate
+
 	func deviceTransportDidWriteData(transport: DeviceTransport) {
 		wroteData()
 	}
 
 	func deviceTransportDidClose(transport: DeviceTransport) {
-		delegate?.deviceDidClose()
+		// TODO: should we do anything else here?
 	}
 
 	func deviceTransport(transport: DeviceTransport, didFailToOpenWithError error: ErrorType) {
 		failedToOpenTransport()
-		delegate?.device(self, didFailToOpenWithError: error)
 	}
 
 	func deviceTransportDidOpen(transport: DeviceTransport) {
 		openedTransport()
-		delegate?.deviceDidOpen(self)
 	}
 
 	func deviceTransportHandleData(transport: DeviceTransport, data: NSData) {
