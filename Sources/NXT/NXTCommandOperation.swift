@@ -7,10 +7,22 @@
 
 import Foundation
 
+public typealias NXTCommandHandler = (NXTCommandResult) -> ()
+
+public enum NXTCommandError {
+	case TransportError(ErrorType)
+	case CommandError(NXTStatus)
+}
+
+public enum NXTCommandResult {
+	case Error(NXTCommandError)
+	case Response(NXTResponse)
+}
+
 final class NXTCommandOperation: NSOperation {
 	private let transport: DeviceTransport
 	private let command: NXTCommand
-	private let responseHandler: NXTResponseHandler?
+	private let responseHandler: NXTCommandHandler
 
 	private let isExecuting = AtomicBool()
 	private let isFinished = AtomicBool()
@@ -35,7 +47,7 @@ final class NXTCommandOperation: NSOperation {
 		didChangeValueForKey("isFinished")
 	}
 
-	init(transport: DeviceTransport, command: NXTCommand, responseHandler: NXTResponseHandler?) {
+	init(transport: DeviceTransport, command: NXTCommand, responseHandler: NXTCommandHandler) {
 		self.transport = transport
 		self.command = command
 		self.responseHandler = responseHandler
@@ -73,16 +85,19 @@ final class NXTCommandOperation: NSOperation {
 
 		do {
 			try transport.writeData(packet) { error in
-				// TODO: handle error
-				self.handleErrorResponse()
+				self.finishWithResult(.Error(.TransportError(error)))
 			}
 		} catch {
 			print("Cannot write packet data: \(error)")
-			handleErrorResponse()
+			finishWithResult(.Error(.TransportError(error)))
 		}
 	}
 
-	private func handleErrorResponse() {
+	private func finishWithResult(result: NXTCommandResult) {
+		dispatch_async(dispatch_get_main_queue()) {
+			self.responseHandler(result)
+		}
+
 		setExecuting(false)
 		setFinished(true)
 	}
@@ -108,16 +123,13 @@ final class NXTCommandOperation: NSOperation {
 			mainData = data
 		}
 
-		guard let response = command.responseType.init(data: mainData, userInfo: command.responseInfo) else {
+		guard let response = command.responseType.init(data: mainData, userInfo: command.responseInfo) as? NXTResponse else {
 			print("Could not parse a response")
 			setExecuting(false)
 			setFinished(true)
 			return
 		}
 
-		// Response handlers are optional.
-		responseHandler?(response)
-		setExecuting(false)
-		setFinished(true)
+		finishWithResult(response.status == .StatusSuccess ? .Response(response) : .Error(.CommandError(response.status)))
 	}
 }
