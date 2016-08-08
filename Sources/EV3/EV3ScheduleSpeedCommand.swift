@@ -33,7 +33,7 @@ public struct EV3ScheduleSpeedCommand: EV3DirectCommand {
 		mutableData.appendUInt8(EV3OpCode.OutputTimeSpeed.rawValue)
 		mutableData.appendUInt8(EV3Layer.ThisBrick.rawValue)
 		mutableData.appendUInt8(ports.rawValue)
-		mutableData.appendUInt8(unsafeBitCast(speed, UInt8.self))
+		mutableData.appendLC1(unsafeBitCast(speed, UInt8.self))
 		mutableData.appendUInt32(time1)
 		mutableData.appendUInt32(time2)
 		mutableData.appendUInt32(time3)

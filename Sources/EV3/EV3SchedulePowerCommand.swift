@@ -31,7 +31,7 @@ public struct EV3SchedulePowerCommand: EV3DirectCommand {
 		mutableData.appendUInt8(EV3OpCode.OutputTimePower.rawValue)
 		mutableData.appendUInt8(EV3Layer.ThisBrick.rawValue)
 		mutableData.appendUInt8(ports.rawValue)
-		mutableData.appendUInt8(unsafeBitCast(power, UInt8.self))
+		mutableData.appendLC1(unsafeBitCast(power, UInt8.self))
 		mutableData.appendUInt32(time1)
 		mutableData.appendUInt32(time2)
 		mutableData.appendUInt32(time3)

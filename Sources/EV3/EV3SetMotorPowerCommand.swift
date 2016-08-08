@@ -25,7 +25,7 @@ public struct EV3SetMotorPowerCommand: EV3DirectCommand {
 		mutableData.appendUInt8(EV3OpCode.OutputPower.rawValue)
 		mutableData.appendUInt8(EV3Layer.ThisBrick.rawValue)
 		mutableData.appendUInt8(ports.rawValue)
-		mutableData.appendUInt8(unsafeBitCast(power, UInt8.self))
+		mutableData.appendLC1(unsafeBitCast(power, UInt8.self))
 
 		return mutableData.copy() as! NSData
 	}
