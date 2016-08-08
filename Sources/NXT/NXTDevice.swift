@@ -29,10 +29,6 @@ public final class NXTDevice: Device {
 			NSOperationQueue.mainQueue().addOperationWithBlock(handler)
 		})
 
-		for operation in operationQueue.operations {
-			blockOperation.addDependency(operation)
-		}
-
 		operationQueue.addOperation(blockOperation)
 	}
 
