@@ -117,7 +117,10 @@ final class EV3CommandGroupOperation: NSOperation {
 	}
 
 	private func finishWithResult(result: EV3CommandResult) {
-		responseHandler(result)
+		dispatch_async(dispatch_get_main_queue()) {
+			self.responseHandler(result)
+		}
+
 		setExecuting(false)
 		setFinished(true)
 	}
