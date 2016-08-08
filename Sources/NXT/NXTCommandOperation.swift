@@ -14,7 +14,6 @@ final class NXTCommandOperation: NSOperation {
 
 	private let isExecuting = AtomicBool()
 	private let isFinished = AtomicBool()
-	private let isCancelled = AtomicBool()
 	
 	override var executing: Bool {
 		return isExecuting.get()
@@ -22,17 +21,6 @@ final class NXTCommandOperation: NSOperation {
 
 	override var finished: Bool {
 		return isFinished.get()
-	}
-
-	override var cancelled: Bool {
-		return isCancelled.get()
-	}
-
-	override func cancel() {
-		super.cancel()
-		setExecuting(false)
-		setFinished(false)
-		setCancelled(true)
 	}
 
 	private func setExecuting(value: Bool) {
@@ -45,12 +33,6 @@ final class NXTCommandOperation: NSOperation {
 		willChangeValueForKey("isFinished")
 		isFinished.set(value)
 		didChangeValueForKey("isFinished")
-	}
-
-	private func setCancelled(value: Bool) {
-		willChangeValueForKey("isCancelled")
-		isCancelled.set(value)
-		didChangeValueForKey("isCancelled")
 	}
 
 	init(transport: DeviceTransport, command: NXTCommand, responseHandler: NXTResponseHandler?) {
@@ -66,6 +48,10 @@ final class NXTCommandOperation: NSOperation {
 	}
 
 	override func start() {
+		if cancelled {
+			return
+		}
+		
 		guard NSThread.isMainThread() else {
 			dispatch_sync(dispatch_get_main_queue()) {
 				self.start()
