@@ -107,7 +107,7 @@ final class NXTCommandOperation: NSOperation {
 	}
 
 	func canHandleResponseData(data: NSData) -> Bool {
-		return true
+		return !cancelled
 	}
 
 	func handleResponseData(data: NSData) {

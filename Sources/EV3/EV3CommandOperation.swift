@@ -130,6 +130,10 @@ final class EV3CommandGroupOperation: NSOperation {
 	}
 
 	func canHandleResponseData(data: NSData) -> Bool {
+		if cancelled {
+			return false
+		}
+
 		guard let (_, messageCounter, _) = processGenericResponseForData(data) else {
 			return false
 		}
