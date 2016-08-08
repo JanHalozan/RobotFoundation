@@ -12,6 +12,10 @@ public enum EV3ReplyType: UInt8 {
 	case SystemSuccess = 0x3
 	case Error = 0x4
 	case SystemError = 0x5
+
+	var isError: Bool {
+		return self == .Error || self == .SystemError
+	}
 }
 
 public enum EV3SystemReturnStatus: UInt8 {

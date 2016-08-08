@@ -11,7 +11,6 @@ import Foundation
 /// Consists of one or more EV3Responses for command groups.
 public struct EV3ResponseGroup {
 	public let length: UInt16
-	public let replyType: EV3ReplyType
 	public let messageCounter: UInt16
 
 	public let responses: [EV3Response]
@@ -20,9 +19,8 @@ public struct EV3ResponseGroup {
 		return responses[0]
 	}
 
-	public init(length: UInt16, replyType: EV3ReplyType, messageCounter: UInt16, responses: [EV3Response]) {
+	public init(length: UInt16, messageCounter: UInt16, responses: [EV3Response]) {
 		self.length = length
-		self.replyType = replyType
 		self.messageCounter = messageCounter
 		self.responses = responses
 	}

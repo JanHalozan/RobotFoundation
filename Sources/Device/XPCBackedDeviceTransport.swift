@@ -118,16 +118,19 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
 		}
 	}
 
-	override func writeData(data: NSData, errorHandler: () -> ()) throws {
+	override func writeData(data: NSData, errorHandler: (ErrorType) -> ()) throws {
 		accessConnection({
 			print("Tried to write to a device even though we have no XPC connection.")
 		}) { connection in
 			guard let proxy = connection.remoteObjectProxyWithErrorHandler({ error in
 				print("Failed to communicate with the XPC transport service during write: \(error)")
 				dispatch_async(dispatch_get_main_queue()) {
-					errorHandler()
+					errorHandler(kIOReturnNoMedia)
 				}
 			}) as? XPCTransportServiceProtocol else {
+				dispatch_async(dispatch_get_main_queue()) {
+					errorHandler(kIOReturnNoMedia)
+				}
 				assertionFailure()
 				return false
 			}
@@ -136,7 +139,7 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
 				dispatch_async(dispatch_get_main_queue()) {
 					guard result == Int(kIOReturnSuccess) else {
 						print("An error occured during write (\(result)).")
-						errorHandler()
+						errorHandler(IOReturn(result))
 						return
 					}
 

@@ -14,8 +14,8 @@ private let kMaxBytes: UInt16 = 50
 // 64 bytes total is the max over Bluetooth, and there is a 6 byte header, so the max chunk is 58.
 private let kMaxChunk = 58
 
-public typealias NXTDeviceDownloadHandler = NSData -> ()
-public typealias NXTDeviceUploadHandler = Bool -> ()
+public typealias NXTDeviceDownloadHandler = (NSData?) -> ()
+public typealias NXTDeviceUploadHandler = (Bool) -> ()
 
 // Offers convenience API for "sequential" commands.
 extension NXTDevice {

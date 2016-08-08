@@ -72,9 +72,10 @@ final class NXTCommandOperation: NSOperation {
 		packet.appendData(data)
 
 		do {
-			try transport.writeData(packet, errorHandler: {
+			try transport.writeData(packet) { error in
+				// TODO: handle error
 				self.handleErrorResponse()
-			})
+			}
 		} catch {
 			print("Cannot write packet data: \(error)")
 			handleErrorResponse()

@@ -7,8 +7,8 @@
 
 import Foundation
 
-public typealias EV3DeviceDownloadHandler = NSData -> ()
-public typealias EV3DeviceUploadHandler = Bool -> ()
+public typealias EV3DeviceDownloadHandler = (NSData?) -> ()
+public typealias EV3DeviceUploadHandler = (Bool) -> ()
 
 private let kDownloadChunkSize = 1000
 
@@ -40,9 +40,13 @@ extension EV3Device {
 			}
 
 			let command = EV3WriteChainedCommand(path: path, data: chunk, type: type)
-			enqueueCommand(command) { responseGroup in
-				if responseGroup.replyType == .Error {
+			enqueueCommand(command) { result in
+				assert(NSThread.isMainThread())
+				switch result {
+				case .Error:
 					anyFailed = true
+				case .ResponseGroup:
+					break
 				}
 			}
 		}
@@ -55,23 +59,30 @@ extension EV3Device {
 	public func downloadFileAtPath(path: String, handler: EV3DeviceDownloadHandler) {
 		// Try to read more than we might have. We'll sort it out later.
 		let command = EV3ReadFileCommand(path: path, bytesToRead: UInt16(kDownloadChunkSize))
-		enqueueCommand(command) { responseGroup in
-			guard let listingResponse = responseGroup.firstResponse as? EV3FileResponse else {
-				assertionFailure()
-				return
-			}
+		enqueueCommand(command) { result in
+			switch result {
+			case .Error:
+				handler(nil)
+			case .ResponseGroup(let responseGroup):
+				guard let listingResponse = responseGroup.firstResponse as? EV3FileResponse else {
+					handler(nil)
+					assertionFailure()
+					return
+				}
 
-			let fileSize = Int(listingResponse.fileSize)
+				let fileSize = Int(listingResponse.fileSize)
 
-			if listingResponse.returnStatus == .EndOfFile {
-				assert(fileSize <= kDownloadChunkSize)
-				handler(listingResponse.data.subdataWithRange(NSMakeRange(0, fileSize)))
-			} else if listingResponse.returnStatus == .Success {
-				// We finished reading but there is more!
-				assert(fileSize > kDownloadChunkSize)
-				self.continueFileDownloadWithHandle(listingResponse.handle, dataSoFar: listingResponse.data, bytesLeft: fileSize - kDownloadChunkSize, handler: handler)
-			} else {
-				assertionFailure()
+				if listingResponse.returnStatus == .EndOfFile {
+					assert(fileSize <= kDownloadChunkSize)
+					handler(listingResponse.data.subdataWithRange(NSMakeRange(0, fileSize)))
+				} else if listingResponse.returnStatus == .Success {
+					// We finished reading but there is more!
+					assert(fileSize > kDownloadChunkSize)
+					self.continueFileDownloadWithHandle(listingResponse.handle, dataSoFar: listingResponse.data, bytesLeft: fileSize - kDownloadChunkSize, handler: handler)
+				} else {
+					handler(nil)
+					assertionFailure()
+				}
 			}
 		}
 	}
@@ -79,23 +90,30 @@ extension EV3Device {
 	private func continueFileDownloadWithHandle(handle: UInt8, dataSoFar: NSData, bytesLeft: Int, handler: EV3DeviceDownloadHandler) {
 		let bytesToReadNow = min(bytesLeft, kDownloadChunkSize)
 		let continueCommand = EV3ContinueReadFileCommand(handle: handle, bytesToRead: UInt16(bytesToReadNow))
-		enqueueCommand(continueCommand) { responseGroup in
-			guard let listingResponse = responseGroup.firstResponse as? EV3ContinueFileResponse else {
-				assertionFailure()
-				return
-			}
+		enqueueCommand(continueCommand) { result in
+			switch result {
+			case .Error:
+				handler(nil)
+			case .ResponseGroup(let responseGroup):
+				guard let listingResponse = responseGroup.firstResponse as? EV3ContinueFileResponse else {
+					handler(nil)
+					assertionFailure()
+					return
+				}
 
-			if listingResponse.returnStatus == .EndOfFile {
-				assert(listingResponse.data.length == bytesToReadNow)
-				let newDataSoFar = dataSoFar.dataByAppendingData(listingResponse.data)
-				handler(newDataSoFar)
-			} else if listingResponse.returnStatus == .Success {
-				// We finished reading but there is more!
-				assert(listingResponse.data.length == bytesToReadNow)
-				let newDataSoFar = dataSoFar.dataByAppendingData(listingResponse.data)
-				self.continueFileDownloadWithHandle(listingResponse.handle, dataSoFar: newDataSoFar, bytesLeft: bytesLeft - bytesToReadNow, handler: handler)
-			} else {
-				assertionFailure()
+				if listingResponse.returnStatus == .EndOfFile {
+					assert(listingResponse.data.length == bytesToReadNow)
+					let newDataSoFar = dataSoFar.dataByAppendingData(listingResponse.data)
+					handler(newDataSoFar)
+				} else if listingResponse.returnStatus == .Success {
+					// We finished reading but there is more!
+					assert(listingResponse.data.length == bytesToReadNow)
+					let newDataSoFar = dataSoFar.dataByAppendingData(listingResponse.data)
+					self.continueFileDownloadWithHandle(listingResponse.handle, dataSoFar: newDataSoFar, bytesLeft: bytesLeft - bytesToReadNow, handler: handler)
+				} else {
+					handler(nil)
+					assertionFailure()
+				}
 			}
 		}
 	}

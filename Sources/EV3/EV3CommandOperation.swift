@@ -7,7 +7,24 @@
 
 import Foundation
 
-public typealias EV3ResponseHandler = EV3ResponseGroup -> ()
+public enum EV3ResponseError: ErrorType {
+	case IncompleteResponse
+	case InvalidHeader
+	case InvalidPayload
+}
+
+public enum EV3CommandError {
+	case TransportError(ErrorType)
+	case ResponseError(ErrorType)
+	case CommandError
+}
+
+public enum EV3CommandResult {
+	case Error(EV3CommandError)
+	case ResponseGroup(EV3ResponseGroup)
+}
+
+public typealias EV3ResponseHandler = (EV3CommandResult) -> ()
 
 private func toDirectCommands(commands: [EV3Command]) -> [EV3DirectCommand] {
 	var directCommands = [EV3DirectCommand]()
@@ -25,7 +42,7 @@ private func toDirectCommands(commands: [EV3Command]) -> [EV3DirectCommand] {
 final class EV3CommandGroupOperation: NSOperation {
 	private let transport: DeviceTransport
 	private let commands: [EV3Command]
-	private let responseHandler: EV3ResponseHandler?
+	private let responseHandler: EV3ResponseHandler
 	private let messageIndex: UInt16
 
 	private static var messageCounter = UInt16()
@@ -33,7 +50,7 @@ final class EV3CommandGroupOperation: NSOperation {
 	private let isExecuting = AtomicBool()
 	private let isFinished = AtomicBool()
 
-	init(transport: DeviceTransport, commands: [EV3Command], responseHandler: EV3ResponseHandler?) {
+	init(transport: DeviceTransport, commands: [EV3Command], responseHandler: EV3ResponseHandler) {
 		self.transport = transport
 		self.commands = commands
 		self.responseHandler = responseHandler
@@ -90,16 +107,17 @@ final class EV3CommandGroupOperation: NSOperation {
 		// TODO: actually increment the message counter
 
 		do {
-			try transport.writeData(data) {
-				self.handleErrorResponse()
+			try transport.writeData(data) { error in
+				self.finishWithResult(.Error(.TransportError(error)))
 			}
 		} catch {
 			print("Cannot write packet data: \(error)")
-			handleErrorResponse()
+			finishWithResult(.Error(.TransportError(error)))
 		}
 	}
 
-	private func handleErrorResponse() {
+	private func finishWithResult(result: EV3CommandResult) {
+		responseHandler(result)
 		setExecuting(false)
 		setFinished(true)
 	}
@@ -116,16 +134,14 @@ final class EV3CommandGroupOperation: NSOperation {
 		assert(NSThread.isMainThread())
 
 		guard data.length >= 5 else {
-			debugPrint("Responses should be at least 5 in length")
-			setExecuting(false)
-			setFinished(true)
+			print("Responses should be at least 5 bytes in length")
+			finishWithResult(.Error(.ResponseError(EV3ResponseError.IncompleteResponse)))
 			return
 		}
 
 		guard let (length, messageCounter, replyType) = processGenericResponseForData(data) else {
-			debugPrint("Could not parse the generic response header")
-			setExecuting(false)
-			setFinished(true)
+			print("Could not parse the generic response header")
+			finishWithResult(.Error(.ResponseError(EV3ResponseError.InvalidHeader)))
 			return
 		}
 
@@ -138,8 +154,7 @@ final class EV3CommandGroupOperation: NSOperation {
 		for command in commands {
 			guard let response = command.responseType.init(data: restOfData, userInfo: command.responseInfo) as? EV3Response else {
 				print("Could not parse a response")
-				setExecuting(false)
-				setFinished(true)
+				finishWithResult(.Error(.ResponseError(EV3ResponseError.InvalidPayload)))
 				return
 			}
 
@@ -148,12 +163,7 @@ final class EV3CommandGroupOperation: NSOperation {
 			restOfData = restOfData.subdataWithRange(NSMakeRange(response.responseLength, restOfData.length - response.responseLength))
 		}
 
-		let responseGroup = EV3ResponseGroup(length: length, replyType: replyType, messageCounter: messageCounter, responses: responses)
-
-		// Response handlers are optional.
-		responseHandler?(responseGroup)
-
-		setExecuting(false)
-		setFinished(true)
+		let responseGroup = EV3ResponseGroup(length: length, messageCounter: messageCounter, responses: responses)
+		finishWithResult(replyType.isError ? .Error(.CommandError) : .ResponseGroup(responseGroup))
 	}
 }
