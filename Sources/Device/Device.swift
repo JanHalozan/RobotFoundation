@@ -49,6 +49,7 @@ public class Device: DeviceTransportDelegate {
 	}
 
 	func deviceTransport(transport: DeviceTransport, didFailToOpenWithError error: ErrorType) {
+		failedToOpenTransport()
 		delegate?.device(self, didFailToOpenWithError: error)
 	}
 
@@ -62,6 +63,10 @@ public class Device: DeviceTransportDelegate {
 	}
 
 	/* this is only for use by subclasses */
+	func failedToOpenTransport() {
+		// no-op by default
+	}
+
 	func openedTransport() {
 		fatalError("Subclasses must override")
 	}

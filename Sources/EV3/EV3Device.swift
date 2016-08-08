@@ -20,6 +20,11 @@ public final class EV3Device: Device {
 	}
 
 	public func enqueueCommands(commands: [EV3Command], responseHandler: EV3ResponseHandler) {
+		if transport.openState == .Closed {
+			print("No open transport, won't bother enqueuing the commands.")
+			return
+		}
+		
 		// TODO: system commands cannot be grouped
 		let operation = EV3CommandGroupOperation(transport: transport, commands: commands, responseHandler: responseHandler)
 		operationQueue.addOperation(operation)
@@ -37,9 +42,17 @@ public final class EV3Device: Device {
 		operationQueue.addOperation(blockOperation)
 	}
 
+	private var activeOperations: Int {
+		var operationCount = 0
+		for operation in operationQueue.operations where !operation.cancelled {
+			operationCount += 1
+		}
+		return operationCount
+	}
+
 	public func waitForOperations() {
-		while operationQueue.operationCount > 0 {
-			NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate.distantFuture())
+		while activeOperations > 0 {
+			NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: .distantFuture())
 		}
 	}
 
@@ -51,6 +64,11 @@ public final class EV3Device: Device {
 				commandOperation.handleResponseData(data)
 			}
 		}
+	}
+
+	override func failedToOpenTransport() {
+		assert(NSThread.isMainThread())
+		operationQueue.cancelAllOperations()
 	}
 
 	override func openedTransport() {

@@ -30,23 +30,9 @@ final class EV3CommandGroupOperation: NSOperation {
 
 	private static var messageCounter = UInt16()
 
-	private var isExecuting = false {
-		willSet {
-			willChangeValueForKey("isExecuting")
-		}
-		didSet {
-			didChangeValueForKey("isExecuting")
-		}
-	}
-
-	private var isFinished = false {
-		willSet {
-			willChangeValueForKey("isFinished")
-		}
-		didSet {
-			didChangeValueForKey("isFinished")
-		}
-	}
+	private let isExecuting = AtomicBool()
+	private let isFinished = AtomicBool()
+	private let isCancelled = AtomicBool()
 
 	init(transport: DeviceTransport, commands: [EV3Command], responseHandler: EV3ResponseHandler?) {
 		self.transport = transport
@@ -57,20 +43,46 @@ final class EV3CommandGroupOperation: NSOperation {
 		super.init()
 	}
 
-	override var concurrent: Bool {
-		return true
-	}
-
 	override var executing: Bool {
-		return isExecuting
+		return isExecuting.get()
 	}
 
 	override var finished: Bool {
-		return isFinished
+		return isFinished.get()
+	}
+
+	override var cancelled: Bool {
+		return isCancelled.get()
 	}
 
 	override var ready: Bool {
+		assert(NSThread.isMainThread())
 		return super.ready && transport.openState == .Opened
+	}
+
+	override func cancel() {
+		super.cancel()
+		setExecuting(false)
+		setFinished(false)
+		setCancelled(true)
+	}
+
+	private func setExecuting(value: Bool) {
+		willChangeValueForKey("isExecuting")
+		isExecuting.set(value)
+		didChangeValueForKey("isExecuting")
+	}
+
+	private func setFinished(value: Bool) {
+		willChangeValueForKey("isFinished")
+		isFinished.set(value)
+		didChangeValueForKey("isFinished")
+	}
+
+	private func setCancelled(value: Bool) {
+		willChangeValueForKey("isCancelled")
+		isCancelled.set(value)
+		didChangeValueForKey("isCancelled")
 	}
 
 	override func start() {
@@ -81,7 +93,7 @@ final class EV3CommandGroupOperation: NSOperation {
 			return
 		}
 
-		isExecuting = true
+		setExecuting(true)
 
 		let data: NSData
 
@@ -109,8 +121,8 @@ final class EV3CommandGroupOperation: NSOperation {
 
 	private func handleErrorResponse() {
 		assert(NSThread.isMainThread())
-		isExecuting = false
-		isFinished = true
+		setExecuting(false)
+		setFinished(true)
 	}
 
 	func canHandleResponseData(data: NSData) -> Bool {
@@ -126,15 +138,15 @@ final class EV3CommandGroupOperation: NSOperation {
 
 		guard data.length >= 5 else {
 			debugPrint("Responses should be at least 5 in length")
-			isExecuting = false
-			isFinished = true
+			setExecuting(false)
+			setFinished(true)
 			return
 		}
 
 		guard let (length, messageCounter, replyType) = processGenericResponseForData(data) else {
 			debugPrint("Could not parse the generic response header")
-			isExecuting = false
-			isFinished = true
+			setExecuting(false)
+			setFinished(true)
 			return
 		}
 
@@ -147,8 +159,8 @@ final class EV3CommandGroupOperation: NSOperation {
 		for command in commands {
 			guard let response = command.responseType.init(data: restOfData, userInfo: command.responseInfo) as? EV3Response else {
 				print("Could not parse a response")
-				isExecuting = false
-				isFinished = true
+				setExecuting(false)
+				setFinished(true)
 				return
 			}
 
@@ -162,7 +174,7 @@ final class EV3CommandGroupOperation: NSOperation {
 		// Response handlers are optional.
 		responseHandler?(responseGroup)
 
-		isExecuting = false
-		isFinished = true
+		setExecuting(false)
+		setFinished(true)
 	}
 }
