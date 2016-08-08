@@ -32,7 +32,6 @@ final class EV3CommandGroupOperation: NSOperation {
 
 	private let isExecuting = AtomicBool()
 	private let isFinished = AtomicBool()
-	private let isCancelled = AtomicBool()
 
 	init(transport: DeviceTransport, commands: [EV3Command], responseHandler: EV3ResponseHandler?) {
 		self.transport = transport
@@ -51,20 +50,9 @@ final class EV3CommandGroupOperation: NSOperation {
 		return isFinished.get()
 	}
 
-	override var cancelled: Bool {
-		return isCancelled.get()
-	}
-
 	override var ready: Bool {
 		assert(NSThread.isMainThread())
 		return super.ready && transport.openState == .Opened
-	}
-
-	override func cancel() {
-		super.cancel()
-		setExecuting(false)
-		setFinished(false)
-		setCancelled(true)
 	}
 
 	private func setExecuting(value: Bool) {
@@ -79,13 +67,11 @@ final class EV3CommandGroupOperation: NSOperation {
 		didChangeValueForKey("isFinished")
 	}
 
-	private func setCancelled(value: Bool) {
-		willChangeValueForKey("isCancelled")
-		isCancelled.set(value)
-		didChangeValueForKey("isCancelled")
-	}
-
 	override func start() {
+		if cancelled {
+			return
+		}
+
 		guard NSThread.isMainThread() else {
 			dispatch_sync(dispatch_get_main_queue()) {
 				self.start()
