@@ -92,6 +92,8 @@ final class NXTCommandOperation: NSOperation {
 	}
 
 	func handleResponseData(data: NSData) {
+		assert(NSThread.isMainThread())
+
 		let mainData: NSData
 
 		// Bluetooth responses are padded with the length.
