@@ -23,8 +23,14 @@ enum DeviceTransportOpenState {
 	case Opened
 }
 
+extension DeviceTransportOpenState: Initializable {
+	init() {
+		self = .Closed
+	}
+}
+
 class DeviceTransport {
-	private(set) var openState = DeviceTransportOpenState.Closed
+	let openState = SimpleAtomic<DeviceTransportOpenState>()
 
 	weak var delegate: DeviceTransportDelegate?
 
@@ -58,15 +64,15 @@ class DeviceTransport {
 	func beganOpening() {
 		assert(NSThread.isMainThread())
 		
-		assert(openState == .Closed)
-		openState = .Opening
+		assert(openState.get() == .Closed)
+		openState.set(.Opening)
 	}
 	
 	func opened() {
 		assert(NSThread.isMainThread())
 
-		assert(openState == .Opening)
-		openState = .Opened
+		assert(openState.get() == .Opening)
+		openState.set(.Opened)
 
 		delegate?.deviceTransportDidOpen(self)
 	}
@@ -74,8 +80,8 @@ class DeviceTransport {
 	func failedToOpenWithError(error: ErrorType) {
 		assert(NSThread.isMainThread())
 
-		assert(openState == .Opening)
-		openState = .Closed
+		assert(openState.get() == .Opening)
+		openState.set(.Closed)
 
 		delegate?.deviceTransport(self, didFailToOpenWithError: error)
 	}
@@ -83,8 +89,8 @@ class DeviceTransport {
 	func closed() {
 		assert(NSThread.isMainThread())
 
-		assert(openState == .Opened)
-		openState = .Closed
+		assert(openState.get() == .Opened)
+		openState.set(.Closed)
 
 		delegate?.deviceTransportDidClose(self)
 	}

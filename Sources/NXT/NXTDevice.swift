@@ -15,7 +15,7 @@ public final class NXTDevice: Device {
 	}()
 
 	public func enqueueCommand(command: NXTCommand, responseHandler: NXTCommandHandler) {
-		if transport.openState == .Closed {
+		if transport.openState.get() == .Closed {
 			print("No open transport, won't bother enqueuing the command.")
 			responseHandler(.Error(.TransportError(kIOReturnAborted)))
 			return

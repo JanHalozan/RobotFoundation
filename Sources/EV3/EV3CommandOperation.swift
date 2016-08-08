@@ -47,8 +47,8 @@ final class EV3CommandGroupOperation: NSOperation {
 
 	private static var messageCounter = UInt16()
 
-	private let isExecuting = AtomicBool()
-	private let isFinished = AtomicBool()
+	private let isExecuting = SimpleAtomic<Bool>()
+	private let isFinished = SimpleAtomic<Bool>()
 
 	init(transport: DeviceTransport, commands: [EV3Command], responseHandler: EV3ResponseHandler) {
 		self.transport = transport
@@ -68,8 +68,8 @@ final class EV3CommandGroupOperation: NSOperation {
 	}
 
 	override var ready: Bool {
-		assert(NSThread.isMainThread())
-		return super.ready && (transport.openState == .Opened || transport.openState == .Closed)
+		let state = transport.openState.get()
+		return super.ready && (state == .Opened || state == .Closed)
 	}
 
 	private func setExecuting(value: Bool) {

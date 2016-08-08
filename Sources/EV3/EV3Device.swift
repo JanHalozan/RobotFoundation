@@ -20,7 +20,7 @@ public final class EV3Device: Device {
 	}
 
 	public func enqueueCommands(commands: [EV3Command], responseHandler: EV3ResponseHandler) {
-		if transport.openState == .Closed {
+		if transport.openState.get() == .Closed {
 			print("No open transport, won't bother enqueuing the commands.")
 			responseHandler(.Error(.TransportError(kIOReturnAborted)))
 			return

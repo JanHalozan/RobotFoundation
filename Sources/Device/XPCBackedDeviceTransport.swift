@@ -49,7 +49,7 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
 	override func open() throws {
 		assert(NSThread.isMainThread())
 
-		guard openState == .Closed else {
+		guard openState.get() == .Closed else {
 			return
 		}
 

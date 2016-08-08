@@ -24,8 +24,8 @@ final class NXTCommandOperation: NSOperation {
 	private let command: NXTCommand
 	private let responseHandler: NXTCommandHandler
 
-	private let isExecuting = AtomicBool()
-	private let isFinished = AtomicBool()
+	private let isExecuting = SimpleAtomic<Bool>()
+	private let isFinished = SimpleAtomic<Bool>()
 	
 	override var executing: Bool {
 		return isExecuting.get()
@@ -55,8 +55,8 @@ final class NXTCommandOperation: NSOperation {
 	}
 
 	override var ready: Bool {
-		assert(NSThread.isMainThread())
-		return super.ready && (transport.openState == .Opened || transport.openState == .Closed)
+		let state = transport.openState.get()
+		return super.ready && (state == .Opened || state == .Closed)
 	}
 
 	override func start() {

@@ -263,8 +263,8 @@
 		C9C561251C2E1FC700E61C28 /* EV3HandleDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C561231C2E1FC700E61C28 /* EV3HandleDataResponse.swift */; };
 		C9C561281C2E21F700E61C28 /* EV3DisplayFramebuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C561271C2E21F700E61C28 /* EV3DisplayFramebuffer.swift */; };
 		C9C561291C2E21F700E61C28 /* EV3DisplayFramebuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C561271C2E21F700E61C28 /* EV3DisplayFramebuffer.swift */; };
-		C9CD0CEE1D580D5A00584574 /* AtomicBool.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CD0CED1D580D5A00584574 /* AtomicBool.swift */; };
-		C9CD0CEF1D580D5A00584574 /* AtomicBool.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CD0CED1D580D5A00584574 /* AtomicBool.swift */; };
+		C9CD0CEE1D580D5A00584574 /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CD0CED1D580D5A00584574 /* Atomic.swift */; };
+		C9CD0CEF1D580D5A00584574 /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CD0CED1D580D5A00584574 /* Atomic.swift */; };
 		C9CFFC291C2F393800E75768 /* HIDDeviceTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CFFC281C2F393800E75768 /* HIDDeviceTransport.swift */; };
 		C9CFFC2A1C2F393800E75768 /* HIDDeviceTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CFFC281C2F393800E75768 /* HIDDeviceTransport.swift */; };
 		C9CFFC2C1C2F3A8200E75768 /* XPCTransportServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CFFC2B1C2F3A8200E75768 /* XPCTransportServiceProtocol.swift */; };
@@ -496,7 +496,7 @@
 		C9C128DC1D1FD8A6001D1EFD /* EV3SensorTypeModeResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3SensorTypeModeResponse.swift; sourceTree = "<group>"; };
 		C9C561231C2E1FC700E61C28 /* EV3HandleDataResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3HandleDataResponse.swift; sourceTree = "<group>"; };
 		C9C561271C2E21F700E61C28 /* EV3DisplayFramebuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3DisplayFramebuffer.swift; sourceTree = "<group>"; };
-		C9CD0CED1D580D5A00584574 /* AtomicBool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AtomicBool.swift; sourceTree = "<group>"; };
+		C9CD0CED1D580D5A00584574 /* Atomic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
 		C9CFFC281C2F393800E75768 /* HIDDeviceTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HIDDeviceTransport.swift; sourceTree = "<group>"; };
 		C9CFFC2B1C2F3A8200E75768 /* XPCTransportServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XPCTransportServiceProtocol.swift; sourceTree = "<group>"; };
 		C9CFFC3A1C2F542700E75768 /* BluetoothTransportService.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = BluetoothTransportService.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -749,7 +749,7 @@
 		C98C34B11C25D1F7006840C3 /* Device */ = {
 			isa = PBXGroup;
 			children = (
-				C9CD0CED1D580D5A00584574 /* AtomicBool.swift */,
+				C9CD0CED1D580D5A00584574 /* Atomic.swift */,
 				C98C34B81C25E00D006840C3 /* Device.swift */,
 				C98C34B41C25D28D006840C3 /* DeviceTransport.swift */,
 				C98C34B21C25D24B006840C3 /* IOBluetoothDeviceTransport.swift */,
@@ -1260,7 +1260,7 @@
 				C91ED1C11D01F8AE00AFCABB /* EV3FloatResponse.swift in Sources */,
 				C93AAEB11C553759008B7758 /* EV3DrawIconCommand.swift in Sources */,
 				C94C0CA81D1AD7120083220A /* EV3ScheduleSpeedCommand.swift in Sources */,
-				C9CD0CEE1D580D5A00584574 /* AtomicBool.swift in Sources */,
+				C9CD0CEE1D580D5A00584574 /* Atomic.swift in Sources */,
 				C98C34CF1C25F644006840C3 /* EV3CommandSerialization.swift in Sources */,
 				C9B138771C2B09650018812F /* EV3ListFilesCommand.swift in Sources */,
 				C94751731C54056200A30AA6 /* EV3DrawTextCommand.swift in Sources */,
@@ -1416,7 +1416,7 @@
 				C91ED1C21D01F8AE00AFCABB /* EV3FloatResponse.swift in Sources */,
 				C93AAEB21C553759008B7758 /* EV3DrawIconCommand.swift in Sources */,
 				C94C0CA91D1AD7120083220A /* EV3ScheduleSpeedCommand.swift in Sources */,
-				C9CD0CEF1D580D5A00584574 /* AtomicBool.swift in Sources */,
+				C9CD0CEF1D580D5A00584574 /* Atomic.swift in Sources */,
 				C98C35161C26544D006840C3 /* NXTFileResponse.swift in Sources */,
 				C9B138781C2B09650018812F /* EV3ListFilesCommand.swift in Sources */,
 				C94751741C54056200A30AA6 /* EV3DrawTextCommand.swift in Sources */,
