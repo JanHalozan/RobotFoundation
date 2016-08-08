@@ -90,9 +90,9 @@ final class EV3CommandGroupOperation: NSOperation {
 		// TODO: actually increment the message counter
 
 		do {
-			try transport.writeData(data, errorHandler: {
+			try transport.writeData(data) {
 				self.handleErrorResponse()
-			})
+			}
 		} catch {
 			print("Cannot write packet data: \(error)")
 			handleErrorResponse()
