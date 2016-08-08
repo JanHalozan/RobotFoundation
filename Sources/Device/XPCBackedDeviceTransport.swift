@@ -73,21 +73,17 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
 		}) { connection in
 			guard let proxy = connection.remoteObjectProxyWithErrorHandler({ error in
 				print("Failed to communicate with the XPC transport service during open: \(error)")
-				dispatch_async(dispatch_get_main_queue()) {
-					self.failedToOpenWithError(kIOReturnNotFound)
-				}
+				self.failedToOpenWithError(kIOReturnNotFound)
 			}) as? XPCTransportServiceProtocol else {
 				assertionFailure()
 				return false
 			}
 
 			proxy.open(self.identifier) { result in
-				dispatch_async(dispatch_get_main_queue()) {
-					if result == Int(kIOReturnSuccess) {
-						self.opened()
-					} else {
-						self.failedToOpenWithError(IOReturn(result))
-					}
+				if result == Int(kIOReturnSuccess) {
+					self.opened()
+				} else {
+					self.failedToOpenWithError(IOReturn(result))
 				}
 			}
 
@@ -106,9 +102,7 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
 
 			proxy.close(self.identifier) { result in
 				if result == Int(kIOReturnSuccess) {
-					dispatch_async(dispatch_get_main_queue()) {
-						self.closed()
-					}
+					self.closed()
 				} else {
 					print("Transport close failed with code: \(result)")
 				}
@@ -124,27 +118,21 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
 		}) { connection in
 			guard let proxy = connection.remoteObjectProxyWithErrorHandler({ error in
 				print("Failed to communicate with the XPC transport service during write: \(error)")
-				dispatch_async(dispatch_get_main_queue()) {
-					errorHandler(kIOReturnNoMedia)
-				}
+				errorHandler(kIOReturnNoMedia)
 			}) as? XPCTransportServiceProtocol else {
-				dispatch_async(dispatch_get_main_queue()) {
-					errorHandler(kIOReturnNoMedia)
-				}
+				errorHandler(kIOReturnNoMedia)
 				assertionFailure()
 				return false
 			}
 
 			proxy.writeData(data, identifier: self.identifier) { result in
-				dispatch_async(dispatch_get_main_queue()) {
-					guard result == Int(kIOReturnSuccess) else {
-						print("An error occured during write (\(result)).")
-						errorHandler(IOReturn(result))
-						return
-					}
-
-					self.wroteData()
+				guard result == Int(kIOReturnSuccess) else {
+					print("An error occured during write (\(result)).")
+					errorHandler(IOReturn(result))
+					return
 				}
+
+				self.wroteData()
 			}
 
 			return true
@@ -161,11 +149,9 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
 			}
 
 			proxy.scheduleRead(self.identifier, handler: { result in
-				dispatch_async(dispatch_get_main_queue()) {
-					guard result == Int(kIOReturnSuccess) else {
-						print("An error occured while scheduling a read (\(result)).")
-						return
-					}
+				guard result == Int(kIOReturnSuccess) else {
+					print("An error occured while scheduling a read (\(result)).")
+					return
 				}
 			})
 
@@ -174,9 +160,7 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
 	}
 
 	@objc func handleTransportData(data: NSData) {
-		dispatch_async(dispatch_get_main_queue()) {
-			self.handleData(data)
-		}
+		self.handleData(data)
 	}
 
 	override func closed() {

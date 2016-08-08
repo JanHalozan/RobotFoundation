@@ -52,25 +52,19 @@ class DeviceTransport {
 
 	/* these methods should only be called by subclasses to invoke delegate methods */
 	func wroteData() {
-		assert(NSThread.isMainThread())
 		delegate?.deviceTransportDidWriteData(self)
 	}
 
 	func handleData(data: NSData) {
-		assert(NSThread.isMainThread())
 		delegate?.deviceTransportHandleData(self, data: data)
 	}
 
 	func beganOpening() {
-		assert(NSThread.isMainThread())
-		
 		assert(openState.get() == .Closed)
 		openState.set(.Opening)
 	}
 	
 	func opened() {
-		assert(NSThread.isMainThread())
-
 		assert(openState.get() == .Opening)
 		openState.set(.Opened)
 
@@ -78,8 +72,6 @@ class DeviceTransport {
 	}
 
 	func failedToOpenWithError(error: ErrorType) {
-		assert(NSThread.isMainThread())
-
 		assert(openState.get() == .Opening)
 		openState.set(.Closed)
 
@@ -87,8 +79,6 @@ class DeviceTransport {
 	}
 
 	func closed() {
-		assert(NSThread.isMainThread())
-
 		assert(openState.get() == .Opened)
 		openState.set(.Closed)
 
