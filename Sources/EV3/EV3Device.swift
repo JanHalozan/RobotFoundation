@@ -15,22 +15,21 @@ public final class EV3Device: Device {
 		return operationQueue
 	}()
 
+	deinit {
+		waitForOperations()
+	}
+
 	public func enqueueCommand(command: EV3Command, responseHandler: EV3ResponseHandler) {
 		enqueueCommands([command], responseHandler: responseHandler)
 	}
 
 	public func enqueueCommands(commands: [EV3Command], responseHandler: EV3ResponseHandler) {
-		if transport.openState.get() == .Closed {
-			print("No open transport, won't bother enqueuing the commands.")
-			responseHandler(.Error(.TransportError(kIOReturnAborted)))
-			return
-		}
-		
 		// TODO: system commands cannot be grouped
 		let operation = EV3CommandGroupOperation(transport: transport, commands: commands, responseHandler: responseHandler)
 		operationQueue.addOperation(operation)
 	}
 
+	// TODO: consider removing
 	public func enqueueBarrier(handler: () -> ()) {
 		let blockOperation = NSBlockOperation(block: {
 			NSOperationQueue.mainQueue().addOperationWithBlock(handler)
@@ -63,22 +62,6 @@ public final class EV3Device: Device {
 				commandOperation.handleResponseData(data)
 			}
 		}
-	}
-
-	override func failedToOpenTransport() {
-		operationQueue.cancelAllOperations()
-	}
-
-	override func openedTransport() {
-		for operation in operationQueue.operations {
-			operation.willChangeValueForKey("isReady")
-			operation.didChangeValueForKey("isReady")
-		}
-	}
-
-	public override func close() {
-		waitForOperations()
-		super.close()
 	}
 }
 

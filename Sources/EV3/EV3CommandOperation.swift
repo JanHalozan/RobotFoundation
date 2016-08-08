@@ -67,11 +67,6 @@ final class EV3CommandGroupOperation: NSOperation {
 		return isFinished.get()
 	}
 
-	override var ready: Bool {
-		let state = transport.openState.get()
-		return super.ready && (state == .Opened || state == .Closed)
-	}
-
 	private func setExecuting(value: Bool) {
 		willChangeValueForKey("isExecuting")
 		isExecuting.set(value)

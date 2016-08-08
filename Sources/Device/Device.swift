@@ -10,21 +10,9 @@ import Foundation
 public class Device: DeviceTransportDelegate {
 	let transport: DeviceTransport
 
-	public var isOpen: Bool {
-		return transport.openState.get() == .Opened
-	}
-
 	init(transport: DeviceTransport) {
 		self.transport = transport
 		transport.delegate = self
-	}
-
-	public func open() throws {
-		try transport.open()
-	}
-
-	public func close() {
-		transport.close()
 	}
 
 	// MARK: - Device Transport Delegate
@@ -37,27 +25,11 @@ public class Device: DeviceTransportDelegate {
 		// TODO: should we do anything else here?
 	}
 
-	func deviceTransport(transport: DeviceTransport, didFailToOpenWithError error: ErrorType) {
-		failedToOpenTransport()
-	}
-
-	func deviceTransportDidOpen(transport: DeviceTransport) {
-		openedTransport()
-	}
-
 	func deviceTransportHandleData(transport: DeviceTransport, data: NSData) {
 		handleData(data)
 	}
 
 	/* this is only for use by subclasses */
-	func failedToOpenTransport() {
-		// no-op by default
-	}
-
-	func openedTransport() {
-		fatalError("Subclasses must override")
-	}
-
 	func wroteData() {
 		// no-op by default
 	}

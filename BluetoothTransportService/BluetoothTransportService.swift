@@ -37,6 +37,7 @@ protocol BluetoothTransportServiceDelegate: class {
 final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, IOBluetoothRFCOMMChannelDelegate {
 	private var state: BluetoothState = .Ready
 	private var channel: IOBluetoothRFCOMMChannel?
+	private var awaitingDeferredClose = false
 
 	private var connectingChannels = Set<IOBluetoothRFCOMMChannel>()
 
@@ -52,7 +53,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		self.delegate = delegate
 	}
 
-	func open(identifier: NSString, handler: Int -> ()) {
+	private func open(identifier: NSString, handler: Int -> ()) -> Bool {
 		let semaphore = dispatch_semaphore_create(0)
 
 		var openState = BluetoothAsyncOpenState.Error(Int(kIOReturnInvalid))
@@ -72,11 +73,10 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 
 		switch openState {
 		case .AlreadyConnected:
-			handler(Int(kIOReturnSuccess))
-			return
+			return true
 		case .Error(let errorCode):
 			handler(errorCode)
-			return
+			return false
 		case .AlreadyOpening:
 			// continue on
 			break
@@ -87,7 +87,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 
 		guard dispatch_semaphore_wait(semaphore, tenSecondTimeout()) == 0 else {
 			handler(Int(kIOReturnTimeout))
-			return
+			return false
 		}
 
 		dispatch_sync(dispatch_get_main_queue()) {
@@ -98,28 +98,63 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 
 		guard let openStatus = openStatus else {
 			handler(Int(kIOReturnNotFound))
-			return
+			return false
 		}
 
-		if openStatus == kIOReturnSuccess {
-			// We actually did it.
-			dispatch_sync(dispatch_get_main_queue()) {
-				switch self.state {
-				case .Opening(let device):
-					self.state = .Open(device)
-					self.activeClients += 1
-				case .Open:
-					self.activeClients += 1
-				default:
-					assertionFailure()
+		if openStatus != kIOReturnSuccess {
+			handler(Int(openStatus))
+			return false
+		}
+
+		// We actually did it.
+		dispatch_sync(dispatch_get_main_queue()) {
+			switch self.state {
+			case .Opening(let device):
+				self.state = .Open(device)
+				self.activeClients += 1
+			case .Open:
+				self.activeClients += 1
+			default:
+				assertionFailure()
+			}
+		}
+
+		return true
+	}
+
+	private func actuallyOpenWithIdentifier(identifier: NSString) -> BluetoothAsyncOpenState {
+		if awaitingDeferredClose {
+			switch state {
+			case .Ready:
+				assertionFailure()
+				// Continue as usual.
+			case .Open(let device):
+				if device.addressString == identifier {
+					// Just don't close!
+					cancelDeferredClose()
+					activeClients += 1
+					return .AlreadyConnected
+				}
+				else {
+					// Close now and open the new device.
+					cancelDeferredClose()
+					deferredClose()
+				}
+			case .Opening(let device):
+				if device.addressString == identifier {
+					// Just don't close!
+					cancelDeferredClose()
+					activeClients += 1
+					return .AlreadyOpening
+				}
+				else {
+					// Close now and open the new device.
+					cancelDeferredClose()
+					deferredClose()
 				}
 			}
 		}
 
-		handler(Int(openStatus))
-	}
-
-	private func actuallyOpenWithIdentifier(identifier: NSString) -> BluetoothAsyncOpenState {
 		switch state {
 		case .Ready:
 			assert(activeClients == 0)
@@ -157,63 +192,74 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		return .Opening
 	}
 
-	func close(identifier: NSString, handler: Int -> ()) {
+	func close(identifier: NSString) {
 		dispatch_sync(dispatch_get_main_queue()) {
-			self.actuallyCloseWithIdentifier(identifier, handler: handler)
+			self.actuallyCloseWithIdentifier(identifier)
 		}
 	}
 
-	private func actuallyCloseWithIdentifier(identifier: NSString, handler: Int -> ()) {
+	private func actuallyCloseWithIdentifier(identifier: NSString) {
 		assert(NSThread.isMainThread())
 
 		switch state {
 		case .Ready:
 			debugPrint("No open device; nothing to close.")
-			handler(Int(kIOReturnNotOpen))
 			return
 		case .Open(let device):
 			if device.addressString != identifier {
 				debugPrint("Device mismatch.")
-				handler(Int(kIOReturnInternalError))
 				return
 			}
-			break
 		case .Opening(let device):
 			if device.addressString != identifier {
 				debugPrint("Device mismatch.")
-				handler(Int(kIOReturnInternalError))
 				return
 			}
-			break
 		}
 
 		activeClients -= 1
 		assert(activeClients >= 0)
 
 		if activeClients == 0 {
-			assert(channel != nil)
-			channel?.closeChannel()
-			channel = nil
+			// Schedule a deferred close.
+			awaitingDeferredClose = true
 
-			switch state {
-			case .Open(let device):
-				device.closeConnection()
-				break
-			case .Opening(let device):
-				device.closeConnection()
-				break
-			case .Ready:
-				assertionFailure()
-				break
-			}
+			BluetoothTransportService.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(deferredClose), object: nil)
+			performSelector(#selector(deferredClose), withObject: nil, afterDelay: 10)
+		}
+	}
 
-			state = .Ready
+	private func cancelDeferredClose() {
+		assert(NSThread.isMainThread())
+		BluetoothTransportService.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(deferredClose), object: nil)
+		awaitingDeferredClose = false
+	}
+
+	@objc private func deferredClose() {
+		assert(NSThread.isMainThread())
+
+		assert(channel != nil)
+		channel?.closeChannel()
+		channel = nil
+
+		switch state {
+		case .Open(let device):
+			device.closeConnection()
+		case .Opening(let device):
+			device.closeConnection()
+		case .Ready:
+			assertionFailure()
 		}
 
-		handler(Int(kIOReturnSuccess))
+		state = .Ready
+		awaitingDeferredClose = false
 	}
 
 	func writeData(data: NSData, identifier: NSString, handler: Int -> ()) {
+		if !open(identifier, handler: handler) {
+			return
+		}
+
 		var writeState = BluetoothAsyncWriteState.Error(Int(kIOReturnInvalid))
 
 		let semaphore = dispatch_semaphore_create(0)
@@ -245,6 +291,8 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		dispatch_sync(dispatch_get_main_queue()) {
 			self.writeStatus = nil
 		}
+
+		close(identifier)
 
 		handler(Int(writeStatus))
 	}

@@ -46,15 +46,7 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
 		}
 	}
 
-	override func open() throws {
-		assert(NSThread.isMainThread())
-
-		guard openState.get() == .Closed else {
-			return
-		}
-
-		beganOpening()
-
+	override func writeData(data: NSData, errorHandler: (ErrorType) -> ()) throws {
 		dispatch_barrier_async(connectionQueue) {
 			if self.serviceConnection != nil {
 				return
@@ -68,51 +60,6 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
 			self.serviceConnection = connection
 		}
 
-		accessConnection({
-			// no need, we just created one.
-		}) { connection in
-			guard let proxy = connection.remoteObjectProxyWithErrorHandler({ error in
-				print("Failed to communicate with the XPC transport service during open: \(error)")
-				self.failedToOpenWithError(kIOReturnNotFound)
-			}) as? XPCTransportServiceProtocol else {
-				assertionFailure()
-				return false
-			}
-
-			proxy.open(self.identifier) { result in
-				if result == Int(kIOReturnSuccess) {
-					self.opened()
-				} else {
-					self.failedToOpenWithError(IOReturn(result))
-				}
-			}
-
-			return true
-		}
-	}
-
-	override func close() {
-		accessConnection({
-			print("Tried to close a device even though we have no XPC connection.")
-		}) { connection in
-			guard let proxy = connection.remoteObjectProxy as? XPCTransportServiceProtocol else {
-				assertionFailure()
-				return false
-			}
-
-			proxy.close(self.identifier) { result in
-				if result == Int(kIOReturnSuccess) {
-					self.closed()
-				} else {
-					print("Transport close failed with code: \(result)")
-				}
-			}
-
-			return true
-		}
-	}
-
-	override func writeData(data: NSData, errorHandler: (ErrorType) -> ()) throws {
 		accessConnection({
 			print("Tried to write to a device even though we have no XPC connection.")
 		}) { connection in

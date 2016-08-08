@@ -14,6 +14,10 @@ public final class NXTDevice: Device {
 		return operationQueue
 	}()
 
+	deinit {
+		waitForOperations()
+	}
+
 	public func enqueueCommand(command: NXTCommand, responseHandler: NXTCommandHandler) {
 		if transport.openState.get() == .Closed {
 			print("No open transport, won't bother enqueuing the command.")
@@ -67,22 +71,5 @@ public final class NXTDevice: Device {
 		}
 
 		usbTransport.scheduleRead()
-	}
-
-	public override func close() {
-		waitForOperations()
-		super.close()
-	}
-
-	override func failedToOpenTransport() {
-		assert(NSThread.isMainThread())
-		operationQueue.cancelAllOperations()
-	}
-
-	override func openedTransport() {
-		for operation in operationQueue.operations {
-			operation.willChangeValueForKey("isReady")
-			operation.didChangeValueForKey("isReady")
-		}
 	}
 }

@@ -11,9 +11,6 @@ protocol DeviceTransportDelegate: class {
 	func deviceTransportDidWriteData(transport: DeviceTransport)
 	func deviceTransportHandleData(transport: DeviceTransport, data: NSData)
 
-	func deviceTransportDidOpen(transport: DeviceTransport)
-	func deviceTransport(transport: DeviceTransport, didFailToOpenWithError error: ErrorType)
-
 	func deviceTransportDidClose(transport: DeviceTransport)
 }
 
@@ -34,14 +31,6 @@ class DeviceTransport {
 
 	weak var delegate: DeviceTransportDelegate?
 
-	func open() throws {
-		fatalError("Must be overriden")
-	}
-
-	func close() {
-		fatalError("Must be overriden")
-	}
-
 	func writeData(data: NSData, errorHandler: (ErrorType) -> ()) throws {
 		fatalError("Must be overriden")
 	}
@@ -57,25 +46,6 @@ class DeviceTransport {
 
 	func handleData(data: NSData) {
 		delegate?.deviceTransportHandleData(self, data: data)
-	}
-
-	func beganOpening() {
-		assert(openState.get() == .Closed)
-		openState.set(.Opening)
-	}
-	
-	func opened() {
-		assert(openState.get() == .Opening)
-		openState.set(.Opened)
-
-		delegate?.deviceTransportDidOpen(self)
-	}
-
-	func failedToOpenWithError(error: ErrorType) {
-		assert(openState.get() == .Opening)
-		openState.set(.Closed)
-
-		delegate?.deviceTransport(self, didFailToOpenWithError: error)
 	}
 
 	func closed() {
