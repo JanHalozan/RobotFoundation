@@ -19,10 +19,6 @@ public class Device: DeviceTransportDelegate {
 		transport.delegate = self
 	}
 
-	deinit {
-		close()
-	}
-
 	public func open() throws {
 		try transport.open()
 	}
