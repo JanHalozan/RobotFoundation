@@ -31,7 +31,7 @@ public struct EV3ReadTouchSensorCommand: EV3DirectCommand {
 		mutableData.appendUInt8(EV3Layer.ThisBrick.rawValue)
 		mutableData.appendUInt8(port.rawValue)
 
-		mutableData.appendUInt8(EV3SensorType.KeepType.rawValue)
+		mutableData.appendUInt8(EV3SensorType.Touch.rawValue)
 		mutableData.appendUInt8(kEV3TouchSensorBooleanMode)
 		mutableData.appendGV2(offset)
 
