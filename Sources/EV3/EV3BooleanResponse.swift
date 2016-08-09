@@ -19,13 +19,22 @@ public struct EV3BooleanResponse: EV3Response {
 }
 
 public struct EV3BooleanSensorResponse: EV3Response {
-	public let value: Bool
+	public let value: Bool?
 
 	public let responseLength: Int
 
 	public init?(data: NSData, userInfo: [String : Any]) {
 		let byte = data.readUInt8AtIndex(0)
-		self.value = byte == 100 ? true : false
+
+		switch byte {
+		case 0:
+			value = false
+		case 100:
+			value = true
+		default:
+			value = nil
+		}
+		
 		responseLength = 1
 	}
 }
