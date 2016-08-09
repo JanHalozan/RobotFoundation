@@ -24,7 +24,8 @@ public struct EV3BooleanSensorResponse: EV3Response {
 	public let responseLength: Int
 
 	public init?(data: NSData, userInfo: [String : Any]) {
-		self.value = data.readUInt8AtIndex(0) > 50 ? true : false
+		let byte = data.readUInt8AtIndex(0)
+		self.value = byte == 100 ? true : false
 		responseLength = 1
 	}
 }
