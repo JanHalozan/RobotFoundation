@@ -15,6 +15,7 @@ protocol HIDTransportServiceDelegate: class {
 final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 	private var device: IOHIDDevice?
 	private var activeClients = 0
+	private var awaitingDeferredClose = false
 	private var inputReportBuffer = [UInt8](count: 1024, repeatedValue: 0)
 
 	private weak var delegate: HIDTransportServiceDelegate?
@@ -33,14 +34,31 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 		return IOHIDDeviceGetProperty(device, kIOHIDSerialNumberKey)?.takeUnretainedValue() as? String
 	}
 
-	func open(identifier: NSString, handler: Int -> ()) {
+	private func open(identifier: NSString, handler: Int -> ()) -> Bool {
+		var result = false
 		dispatch_sync(dispatch_get_main_queue()) {
-			self.actuallyOpenWithIdentifier(identifier, handler: handler)
+			result = self.actuallyOpenWithIdentifier(identifier, handler: handler)
 		}
+		return result
 	}
 
-	private func actuallyOpenWithIdentifier(identifier: NSString, handler: Int -> ()) {
+	private func actuallyOpenWithIdentifier(identifier: NSString, handler: Int -> ()) -> Bool {
 		assert(NSThread.isMainThread())
+
+		if awaitingDeferredClose {
+			if currentIdentifier == nil {
+				// Just go on and open.
+			} else if currentIdentifier! == identifier {
+				// Bring back the connection we have.
+				cancelDeferredClose()
+				activeClients += 1
+				return true
+			} else {
+				// Cancel immediately and re-open.
+				cancelDeferredClose()
+				deferredClose()
+			}
+		}
 
 		if currentIdentifier == nil {
 			assert(activeClients == 0)
@@ -48,17 +66,18 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 			let openResult = openNewDevice(identifier)
 			guard openResult == Int(kIOReturnSuccess) else {
 				handler(openResult)
-				return
+				return false
 			}
 
 			activeClients += 1
-			handler(Int(kIOReturnSuccess))
+			return true
 		} else if currentIdentifier! == identifier {
 			activeClients += 1
-			handler(Int(kIOReturnSuccess))
+			return true
 		} else {
-			debugPrint("Tried to open a device while one was already open.")
+			print("Tried to open a device while one was already open.")
 			handler(Int(kIOReturnStillOpen))
+			return false
 		}
 	}
 
@@ -91,6 +110,10 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 	}
 
 	func writeData(data: NSData, identifier: NSString, handler: Int -> ()) {
+		if !open(identifier, handler: handler) {
+			return
+		}
+
 		var result: IOReturn?
 
 		dispatch_sync(dispatch_get_main_queue()) {
@@ -102,6 +125,8 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 			handler(Int(kIOReturnInternalError))
 			return
 		}
+
+		close(identifier)
 
 		handler(Int(theResult))
 	}
@@ -134,24 +159,22 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 		delegate?.handleData(receivedData)
 	}
 
-	func close(identifier: NSString, handler: Int -> ()) {
+	private func close(identifier: NSString) {
 		dispatch_sync(dispatch_get_main_queue()) {
-			self.actuallyCloseWithIdentifier(identifier, handler: handler)
+			self.actuallyCloseWithIdentifier(identifier)
 		}
 	}
 
-	private func actuallyCloseWithIdentifier(identifier: NSString, handler: Int -> ()) {
+	private func actuallyCloseWithIdentifier(identifier: NSString) {
 		assert(NSThread.isMainThread())
 
 		guard let currentIdentifier = currentIdentifier else {
-			debugPrint("No open device; nothing to close.")
-			handler(Int(kIOReturnNotOpen))
+			print("No open device; nothing to close.")
 			return
 		}
 
 		guard currentIdentifier == identifier else {
-			debugPrint("Device mismatch.")
-			handler(Int(kIOReturnInternalError))
+			print("Device mismatch.")
 			return
 		}
 
@@ -159,16 +182,28 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 		assert(activeClients >= 0)
 
 		if activeClients == 0 {
-			if let existingDevice = device {
-				IOHIDDeviceClose(existingDevice, 0)
-			} else {
-				assertionFailure()
-			}
+			// Schedule a deferred close.
+			awaitingDeferredClose = true
 
-			device = nil
+			HIDTransportService.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(deferredClose), object: nil)
+			performSelector(#selector(deferredClose), withObject: nil, afterDelay: 10)
+		}
+	}
+
+	private func cancelDeferredClose() {
+		assert(NSThread.isMainThread())
+		HIDTransportService.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(deferredClose), object: nil)
+		awaitingDeferredClose = false
+	}
+
+	@objc private func deferredClose() {
+		if let existingDevice = device {
+			IOHIDDeviceClose(existingDevice, 0)
+		} else {
+			assertionFailure()
 		}
 
-		handler(Int(kIOReturnSuccess))
+		device = nil
 	}
 
 	func scheduleRead(identifier: NSString, handler: Int -> ()) {
