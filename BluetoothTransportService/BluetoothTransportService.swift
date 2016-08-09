@@ -192,7 +192,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		return .Opening
 	}
 
-	func close(identifier: NSString) {
+	private func close(identifier: NSString) {
 		dispatch_sync(dispatch_get_main_queue()) {
 			self.actuallyCloseWithIdentifier(identifier)
 		}
