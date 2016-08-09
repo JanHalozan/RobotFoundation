@@ -133,6 +133,9 @@ final class NXTCommandOperation: NSOperation {
 			return
 		}
 
-		finishWithResult(response.status == .StatusSuccess ? .Response(response) : .Error(.CommandError(response.status)))
+		// FIXME: FileNotFound is returned in cases where we get correct data but we're at the very end of a file or file listing.
+		// This is hacky, but it's safest/easiest to treat it as a successful response for now.
+		let succeeded = response.status == .StatusSuccess || response.status == .FileNotFound
+		finishWithResult(succeeded ? .Response(response) : .Error(.CommandError(response.status)))
 	}
 }
