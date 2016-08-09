@@ -52,7 +52,7 @@ public final class EV3Device: Device {
 
 	public func waitForOperations() {
 		while activeOperations > 0 {
-			NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: .distantFuture())
+			NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate(timeIntervalSinceNow: 1))
 		}
 	}
 
