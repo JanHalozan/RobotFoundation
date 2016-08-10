@@ -22,6 +22,7 @@ public final class EV3Device: Device {
 		for operation in operations {
 			if let commandOperation = operation as? EV3CommandGroupOperation where commandOperation.canHandleResponseData(data) {
 				commandOperation.handleResponseData(data)
+				return
 			}
 		}
 	}
