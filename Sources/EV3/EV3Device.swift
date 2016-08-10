@@ -13,7 +13,21 @@ public final class EV3Device: Device {
 	}
 
 	public func enqueueCommands(commands: [EV3Command], isCritical: Bool = true, responseHandler: EV3ResponseHandler) {
-		// TODO: system commands cannot be grouped
+		var encounteredSystemCommand = false
+		for command in commands {
+			guard command is EV3SystemCommand else {
+				continue
+			}
+
+			if encounteredSystemCommand {
+				// We have more than one! Oops!
+				assertionFailure()
+				return
+			} else {
+				encounteredSystemCommand = true
+			}
+		}
+
 		let operation = EV3CommandGroupOperation(transport: transport, commands: commands, isCritical: isCritical, responseHandler: responseHandler)
 		enqueueOperation(operation)
 	}
