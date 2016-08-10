@@ -78,7 +78,7 @@ public class Device: DeviceTransportDelegate {
 		return operationQueue.operations
 	}
 
-	// TODO: consider removing
+	// FIXME: consider removing
 	public func enqueueBarrier(handler: () -> ()) {
 		let blockOperation = NSBlockOperation(block: {
 			NSOperationQueue.mainQueue().addOperationWithBlock(handler)
