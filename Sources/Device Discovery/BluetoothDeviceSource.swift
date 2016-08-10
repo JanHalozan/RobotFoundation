@@ -13,7 +13,7 @@ import IOBluetooth
 public final class BluetoothDeviceSource: RobotDeviceSource, IOBluetoothDeviceInquiryDelegate {
 	private let deviceInquiry: IOBluetoothDeviceInquiry
 	private var foundDevices = Set<MetaDevice>()
-	private var scanTimer: NSTimer?
+	private weak var scanTimer: NSTimer?
 
 	private unowned var client: RobotDeviceSourceClient
 
@@ -125,7 +125,6 @@ public final class BluetoothDeviceSource: RobotDeviceSource, IOBluetoothDeviceIn
 	}
 
 	@objc private func scanAgain(sender: AnyObject) {
-		scanTimer = nil
 		deviceInquiry.stop()
 		deviceInquiry.clearFoundDevices()
 		deviceInquiry.start()
