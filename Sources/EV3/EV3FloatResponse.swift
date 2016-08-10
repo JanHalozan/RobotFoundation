@@ -13,8 +13,7 @@ public struct EV3FloatResponse: EV3Response {
 	public let responseLength: Int
 
 	public init?(data: NSData, userInfo: [String : Any]) {
-		// TODO: if 0 doesn't work, it's probably 3 or 4
-		self.value = data.readFloatAtIndex(0)
+		value = data.readFloatAtIndex(0)
 		responseLength = 4
 	}
 }
