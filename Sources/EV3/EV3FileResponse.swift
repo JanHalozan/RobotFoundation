@@ -9,7 +9,7 @@ import Foundation
 
 let kEV3FileLengthInfo = "response.file.length.info"
 
-// TODO: This is really similar to the listing response
+// FIXME: This is really similar to the listing response
 public struct EV3FileResponse: EV3Response {
 	public let systemCommand: UInt8
 	public let returnStatus: EV3SystemReturnStatus
