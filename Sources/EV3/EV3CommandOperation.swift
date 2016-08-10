@@ -13,7 +13,7 @@ public enum EV3ResponseError: ErrorType {
 	case InvalidPayload
 }
 
-public enum EV3CommandError {
+public enum EV3CommandError: ErrorType {
 	case TransportError(ErrorType)
 	case ResponseError(ErrorType)
 	case CommandError

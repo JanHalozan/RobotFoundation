@@ -9,7 +9,7 @@ import Foundation
 
 public typealias NXTCommandHandler = (NXTCommandResult) -> ()
 
-public enum NXTCommandError {
+public enum NXTCommandError: ErrorType {
 	case TransportError(ErrorType)
 	case CommandError(NXTStatus)
 	case ResponseParseError
