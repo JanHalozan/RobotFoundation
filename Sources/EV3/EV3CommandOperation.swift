@@ -100,8 +100,6 @@ final class EV3CommandGroupOperation: DeviceOperation {
 			fatalError()
 		}
 
-		// TODO: actually increment the message counter
-
 		do {
 			try transport.writeData(data) { error in
 				self.finishWithResult(.Error(.TransportError(error)))
