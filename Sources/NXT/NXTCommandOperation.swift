@@ -20,7 +20,7 @@ public enum NXTCommandResult {
 	case Response(NXTResponse)
 }
 
-final class NXTCommandOperation: NSOperation {
+final class NXTCommandOperation: DeviceOperation {
 	private let transport: DeviceTransport
 	private let command: NXTCommand
 	private let responseHandler: NXTCommandHandler
@@ -48,11 +48,11 @@ final class NXTCommandOperation: NSOperation {
 		didChangeValueForKey("isFinished")
 	}
 
-	init(transport: DeviceTransport, command: NXTCommand, responseHandler: NXTCommandHandler) {
+	init(transport: DeviceTransport, command: NXTCommand, isCritical: Bool, responseHandler: NXTCommandHandler) {
 		self.transport = transport
 		self.command = command
 		self.responseHandler = responseHandler
-		super.init()
+		super.init(isCritical: isCritical)
 	}
 
 	override var ready: Bool {

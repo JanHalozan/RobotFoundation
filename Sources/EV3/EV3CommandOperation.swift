@@ -39,7 +39,7 @@ private func toDirectCommands(commands: [EV3Command]) -> [EV3DirectCommand] {
 	return directCommands
 }
 
-final class EV3CommandGroupOperation: NSOperation {
+final class EV3CommandGroupOperation: DeviceOperation {
 	private let transport: DeviceTransport
 	private let commands: [EV3Command]
 	private let responseHandler: EV3ResponseHandler
@@ -50,13 +50,13 @@ final class EV3CommandGroupOperation: NSOperation {
 	private let isExecuting = SimpleAtomic<Bool>()
 	private let isFinished = SimpleAtomic<Bool>()
 
-	init(transport: DeviceTransport, commands: [EV3Command], responseHandler: EV3ResponseHandler) {
+	init(transport: DeviceTransport, commands: [EV3Command], isCritical: Bool, responseHandler: EV3ResponseHandler) {
 		self.transport = transport
 		self.commands = commands
 		self.responseHandler = responseHandler
 		self.messageIndex = EV3CommandGroupOperation.messageCounter
 		EV3CommandGroupOperation.messageCounter = EV3CommandGroupOperation.messageCounter &+ 1
-		super.init()
+		super.init(isCritical: isCritical)
 	}
 
 	override var executing: Bool {

@@ -7,6 +7,15 @@
 
 import Foundation
 
+class DeviceOperation: NSOperation {
+	private let isCritical: Bool
+
+	init(isCritical: Bool) {
+		self.isCritical = isCritical
+		super.init()
+	}
+}
+
 public class Device: DeviceTransportDelegate {
 	let transport: DeviceTransport
 
@@ -22,7 +31,9 @@ public class Device: DeviceTransportDelegate {
 	}
 
 	deinit {
-		waitForOperations()
+		if criticalOperationCount > 0 {
+			waitForCriticalOperations()
+		}
 	}
 
 	private var activeOperationCount: Int {
@@ -33,13 +44,33 @@ public class Device: DeviceTransportDelegate {
 		return operationCount
 	}
 
+	private var criticalOperationCount: Int {
+		var criticalOperationCount = 0
+		for operation in operationQueue.operations where !operation.cancelled && !operation.finished {
+			guard let deviceOperation = operation as? DeviceOperation else {
+				continue
+			}
+
+			if deviceOperation.isCritical {
+				criticalOperationCount += 1
+			}
+		}
+		return criticalOperationCount
+	}
+
 	public func waitForOperations() {
 		while activeOperationCount > 0 {
 			NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate(timeIntervalSinceNow: 0.05))
 		}
 	}
 
-	func enqueueOperation(operation: NSOperation) {
+	public func waitForCriticalOperations() {
+		while criticalOperationCount > 0 {
+			NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate(timeIntervalSinceNow: 0.05))
+		}
+	}
+
+	func enqueueOperation(operation: DeviceOperation) {
 		operationQueue.addOperation(operation)
 	}
 

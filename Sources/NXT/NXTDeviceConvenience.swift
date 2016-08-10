@@ -25,7 +25,7 @@ extension NXTDevice {
 
 		for n: UInt16 in 0..<16 {
 			let command = NXTReadIOMapCommand(module: kDisplayModule, offset: kDisplayNormalOffset + (n * kMaxBytes), bytesToRead: kMaxBytes)
-			enqueueCommand(command) { result in
+			enqueueCommand(command, isCritical: false) { result in
 				assert(NSThread.isMainThread())
 
 				switch result {

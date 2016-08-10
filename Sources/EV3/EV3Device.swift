@@ -8,13 +8,13 @@
 import Foundation
 
 public final class EV3Device: Device {
-	public func enqueueCommand(command: EV3Command, responseHandler: EV3ResponseHandler) {
-		enqueueCommands([command], responseHandler: responseHandler)
+	public func enqueueCommand(command: EV3Command, isCritical: Bool = true, responseHandler: EV3ResponseHandler) {
+		enqueueCommands([command], isCritical: isCritical, responseHandler: responseHandler)
 	}
 
-	public func enqueueCommands(commands: [EV3Command], responseHandler: EV3ResponseHandler) {
+	public func enqueueCommands(commands: [EV3Command], isCritical: Bool = true, responseHandler: EV3ResponseHandler) {
 		// TODO: system commands cannot be grouped
-		let operation = EV3CommandGroupOperation(transport: transport, commands: commands, responseHandler: responseHandler)
+		let operation = EV3CommandGroupOperation(transport: transport, commands: commands, isCritical: isCritical, responseHandler: responseHandler)
 		enqueueOperation(operation)
 	}
 
