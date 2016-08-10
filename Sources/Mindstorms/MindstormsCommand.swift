@@ -21,11 +21,12 @@ public protocol MindstormsCommand {
 extension MindstormsCommand {
 	// TODO: support no-reply variants
 	var telegramType: UInt8 {
-		if type == .Direct {
+		switch type {
+		case .Direct:
 			return kDirectTelegramType
+		case .System:
+			return kSystemTelegramType
 		}
-
-		return kSystemTelegramType
 	}
 
 	public var responseInfo: [String : Any] {
