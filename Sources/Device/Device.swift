@@ -27,7 +27,7 @@ public class Device: DeviceTransportDelegate {
 
 	private var activeOperationCount: Int {
 		var operationCount = 0
-		for operation in operationQueue.operations where !operation.cancelled {
+		for operation in operationQueue.operations where !operation.cancelled && !operation.finished {
 			operationCount += 1
 		}
 		return operationCount
