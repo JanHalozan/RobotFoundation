@@ -113,6 +113,10 @@ public enum EV3InputPort: UInt8 {
 	case One = 0, Two, Three, Four
 }
 
+public enum EV3OutputPort: UInt8 {
+	case A = 0, B, C, D
+}
+
 public struct EV3OutputPortOptions: OptionSetType {
 	public let rawValue: UInt8
 	public init(rawValue: UInt8) {

@@ -8,10 +8,10 @@
 import Foundation
 
 public struct EV3ReadOutputCommand: EV3DirectCommand {
-	public let ports: EV3OutputPortOptions
+	public let port: EV3OutputPort
 
-	public init(ports: EV3OutputPortOptions) {
-		self.ports = ports
+	public init(port: EV3OutputPort) {
+		self.port = port
 	}
 
 	public var responseType: MindstormsResponse.Type {
@@ -26,7 +26,7 @@ public struct EV3ReadOutputCommand: EV3DirectCommand {
 		let mutableData = NSMutableData()
 		mutableData.appendUInt8(EV3OpCode.OutputRead.rawValue)
 		mutableData.appendUInt8(EV3Layer.ThisBrick.rawValue)
-		mutableData.appendUInt8(ports.rawValue)
+		mutableData.appendUInt8(port.rawValue)
 
 		mutableData.appendGV2(offset)
 		mutableData.appendGV2(offset + 4)
