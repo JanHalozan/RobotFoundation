@@ -19,7 +19,6 @@ public protocol MindstormsCommand {
 }
 
 extension MindstormsCommand {
-	// TODO: support no-reply variants
 	var telegramType: UInt8 {
 		switch type {
 		case .Direct:
