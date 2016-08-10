@@ -13,7 +13,7 @@ public struct NXTHandleSizeResponse: NXTResponse {
 	public let size: UInt16
 
 	public init?(data: NSData, userInfo: [String : Any]) {
-		guard let status = NXTStatus(responseData: data) else {
+		guard let (_, status) = processReplyWithResponseData(data) else {
 			return nil
 		}
 

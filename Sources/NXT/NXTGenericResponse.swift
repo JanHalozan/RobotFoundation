@@ -11,7 +11,7 @@ public struct NXTGenericResponse: NXTResponse {
 	public let status: NXTStatus
 
 	public init?(data: NSData, userInfo: [String : Any]) {
-		guard let status = NXTStatus(responseData: data) else {
+		guard let (_, status) = processReplyWithResponseData(data) else {
 			return nil
 		}
 

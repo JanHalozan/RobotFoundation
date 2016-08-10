@@ -19,15 +19,24 @@ extension NXTResponse {
 
 private let kNXTHeaderLength = 3
 
-extension NXTStatus {
-	init?(responseData: NSData) {
-		let headerData = responseData.subdataWithRange(NSMakeRange(0, kNXTHeaderLength))
-
-		var status = NXTStatus.UndefinedError
-		headerData.getBytes(&status, range: NSMakeRange(2, 1))
-
-		self = status
+func processReplyWithResponseData(data: NSData) -> (UInt8, NXTStatus)? {
+	guard data.length >= kNXTHeaderLength else {
+		return nil
 	}
+
+	let headerData = data.subdataWithRange(NSMakeRange(0, kNXTHeaderLength))
+
+	let code = headerData.readUInt8AtIndex(0)
+
+	// All replies start with 0x2
+	guard code == 0x2 else {
+		return nil
+	}
+
+	let command = headerData.readUInt8AtIndex(1)
+	let rawStatus = headerData.readUInt8AtIndex(2)
+	let status = NXTStatus(rawValue: rawStatus) ?? .UndefinedError
+	return (command, status)
 }
 
 extension NSData {

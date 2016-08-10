@@ -14,7 +14,7 @@ public struct NXTIOMapResponse: NXTResponse {
 	public let contents: NSData
 
 	public init?(data: NSData, userInfo: [String : Any]) {
-		guard let status = NXTStatus(responseData: data) else {
+		guard let (_, status) = processReplyWithResponseData(data) else {
 			return nil
 		}
 

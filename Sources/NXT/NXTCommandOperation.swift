@@ -109,7 +109,15 @@ final class NXTCommandOperation: DeviceOperation {
 	}
 
 	func canHandleResponseData(data: NSData) -> Bool {
-		return !cancelled
+		if cancelled {
+			return false
+		}
+
+		guard let (commandCode, _) = processReplyWithResponseData(data) else {
+			return false
+		}
+
+		return commandCode == command.identifier
 	}
 
 	func handleResponseData(data: NSData) {
