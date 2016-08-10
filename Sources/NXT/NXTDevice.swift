@@ -27,6 +27,8 @@ public final class NXTDevice: Device {
 				return
 			}
 		}
+
+		print("Unhandled NXT response")
 	}
 
 	override func wroteData() {

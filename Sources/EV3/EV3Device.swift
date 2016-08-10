@@ -25,5 +25,7 @@ public final class EV3Device: Device {
 				return
 			}
 		}
+
+		print("Unhandled EV3 response")
 	}
 }
