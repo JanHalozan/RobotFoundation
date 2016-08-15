@@ -19,7 +19,7 @@ public struct EV3ReadColorCommand: EV3DirectCommand {
 	}
 
 	public var globalSpaceSize: UInt16 {
-		return 1
+		return 4
 	}
 
 	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
