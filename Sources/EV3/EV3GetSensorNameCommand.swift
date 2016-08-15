@@ -24,6 +24,10 @@ public struct EV3GetSensorNameCommand: EV3DirectCommand {
 		return UInt16(kEV3MaxSensorNameLength)
 	}
 
+	public var responseInfo: [String : Any] {
+		return [kResponseMaxLengthKey: Int(kEV3MaxSensorNameLength)]
+	}
+
 	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
 		let mutableData = NSMutableData()
 		mutableData.appendUInt8(EV3OpCode.InputDevice.rawValue)
