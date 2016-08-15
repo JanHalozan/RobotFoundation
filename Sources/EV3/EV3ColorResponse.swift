@@ -17,8 +17,12 @@ public struct EV3ColorResponse: EV3Response {
 	public let responseLength: Int
 
 	public init?(data: NSData, userInfo: [String : Any]) {
-		let index = data.readUInt32AtIndex(0)
-		color = EV3SensorColor(rawValue: index) ?? EV3SensorColor.None
+		let index = data.readFloatAtIndex(0)
+		if index.isNaN || index.isInfinite {
+			color = .None
+		} else {
+			color = EV3SensorColor(rawValue: UInt32(Int(index))) ?? EV3SensorColor.None
+		}
 		responseLength = 4
 	}
 }
