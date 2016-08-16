@@ -81,6 +81,9 @@ final class EV3CommandGroupOperation: DeviceOperation {
 
 	override func start() {
 		if cancelled {
+		#if DEBUG
+			print("Cancelling EV3 operation...")
+		#endif
 			finishWithResult(.Error(.TransportError(kIOReturnAborted)))
 			return
 		}

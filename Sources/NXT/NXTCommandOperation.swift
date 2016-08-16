@@ -62,6 +62,9 @@ final class NXTCommandOperation: DeviceOperation {
 
 	override func start() {
 		if cancelled {
+		#if DEBUG
+			print("Cancelling NXT operation...")
+		#endif
 			finishWithResult(.Error(.TransportError(kIOReturnAborted)))
 			return
 		}
