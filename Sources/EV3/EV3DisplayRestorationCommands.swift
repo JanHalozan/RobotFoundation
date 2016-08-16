@@ -22,7 +22,7 @@ public struct EV3StoreCommand: EV3DirectCommand {
 		let mutableData = NSMutableData()
 		mutableData.appendUInt8(EV3OpCode.UIDraw.rawValue)
 		mutableData.appendUInt8(EV3UIDrawOpSubcode.Store.rawValue)
-		mutableData.appendUInt8(level)
+		mutableData.appendLC1(level)
 
 		return mutableData.copy() as! NSData
 	}
@@ -44,7 +44,7 @@ public struct EV3RestoreCommand: EV3DirectCommand {
 		let mutableData = NSMutableData()
 		mutableData.appendUInt8(EV3OpCode.UIDraw.rawValue)
 		mutableData.appendUInt8(EV3UIDrawOpSubcode.Restore.rawValue)
-		mutableData.appendUInt8(level)
+		mutableData.appendLC1(level)
 
 		return mutableData.copy() as! NSData
 	}
