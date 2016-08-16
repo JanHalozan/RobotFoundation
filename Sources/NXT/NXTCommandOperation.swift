@@ -55,11 +55,6 @@ final class NXTCommandOperation: DeviceOperation {
 		super.init(isCritical: isCritical)
 	}
 
-	override var ready: Bool {
-		let state = transport.openState.get()
-		return super.ready && (state == .Opened || state == .Closed)
-	}
-
 	override func start() {
 		if cancelled {
 		#if DEBUG
