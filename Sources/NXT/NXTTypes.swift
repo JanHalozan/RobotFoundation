@@ -12,10 +12,15 @@ public enum NXTOutputPort: UInt8 {
 	case All = 0xFF
 }
 
-public enum NXTOutputMode: UInt8 {
-	case MotorOn = 0x01
-	case Brake = 0x02
-	case Regulated = 0x04
+public struct NXTOutputMode: OptionSetType {
+	public let rawValue: UInt8
+	public init(rawValue: UInt8) {
+		self.rawValue = rawValue
+	}
+
+	public static let MotorOn = NXTOutputMode(rawValue: 1)
+	public static let Brake = NXTOutputMode(rawValue: 2)
+	public static let Regulated = NXTOutputMode(rawValue: 4)
 }
 
 public enum NXTRegulationMode: UInt8 {
