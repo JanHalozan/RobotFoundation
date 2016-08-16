@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NXTSetOutputStateCommand: NXTCommand {
+public struct NXTSetOutputStateCommand: NXTCommand {
 	let port: NXTOutputPort
 	let power: Int8
 	let outputMode: NXTOutputMode
@@ -16,19 +16,29 @@ struct NXTSetOutputStateCommand: NXTCommand {
 	let runState: NXTRunState
 	let tachoLimit: UInt32
 
-	var responseType: MindstormsResponse.Type {
+	public init(port: NXTOutputPort, power: Int8, outputMode: NXTOutputMode, regulationMode: NXTRegulationMode, turnRatio: Int8, runState: NXTRunState, tachoLimit: UInt32) {
+		self.port = port
+		self.power = power
+		self.outputMode = outputMode
+		self.regulationMode = regulationMode
+		self.turnRatio = turnRatio
+		self.runState = runState
+		self.tachoLimit = tachoLimit
+	}
+
+	public var responseType: MindstormsResponse.Type {
 		return NXTGenericResponse.self
 	}
 
-	var type: MindstormsCommandType {
+	public var type: MindstormsCommandType {
 		return .Direct
 	}
 
-	var identifier: UInt8 {
+	public var identifier: UInt8 {
 		return 0x04
 	}
 
-	var payloadData: NSData {
+	public var payloadData: NSData {
 		let data = NSMutableData()
 		data.appendUInt8(port.rawValue)
 		data.appendInt8(power)

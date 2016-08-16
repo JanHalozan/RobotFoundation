@@ -7,24 +7,24 @@
 
 import Foundation
 
-enum NXTOutputPort: UInt8 {
+public enum NXTOutputPort: UInt8 {
 	case A = 0, B, C
 	case All = 0xFF
 }
 
-enum NXTOutputMode: UInt8 {
+public enum NXTOutputMode: UInt8 {
 	case MotorOn = 0x01
 	case Brake = 0x02
 	case Regulated = 0x04
 }
 
-enum NXTRegulationMode: UInt8 {
+public enum NXTRegulationMode: UInt8 {
 	case Idle = 0x0
 	case MotorSpeed = 0x01
 	case MotorSync = 0x02
 }
 
-enum NXTRunState: UInt8 {
+public enum NXTRunState: UInt8 {
 	case Idle = 0x0
 	case RampUp = 0x10
 	case Running = 0x20
