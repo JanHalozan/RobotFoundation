@@ -10,6 +10,7 @@ import IOKit.hid
 
 protocol HIDTransportServiceDelegate: class {
 	func handleData(data: NSData)
+	func closedConnection()
 }
 
 final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
@@ -56,7 +57,7 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 			} else {
 				// Cancel immediately and re-open.
 				cancelDeferredClose()
-				deferredClose()
+				actuallyClose()
 			}
 		}
 
@@ -104,9 +105,25 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 			return Int(result)
 		}
 
+		IOHIDDeviceRegisterRemovalCallback(hidDevice, { context, result, refcon in
+
+			let selfPointer = unsafeBitCast(context, HIDTransportService.self)
+			selfPointer.closedConnection()
+
+		}, UnsafeMutablePointer(unsafeAddressOf(self)))
+
 		device = hidDevice
 
 		return Int(kIOReturnSuccess)
+	}
+
+	private func closedConnection() {
+		assert(NSThread.isMainThread())
+
+		cancelDeferredClose()
+		actuallyClose()
+
+		delegate?.closedConnection()
 	}
 
 	func writeData(data: NSData, identifier: NSString, handler: Int -> ()) {
@@ -185,18 +202,18 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 			// Schedule a deferred close.
 			awaitingDeferredClose = true
 
-			HIDTransportService.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(deferredClose), object: nil)
-			performSelector(#selector(deferredClose), withObject: nil, afterDelay: 10)
+			HIDTransportService.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(actuallyClose), object: nil)
+			performSelector(#selector(actuallyClose), withObject: nil, afterDelay: 10)
 		}
 	}
 
 	private func cancelDeferredClose() {
 		assert(NSThread.isMainThread())
-		HIDTransportService.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(deferredClose), object: nil)
+		HIDTransportService.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(actuallyClose), object: nil)
 		awaitingDeferredClose = false
 	}
 
-	@objc private func deferredClose() {
+	@objc private func actuallyClose() {
 		if let existingDevice = device {
 			IOHIDDeviceClose(existingDevice, 0)
 		} else {
@@ -204,6 +221,8 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 		}
 
 		device = nil
+		awaitingDeferredClose = false
+		activeClients = 0
 	}
 
 	func scheduleRead(identifier: NSString, handler: Int -> ()) {

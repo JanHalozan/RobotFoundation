@@ -37,8 +37,22 @@ final class ServiceDelegate : NSObject, NSXPCListenerDelegate, HIDTransportServi
 
 	func handleData(data: NSData) {
 		for connection in connections {
-			if let client = connection.remoteObjectProxy as? XPCTransportClientProtocol {
+			if let client = connection.remoteObjectProxyWithErrorHandler({ error in
+				print("Error communicating with the client after data was received: \(error)")
+			}) as? XPCTransportClientProtocol {
 				client.handleTransportData(data)
+			} else {
+				assertionFailure()
+			}
+		}
+	}
+
+	func closedConnection() {
+		for connection in connections {
+			if let client = connection.remoteObjectProxyWithErrorHandler({ error in
+				print("Error communicating with the client after a device connection was closed: \(error)")
+			}) as? XPCTransportClientProtocol {
+				client.closedTransportConnection()
 			} else {
 				assertionFailure()
 			}
