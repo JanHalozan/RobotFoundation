@@ -98,7 +98,7 @@ public class Device: DeviceTransportDelegate {
 	}
 
 	func deviceTransportDidClose(transport: DeviceTransport) {
-		// TODO: should we do anything else here?
+		closedConnection()
 	}
 
 	func deviceTransportHandleData(transport: DeviceTransport, data: NSData) {
@@ -112,5 +112,9 @@ public class Device: DeviceTransportDelegate {
 
 	func handleData(data: NSData) {
 		fatalError("Subclasses must override")
+	}
+
+	func closedConnection() {
+		operationQueue.cancelAllOperations()
 	}
 }
