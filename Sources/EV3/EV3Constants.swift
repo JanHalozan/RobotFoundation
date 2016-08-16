@@ -55,6 +55,7 @@ enum EV3SoundOpSubcode: UInt8 {
 }
 
 enum EV3UIWriteOpSubcode: UInt8 {
+	case ScreenBlock = 16
 	case LED = 27
 }
 
