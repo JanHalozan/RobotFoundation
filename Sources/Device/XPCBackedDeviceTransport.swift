@@ -110,16 +110,8 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
 		self.handleData(data)
 	}
 
-	override func closed() {
-		super.closed()
-
-		modifyConnection ({
-			// no-op
-		}) { connection in
-			connection.suspend()
-			connection.invalidate()
-			return nil
-		}
+	@objc func closedTransportConnection() {
+		self.handleClosedConnection()
 	}
 }
 

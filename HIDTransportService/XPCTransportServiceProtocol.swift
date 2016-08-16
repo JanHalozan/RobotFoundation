@@ -11,6 +11,7 @@ import Foundation
 
 @objc protocol XPCTransportClientProtocol {
 	func handleTransportData(data: NSData)
+	func closedTransportConnection()
 }
 
 @objc protocol XPCTransportServiceProtocol {

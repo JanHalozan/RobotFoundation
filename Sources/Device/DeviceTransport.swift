@@ -14,21 +14,7 @@ protocol DeviceTransportDelegate: class {
 	func deviceTransportDidClose(transport: DeviceTransport)
 }
 
-enum DeviceTransportOpenState {
-	case Closed
-	case Opening
-	case Opened
-}
-
-extension DeviceTransportOpenState: Initializable {
-	init() {
-		self = .Closed
-	}
-}
-
 class DeviceTransport {
-	let openState = SimpleAtomic<DeviceTransportOpenState>()
-
 	weak var delegate: DeviceTransportDelegate?
 
 	func writeData(data: NSData, errorHandler: (ErrorType) -> ()) throws {
@@ -48,10 +34,7 @@ class DeviceTransport {
 		delegate?.deviceTransportHandleData(self, data: data)
 	}
 
-	func closed() {
-		assert(openState.get() == .Opened)
-		openState.set(.Closed)
-
+	func handleClosedConnection() {
 		delegate?.deviceTransportDidClose(self)
 	}
 }

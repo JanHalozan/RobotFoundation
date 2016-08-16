@@ -32,6 +32,7 @@ private enum BluetoothAsyncWriteState {
 
 protocol BluetoothTransportServiceDelegate: class {
 	func handleData(data: NSData)
+	func closedConnection()
 }
 
 final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, IOBluetoothRFCOMMChannelDelegate {
@@ -138,7 +139,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 				else {
 					// Close now and open the new device.
 					cancelDeferredClose()
-					deferredClose()
+					actuallyClose()
 				}
 			case .Opening(let device):
 				if device.addressString == identifier {
@@ -150,7 +151,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 				else {
 					// Close now and open the new device.
 					cancelDeferredClose()
-					deferredClose()
+					actuallyClose()
 				}
 			}
 		}
@@ -224,18 +225,18 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 			// Schedule a deferred close.
 			awaitingDeferredClose = true
 
-			BluetoothTransportService.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(deferredClose), object: nil)
-			performSelector(#selector(deferredClose), withObject: nil, afterDelay: 10)
+			BluetoothTransportService.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(actuallyClose), object: nil)
+			performSelector(#selector(actuallyClose), withObject: nil, afterDelay: 10)
 		}
 	}
 
 	private func cancelDeferredClose() {
 		assert(NSThread.isMainThread())
-		BluetoothTransportService.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(deferredClose), object: nil)
+		BluetoothTransportService.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(actuallyClose), object: nil)
 		awaitingDeferredClose = false
 	}
 
-	@objc private func deferredClose() {
+	@objc private func actuallyClose() {
 		assert(NSThread.isMainThread())
 
 		assert(channel != nil)
@@ -253,6 +254,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 
 		state = .Ready
 		awaitingDeferredClose = false
+		activeClients = 0
 	}
 
 	func writeData(data: NSData, identifier: NSString, handler: Int -> ()) {
@@ -399,12 +401,15 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 	@objc func rfcommChannelClosed(rfcommChannel: IOBluetoothRFCOMMChannel!) {
 		assert(NSThread.isMainThread())
 
-		// TODO: better handle this
-		//close()
-
 		if let rfcommChannel = rfcommChannel {
 			connectingChannels.remove(rfcommChannel)
 		}
+
+		cancelDeferredClose()
+		actuallyClose()
+
+		// Writes will already fail gracefully, but we still tell clients about the close so they can, for example, cancel pending operations as well.
+		delegate?.closedConnection()
 	}
 
 	func scheduleRead(identifier: NSString, handler: Int -> ()) {
