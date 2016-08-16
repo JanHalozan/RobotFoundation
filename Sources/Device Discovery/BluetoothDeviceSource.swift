@@ -136,7 +136,6 @@ private func deviceClassForBluetoothDevice(bluetoothDevice: IOBluetoothDevice) -
 	}
 
 	guard let firstService = services.first else {
-		assertionFailure()
 		return .Unknown
 	}
 
