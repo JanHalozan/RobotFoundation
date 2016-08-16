@@ -488,6 +488,9 @@
 		C9B138761C2B09650018812F /* EV3ListFilesCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ListFilesCommand.swift; sourceTree = "<group>"; };
 		C9B138791C2B12BB0018812F /* EV3ListingResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ListingResponse.swift; sourceTree = "<group>"; };
 		C9B1387C1C2B1C5C0018812F /* EV3ListingParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ListingParser.swift; sourceTree = "<group>"; };
+		C9B5895F1D63B6C500E9586D /* HIDTransportService.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = HIDTransportService.entitlements; sourceTree = "<group>"; };
+		C9B589601D63B6CF00E9586D /* LegacyUSBTransportService.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = LegacyUSBTransportService.entitlements; sourceTree = "<group>"; };
+		C9B589611D63B6EF00E9586D /* BluetoothTransportService.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = BluetoothTransportService.entitlements; sourceTree = "<group>"; };
 		C9BC33CE1C2F162300E0A41F /* HIDTransportService.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = HIDTransportService.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9BC33D11C2F162300E0A41F /* HIDTransportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDTransportService.swift; sourceTree = "<group>"; };
 		C9BC33D41C2F162300E0A41F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -649,6 +652,7 @@
 		C9683A0E1D24325C00741EFF /* LegacyUSBTransportService */ = {
 			isa = PBXGroup;
 			children = (
+				C9B589601D63B6CF00E9586D /* LegacyUSBTransportService.entitlements */,
 				C9683A1D1D2432CE00741EFF /* XPCTransportServiceProtocol.swift */,
 				C9683A101D24325C00741EFF /* LegacyUSBTransportService.h */,
 				C9683A111D24325C00741EFF /* LegacyUSBTransportService.m */,
@@ -806,6 +810,7 @@
 		C9BC33CF1C2F162300E0A41F /* HIDTransportService */ = {
 			isa = PBXGroup;
 			children = (
+				C9B5895F1D63B6C500E9586D /* HIDTransportService.entitlements */,
 				C9CFFC2B1C2F3A8200E75768 /* XPCTransportServiceProtocol.swift */,
 				C9BC33D11C2F162300E0A41F /* HIDTransportService.swift */,
 				C9BC33D41C2F162300E0A41F /* main.swift */,
@@ -897,6 +902,7 @@
 		C9CFFC3B1C2F542700E75768 /* BluetoothTransportService */ = {
 			isa = PBXGroup;
 			children = (
+				C9B589611D63B6EF00E9586D /* BluetoothTransportService.entitlements */,
 				C9CFFC491C2F54C900E75768 /* XPCTransportServiceProtocol.swift */,
 				C9CFFC3E1C2F542700E75768 /* BluetoothTransportService.swift */,
 				C9CFFC401C2F542700E75768 /* main.swift */,
@@ -1050,6 +1056,11 @@
 						CreatedOnToolsVersion = 8.0;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
 					};
 					C98C346C1C25C160006840C3 = {
 						CreatedOnToolsVersion = 7.2;
@@ -1062,9 +1073,19 @@
 					};
 					C9BC33CD1C2F162300E0A41F = {
 						CreatedOnToolsVersion = 7.2;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
 					};
 					C9CFFC391C2F542700E75768 = {
 						CreatedOnToolsVersion = 7.2;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -1500,6 +1521,7 @@
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_ENTITLEMENTS = LegacyUSBTransportService/LegacyUSBTransportService.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = LegacyUSBTransportService/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -1516,6 +1538,7 @@
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_ENTITLEMENTS = LegacyUSBTransportService/LegacyUSBTransportService.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = LegacyUSBTransportService/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -1725,6 +1748,7 @@
 		C9BC33DB1C2F162400E0A41F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = HIDTransportService/HIDTransportService.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -1739,6 +1763,7 @@
 		C9BC33DC1C2F162400E0A41F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = HIDTransportService/HIDTransportService.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -1753,6 +1778,7 @@
 		C9CFFC461C2F542700E75768 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = BluetoothTransportService/BluetoothTransportService.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = BluetoothTransportService/Info.plist;
@@ -1766,6 +1792,7 @@
 		C9CFFC471C2F542700E75768 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = BluetoothTransportService/BluetoothTransportService.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = BluetoothTransportService/Info.plist;
