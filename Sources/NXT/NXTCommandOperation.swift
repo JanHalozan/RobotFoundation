@@ -111,7 +111,21 @@ final class NXTCommandOperation: DeviceOperation {
 			return false
 		}
 
-		guard let (commandCode, _) = processReplyWithResponseData(data) else {
+		let mainData: NSData
+
+		// Bluetooth responses are padded with the length.
+		if transport is IOBluetoothDeviceTransport {
+			assert(data.length >= 2)
+
+			let length = Int(data.readUInt16AtIndex(0))
+			mainData = data.subdataWithRange(NSMakeRange(2, data.length - 2))
+
+			assert(length == mainData.length)
+		} else {
+			mainData = data
+		}
+
+		guard let (commandCode, _) = processReplyWithResponseData(mainData) else {
 			return false
 		}
 
