@@ -239,7 +239,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 	@objc private func actuallyClose() {
 		assert(NSThread.isMainThread())
 
-		assert(channel != nil)
+		// Channel might be `nil` if this is called in response to rfcommChannelClosed, but we still want to do the rest of the cleanup.
 		channel?.closeChannel()
 		channel = nil
 
