@@ -444,7 +444,7 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 	return kIOReturnSuccess;
 }
 
-- (void)open:(NSString *)identifier handler:(void (^)(NSInteger))handler
+- (BOOL)open:(NSString *)identifier handler:(void (^)(NSInteger))handler
 {
 	__block IOReturn result = kIOReturnError;
 	NSString *const safeIdentifier = [identifier copy];
@@ -453,7 +453,12 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 		result = [self _actuallyOpen:safeIdentifier];
 	});
 
-	handler(result);
+	if (result != kIOReturnSuccess) {
+		handler(result);
+		return NO;
+	}
+
+	return YES;
 }
 
 - (IOReturn)_actuallyCloseWithIdentifier:(NSString *)identifier
@@ -484,7 +489,7 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 	return kIOReturnSuccess;
 }
 
-- (void)close:(NSString *)identifier handler:(void (^)(NSInteger))handler
+- (void)close:(NSString *)identifier
 {
 	NSString *const safeIdentifier = [identifier copy];
 	__block IOReturn result = kIOReturnError;
@@ -492,8 +497,6 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 	dispatch_sync(dispatch_get_main_queue(), ^{
 		result = [self _actuallyCloseWithIdentifier:safeIdentifier];
 	});
-
-	handler(result);
 }
 
 - (BOOL)_isOpen
@@ -535,6 +538,10 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 
 - (void)writeData:(NSData *)data identifier:(NSString *)identifier handler:(void (^)(NSInteger))handler
 {
+	if (![self open:identifier handler:handler]) {
+		return;
+	}
+
 	__block IOReturn result = kIOReturnError;
 
 	dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
@@ -553,6 +560,8 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 		handler(kIOReturnTimeout);
 		return;
 	}
+
+	[self close:identifier];
 
 	handler(self.writeResult);
 }
