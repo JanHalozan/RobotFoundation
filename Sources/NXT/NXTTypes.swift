@@ -7,6 +7,36 @@
 
 import Foundation
 
+public enum NXTInputPort: UInt8 {
+	case One = 0, Two, Three, Four
+}
+
+public enum NXTSensorType: UInt8 {
+	case NoSensor = 0x0
+	case Switch
+	case Temperature
+	case Reflection
+	case Angle
+	case LightActive
+	case LightInactive
+	case SounddB
+	case SounddBA
+	case Custom
+	case LowSpeed
+	case LowSpeed9V
+}
+
+public enum NXTSensorMode: UInt8 {
+	case Raw = 0x0
+	case Boolean = 0x20
+	case TransitionCounter = 0x40
+	case PeriodicCounter = 0x60
+	case PercentFull = 0x80
+	case Celsius = 0xA0
+	case Fahrenheit = 0xC0
+	case AngleSteps = 0xE0
+}
+
 public enum NXTOutputPort: UInt8 {
 	case A = 0, B, C
 	case All = 0xFF
