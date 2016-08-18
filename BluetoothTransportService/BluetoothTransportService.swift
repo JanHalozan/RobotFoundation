@@ -272,6 +272,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 
 		switch writeState {
 		case .Error(let errorCode):
+			close(identifier)
 			handler(errorCode)
 			return
 		case .Writing:
@@ -280,12 +281,14 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		}
 
 		guard dispatch_semaphore_wait(semaphore, tenSecondTimeout()) == 0 else {
+			close(identifier)
 			handler(Int(kIOReturnTimeout))
 			return
 		}
 
 		guard let writeStatus = writeStatus else {
 			assertionFailure()
+			close(identifier)
 			handler(Int(kIOReturnInternalError))
 			return
 		}
@@ -295,7 +298,6 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		}
 
 		close(identifier)
-
 		handler(Int(writeStatus))
 	}
 
