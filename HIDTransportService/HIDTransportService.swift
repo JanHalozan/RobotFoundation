@@ -139,12 +139,12 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 
 		guard let theResult = result else {
 			assertionFailure()
+			close(identifier)
 			handler(Int(kIOReturnInternalError))
 			return
 		}
 
 		close(identifier)
-
 		handler(Int(theResult))
 	}
 
