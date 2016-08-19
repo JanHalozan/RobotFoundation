@@ -423,6 +423,10 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 
 		openStatus = error
 
+		if error != kIOReturnSuccess {
+			actuallyClose()
+		}
+
 		for semaphore in openSemaphores {
 			dispatch_semaphore_signal(semaphore)
 		}
