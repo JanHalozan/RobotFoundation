@@ -39,6 +39,7 @@
 	io_object_t _registeredNotification;
 	NSDictionary<NSNumber *, NSMutableArray<NSNumber *> *> *_pipes;
 	uint8_t _readBuffer[READ_BUFFER_LEN];
+	BOOL _scheduledDeferredClose;
 
 	// Shared
 	IONotificationPortRef _notificationPort;
@@ -105,6 +106,11 @@ static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 	};
 
 	return self;
+}
+
+- (void)dealloc
+{
+	[self.class cancelPreviousPerformRequestsWithTarget:self];
 }
 
 #pragma mark - Device Setup
@@ -427,6 +433,20 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 {
 	NSAssert(NSThread.isMainThread, @"Unexpected thread");
 
+	if (_scheduledDeferredClose) {
+		if ([self._currentSerialNumberString isEqualToString:identifier]) {
+			// It's the same device! Just restore the connection we have.
+			[self _cancelDeferredClose];
+			_activeClients += 1;
+			NSLog(@"%s: restoring a deferred close with %zd active clients", __PRETTY_FUNCTION__, _activeClients);
+			return kIOReturnSuccess;
+		} else {
+			// Close now and open the new device.
+			[self _cancelDeferredClose];
+			[self _reallyClose];
+		}
+	}
+
 	if (self._isOpen) {
 		if (![self._currentSerialNumberString isEqualToString:identifier]) {
 			// Tried to open a new device while another one was already open.
@@ -441,6 +461,7 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 	}
 
 	_activeClients += 1;
+	NSLog(@"%s: legacy USB transport increased active clients to %zd", __PRETTY_FUNCTION__, _activeClients);
 	return kIOReturnSuccess;
 }
 
@@ -480,16 +501,45 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 	_activeClients -= 1;
 	NSAssert(_activeClients >= 0, @"Mismatched client counting");
 
+	NSLog(@"%s: number of active clients in legacy USB service dropped to %zd", __PRETTY_FUNCTION__, _activeClients);
+
 	if (_activeClients == 0) {
-		[self _cleanUpNotification];
-		[self _cleanUpAsyncIO];
-		[self _cleanUpInterface];
-		[self _cleanUpDevice];
-		[self _cleanUpService];
-		[self _cleanUpPipes];
+		NSLog(@"%s: scheduling a deferred close", __PRETTY_FUNCTION__);
+
+		if (_scheduledDeferredClose) {
+			NSLog(@"%s: cancelling previous deferred close", __PRETTY_FUNCTION__);
+			[self.class cancelPreviousPerformRequestsWithTarget:self selector:@selector(_reallyClose) object:nil];
+		}
+		_scheduledDeferredClose = YES;
+
+		[self performSelector:@selector(_reallyClose) withObject:nil afterDelay:10];
 	}
 
 	return kIOReturnSuccess;
+}
+
+- (void)_cancelDeferredClose
+{
+	NSLog(@"%s: cancelling a deferred close", __PRETTY_FUNCTION__);
+	[self.class cancelPreviousPerformRequestsWithTarget:self selector:@selector(_reallyClose) object:nil];
+	_scheduledDeferredClose = NO;
+}
+
+- (void)_reallyClose
+{
+	NSAssert(NSThread.isMainThread, @"%s: unexpected thread", __PRETTY_FUNCTION__);
+
+	NSLog(@"%s: actually closing now!", __PRETTY_FUNCTION__);
+
+	[self _cleanUpNotification];
+	[self _cleanUpAsyncIO];
+	[self _cleanUpInterface];
+	[self _cleanUpDevice];
+	[self _cleanUpService];
+	[self _cleanUpPipes];
+
+	_scheduledDeferredClose = NO;
+	_activeClients = 0;
 }
 
 - (void)close:(NSString *)identifier
