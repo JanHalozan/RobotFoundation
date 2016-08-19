@@ -33,13 +33,14 @@ public final class EV3Device: Device {
 	}
 
 	override func handleData(data: NSData) {
-		for operation in operations {
+		let cachedOperations = operations
+		for operation in cachedOperations {
 			if let commandOperation = operation as? EV3CommandGroupOperation where commandOperation.canHandleResponseData(data) {
 				commandOperation.handleResponseData(data)
 				return
 			}
 		}
 
-		print("Unhandled EV3 response")
+		print("Unhandled EV3 response, operations: \(cachedOperations.count)")
 	}
 }
