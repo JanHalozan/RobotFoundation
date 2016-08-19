@@ -55,6 +55,8 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 	}
 
 	private func open(identifier: NSString, handler: Int -> ()) -> Bool {
+		NSLog("\(#function): beginning open request")
+
 		let semaphore = dispatch_semaphore_create(0)
 
 		var openState = BluetoothAsyncOpenState.Error(Int(kIOReturnInvalid))
@@ -98,11 +100,13 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		}
 
 		guard let openStatus = openStatus else {
+			NSLog("\(#function): could not retrieve an open status code")
 			handler(Int(kIOReturnNotFound))
 			return false
 		}
 
 		if openStatus != kIOReturnSuccess {
+			NSLog("\(#function): opening the device failed")
 			handler(Int(openStatus))
 			return false
 		}
@@ -120,6 +124,8 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 			}
 		}
 
+		NSLog("\(#function): opened the device")
+
 		return true
 	}
 
@@ -134,11 +140,12 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 					// Just don't close!
 					cancelDeferredClose()
 					activeClients += 1
+					NSLog("\(#function): cancelling a deferred close and increasing active clients to \(activeClients)")
 					return .AlreadyConnected
 				}
 				else {
 					// Close now and open the new device.
-					cancelDeferredClose()
+					NSLog("\(#function): cancelling a deferred close and opening a new device now")
 					actuallyClose()
 				}
 			case .Opening(let device):
@@ -146,11 +153,12 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 					// Just don't close!
 					cancelDeferredClose()
 					activeClients += 1
+					NSLog("\(#function): cancelling a deferred close and increasing active clients to \(activeClients)")
 					return .AlreadyOpening
 				}
 				else {
 					// Close now and open the new device.
-					cancelDeferredClose()
+					NSLog("\(#function): cancelling a deferred close and opening a new device now")
 					actuallyClose()
 				}
 			}
@@ -163,17 +171,20 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		case .Open(let device):
 			if device.addressString == identifier {
 				activeClients += 1
+				NSLog("\(#function): reusing open connection and increasing active clients to \(activeClients)")
 				return .AlreadyConnected
 			}
 			break
 		case .Opening(let device):
 			if device.addressString == identifier {
+				activeClients += 1
+				NSLog("\(#function): reusing opening connection and increasing active clients to \(activeClients)")
 				return .AlreadyOpening
 			}
 			break
 		}
 
-		debugPrint("Tried to open a device while one was already open.")
+		NSLog("\(#function): tried to open a device while one was already open")
 		return .Error(Int(kIOReturnBusy))
 	}
 
@@ -187,6 +198,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		let openResult = Int(device.openConnection(self))
 
 		guard openResult == Int(kIOReturnSuccess) else {
+			NSLog("\(#function): failed to open a baseband connection \(openResult)")
 			return .Error(openResult)
 		}
 
@@ -204,16 +216,13 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 
 		switch state {
 		case .Ready:
-			debugPrint("No open device; nothing to close.")
 			return
 		case .Open(let device):
 			if device.addressString != identifier {
-				debugPrint("Device mismatch.")
 				return
 			}
 		case .Opening(let device):
 			if device.addressString != identifier {
-				debugPrint("Device mismatch.")
 				return
 			}
 		}
@@ -221,17 +230,25 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		activeClients -= 1
 		assert(activeClients >= 0)
 
+		NSLog("\(#function): decreasing active clients to \(activeClients) after close")
+
 		if activeClients == 0 {
+			NSLog("\(#function): scheduling a deferred close")
+
+			if awaitingDeferredClose {
+				NSLog("\(#function): cancelling previous deferred close")
+				BluetoothTransportService.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(actuallyClose), object: nil)
+			}
+
 			// Schedule a deferred close.
 			awaitingDeferredClose = true
-
-			BluetoothTransportService.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(actuallyClose), object: nil)
 			performSelector(#selector(actuallyClose), withObject: nil, afterDelay: 10)
 		}
 	}
 
 	private func cancelDeferredClose() {
 		assert(NSThread.isMainThread())
+		NSLog("\(#function): cancelling deferred close")
 		BluetoothTransportService.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(actuallyClose), object: nil)
 		awaitingDeferredClose = false
 	}
@@ -239,19 +256,28 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 	@objc private func actuallyClose() {
 		assert(NSThread.isMainThread())
 
+		NSLog("\(#function): actually closing the device")
+
 		cancelDeferredClose()
 
-		// Channel might be `nil` if this is called in response to rfcommChannelClosed, but we still want to do the rest of the cleanup.
-		channel?.closeChannel()
-		channel = nil
+		func cleanUpDevice(device: IOBluetoothDevice) {
+			assert(channel != nil)
+
+			channel?.closeChannel()
+			channel = nil
+
+			device.closeConnection()
+		}
 
 		switch state {
-		case .Open(let device):
-			device.closeConnection()
-		case .Opening(let device):
-			device.closeConnection()
 		case .Ready:
-			assertionFailure()
+			// Just ignore this. Calling device.closeConnection will cause the RFCOMM did close delegate method to get invoked, which in turn invokes actuallyClose again, but we're already closed by then.
+			assert(activeClients == 0)
+			return
+		case .Open(let device):
+			cleanUpDevice(device)
+		case .Opening(let device):
+			cleanUpDevice(device)
 		}
 
 		state = .Ready
@@ -273,6 +299,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 
 		switch writeState {
 		case .Error(let errorCode):
+			NSLog("\(#function): actual write failed: \(errorCode)")
 			close(identifier)
 			handler(errorCode)
 			return
@@ -282,6 +309,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		}
 
 		guard dispatch_semaphore_wait(semaphore, tenSecondTimeout()) == 0 else {
+			NSLog("\(#function): timed out while waiting for write")
 			close(identifier)
 			handler(Int(kIOReturnTimeout))
 			return
@@ -289,6 +317,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 
 		guard let writeStatus = writeStatus else {
 			assertionFailure()
+			NSLog("\(#function): could not obtain a write status code")
 			close(identifier)
 			handler(Int(kIOReturnInternalError))
 			return
@@ -308,7 +337,6 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		switch state {
 		case .Open(let device):
 			guard device.addressString == identifier else {
-				print("Device mismatch.")
 				return .Error(Int(kIOReturnInternalError))
 			}
 		case .Opening:
@@ -319,6 +347,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		}
 
 		guard let channel = channel else {
+			NSLog("\(#function): there is no channel to write")
 			return .Error(Int(kIOReturnNoMedia))
 		}
 
@@ -327,6 +356,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		let status = channel.writeAsync(&array, length: UInt16(data.length), refcon: unsafeBitCast(semaphore, UnsafeMutablePointer<Void>.self))
 
 		guard status == kIOReturnSuccess else {
+			NSLog("\(#function): beginning the write failed: \(status)")
 			return .Error(Int(status))
 		}
 
@@ -336,6 +366,10 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 	@objc func rfcommChannelWriteComplete(rfcommChannel: IOBluetoothRFCOMMChannel!, refcon: UnsafeMutablePointer<Void>, status error: IOReturn) {
 		assert(NSThread.isMainThread())
 		assert(writeStatus == nil)
+
+		if error != kIOReturnSuccess {
+			NSLog("\(#function): writing failed: \(error)")
+		}
 
 		writeStatus = error
 
@@ -347,12 +381,14 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		assert(NSThread.isMainThread())
 
 		guard status == kIOReturnSuccess else {
+			NSLog("\(#function): opening connection failed: \(status)")
 			finishedOpenWithError(status)
 			return
 		}
 
 		let uuid = IOBluetoothSDPUUID(UUID16: BluetoothSDPUUID16(kBluetoothSDPUUID16ServiceClassSerialPort.rawValue))
 		guard let record = device.getServiceRecordForUUID(uuid) else {
+			NSLog("\(#function): obtaining service record failed")
 			finishedOpenWithError(kIOReturnNotFound)
 			return
 		}
@@ -361,6 +397,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		let getChannelStatus = record.getRFCOMMChannelID(&channelID)
 
 		guard getChannelStatus == kIOReturnSuccess else {
+			NSLog("\(#function): obtaining RFCOMM channnel ID failed")
 			finishedOpenWithError(getChannelStatus)
 			return
 		}
@@ -369,11 +406,13 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		let openChannelStatus = device.openRFCOMMChannelAsync(&newChannel, withChannelID: channelID, delegate: self)
 
 		guard openChannelStatus == kIOReturnSuccess else {
+			NSLog("\(#function): beginning to open RFCOMM channel failed \(openChannelStatus)")
 			finishedOpenWithError(openChannelStatus)
 			return
 		}
 
 		guard let theNewChannel = newChannel else {
+			NSLog("\(#function): the RFCOMM channel is nil")
 			finishedOpenWithError(kIOReturnNotFound)
 			return
 		}
@@ -402,6 +441,8 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 
 		if error == kIOReturnSuccess {
 			self.channel = rfcommChannel
+		} else {
+			NSLog("\(#function): opening RFCOMM channel failed: \(error)")
 		}
 
 		finishedOpenWithError(error)
@@ -417,11 +458,12 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 	@objc func rfcommChannelClosed(rfcommChannel: IOBluetoothRFCOMMChannel!) {
 		assert(NSThread.isMainThread())
 
+		NSLog("\(#function): RFCOMM channel was closed")
+
 		if let rfcommChannel = rfcommChannel {
 			connectingChannels.remove(rfcommChannel)
 		}
 
-		cancelDeferredClose()
 		actuallyClose()
 
 		// Writes will already fail gracefully, but we still tell clients about the close so they can, for example, cancel pending operations as well.
