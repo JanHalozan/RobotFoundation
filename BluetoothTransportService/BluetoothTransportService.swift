@@ -151,10 +151,9 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 				}
 			case .Opening(let device):
 				if device.addressString == identifier {
-					// Just don't close!
+					// Just don't close and wait until the open finishes before incrementing the active clients.
 					cancelDeferredClose()
-					activeClients += 1
-					NSLog("\(#function): cancelling a deferred close and increasing active clients to \(activeClients)")
+					NSLog("\(#function): cancelling a deferred close and waiting for existing opening")
 					return .AlreadyOpening
 				}
 				else {
