@@ -7,6 +7,8 @@
 
 import Foundation
 
+private let kBatchLength = 768
+
 public struct EV3ReadChainedCommand: EV3DirectCommand {
 	public let path: String
 	public let offset: UInt16
@@ -42,11 +44,11 @@ public struct EV3ReadChainedCommand: EV3DirectCommand {
 		mutableData.appendGV2(globalOffset)
 		mutableData.appendGV2(globalOffset + 4)
 
-		for x in Int(offset).stride(to: 0, by: -1000) {
+		for x in Int(offset).stride(to: 0, by: -kBatchLength) {
 			mutableData.appendUInt8(EV3OpCode.File.rawValue)
 			mutableData.appendUInt8(EV3FileOpSubcode.ReadBytes.rawValue)
 			mutableData.appendGV2(globalOffset)
-			mutableData.appendLC2(UInt16(x > 1000 ? 1000 : x))
+			mutableData.appendLC2(UInt16(x > kBatchLength ? kBatchLength : x))
 			mutableData.appendGV2(globalOffset + 4)
 		}
 

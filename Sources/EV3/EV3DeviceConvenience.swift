@@ -10,7 +10,7 @@ import Foundation
 public typealias EV3DeviceDownloadHandler = (NSData?) -> ()
 public typealias EV3DeviceUploadHandler = (Bool) -> ()
 
-private let kDownloadChunkSize = 1000
+private let kDownloadChunkSize = 768
 
 // Offers convenience API for "sequential" commands.
 extension EV3Device {
