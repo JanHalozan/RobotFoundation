@@ -261,8 +261,6 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		cancelDeferredClose()
 
 		func cleanUpDevice(device: IOBluetoothDevice) {
-			assert(channel != nil)
-
 			channel?.closeChannel()
 			channel = nil
 
