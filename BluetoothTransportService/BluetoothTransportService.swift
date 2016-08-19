@@ -192,15 +192,14 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		assert(NSThread.isMainThread())
 
 		let device = IOBluetoothDevice(addressString: identifier as String)
-
-		state = .Opening(device)
-
 		let openResult = Int(device.openConnection(self))
 
 		guard openResult == Int(kIOReturnSuccess) else {
 			NSLog("\(#function): failed to open a baseband connection \(openResult)")
 			return .Error(openResult)
 		}
+
+		state = .Opening(device)
 
 		return .Opening
 	}
