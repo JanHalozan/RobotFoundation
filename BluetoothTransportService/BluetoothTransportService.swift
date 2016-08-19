@@ -89,6 +89,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		}
 
 		guard dispatch_semaphore_wait(semaphore, tenSecondTimeout()) == 0 else {
+			NSLog("\(#function): opening the device timed out")
 			handler(Int(kIOReturnTimeout))
 			return false
 		}
