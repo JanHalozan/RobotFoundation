@@ -56,7 +56,6 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 				return true
 			} else {
 				// Cancel immediately and re-open.
-				cancelDeferredClose()
 				actuallyClose()
 			}
 		}
@@ -120,7 +119,6 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 	private func closedConnection() {
 		assert(NSThread.isMainThread())
 
-		cancelDeferredClose()
 		actuallyClose()
 
 		delegate?.closedConnection()
@@ -199,10 +197,12 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 		assert(activeClients >= 0)
 
 		if activeClients == 0 {
+			if awaitingDeferredClose {
+				HIDTransportService.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(actuallyClose), object: nil)
+			}
+
 			// Schedule a deferred close.
 			awaitingDeferredClose = true
-
-			HIDTransportService.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(actuallyClose), object: nil)
 			performSelector(#selector(actuallyClose), withObject: nil, afterDelay: 10)
 		}
 	}
