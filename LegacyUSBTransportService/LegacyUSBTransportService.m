@@ -454,9 +454,12 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 	});
 
 	if (result != kIOReturnSuccess) {
+		NSLog(@"%s: the legacy USB device could not be opened (%d)", __PRETTY_FUNCTION__, result);
 		handler(result);
 		return NO;
 	}
+
+	NSLog(@"%s: opened the legacy USB device", __PRETTY_FUNCTION__);
 
 	return YES;
 }
@@ -552,18 +555,31 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 	});
 
 	if (result != kIOReturnSuccess) {
+		NSLog(@"%s: initiating writing to a legacy USB device failed (%d)", __PRETTY_FUNCTION__, result);
+		[self close:identifier];
 		handler(result);
 		return;
 	}
 
 	if (dispatch_semaphore_wait(semaphore, TenSecondTimeout()) != 0) {
+		NSLog(@"%s: writing to a legacy USB device timed out", __PRETTY_FUNCTION__);
+		[self close:identifier];
 		handler(kIOReturnTimeout);
 		return;
 	}
 
-	[self close:identifier];
+	const IOReturn writeResult = self.writeResult;
+	if (writeResult != kIOReturnSuccess) {
+		NSLog(@"%s: writing to a legacy USB device failed (%d)", __PRETTY_FUNCTION__, result);
+		[self close:identifier];
+		handler(writeResult);
+		return;
+	}
 
-	handler(self.writeResult);
+	NSLog(@"%s: finished writing to a legacy USB device", __PRETTY_FUNCTION__);
+
+	[self close:identifier];
+	handler(kIOReturnSuccess);
 }
 
 - (IOReturn)_actuallyScheduleReadWithIdentifier:(NSString *)identifier semaphore:(dispatch_semaphore_t)semaphore
