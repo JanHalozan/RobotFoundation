@@ -101,6 +101,7 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 		}
 
 		guard let openStatus = openStatus else {
+			assertionFailure("The open status should always be set right before signalling, but it was not.")
 			NSLog("\(#function): could not retrieve an open status code")
 			handler(Int(kIOReturnNotFound))
 			return false
