@@ -15,7 +15,7 @@ func processGenericResponseForData(data: NSData) -> (UInt16, UInt16, EV3ReplyTyp
 
 	let length = data.readUInt16AtIndex(0)
 
-	guard data.length - 2 >= Int(length) else {
+	guard data.length - 2 == Int(length) else {
 		// We don't have all the data.
 		return nil
 	}
