@@ -177,8 +177,8 @@ final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, I
 			break
 		case .Opening(let device):
 			if device.addressString == identifier {
-				activeClients += 1
-				NSLog("\(#function): reusing opening connection and increasing active clients to \(activeClients)")
+				// Wait until the open finishes before incrementing the active clients.
+				NSLog("\(#function): cancelling a deferred close and waiting for existing opening")
 				return .AlreadyOpening
 			}
 			break
