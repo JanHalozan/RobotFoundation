@@ -21,12 +21,19 @@ public struct EV3FileResponse: EV3Response {
 	public let responseLength: Int
 
 	public init?(data: NSData, userInfo: [String : Any]) {
+		guard data.length >= 7 else {
+			// Otherwise we don't even have the whole metadata!
+			assertionFailure()
+			return nil
+		}
+
 		guard let length = userInfo[kEV3FileLengthInfo] as? Int else {
 			assertionFailure()
 			return nil
 		}
 
-		guard length <= data.length - 7 else {
+		let retrievedLength = data.length - 7
+		guard retrievedLength <= length else {
 			assertionFailure()
 			return nil
 		}
@@ -35,8 +42,11 @@ public struct EV3FileResponse: EV3Response {
 		returnStatus = EV3SystemReturnStatus(rawValue: data.readUInt8AtIndex(1)) ?? EV3SystemReturnStatus.UnknownError
 		fileSize = data.readUInt32AtIndex(2)
 		handle = data.readUInt8AtIndex(6)
-		self.data = data.subdataWithRange(NSMakeRange(7, length))
-		responseLength = 7 + length
+		self.data = data.subdataWithRange(NSMakeRange(7, retrievedLength))
+		responseLength = data.length
+
+		// The chunk of data we just read shouldn't exceed the total file size.
+		assert(retrievedLength <= Int(fileSize))
 	}
 }
 
