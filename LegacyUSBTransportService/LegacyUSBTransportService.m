@@ -373,7 +373,8 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 	LegacyUSBTransportService *const self = (__bridge LegacyUSBTransportService *)refCon;
 
 	if (messageType == kIOMessageServiceIsTerminated) {
-		// TODO: [self close];
+		NSLog(@"%s: the service was terminated", __PRETTY_FUNCTION__);
+		[self _reallyClose];
 	}
 }
 
@@ -531,6 +532,8 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 
 	NSLog(@"%s: actually closing now!", __PRETTY_FUNCTION__);
 
+	[self _cancelDeferredClose];
+
 	[self _cleanUpNotification];
 	[self _cleanUpAsyncIO];
 	[self _cleanUpInterface];
@@ -538,7 +541,6 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 	[self _cleanUpService];
 	[self _cleanUpPipes];
 
-	_scheduledDeferredClose = NO;
 	_activeClients = 0;
 }
 
