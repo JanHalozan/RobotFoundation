@@ -214,6 +214,8 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 	}
 
 	@objc private func actuallyClose() {
+		cancelDeferredClose()
+
 		if let existingDevice = device {
 			IOHIDDeviceClose(existingDevice, 0)
 		} else {
@@ -221,7 +223,6 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 		}
 
 		device = nil
-		awaitingDeferredClose = false
 		activeClients = 0
 	}
 
