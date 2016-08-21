@@ -161,8 +161,10 @@ final class EV3CommandGroupOperation: DeviceOperation {
 
 		assert(messageCounter == messageIndex)
 		assert(data.length >= 5)
+		assert(Int(length) <= data.length - 2)
 
-		var restOfData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
+		// For HID transports, `data` is a fixed size buffer. Truncate it to the actual length.
+		var restOfData = data.subdataWithRange(NSMakeRange(5, Int(length) - 3))
 		var responses = [EV3Response]()
 
 		for command in commands {
