@@ -22,7 +22,8 @@ func processGenericResponseForData(data: NSData) -> EV3HeaderResponse {
 
 	let length = data.readUInt16AtIndex(0)
 
-	guard data.length - 2 == Int(length) else {
+	// HID transports aren't aware of how much data is actually being sent so `data` is always a 1024 length buffer, hence the inequality.
+	guard data.length - 2 >= Int(length) else {
 		// We don't have all the data.
 		return .MismatchedLength
 	}
