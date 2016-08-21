@@ -7,26 +7,33 @@
 
 import Foundation
 
-func processGenericResponseForData(data: NSData) -> (UInt16, UInt16, EV3ReplyType)? {
+enum EV3HeaderResponse {
+	case IncompleteHeader
+	case MismatchedLength
+	case MalformedReplyType
+	case Success(length: UInt16, messageCounter: UInt16, replyType: EV3ReplyType)
+}
+
+func processGenericResponseForData(data: NSData) -> EV3HeaderResponse {
 	guard data.length >= 2 else {
 		// We don't even have enough space to read the length.
-		return nil
+		return .IncompleteHeader
 	}
 
 	let length = data.readUInt16AtIndex(0)
 
 	guard data.length - 2 == Int(length) else {
 		// We don't have all the data.
-		return nil
+		return .MismatchedLength
 	}
 
 	let messageCounter = data.readUInt16AtIndex(2)
 
 	guard let replyType = EV3ReplyType(rawValue: data.readUInt8AtIndex(4)) else {
-		return nil
+		return .MalformedReplyType
 	}
 
-	return (length, messageCounter, replyType)
+	return .Success(length: length, messageCounter: messageCounter, replyType: replyType)
 }
 
 public struct EV3GenericResponse: EV3Response {

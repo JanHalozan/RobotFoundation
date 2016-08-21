@@ -128,14 +128,22 @@ final class EV3CommandGroupOperation: DeviceOperation {
 
 	func canHandleResponseData(data: NSData) -> Bool {
 		if cancelled {
+			NSLog("\(#function): cannot handle cancelled operation...")
 			return false
 		}
 
-		guard let (_, messageCounter, _) = processGenericResponseForData(data) else {
+		let headerResponse = processGenericResponseForData(data)
+		guard case let .Success(length: _, messageCounter: messageCounter, replyType: _) = headerResponse else {
+			NSLog("\(#function): cannot handle operation: \(headerResponse)")
 			return false
 		}
 
-		return messageCounter == messageIndex
+		guard messageCounter == messageIndex else {
+			NSLog("\(#function): cannot handle mismatched response...")
+			return false
+		}
+
+		return true
 	}
 
 	func handleResponseData(data: NSData) {
@@ -145,7 +153,7 @@ final class EV3CommandGroupOperation: DeviceOperation {
 			return
 		}
 
-		guard let (length, messageCounter, replyType) = processGenericResponseForData(data) else {
+		guard case let .Success(length: length, messageCounter: messageCounter, replyType: replyType) = processGenericResponseForData(data) else {
 			print("Could not parse the generic response header")
 			finishWithResult(.Error(.ResponseError(EV3ResponseError.InvalidHeader)))
 			return
