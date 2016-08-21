@@ -115,6 +115,7 @@ public class Device: DeviceTransportDelegate {
 	}
 
 	func closedConnection() {
-		operationQueue.cancelAllOperations()
+		// Don't cancel all operations here because the system may have simply disconnected from the device gracefully
+		// and subsequent operations would have just re-connected.
 	}
 }
