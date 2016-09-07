@@ -31,9 +31,7 @@ public class Device: DeviceTransportDelegate {
 	}
 
 	deinit {
-		if criticalOperationCount > 0 {
-			waitForCriticalOperations()
-		}
+		waitForCriticalOperations()
 	}
 
 	private var activeOperationCount: Int {
