@@ -24,6 +24,13 @@ public enum NXTSensorType: UInt8 {
 	case Custom
 	case LowSpeed
 	case LowSpeed9V
+	case HiSpeed
+	case ColorFull
+	case ColorRed
+	case ColorGreen
+	case ColorBlue
+	case ColorNone
+	case ColorExit
 }
 
 public enum NXTSensorMode: UInt8 {
