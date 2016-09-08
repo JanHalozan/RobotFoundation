@@ -32,7 +32,7 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 			return nil
 		}
 
-		return IOHIDDeviceGetProperty(device, kIOHIDSerialNumberKey)?.takeUnretainedValue() as? String
+		return IOHIDDeviceGetProperty(device, kIOHIDSerialNumberKey) as? String
 	}
 
 	private func open(identifier: NSString, handler: Int -> ()) -> Bool {
@@ -87,7 +87,7 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 
 		let service = IOServiceGetMatchingService(kIOMasterPortDefault, matching as CFDictionaryRef)
 
-		guard let hidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, service)?.takeRetainedValue() else {
+		guard let hidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, service) else {
 			return 1
 		}
 
