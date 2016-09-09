@@ -22,13 +22,13 @@ public struct EV3TestOutputCommand: EV3DirectCommand {
 		return 1
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
-		let mutableData = NSMutableData()
-		mutableData.appendUInt8(EV3OpCode.OutputTest.rawValue)
-		mutableData.appendUInt8(EV3Layer.ThisBrick.rawValue)
+	public func payloadDataWithGlobalOffset(_ offset: UInt16) -> Data {
+		var mutableData = Data()
+		mutableData.appendUInt8(EV3OpCode.outputTest.rawValue)
+		mutableData.appendUInt8(EV3Layer.thisBrick.rawValue)
 		mutableData.appendUInt8(ports.rawValue)
 		mutableData.appendGV2(offset)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

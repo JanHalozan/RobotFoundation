@@ -9,15 +9,15 @@ import Foundation
 
 public typealias NXTCommandHandler = (NXTCommandResult) -> ()
 
-public enum NXTCommandError: ErrorType {
-	case TransportError(ErrorType)
-	case CommandError(NXTStatus)
-	case ResponseParseError
+public enum NXTCommandError: Error {
+	case transportError(Error)
+	case commandError(NXTStatus)
+	case responseParseError
 }
 
 public enum NXTCommandResult {
-	case Error(NXTCommandError)
-	case Response(NXTResponse)
+	case error(NXTCommandError)
+	case response(NXTResponse)
 }
 
 final class NXTCommandOperation: DeviceOperation {
@@ -25,30 +25,30 @@ final class NXTCommandOperation: DeviceOperation {
 	private let command: NXTCommand
 	private let responseHandler: NXTCommandHandler
 
-	private let isExecuting = SimpleAtomic<Bool>()
-	private let isFinished = SimpleAtomic<Bool>()
+	private let isExecutingValue = SimpleAtomic<Bool>()
+	private let isFinishedValue = SimpleAtomic<Bool>()
 	
-	override var executing: Bool {
-		return isExecuting.get()
+	override var isExecuting: Bool {
+		return isExecutingValue.get()
 	}
 
-	override var finished: Bool {
-		return isFinished.get()
+	override var isFinished: Bool {
+		return isFinishedValue.get()
 	}
 
-	private func setExecuting(value: Bool) {
-		willChangeValueForKey("isExecuting")
-		isExecuting.set(value)
-		didChangeValueForKey("isExecuting")
+	private func setExecuting(_ value: Bool) {
+		willChangeValue(forKey: "isExecuting")
+		isExecutingValue.set(value)
+		didChangeValue(forKey: "isExecuting")
 	}
 
-	private func setFinished(value: Bool) {
-		willChangeValueForKey("isFinished")
-		isFinished.set(value)
-		didChangeValueForKey("isFinished")
+	private func setFinished(_ value: Bool) {
+		willChangeValue(forKey: "isFinished")
+		isFinishedValue.set(value)
+		didChangeValue(forKey: "isFinished")
 	}
 
-	init(transport: DeviceTransport, command: NXTCommand, isCritical: Bool, responseHandler: NXTCommandHandler) {
+	init(transport: DeviceTransport, command: NXTCommand, isCritical: Bool, responseHandler: @escaping NXTCommandHandler) {
 		self.transport = transport
 		self.command = command
 		self.responseHandler = responseHandler
@@ -56,48 +56,49 @@ final class NXTCommandOperation: DeviceOperation {
 	}
 
 	override func start() {
-		if cancelled {
+		if isCancelled {
 		#if DEBUG
 			print("Cancelling NXT operation...")
 		#endif
-			finishWithResult(.Error(.TransportError(kIOReturnAborted)))
+			finishWithResult(.error(.transportError(kIOReturnAborted as Error)))
 			return
 		}
 
 		setExecuting(true)
 
 		let data = command.payloadData
-		var dataLength = NSSwapHostShortToLittle(2 + UInt16(data.length))
+		var dataLength = NSSwapHostShortToLittle(2 + UInt16(data.count))
 		var type = command.telegramType
 		var identifier = command.identifier
-
-		let packet = NSMutableData()
+		var packet = Data()
 
 	#if os(OSX)
 		if transport is IOBluetoothDeviceTransport {
-			packet.appendBytes(&dataLength, length: sizeof(UInt16))
+			withUnsafePointer(to: &dataLength) { ptr in
+				packet.append(unsafeBitCast(ptr, to: UnsafePointer<UInt8>.self), count: MemoryLayout<UInt16>.size)
+			}
 		}
 	#endif
 
-		packet.appendBytes(&type, length: sizeof(UInt8))
-		packet.appendBytes(&identifier, length: sizeof(UInt8))
-		packet.appendData(data)
+		packet.append(&type, count: MemoryLayout<UInt8>.size)
+		packet.append(&identifier, count: MemoryLayout<UInt8>.size)
+		packet.append(data)
 
 		do {
 			try transport.writeData(packet) { error in
-				self.finishWithResult(.Error(.TransportError(error)))
+				self.finishWithResult(.error(.transportError(error)))
 			}
 		} catch {
 			print("Cannot write packet data: \(error)")
-			finishWithResult(.Error(.TransportError(error)))
+			finishWithResult(.error(.transportError(error)))
 		}
 	}
 
-	private func finishWithResult(result: NXTCommandResult) {
-		if NSThread.isMainThread() {
+	private func finishWithResult(_ result: NXTCommandResult) {
+		if Thread.isMainThread {
 			responseHandler(result)
 		} else {
-			dispatch_sync(dispatch_get_main_queue()) {
+			DispatchQueue.main.sync {
 				self.responseHandler(result)
 			}
 		}
@@ -106,21 +107,21 @@ final class NXTCommandOperation: DeviceOperation {
 		setFinished(true)
 	}
 
-	func canHandleResponseData(data: NSData) -> Bool {
-		if cancelled {
+	func canHandleResponseData(_ data: Data) -> Bool {
+		if isCancelled {
 			return false
 		}
 
-		let mainData: NSData
+		let mainData: Data
 
 		// Bluetooth responses are padded with the length.
 		if transport is IOBluetoothDeviceTransport {
-			assert(data.length >= 2)
+			assert(data.count >= 2)
 
 			let length = Int(data.readUInt16AtIndex(0))
-			mainData = data.subdataWithRange(NSMakeRange(2, data.length - 2))
+			mainData = data.subdata(in: 2..<data.count)
 
-			assert(length == mainData.length)
+			assert(length == mainData.count)
 		} else {
 			mainData = data
 		}
@@ -132,30 +133,30 @@ final class NXTCommandOperation: DeviceOperation {
 		return commandCode == command.identifier
 	}
 
-	func handleResponseData(data: NSData) {
-		let mainData: NSData
+	func handleResponseData(_ data: Data) {
+		let mainData: Data
 
 		// Bluetooth responses are padded with the length.
 		if transport is IOBluetoothDeviceTransport {
-			assert(data.length >= 2)
+			assert(data.count >= 2)
 
 			let length = Int(data.readUInt16AtIndex(0))
-			mainData = data.subdataWithRange(NSMakeRange(2, data.length - 2))
+			mainData = data.subdata(in: 2..<data.count)
 
-			assert(length == mainData.length)
+			assert(length == mainData.count)
 		} else {
 			mainData = data
 		}
 
 		guard let response = command.responseType.init(data: mainData, userInfo: command.responseInfo) as? NXTResponse else {
 			print("Could not parse a response")
-			finishWithResult(.Error(.ResponseParseError))
+			finishWithResult(.error(.responseParseError))
 			return
 		}
 
 		// FIXME: FileNotFound is returned in cases where we get correct data but we're at the very end of a file or file listing.
 		// This is hacky, but it's safest/easiest to treat it as a successful response for now.
-		let succeeded = response.status == .StatusSuccess || response.status == .FileNotFound
-		finishWithResult(succeeded ? .Response(response) : .Error(.CommandError(response.status)))
+		let succeeded = response.status == .statusSuccess || response.status == .fileNotFound
+		finishWithResult(succeeded ? .response(response) : .error(.commandError(response.status)))
 	}
 }

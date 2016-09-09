@@ -26,17 +26,17 @@ public struct EV3SchedulePowerCommand: EV3DirectCommand {
 		return EV3GenericResponse.self
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
-		let mutableData = NSMutableData()
-		mutableData.appendUInt8(EV3OpCode.OutputTimePower.rawValue)
-		mutableData.appendUInt8(EV3Layer.ThisBrick.rawValue)
+	public func payloadDataWithGlobalOffset(_ offset: UInt16) -> Data {
+		var mutableData = Data()
+		mutableData.appendUInt8(EV3OpCode.outputTimePower.rawValue)
+		mutableData.appendUInt8(EV3Layer.thisBrick.rawValue)
 		mutableData.appendUInt8(ports.rawValue)
-		mutableData.appendLC1(unsafeBitCast(power, UInt8.self))
+		mutableData.appendLC1(unsafeBitCast(power, to: UInt8.self))
 		mutableData.appendLC4(time1)
 		mutableData.appendLC4(time2)
 		mutableData.appendLC4(time3)
 		mutableData.appendUInt8(stopType.rawValue)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

@@ -14,7 +14,7 @@ public struct EV3StringResponse: EV3Response {
 
 	public let responseLength: Int
 
-	public init?(data: NSData, userInfo: [String : Any]) {
+	public init?(data: Data, userInfo: [String : Any]) {
 		guard let maxLength = userInfo[kResponseMaxLengthKey] as? Int else {
 			assertionFailure()
 			return nil

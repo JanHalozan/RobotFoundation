@@ -21,9 +21,9 @@ public protocol MindstormsCommand {
 extension MindstormsCommand {
 	var telegramType: UInt8 {
 		switch type {
-		case .Direct:
+		case .direct:
 			return kDirectTelegramType
-		case .System:
+		case .system:
 			return kSystemTelegramType
 		}
 	}

@@ -18,12 +18,12 @@ public struct EV3SetBrickNameCommand: EV3DirectCommand {
 		return EV3GenericResponse.self
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
-		let mutableData = NSMutableData()
-		mutableData.appendUInt8(EV3OpCode.COMSet.rawValue)
-		mutableData.appendUInt8(EV3COMSetSubcode.SetBrickName.rawValue)
+	public func payloadDataWithGlobalOffset(_ offset: UInt16) -> Data {
+		var mutableData = Data()
+		mutableData.appendUInt8(EV3OpCode.comSet.rawValue)
+		mutableData.appendUInt8(EV3COMSetSubcode.setBrickName.rawValue)
 		mutableData.appendLCS(name)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

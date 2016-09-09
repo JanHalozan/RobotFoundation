@@ -24,17 +24,17 @@ public struct EV3ReadUltrasonicSensorCommand: EV3DirectCommand {
 		return 4
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
-		let mutableData = NSMutableData()
-		mutableData.appendUInt8(EV3OpCode.InputReadSI.rawValue)
-		mutableData.appendUInt8(EV3Layer.ThisBrick.rawValue)
+	public func payloadDataWithGlobalOffset(_ offset: UInt16) -> Data {
+		var mutableData = Data()
+		mutableData.appendUInt8(EV3OpCode.inputReadSI.rawValue)
+		mutableData.appendUInt8(EV3Layer.thisBrick.rawValue)
 		mutableData.appendUInt8(port.rawValue)
 
-		mutableData.appendUInt8(EV3SensorType.KeepType.rawValue)
+		mutableData.appendUInt8(EV3SensorType.keepType.rawValue)
 		mutableData.appendUInt8(kEV3UltrasonicSensorCMMode)
 		mutableData.appendGV2(offset)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }
 

@@ -8,8 +8,8 @@
 import Foundation
 
 public protocol RobotDeviceSourceClient: class {
-	func robotDeviceSourceDidFindDevice(device: MetaDevice)
-	func robotDeviceSourceDidLoseDevice(device: MetaDevice)
+	func robotDeviceSourceDidFindDevice(_ device: MetaDevice)
+	func robotDeviceSourceDidLoseDevice(_ device: MetaDevice)
 }
 
 public protocol RobotDeviceSource: class {

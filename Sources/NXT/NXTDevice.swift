@@ -9,14 +9,14 @@ import Foundation
 
 public final class NXTDevice: Device {
 	// The device will wait until all critical commands complete before going away.
-	public func enqueueCommand(command: NXTCommand, isCritical: Bool = true, responseHandler: NXTCommandHandler) {
+	public func enqueueCommand(_ command: NXTCommand, isCritical: Bool = true, responseHandler: @escaping NXTCommandHandler) {
 		let operation = NXTCommandOperation(transport: transport, command: command, isCritical: isCritical, responseHandler: responseHandler)
 		enqueueOperation(operation)
 	}
 
-	override func handleData(data: NSData) {
+	override func handleData(_ data: Data) {
 		for operation in operations {
-			if let commandOperation = operation as? NXTCommandOperation where commandOperation.canHandleResponseData(data) {
+			if let commandOperation = operation as? NXTCommandOperation, commandOperation.canHandleResponseData(data) {
 				commandOperation.handleResponseData(data)
 				return
 			}

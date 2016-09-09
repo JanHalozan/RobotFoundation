@@ -22,14 +22,14 @@ public struct EV3GetBrickNameCommand: EV3DirectCommand {
 		return [kResponseMaxLengthKey: Int(kEV3MaxBrickNameLength)]
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
-		let mutableData = NSMutableData()
-		mutableData.appendUInt8(EV3OpCode.COMGet.rawValue)
-		mutableData.appendUInt8(EV3COMGetSubcode.GetBrickName.rawValue)
+	public func payloadDataWithGlobalOffset(_ offset: UInt16) -> Data {
+		var mutableData = Data()
+		mutableData.appendUInt8(EV3OpCode.comGet.rawValue)
+		mutableData.appendUInt8(EV3COMGetSubcode.getBrickName.rawValue)
 		mutableData.appendLC1(kEV3MaxBrickNameLength)
 		mutableData.appendGV2(offset)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }
 

@@ -10,7 +10,7 @@
 import AppKit
 
 extension NSBitmapImageRep {
-	func set1BitValue(value: Bool, atY y: Int, x: Int) {
+	func set1BitValue(_ value: Bool, atY y: Int, x: Int) {
 		if value {
 			var pixel = [0, 0, 0, 255]
 			setPixel(&pixel, atX: x, y: y)

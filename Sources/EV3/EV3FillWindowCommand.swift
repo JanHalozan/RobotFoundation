@@ -8,8 +8,8 @@
 import Foundation
 
 public enum EV3FillColorConst: UInt8 {
-	case Background = 0
-	case Foreground = 1
+	case background = 0
+	case foreground = 1
 }
 
 public struct EV3FillWindowCommand: EV3DirectCommand {
@@ -23,14 +23,14 @@ public struct EV3FillWindowCommand: EV3DirectCommand {
 		return EV3GenericResponse.self
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
-		let mutableData = NSMutableData()
-		mutableData.appendUInt8(EV3OpCode.UIDraw.rawValue)
-		mutableData.appendUInt8(EV3UIDrawOpSubcode.FillWindow.rawValue)
+	public func payloadDataWithGlobalOffset(_ offset: UInt16) -> Data {
+		var mutableData = Data()
+		mutableData.appendUInt8(EV3OpCode.uiDraw.rawValue)
+		mutableData.appendUInt8(EV3UIDrawOpSubcode.fillWindow.rawValue)
 		mutableData.appendUInt8(color.rawValue)
 		mutableData.appendUInt8(0)
 		mutableData.appendUInt8(0)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

@@ -10,7 +10,7 @@ import Foundation
 public protocol NXTCommand: MindstormsCommand, CustomDebugStringConvertible {
 	var identifier: UInt8 { get }
 
-	var payloadData: NSData { get }
+	var payloadData: Data { get }
 }
 
 extension NXTCommand {

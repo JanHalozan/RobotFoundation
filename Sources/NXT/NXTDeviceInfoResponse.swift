@@ -13,7 +13,7 @@ public struct NXTDeviceInfoResponse: NXTResponse {
 	public let brickName: String
 	public let freeSpace: UInt32 // bytes
 
-	public init?(data: NSData, userInfo: [String : Any]) {
+	public init?(data: Data, userInfo: [String : Any]) {
 		guard let (_, status) = processReplyWithResponseData(data) else {
 			return nil
 		}
@@ -24,8 +24,8 @@ public struct NXTDeviceInfoResponse: NXTResponse {
 			return nil
 		}
 
-		let nameData = payloadData.subdataWithRange(NSMakeRange(0, 15))
-		brickName = NSString(data: nameData, encoding: NSUTF8StringEncoding)! as String
+		let nameData = payloadData.subdata(in: 0..<15)
+		brickName = String(data: nameData, encoding: .utf8)!
 
 		self.freeSpace = payloadData.readUInt32AtIndex(26)
 	}

@@ -9,24 +9,24 @@ import Foundation
 
 struct NXTWriteCommand: NXTCommand {
 	let handle: UInt8
-	let contents: NSData // max size: 64 bytes
+	let contents: Data // max size: 64 bytes
 
 	var responseType: MindstormsResponse.Type {
 		return NXTHandleSizeResponse.self
 	}
 
 	var type: MindstormsCommandType {
-		return .System
+		return .system
 	}
 
 	var identifier: UInt8 {
 		return 0x83
 	}
 
-	var payloadData: NSData {
-		let data = NSMutableData()
+	var payloadData: Data {
+		var data = Data()
 		data.appendUInt8(handle)
-		data.appendData(contents)
-		return data.copy() as! NSData
+		data.append(contents)
+		return data
 	}
 }

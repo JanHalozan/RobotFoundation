@@ -8,9 +8,9 @@
 import Foundation
 
 public enum EV3FontSizeConst: UInt8 {
-	case Small = 0
-	case Medium = 1
-	case Large = 2
+	case small = 0
+	case medium = 1
+	case large = 2
 }
 
 public struct EV3DrawTextCommand: EV3DirectCommand {
@@ -32,18 +32,18 @@ public struct EV3DrawTextCommand: EV3DirectCommand {
 		return EV3GenericResponse.self
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
-		let mutableData = NSMutableData()
-		mutableData.appendUInt8(EV3OpCode.UIDraw.rawValue)
-		mutableData.appendUInt8(EV3UIDrawOpSubcode.SelectFont.rawValue)
+	public func payloadDataWithGlobalOffset(_ offset: UInt16) -> Data {
+		var mutableData = Data()
+		mutableData.appendUInt8(EV3OpCode.uiDraw.rawValue)
+		mutableData.appendUInt8(EV3UIDrawOpSubcode.selectFont.rawValue)
 		mutableData.appendUInt8(fontSize.rawValue)
-		mutableData.appendUInt8(EV3OpCode.UIDraw.rawValue)
-		mutableData.appendUInt8(EV3UIDrawOpSubcode.Text.rawValue)
+		mutableData.appendUInt8(EV3OpCode.uiDraw.rawValue)
+		mutableData.appendUInt8(EV3UIDrawOpSubcode.text.rawValue)
 		mutableData.appendUInt8(color.rawValue)
 		mutableData.appendLC2(x)
 		mutableData.appendLC2(y)
 		mutableData.appendLCS(string)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

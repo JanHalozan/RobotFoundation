@@ -19,17 +19,17 @@ public struct NXTSetBrickNameCommand: NXTCommand {
 	}
 
 	public var type: MindstormsCommandType {
-		return .System
+		return .system
 	}
 
 	public var identifier: UInt8 {
 		return 0x98
 	}
 
-	public var payloadData: NSData {
-		let data = NSMutableData()
+	public var payloadData: Data {
+		var data = Data()
 		data.appendNXTBrickName(name)
-		return data.copy() as! NSData
+		return data
 	}
 }
 

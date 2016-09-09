@@ -7,8 +7,8 @@
 
 import Foundation
 
-class DeviceOperation: NSOperation {
-	private let isCritical: Bool
+class DeviceOperation: Operation {
+	fileprivate let isCritical: Bool
 
 	init(isCritical: Bool) {
 		self.isCritical = isCritical
@@ -19,8 +19,8 @@ class DeviceOperation: NSOperation {
 public class Device: DeviceTransportDelegate {
 	let transport: DeviceTransport
 
-	private lazy var operationQueue: NSOperationQueue = {
-		let operationQueue = NSOperationQueue()
+	private lazy var operationQueue: OperationQueue = {
+		let operationQueue = OperationQueue()
 		operationQueue.maxConcurrentOperationCount = 1
 		return operationQueue
 	}()
@@ -36,7 +36,7 @@ public class Device: DeviceTransportDelegate {
 
 	private var activeOperationCount: Int {
 		var operationCount = 0
-		for operation in operationQueue.operations where !operation.cancelled && !operation.finished {
+		for operation in operationQueue.operations where !operation.isCancelled && !operation.isFinished {
 			operationCount += 1
 		}
 		return operationCount
@@ -44,7 +44,7 @@ public class Device: DeviceTransportDelegate {
 
 	private var criticalOperationCount: Int {
 		var criticalOperationCount = 0
-		for operation in operationQueue.operations where !operation.cancelled && !operation.finished {
+		for operation in operationQueue.operations where !operation.isCancelled && !operation.isFinished {
 			guard let deviceOperation = operation as? DeviceOperation else {
 				continue
 			}
@@ -58,28 +58,28 @@ public class Device: DeviceTransportDelegate {
 
 	public func waitForOperations() {
 		while activeOperationCount > 0 {
-			NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate(timeIntervalSinceNow: 0.05))
+			RunLoop.current.run(mode: RunLoopMode.defaultRunLoopMode, before: Date(timeIntervalSinceNow: 0.05))
 		}
 	}
 
 	public func waitForCriticalOperations() {
 		while criticalOperationCount > 0 {
-			NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate(timeIntervalSinceNow: 0.05))
+			RunLoop.current.run(mode: RunLoopMode.defaultRunLoopMode, before: Date(timeIntervalSinceNow: 0.05))
 		}
 	}
 
-	func enqueueOperation(operation: DeviceOperation) {
+	func enqueueOperation(_ operation: DeviceOperation) {
 		operationQueue.addOperation(operation)
 	}
 
-	var operations: [NSOperation] {
+	var operations: [Operation] {
 		return operationQueue.operations
 	}
 
 	// FIXME: consider removing
-	public func enqueueBarrier(handler: () -> ()) {
-		let blockOperation = NSBlockOperation(block: {
-			NSOperationQueue.mainQueue().addOperationWithBlock(handler)
+	public func enqueueBarrier(_ handler: @escaping () -> ()) {
+		let blockOperation = BlockOperation(block: {
+			OperationQueue.main.addOperation(handler)
 		})
 
 		for operation in operationQueue.operations {
@@ -91,15 +91,15 @@ public class Device: DeviceTransportDelegate {
 	
 	// MARK: - Device Transport Delegate
 
-	func deviceTransportDidWriteData(transport: DeviceTransport) {
+	func deviceTransportDidWriteData(_ transport: DeviceTransport) {
 		wroteData()
 	}
 
-	func deviceTransportDidClose(transport: DeviceTransport) {
+	func deviceTransportDidClose(_ transport: DeviceTransport) {
 		closedConnection()
 	}
 
-	func deviceTransportHandleData(transport: DeviceTransport, data: NSData) {
+	func deviceTransportHandleData(_ transport: DeviceTransport, data: Data) {
 		handleData(data)
 	}
 
@@ -108,7 +108,7 @@ public class Device: DeviceTransportDelegate {
 		// no-op by default
 	}
 
-	func handleData(data: NSData) {
+	func handleData(_ data: Data) {
 		fatalError("Subclasses must override")
 	}
 

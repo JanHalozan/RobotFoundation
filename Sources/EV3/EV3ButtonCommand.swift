@@ -8,8 +8,8 @@
 import Foundation
 
 public enum EV3ButtonType: UInt8 {
-	case Press = 5
-	case Release = 6
+	case press = 5
+	case release = 6
 }
 
 public struct EV3ButtonCommand: EV3DirectCommand {
@@ -25,12 +25,12 @@ public struct EV3ButtonCommand: EV3DirectCommand {
 		return EV3GenericResponse.self
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
-		let mutableData = NSMutableData()
-		mutableData.appendUInt8(EV3OpCode.UIButton.rawValue)
+	public func payloadDataWithGlobalOffset(_ offset: UInt16) -> Data {
+		var mutableData = Data()
+		mutableData.appendUInt8(EV3OpCode.uiButton.rawValue)
 		mutableData.appendUInt8(type.rawValue)
 		mutableData.appendUInt8(button.rawValue)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

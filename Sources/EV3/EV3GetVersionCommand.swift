@@ -8,11 +8,11 @@
 import Foundation
 
 public enum EV3Version: UInt8 {
-	case OS = 3
-	case Hardware = 9
-	case Firmware = 10
-	case FirmwareBuild = 11
-	case OSBuild = 12
+	case os = 3
+	case hardware = 9
+	case firmware = 10
+	case firmwareBuild = 11
+	case osBuild = 12
 }
 
 public struct EV3GetVersionCommand: EV3DirectCommand {
@@ -34,13 +34,13 @@ public struct EV3GetVersionCommand: EV3DirectCommand {
 		return [kResponseMaxLengthKey: Int(EV3MaxFileLength)]
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
-		let mutableData = NSMutableData()
-		mutableData.appendUInt8(EV3OpCode.UIRead.rawValue)
+	public func payloadDataWithGlobalOffset(_ offset: UInt16) -> Data {
+		var mutableData = Data()
+		mutableData.appendUInt8(EV3OpCode.uiRead.rawValue)
 		mutableData.appendUInt8(version.rawValue)
 		mutableData.appendLC2(UInt16(EV3MaxFileLength))
 		mutableData.appendGV2(offset)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

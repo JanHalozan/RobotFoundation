@@ -19,15 +19,16 @@ public struct NXTFindNextCommand: NXTCommand {
 	}
 
 	public var type: MindstormsCommandType {
-		return .System
+		return .system
 	}
 
 	public var identifier: UInt8 {
 		return 0x87
 	}
 
-	public var payloadData: NSData {
-		var handleLocal = handle
-		return NSData(bytes: &handleLocal, length: sizeof(UInt8))
+	public var payloadData: Data {
+		var data = Data()
+		data.appendUInt8(handle)
+		return data
 	}
 }

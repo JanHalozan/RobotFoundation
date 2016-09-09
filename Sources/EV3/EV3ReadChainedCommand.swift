@@ -32,38 +32,38 @@ public struct EV3ReadChainedCommand: EV3DirectCommand {
 		return bytesToRead + 4
 	}
 
-	public func payloadDataWithGlobalOffset(globalOffset: UInt16) -> NSData {
-		let mutableData = NSMutableData()
+	public func payloadDataWithGlobalOffset(_ globalOffset: UInt16) -> Data {
+		var mutableData = Data()
 
 		// Open read
-		mutableData.appendUInt8(EV3OpCode.File.rawValue)
-		mutableData.appendUInt8(EV3FileOpSubcode.OpenRead.rawValue)
+		mutableData.appendUInt8(EV3OpCode.file.rawValue)
+		mutableData.appendUInt8(EV3FileOpSubcode.openRead.rawValue)
 		mutableData.appendLCS(path)
 
 		// Handle is in GV(0)
 		mutableData.appendGV2(globalOffset)
 		mutableData.appendGV2(globalOffset + 4)
 
-		for x in Int(offset).stride(to: 0, by: -kBatchLength) {
-			mutableData.appendUInt8(EV3OpCode.File.rawValue)
-			mutableData.appendUInt8(EV3FileOpSubcode.ReadBytes.rawValue)
+		for x in stride(from: Int(offset), to: 0, by: -kBatchLength) {
+			mutableData.appendUInt8(EV3OpCode.file.rawValue)
+			mutableData.appendUInt8(EV3FileOpSubcode.readBytes.rawValue)
 			mutableData.appendGV2(globalOffset)
 			mutableData.appendLC2(UInt16(x > kBatchLength ? kBatchLength : x))
 			mutableData.appendGV2(globalOffset + 4)
 		}
 
 		// Read bytes
-		mutableData.appendUInt8(EV3OpCode.File.rawValue)
-		mutableData.appendUInt8(EV3FileOpSubcode.ReadBytes.rawValue)
+		mutableData.appendUInt8(EV3OpCode.file.rawValue)
+		mutableData.appendUInt8(EV3FileOpSubcode.readBytes.rawValue)
 		mutableData.appendGV2(globalOffset)
 		mutableData.appendLC2(bytesToRead)
 		mutableData.appendGV2(globalOffset + 4)
 
 		// Close
-		mutableData.appendUInt8(EV3OpCode.File.rawValue)
-		mutableData.appendUInt8(EV3FileOpSubcode.Close.rawValue)
+		mutableData.appendUInt8(EV3OpCode.file.rawValue)
+		mutableData.appendUInt8(EV3FileOpSubcode.close.rawValue)
 		mutableData.appendGV2(globalOffset)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

@@ -14,11 +14,11 @@ public struct EV3WaitForButtonCommand: EV3DirectCommand {
 		return EV3GenericResponse.self
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
-		let mutableData = NSMutableData()
-		mutableData.appendUInt8(EV3OpCode.UIButton.rawValue)
-		mutableData.appendUInt8(EV3ButtonOpSubcode.WaitForPress.rawValue)
+	public func payloadDataWithGlobalOffset(_ offset: UInt16) -> Data {
+		var mutableData = Data()
+		mutableData.appendUInt8(EV3OpCode.uiButton.rawValue)
+		mutableData.appendUInt8(EV3ButtonOpSubcode.waitForPress.rawValue)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

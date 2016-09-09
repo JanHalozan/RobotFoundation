@@ -26,16 +26,16 @@ public struct EV3DrawLineCommand: EV3DirectCommand {
 		return EV3GenericResponse.self
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
-		let mutableData = NSMutableData()
-		mutableData.appendUInt8(EV3OpCode.UIDraw.rawValue)
-		mutableData.appendUInt8(EV3UIDrawOpSubcode.Line.rawValue)
+	public func payloadDataWithGlobalOffset(_ offset: UInt16) -> Data {
+		var mutableData = Data()
+		mutableData.appendUInt8(EV3OpCode.uiDraw.rawValue)
+		mutableData.appendUInt8(EV3UIDrawOpSubcode.line.rawValue)
 		mutableData.appendUInt8(color.rawValue)
 		mutableData.appendLC2(x1)
 		mutableData.appendLC2(y1)
 		mutableData.appendLC2(x2)
 		mutableData.appendLC2(y2)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

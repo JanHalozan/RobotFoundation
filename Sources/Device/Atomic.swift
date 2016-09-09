@@ -11,23 +11,23 @@ protocol Initializable {
 	init()
 }
 
-final class SimpleAtomic<T where T: Initializable> {
+final class SimpleAtomic<T> where T: Initializable {
 	private var value: T
-	private let queue = dispatch_queue_create(nil, nil)
+	private let queue = DispatchQueue(label: "atomic", attributes: [])
 
 	init() {
 		value = T()
 	}
 
-	func set(value: T) {
-		dispatch_barrier_async(queue) {
+	func set(_ value: T) {
+		queue.async(flags: .barrier) {
 			self.value = value
 		}
 	}
 
 	func get() -> T {
 		var result = T()
-		dispatch_sync(queue) {
+		queue.sync {
 			result = self.value
 		}
 		return result

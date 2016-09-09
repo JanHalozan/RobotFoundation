@@ -14,14 +14,14 @@ final class ServiceDelegate : NSObject, NSXPCListenerDelegate, LegacyUSBTranspor
 
 	private var connections = Set<NSXPCConnection>()
 
-	func listener(listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
+	func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
 		connections.insert(newConnection)
 
-		newConnection.exportedInterface = NSXPCInterface(withProtocol: XPCTransportServiceProtocol.self)
-		newConnection.remoteObjectInterface = NSXPCInterface(withProtocol: XPCTransportClientProtocol.self)
+		newConnection.exportedInterface = NSXPCInterface(with: XPCTransportServiceProtocol.self)
+		newConnection.remoteObjectInterface = NSXPCInterface(with: XPCTransportClientProtocol.self)
 		newConnection.exportedObject = exportedObject
 		newConnection.invalidationHandler = { [unowned self] in
-			dispatch_async(dispatch_get_main_queue()) {
+			DispatchQueue.main.async {
 				self.connections.remove(newConnection)
 
 				if self.connections.isEmpty {
@@ -35,10 +35,10 @@ final class ServiceDelegate : NSObject, NSXPCListenerDelegate, LegacyUSBTranspor
 		return true
 	}
 
-	func handleData(data: NSData) {
+	func handle(_ data: Data) {
 		for connection in connections {
 			if let client = connection.remoteObjectProxy as? XPCTransportClientProtocol {
-				client.handleTransportData(data)
+				client.handleTransportData(data as NSData)
 			} else {
 				assertionFailure()
 			}
@@ -48,7 +48,7 @@ final class ServiceDelegate : NSObject, NSXPCListenerDelegate, LegacyUSBTranspor
 
 let delegate = ServiceDelegate()
 
-let listener = NSXPCListener.serviceListener()
+let listener = NSXPCListener.service()
 listener.delegate = delegate
 
 // This method does not return.

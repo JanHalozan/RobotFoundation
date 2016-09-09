@@ -8,8 +8,8 @@
 import Foundation
 
 public protocol RobotDeviceManagerDelegate: class {
-	func robotDeviceManagerDidFindDevice(device: MetaDevice)
-	func robotDeviceManagerDidLoseDevice(device: MetaDevice)
+	func robotDeviceManagerDidFindDevice(_ device: MetaDevice)
+	func robotDeviceManagerDidLoseDevice(_ device: MetaDevice)
 }
 
 public let RobotDeviceManagerDidFindDeviceNotificationName = "notification.DeviceDiscovery.RobotDeviceManager.DidFindDevice"
@@ -36,25 +36,25 @@ public final class RobotDeviceManager: RobotDeviceSourceClient {
 
 	public func beginDiscovery() {
 		for source in sources {
-			source.beginDiscovery(searchCriteria)
+			source.beginDiscovery(searchCriteria: searchCriteria)
 		}
 	}
 
-	public func robotDeviceSourceDidFindDevice(device: MetaDevice) {
+	public func robotDeviceSourceDidFindDevice(_ device: MetaDevice) {
 		foundDevices.append(device)
 		delegate?.robotDeviceManagerDidFindDevice(device)
 
 		let userInfo = [DeviceKey: device] as [String: AnyObject]
-		NSNotificationCenter.defaultCenter().postNotificationName(RobotDeviceManagerDidFindDeviceNotificationName, object: self, userInfo: userInfo)
+		NotificationCenter.default.post(name: NSNotification.Name(rawValue: RobotDeviceManagerDidFindDeviceNotificationName), object: self, userInfo: userInfo)
 	}
 
-	public func robotDeviceSourceDidLoseDevice(device: MetaDevice) {
-		if let index = foundDevices.indexOf(device) {
-			foundDevices.removeAtIndex(index)
+	public func robotDeviceSourceDidLoseDevice(_ device: MetaDevice) {
+		if let index = foundDevices.index(of: device) {
+			foundDevices.remove(at: index)
 		}
 		delegate?.robotDeviceManagerDidLoseDevice(device)
 
 		let userInfo = [DeviceKey: device] as [String: AnyObject]
-		NSNotificationCenter.defaultCenter().postNotificationName(RobotDeviceManagerDidLoseDeviceNotificationName, object: self, userInfo: userInfo)
+		NotificationCenter.default.post(name: NSNotification.Name(rawValue: RobotDeviceManagerDidLoseDeviceNotificationName), object: self, userInfo: userInfo)
 	}
 }

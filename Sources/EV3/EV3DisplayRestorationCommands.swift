@@ -18,13 +18,13 @@ public struct EV3StoreCommand: EV3DirectCommand {
 		return EV3GenericResponse.self
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
-		let mutableData = NSMutableData()
-		mutableData.appendUInt8(EV3OpCode.UIDraw.rawValue)
-		mutableData.appendUInt8(EV3UIDrawOpSubcode.Store.rawValue)
+	public func payloadDataWithGlobalOffset(_ offset: UInt16) -> Data {
+		var mutableData = Data()
+		mutableData.appendUInt8(EV3OpCode.uiDraw.rawValue)
+		mutableData.appendUInt8(EV3UIDrawOpSubcode.store.rawValue)
 		mutableData.appendLC1(level)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }
 
@@ -40,12 +40,12 @@ public struct EV3RestoreCommand: EV3DirectCommand {
 		return EV3GenericResponse.self
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
-		let mutableData = NSMutableData()
-		mutableData.appendUInt8(EV3OpCode.UIDraw.rawValue)
-		mutableData.appendUInt8(EV3UIDrawOpSubcode.Restore.rawValue)
+	public func payloadDataWithGlobalOffset(_ offset: UInt16) -> Data {
+		var mutableData = Data()
+		mutableData.appendUInt8(EV3OpCode.uiDraw.rawValue)
+		mutableData.appendUInt8(EV3UIDrawOpSubcode.restore.rawValue)
 		mutableData.appendLC1(level)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

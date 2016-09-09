@@ -19,14 +19,14 @@ public struct NXTDeleteCommand: NXTCommand {
 	}
 
 	public var type: MindstormsCommandType {
-		return .System
+		return .system
 	}
 
 	public var identifier: UInt8 {
 		return 0x85
 	}
 
-	public var payloadData: NSData {
-		return (filename as NSString).dataForFilename
+	public var payloadData: Data {
+		return filename.dataForFilename
 	}
 }

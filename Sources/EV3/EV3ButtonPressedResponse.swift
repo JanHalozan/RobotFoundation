@@ -12,7 +12,7 @@ public struct EV3ButtonPressedResponse: EV3Response {
 
 	public let responseLength: Int
 
-	public init?(data: NSData, userInfo: [String : Any]) {
+	public init?(data: Data, userInfo: [String : Any]) {
 		self.pressed = data.readUInt8AtIndex(0) > 0 ? true : false
 		responseLength = 1
 	}

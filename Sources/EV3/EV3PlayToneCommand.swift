@@ -22,14 +22,14 @@ public struct EV3PlayToneCommand: EV3DirectCommand {
 		return EV3GenericResponse.self
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
-		let mutableData = NSMutableData()
-		mutableData.appendUInt8(EV3OpCode.Sound.rawValue)
-		mutableData.appendUInt8(EV3SoundOpSubcode.PlayTone.rawValue)
+	public func payloadDataWithGlobalOffset(_ offset: UInt16) -> Data {
+		var mutableData = Data()
+		mutableData.appendUInt8(EV3OpCode.sound.rawValue)
+		mutableData.appendUInt8(EV3SoundOpSubcode.playTone.rawValue)
 		mutableData.appendLC1(volume)
 		mutableData.appendLC2(frequency)
 		mutableData.appendLC2(duration)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

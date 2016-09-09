@@ -10,9 +10,9 @@ import Foundation
 public struct NXTWriteIOMapCommand: NXTCommand {
 	public let moduleID: UInt32
 	public let offset: UInt16
-	public let contents: NSData
+	public let contents: Data
 
-	public init(moduleID: UInt32, offset: UInt16, contents: NSData) {
+	public init(moduleID: UInt32, offset: UInt16, contents: Data) {
 		self.moduleID = moduleID
 		self.offset = offset
 		self.contents = contents
@@ -23,19 +23,19 @@ public struct NXTWriteIOMapCommand: NXTCommand {
 	}
 
 	public var type: MindstormsCommandType {
-		return .System
+		return .system
 	}
 
 	public var identifier: UInt8 {
 		return 0x95
 	}
 
-	public var payloadData: NSData {
-		let data = NSMutableData()
+	public var payloadData: Data {
+		var data = Data()
 		data.appendUInt32(moduleID)
 		data.appendUInt16(offset)
-		data.appendUInt16(UInt16(contents.length))
-		data.appendData(contents)
-		return data.copy() as! NSData
+		data.appendUInt16(UInt16(contents.count))
+		data.append(contents)
+		return data
 	}
 }

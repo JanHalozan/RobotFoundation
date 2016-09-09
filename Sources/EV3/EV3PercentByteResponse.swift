@@ -12,7 +12,7 @@ public struct EV3PercentByteResponse: EV3Response {
 
 	public let responseLength: Int
 
-	public init?(data: NSData, userInfo: [String : Any]) {
+	public init?(data: Data, userInfo: [String : Any]) {
 		let byte = data.readUInt8AtIndex(0)
 		if byte <= 100 {
 			percent = byte

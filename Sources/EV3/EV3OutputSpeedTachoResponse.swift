@@ -13,7 +13,7 @@ public struct EV3OutputSpeedTachoResponse: EV3Response {
 
 	public let responseLength: Int
 
-	public init?(data: NSData, userInfo: [String : Any]) {
+	public init?(data: Data, userInfo: [String : Any]) {
 		speed = data.readInt8AtIndex(0)
 		tacho = data.readUInt32AtIndex(1)
 		responseLength = 5

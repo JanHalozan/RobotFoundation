@@ -8,11 +8,11 @@
 import Foundation
 
 public final class EV3Device: Device {
-	public func enqueueCommand(command: EV3Command, isCritical: Bool = true, responseHandler: EV3ResponseHandler) {
+	public func enqueueCommand(_ command: EV3Command, isCritical: Bool = true, responseHandler: @escaping EV3ResponseHandler) {
 		enqueueCommands([command], isCritical: isCritical, responseHandler: responseHandler)
 	}
 
-	public func enqueueCommands(commands: [EV3Command], isCritical: Bool = true, responseHandler: EV3ResponseHandler) {
+	public func enqueueCommands(_ commands: [EV3Command], isCritical: Bool = true, responseHandler: @escaping EV3ResponseHandler) {
 		var encounteredSystemCommand = false
 		for command in commands {
 			guard command is EV3SystemCommand else {
@@ -32,10 +32,10 @@ public final class EV3Device: Device {
 		enqueueOperation(operation)
 	}
 
-	override func handleData(data: NSData) {
+	override func handleData(_ data: Data) {
 		let cachedOperations = operations
 		for operation in cachedOperations {
-			if let commandOperation = operation as? EV3CommandGroupOperation where commandOperation.canHandleResponseData(data) {
+			if let commandOperation = operation as? EV3CommandGroupOperation, commandOperation.canHandleResponseData(data) {
 				commandOperation.handleResponseData(data)
 				return
 			}

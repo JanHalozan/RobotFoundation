@@ -24,15 +24,15 @@ public struct EV3InvertRectCommand: EV3DirectCommand {
 		return EV3GenericResponse.self
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
-		let mutableData = NSMutableData()
-		mutableData.appendUInt8(EV3OpCode.UIDraw.rawValue)
-		mutableData.appendUInt8(EV3UIDrawOpSubcode.InverseRect.rawValue)
+	public func payloadDataWithGlobalOffset(_ offset: UInt16) -> Data {
+		var mutableData = Data()
+		mutableData.appendUInt8(EV3OpCode.uiDraw.rawValue)
+		mutableData.appendUInt8(EV3UIDrawOpSubcode.inverseRect.rawValue)
 		mutableData.appendLC2(x)
 		mutableData.appendLC2(y)
 		mutableData.appendLC2(width)
 		mutableData.appendLC2(height)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

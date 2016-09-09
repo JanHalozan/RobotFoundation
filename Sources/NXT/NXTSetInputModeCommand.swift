@@ -23,19 +23,19 @@ public struct NXTSetInputModeCommand: NXTCommand {
 	}
 
 	public var type: MindstormsCommandType {
-		return .Direct
+		return .direct
 	}
 
 	public var identifier: UInt8 {
 		return 0x05
 	}
 
-	public var payloadData: NSData {
-		let data = NSMutableData()
+	public var payloadData: Data {
+		var data = Data()
 		data.appendUInt8(port.rawValue)
 		data.appendUInt8(sensorType.rawValue)
 		data.appendUInt8(sensorMode.rawValue)
-		return data.copy() as! NSData
+		return data
 	}
 }
 
@@ -51,16 +51,16 @@ public struct NXTResetInputStateCommand: NXTCommand {
 	}
 
 	public var type: MindstormsCommandType {
-		return .Direct
+		return .direct
 	}
 
 	public var identifier: UInt8 {
 		return 0x08
 	}
 
-	public var payloadData: NSData {
-		let data = NSMutableData()
+	public var payloadData: Data {
+		var data = Data()
 		data.appendUInt8(port.rawValue)
-		return data.copy() as! NSData
+		return data
 	}
 }

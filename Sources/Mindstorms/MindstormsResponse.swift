@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol MindstormsResponse {
-	init?(data: NSData, userInfo: [String: Any])
+	init?(data: Data, userInfo: [String: Any])
 }

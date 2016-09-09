@@ -19,17 +19,17 @@ public struct NXTCloseCommand: NXTCommand {
 	}
 
 	public var type: MindstormsCommandType {
-		return .System
+		return .system
 	}
 
 	public var identifier: UInt8 {
 		return 0x84
 	}
 
-	public var payloadData: NSData {
-		let mutableData = NSMutableData()
+	public var payloadData: Data {
+		var mutableData = Data()
 		mutableData.appendUInt8(handle)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

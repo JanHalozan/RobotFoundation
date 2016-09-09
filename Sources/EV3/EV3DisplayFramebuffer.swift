@@ -12,12 +12,12 @@ import AppKit
 private let displayHeight = 128
 private let displayWidth = 178
 
-public func BitmapImageRepForEV3DisplayFramebuffer(data: NSData) -> NSBitmapImageRep {
+public func BitmapImageRepForEV3DisplayFramebuffer(_ data: Data) -> NSBitmapImageRep {
 	guard let imageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: displayWidth, pixelsHigh: displayHeight, bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSCalibratedRGBColorSpace, bitmapFormat: [], bytesPerRow: 0, bitsPerPixel: 32) else {
 		fatalError()
 	}
 
-	for offset in 0..<data.length {
+	for offset in 0..<data.count {
 		let row = offset / 60
 		let column = offset % 60
 		let pixel = data.readUInt8AtIndex(offset)

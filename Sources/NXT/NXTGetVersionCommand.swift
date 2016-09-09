@@ -15,14 +15,14 @@ public struct NXTGetVersionCommand: NXTCommand {
 	}
 
 	public var type: MindstormsCommandType {
-		return .System
+		return .system
 	}
 
 	public var identifier: UInt8 {
 		return 0x88
 	}
 
-	public var payloadData: NSData {
-		return NSData()
+	public var payloadData: Data {
+		return Data()
 	}
 }

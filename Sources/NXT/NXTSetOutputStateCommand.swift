@@ -31,15 +31,15 @@ public struct NXTSetOutputStateCommand: NXTCommand {
 	}
 
 	public var type: MindstormsCommandType {
-		return .Direct
+		return .direct
 	}
 
 	public var identifier: UInt8 {
 		return 0x04
 	}
 
-	public var payloadData: NSData {
-		let data = NSMutableData()
+	public var payloadData: Data {
+		var data = Data()
 		data.appendUInt8(port.rawValue)
 		data.appendInt8(power)
 		data.appendUInt8(outputMode.rawValue)
@@ -47,6 +47,6 @@ public struct NXTSetOutputStateCommand: NXTCommand {
 		data.appendInt8(turnRatio)
 		data.appendUInt8(runState.rawValue)
 		data.appendUInt32(tachoLimit)
-		return data.copy() as! NSData
+		return data
 	}
 }

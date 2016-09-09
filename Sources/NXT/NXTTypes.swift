@@ -8,48 +8,48 @@
 import Foundation
 
 public enum NXTInputPort: UInt8 {
-	case One = 0, Two, Three, Four
+	case one = 0, two, three, four
 }
 
 public enum NXTSensorType: UInt8 {
-	case NoSensor = 0x0
-	case Switch
-	case Temperature
-	case Reflection
-	case Angle
-	case LightActive
-	case LightInactive
-	case SounddB
-	case SounddBA
-	case Custom
-	case LowSpeed
-	case LowSpeed9V
-	case HiSpeed
-	case ColorFull
-	case ColorRed
-	case ColorGreen
-	case ColorBlue
-	case ColorNone
-	case ColorExit
+	case noSensor = 0x0
+	case `switch`
+	case temperature
+	case reflection
+	case angle
+	case lightActive
+	case lightInactive
+	case sounddB
+	case sounddBA
+	case custom
+	case lowSpeed
+	case lowSpeed9V
+	case hiSpeed
+	case colorFull
+	case colorRed
+	case colorGreen
+	case colorBlue
+	case colorNone
+	case colorExit
 }
 
 public enum NXTSensorMode: UInt8 {
-	case Raw = 0x0
-	case Boolean = 0x20
-	case TransitionCounter = 0x40
-	case PeriodicCounter = 0x60
-	case PercentFull = 0x80
-	case Celsius = 0xA0
-	case Fahrenheit = 0xC0
-	case AngleSteps = 0xE0
+	case raw = 0x0
+	case boolean = 0x20
+	case transitionCounter = 0x40
+	case periodicCounter = 0x60
+	case percentFull = 0x80
+	case celsius = 0xA0
+	case fahrenheit = 0xC0
+	case angleSteps = 0xE0
 }
 
 public enum NXTOutputPort: UInt8 {
-	case A = 0, B, C
-	case All = 0xFF
+	case a = 0, b, c
+	case all = 0xFF
 }
 
-public struct NXTOutputMode: OptionSetType {
+public struct NXTOutputMode: OptionSet {
 	public let rawValue: UInt8
 	public init(rawValue: UInt8) {
 		self.rawValue = rawValue
@@ -61,37 +61,37 @@ public struct NXTOutputMode: OptionSetType {
 }
 
 public enum NXTRegulationMode: UInt8 {
-	case Idle = 0x0
-	case MotorSpeed = 0x01
-	case MotorSync = 0x02
+	case idle = 0x0
+	case motorSpeed = 0x01
+	case motorSync = 0x02
 }
 
 public enum NXTRunState: UInt8 {
-	case Idle = 0x0
-	case RampUp = 0x10
-	case Running = 0x20
-	case RampDown = 0x40
+	case idle = 0x0
+	case rampUp = 0x10
+	case running = 0x20
+	case rampDown = 0x40
 }
 
 public enum NXTStatus: UInt8 {
-	case StatusSuccess = 0x0
-	case NoMoreHandles = 0x81
-	case NoSpace = 0x82
-	case NoMoreFiles = 0x83
-	case EndOfFileExpected = 0x84
-	case EndOfFile = 0x85
-	case NotALinearFile = 0x86
-	case FileNotFound = 0x87
-	case HandleAllReadyClosed = 0x88
-	case NoLinearSpace = 0x89
-	case UndefinedError = 0x8A
-	case FileIsBusy = 0x8B
-	case NoWriteBuffers = 0x8C
-	case AppendNotPossible = 0x8D
-	case FileIsFull = 0x8E
-	case FileExists = 0x8F
-	case ModuleNotFound = 0x90
-	case OutOfBoundary = 0x91
-	case IllegalFileName = 0x92
-	case IllegalHandle = 0x93
+	case statusSuccess = 0x0
+	case noMoreHandles = 0x81
+	case noSpace = 0x82
+	case noMoreFiles = 0x83
+	case endOfFileExpected = 0x84
+	case endOfFile = 0x85
+	case notALinearFile = 0x86
+	case fileNotFound = 0x87
+	case handleAllReadyClosed = 0x88
+	case noLinearSpace = 0x89
+	case undefinedError = 0x8A
+	case fileIsBusy = 0x8B
+	case noWriteBuffers = 0x8C
+	case appendNotPossible = 0x8D
+	case fileIsFull = 0x8E
+	case fileExists = 0x8F
+	case moduleNotFound = 0x90
+	case outOfBoundary = 0x91
+	case illegalFileName = 0x92
+	case illegalHandle = 0x93
 }

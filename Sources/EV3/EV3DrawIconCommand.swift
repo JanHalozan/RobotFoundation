@@ -8,115 +8,115 @@
 import Foundation
 
 public enum EV3IconType: UInt8 {
-	case Normal = 0
-	case Small
-	case Large
-	case Menu
-	case Arrow
+	case normal = 0
+	case small
+	case large
+	case menu
+	case arrow
 }
 
 public enum EV3SmallIconNumber: UInt8 {
-	case Charging = 0
-	case Batt4
-	case Batt3
-	case Batt2
-	case Batt1
-	case Batt0
-	case Wait1
-	case Wait2
-	case BtOn
-	case BtVisible
-	case BtConnected
-	case BtConnectedVisible
-	case WiFi3
-	case WiFi2
-	case WiFi1
-	case WiFiConnected
-	case USB
+	case charging = 0
+	case batt4
+	case batt3
+	case batt2
+	case batt1
+	case batt0
+	case wait1
+	case wait2
+	case btOn
+	case btVisible
+	case btConnected
+	case btConnectedVisible
+	case wiFi3
+	case wiFi2
+	case wiFi1
+	case wiFiConnected
+	case usb
 }
 
 public enum EV3NormalIconNumber: UInt8 {
-	case Run = 0
-	case Folder
-	case Folder2
-	case USB
-	case SD
-	case Sound
-	case Image
-	case Settings
-	case OnOff
-	case Search
-	case WiFi
-	case Connections
-	case IconAddHidden
-	case TrashBin
-	case Visibility
-	case Key
-	case Connect
-	case Disconnect
-	case Up
-	case Down
-	case Wait1
-	case Wait2
-	case Bluetooth
-	case Info
-	case Text
+	case run = 0
+	case folder
+	case folder2
+	case usb
+	case sd
+	case sound
+	case image
+	case settings
+	case onOff
+	case search
+	case wiFi
+	case connections
+	case iconAddHidden
+	case trashBin
+	case visibility
+	case key
+	case connect
+	case disconnect
+	case up
+	case down
+	case wait1
+	case wait2
+	case bluetooth
+	case info
+	case text
 
-	case QuestionMark = 27
-	case InfoFile
-	case Disc
-	case Connected
-	case OBP
-	case OBD
-	case OpenFolder
-	case Brick1
+	case questionMark = 27
+	case infoFile
+	case disc
+	case connected
+	case obp
+	case obd
+	case openFolder
+	case brick1
 }
 
 public enum EV3LargeIconNumber: UInt8 {
-	case YesNotSelected = 0
-	case YesSelected
-	case NoNotSelected
-	case NoSelected
-	case Off
-	case WaitVertical
-	case WaitHorizontal
-	case ToManual
-	case WarnSign
-	case WarnBatt
-	case WarnTemp
-	case NoUSBStick
-	case ToExexcute
-	case ToBrick
-	case ToSDCard
-	case ToUSBStick
-	case ToBluetooth
-	case ToWiFi
-	case ToTrash
-	case ToCopy
-	case ToFile
-	case CharError
-	case CopyError
-	case ProgramError
-	case WarnMemory = 27
+	case yesNotSelected = 0
+	case yesSelected
+	case noNotSelected
+	case noSelected
+	case off
+	case waitVertical
+	case waitHorizontal
+	case toManual
+	case warnSign
+	case warnBatt
+	case warnTemp
+	case noUSBStick
+	case toExexcute
+	case toBrick
+	case toSDCard
+	case toUSBStick
+	case toBluetooth
+	case toWiFi
+	case toTrash
+	case toCopy
+	case toFile
+	case charError
+	case copyError
+	case programError
+	case warnMemory = 27
 }
 
 public enum EV3MenuIconNumber: UInt8 {
-	case Star = 0
-	case LockStar
-	case Lock
-	case PC
-	case Phone
-	case Brick
-	case Unknown
-	case FromFolder
-	case Checkbox
-	case Checked
-	case Xed
+	case star = 0
+	case lockStar
+	case lock
+	case pc
+	case phone
+	case brick
+	case unknown
+	case fromFolder
+	case checkbox
+	case checked
+	case xed
 }
 
 public enum EV3ArrowIconNumber: UInt8 {
-	case Left = 1
-	case Right
+	case left = 1
+	case right
 }
 
 public struct EV3DrawIconCommand: EV3DirectCommand {
@@ -138,16 +138,16 @@ public struct EV3DrawIconCommand: EV3DirectCommand {
 		return EV3GenericResponse.self
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
-		let mutableData = NSMutableData()
-		mutableData.appendUInt8(EV3OpCode.UIDraw.rawValue)
-		mutableData.appendUInt8(EV3UIDrawOpSubcode.Icon.rawValue)
+	public func payloadDataWithGlobalOffset(_ offset: UInt16) -> Data {
+		var mutableData = Data()
+		mutableData.appendUInt8(EV3OpCode.uiDraw.rawValue)
+		mutableData.appendUInt8(EV3UIDrawOpSubcode.icon.rawValue)
 		mutableData.appendUInt8(color.rawValue)
 		mutableData.appendLC2(x)
 		mutableData.appendLC2(y)
 		mutableData.appendLC1(type.rawValue)
 		mutableData.appendLC1(number)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

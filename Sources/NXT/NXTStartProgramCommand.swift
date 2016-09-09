@@ -15,14 +15,14 @@ struct NXTStartProgramCommand: NXTCommand {
 	}
 
 	var type: MindstormsCommandType {
-		return .Direct
+		return .direct
 	}
 
 	var identifier: UInt8 {
 		return 0x0
 	}
 
-	var payloadData: NSData {
-		return (filename as NSString).dataForFilename
+	var payloadData: Data {
+		return filename.dataForFilename
 	}
 }

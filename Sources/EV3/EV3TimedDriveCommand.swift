@@ -26,16 +26,16 @@ public struct EV3TimedDriveCommand: EV3DirectCommand {
 		return EV3GenericResponse.self
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
-		let mutableData = NSMutableData()
-		mutableData.appendUInt8(EV3OpCode.OutputTimeSync.rawValue)
-		mutableData.appendUInt8(EV3Layer.ThisBrick.rawValue)
+	public func payloadDataWithGlobalOffset(_ offset: UInt16) -> Data {
+		var mutableData = Data()
+		mutableData.appendUInt8(EV3OpCode.outputTimeSync.rawValue)
+		mutableData.appendUInt8(EV3Layer.thisBrick.rawValue)
 		mutableData.appendUInt8(ports.rawValue)
-		mutableData.appendLC1(unsafeBitCast(speed, UInt8.self))
-		mutableData.appendLC2(unsafeBitCast(turnRatio, UInt16.self))
+		mutableData.appendLC1(unsafeBitCast(speed, to: UInt8.self))
+		mutableData.appendLC2(unsafeBitCast(turnRatio, to: UInt16.self))
 		mutableData.appendLC4(duration)
 		mutableData.appendInt8(shouldBrakeWhenDone ? 1 : 0)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

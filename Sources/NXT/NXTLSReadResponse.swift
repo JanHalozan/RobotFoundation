@@ -10,9 +10,9 @@ import Foundation
 public struct NXTLSReadResponse: NXTResponse {
 	public let status: NXTStatus
 	public let bytesRead: UInt8
-	public let rxData: NSData
+	public let rxData: Data
 
-	public init?(data: NSData, userInfo: [String : Any]) {
+	public init?(data: Data, userInfo: [String : Any]) {
 		guard let (_, status) = processReplyWithResponseData(data) else {
 			return nil
 		}
@@ -26,6 +26,6 @@ public struct NXTLSReadResponse: NXTResponse {
 		bytesRead = payloadData.readUInt8AtIndex(0)
 
 		// Responses are always 16 bytes and padded.
-		rxData = payloadData.subdataWithRange(NSMakeRange(1, 16))
+		rxData = payloadData.subdata(in: 1..<17)
 	}
 }

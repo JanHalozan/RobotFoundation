@@ -7,28 +7,34 @@
 
 import Foundation
 
-extension NSMutableData {
-	public func appendUInt8(value: UInt8) {
+extension Data {
+	public mutating func appendUInt8(_ value: UInt8) {
 		var mutableValue = value
-		appendBytes(&mutableValue, length: sizeof(UInt8))
+		append(&mutableValue, count: MemoryLayout<UInt8>.size)
 	}
 
-	func appendInt8(value: Int8) {
+	mutating func appendInt8(_ value: Int8) {
 		var mutableValue = value
-		appendBytes(&mutableValue, length: sizeof(Int8))
+		withUnsafePointer(to: &mutableValue) { ptr in
+			append(unsafeBitCast(ptr, to: UnsafePointer<UInt8>.self), count: MemoryLayout<Int8>.size)
+		}
 	}
 
-	func appendUInt16(value: UInt16) {
+	mutating func appendUInt16(_ value: UInt16) {
 		var mutableValue = NSSwapHostShortToLittle(value)
-		appendBytes(&mutableValue, length: sizeof(UInt16))
+		withUnsafePointer(to: &mutableValue) { ptr in
+			append(unsafeBitCast(ptr, to: UnsafePointer<UInt8>.self), count: MemoryLayout<UInt16>.size)
+		}
 	}
 
-	func appendUInt32(value: UInt32) {
+	mutating func appendUInt32(_ value: UInt32) {
 		var mutableValue = NSSwapHostIntToLittle(value)
-		appendBytes(&mutableValue, length: sizeof(UInt32))
+		withUnsafePointer(to: &mutableValue) { ptr in
+			append(unsafeBitCast(ptr, to: UnsafePointer<UInt8>.self), count: MemoryLayout<UInt32>.size)
+		}
 	}
 
-	func appendString(string: String) {
+	mutating func appendString(_ string: String) {
 		for unit in string.utf8 {
 			appendUInt8(unit)
 		}
@@ -38,69 +44,71 @@ extension NSMutableData {
 	}
 }
 
-extension NSData {
-	func dataByAppendingData(data: NSData) -> NSData {
-		guard let mutableData = mutableCopy() as? NSMutableData else {
-			assertionFailure()
-			return data
-		}
-
-		mutableData.appendData(data)
-
-		guard let singleData = mutableData.copy() as? NSData else {
-			assertionFailure()
-			return mutableData
-		}
-
-		return singleData
+extension Data {
+	func dataByAppendingData(_ data: Data) -> Data {
+		var mutableData = self
+		mutableData.append(data)
+		return mutableData
 	}
 
-	public func readFloatAtIndex(index: Int) -> Float {
+	public func readFloatAtIndex(_ index: Int) -> Float {
 		var value = Float32()
-		getBytes(&value, range: NSMakeRange(index, 4))
+		withUnsafeMutablePointer(to: &value) { ptr in
+			copyBytes(to: unsafeBitCast(ptr, to: UnsafeMutablePointer<UInt8>.self), from: index..<(index+4))
+		}
 
 		return value
 	}
 
-	public func readInt8AtIndex(index: Int) -> Int8 {
+	public func readInt8AtIndex(_ index: Int) -> Int8 {
 		var value = Int8()
-		getBytes(&value, range: NSMakeRange(index, 1))
+		withUnsafeMutablePointer(to: &value) { ptr in
+			copyBytes(to: unsafeBitCast(ptr, to: UnsafeMutablePointer<UInt8>.self), from: index..<(index+1))
+		}
 
 		return value
 	}
 
-	public func readUInt8AtIndex(index: Int) -> UInt8 {
+	public func readUInt8AtIndex(_ index: Int) -> UInt8 {
 		var value = UInt8()
-		getBytes(&value, range: NSMakeRange(index, 1))
+		copyBytes(to: &value, from: index..<(index+1))
 
 		return value
 	}
 
-	func readUInt16AtIndex(index: Int) -> UInt16 {
+	func readUInt16AtIndex(_ index: Int) -> UInt16 {
 		var value = UInt16()
-		getBytes(&value, range: NSMakeRange(index, 2))
+		withUnsafeMutablePointer(to: &value) { ptr in
+			copyBytes(to: unsafeBitCast(ptr, to: UnsafeMutablePointer<UInt8>.self), from: index..<(index+2))
+		}
 
 		return NSSwapLittleShortToHost(value)
 	}
 
-	func readUInt32AtIndex(index: Int) -> UInt32 {
+	func readUInt32AtIndex(_ index: Int) -> UInt32 {
 		var value = UInt32()
-		getBytes(&value, range: NSMakeRange(index, 4))
+		withUnsafeMutablePointer(to: &value) { ptr in
+			copyBytes(to: unsafeBitCast(ptr, to: UnsafeMutablePointer<UInt8>.self), from: index..<(index+4))
+		}
 
 		return NSSwapLittleIntToHost(value)
 	}
 
-	func readStringAtIndex(index: Int, length: Int) -> String {
-		var stringBuffer = [Int8](count: length + 1 /* null terminated */, repeatedValue: 0)
-		getBytes(&stringBuffer, range: NSMakeRange(index, length))
+	func readStringAtIndex(_ index: Int, length: Int) -> String {
+		var stringBuffer = [UInt8](repeating: 0 /* null terminated */, count: length + 1)
+		copyBytes(to: &stringBuffer, from: index..<(index+length))
 
-		return NSString(UTF8String: stringBuffer) as? String ?? ""
+		return stringBuffer.withUnsafeBufferPointer { ptr in
+			return String(validatingUTF8: unsafeBitCast(ptr.baseAddress!, to: UnsafePointer<Int8>.self))
+		} ?? ""
 	}
 
-	func readStringOfUnknownLengthAtIndex(index: Int, maxLength: Int) -> String {
-		var stringBuffer = [Int8](count: maxLength, repeatedValue: 0)
-		getBytes(&stringBuffer, range: NSMakeRange(index, maxLength))
+	func readStringOfUnknownLengthAtIndex(_ index: Int, maxLength: Int) -> String {
+		var stringBuffer = [UInt8](repeating: 0, count: maxLength)
+		copyBytes(to: &stringBuffer, from: index..<(index+maxLength))
 
-		return NSString(UTF8String: stringBuffer) as? String ?? ""
+		return stringBuffer.withUnsafeBufferPointer { ptr in
+			return String(validatingUTF8: unsafeBitCast(ptr.baseAddress!, to: UnsafePointer<Int8>.self))
+		} ?? ""
 	}
 }

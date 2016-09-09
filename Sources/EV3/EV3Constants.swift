@@ -8,118 +8,118 @@
 import Foundation
 
 enum EV3OpCode: UInt8 {
-	case UIRead = 0x81
-	case UIWrite = 0x82
-	case UIButton = 0x83
-	case UIDraw = 0x84
-	case Sound = 0x94
-	case SoundTest = 0x95
-	case SoundReady = 0x96
-	case InputDevice = 0x99
-	case InputRead = 0x9A
-	case InputReadSI = 0x9D
-	case OutputPower = 0xA4
-	case OutputSpeed = 0xA5
-	case OutputStart = 0xA6
-	case OutputStop = 0xA3
-	case OutputRead = 0xA8
-	case OutputTest = 0xA9
-	case OutputReady = 0xAA
-	case OutputTimePower = 0xAD
-	case OutputTimeSpeed = 0xAF
-	case OutputStepSync = 0xB0
-	case OutputTimeSync = 0xB1
-	case File = 0xC0
-	case MemoryUsage = 0xC5
-	case COMGet = 0xD3
-	case COMSet = 0xD4
+	case uiRead = 0x81
+	case uiWrite = 0x82
+	case uiButton = 0x83
+	case uiDraw = 0x84
+	case sound = 0x94
+	case soundTest = 0x95
+	case soundReady = 0x96
+	case inputDevice = 0x99
+	case inputRead = 0x9A
+	case inputReadSI = 0x9D
+	case outputPower = 0xA4
+	case outputSpeed = 0xA5
+	case outputStart = 0xA6
+	case outputStop = 0xA3
+	case outputRead = 0xA8
+	case outputTest = 0xA9
+	case outputReady = 0xAA
+	case outputTimePower = 0xAD
+	case outputTimeSpeed = 0xAF
+	case outputStepSync = 0xB0
+	case outputTimeSync = 0xB1
+	case file = 0xC0
+	case memoryUsage = 0xC5
+	case comGet = 0xD3
+	case comSet = 0xD4
 }
 
 enum EV3FileOpSubcode: UInt8 {
-	case OpenRead = 1
-	case Close = 7
-	case ReadBytes = 28
-	case WriteBytes = 29
+	case openRead = 1
+	case close = 7
+	case readBytes = 28
+	case writeBytes = 29
 }
 
 enum EV3InputDeviceOpSubcode: UInt8 {
-	case GetTypeMode = 5
-	case GetRaw = 11
-	case GetName = 21
+	case getTypeMode = 5
+	case getRaw = 11
+	case getName = 21
 }
 
 enum EV3SoundOpSubcode: UInt8 {
-	case Break = 0
-	case PlayTone = 1
-	case Play = 2
+	case `break` = 0
+	case playTone = 1
+	case play = 2
 }
 
 enum EV3UIWriteOpSubcode: UInt8 {
-	case ScreenBlock = 16
-	case InitRun = 25
-	case LED = 27
+	case screenBlock = 16
+	case initRun = 25
+	case led = 27
 }
 
 enum EV3ButtonOpSubcode: UInt8 {
-	case WaitForPress = 3
-	case Pressed = 9
+	case waitForPress = 3
+	case pressed = 9
 }
 
 enum EV3UIDrawOpSubcode: UInt8 {
-	case Update = 0
-	case Clean = 1
-	case Pixel = 2
-	case Line = 3
-	case Circle = 4
-	case Text = 5
-	case Icon = 6
-	case FillRect = 9
-	case Rect = 10
-	case InverseRect = 16
-	case SelectFont = 17
-	case Topline = 18
-	case FillWindow = 19
-	case DotLine = 21
-	case FillCircle = 24
-	case Store = 25
-	case Restore = 26
-	case BMPFile = 28
+	case update = 0
+	case clean = 1
+	case pixel = 2
+	case line = 3
+	case circle = 4
+	case text = 5
+	case icon = 6
+	case fillRect = 9
+	case rect = 10
+	case inverseRect = 16
+	case selectFont = 17
+	case topline = 18
+	case fillWindow = 19
+	case dotLine = 21
+	case fillCircle = 24
+	case store = 25
+	case restore = 26
+	case bmpFile = 28
 }
 
 enum EV3COMGetSubcode: UInt8 {
-	case GetBrickName = 13
+	case getBrickName = 13
 }
 
 enum EV3COMSetSubcode: UInt8 {
-	case SetBrickName = 8
+	case setBrickName = 8
 }
 
 public enum EV3SensorType: UInt8 {
-	case KeepType = 0
-	case Touch = 16
-	case Light = 29
-	case Ultrasound = 30
-	case IR = 33
+	case keepType = 0
+	case touch = 16
+	case light = 29
+	case ultrasound = 30
+	case ir = 33
 }
 
 public enum EV3ButtonConst: UInt8 {
-	case Up = 1
-	case Enter = 2
-	case Down = 3
-	case Right = 4
-	case Left = 5
-	case Back = 6
+	case up = 1
+	case enter = 2
+	case down = 3
+	case right = 4
+	case left = 5
+	case back = 6
 }
 
 public enum EV3InputPort: UInt8 {
-	case One = 0, Two, Three, Four
+	case one = 0, two, three, four
 }
 
 public enum EV3OutputPort: UInt8 {
-	case A = 0, B, C, D
+	case a = 0, b, c, d
 }
 
-public struct EV3OutputPortOptions: OptionSetType {
+public struct EV3OutputPortOptions: OptionSet {
 	public let rawValue: UInt8
 	public init(rawValue: UInt8) {
 		self.rawValue = rawValue
@@ -132,12 +132,12 @@ public struct EV3OutputPortOptions: OptionSetType {
 }
 
 enum EV3Layer: UInt8 {
-	case ThisBrick = 0
+	case thisBrick = 0
 }
 
 public enum EV3StopType: UInt8 {
-	case Coast = 0
-	case Brake = 1
+	case coast = 0
+	case brake = 1
 }
 
 let EV3ColorMode = UInt8(2)

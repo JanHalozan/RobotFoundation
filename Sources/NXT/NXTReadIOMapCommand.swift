@@ -23,19 +23,19 @@ public struct NXTReadIOMapCommand: NXTCommand {
 	}
 
 	public var type: MindstormsCommandType {
-		return .System
+		return .system
 	}
 
 	public var identifier: UInt8 {
 		return 0x94
 	}
 
-	public var payloadData: NSData {
-		let mutableData = NSMutableData()
+	public var payloadData: Data {
+		var mutableData = Data()
 		mutableData.appendUInt32(module)
 		mutableData.appendUInt16(offset)
 		mutableData.appendUInt16(bytesToRead)
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }
 

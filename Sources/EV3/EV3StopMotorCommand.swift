@@ -20,13 +20,13 @@ public struct EV3StopMotorCommand: EV3DirectCommand {
 		return EV3GenericResponse.self
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
-		let mutableData = NSMutableData()
-		mutableData.appendUInt8(EV3OpCode.OutputStop.rawValue)
-		mutableData.appendUInt8(EV3Layer.ThisBrick.rawValue)
+	public func payloadDataWithGlobalOffset(_ offset: UInt16) -> Data {
+		var mutableData = Data()
+		mutableData.appendUInt8(EV3OpCode.outputStop.rawValue)
+		mutableData.appendUInt8(EV3Layer.thisBrick.rawValue)
 		mutableData.appendUInt8(port.rawValue)
 		mutableData.appendUInt8(stopType.rawValue)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

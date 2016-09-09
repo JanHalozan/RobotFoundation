@@ -16,17 +16,17 @@ struct NXTResetMotorPositionCommand: NXTCommand {
 	}
 
 	var type: MindstormsCommandType {
-		return .Direct
+		return .direct
 	}
 
 	var identifier: UInt8 {
 		return 0x0A
 	}
 
-	var payloadData: NSData {
-		let data = NSMutableData()
+	var payloadData: Data {
+		var data = Data()
 		data.appendUInt8(port.rawValue)
 		data.appendUInt8(relative ? 1 : 0)
-		return data.copy() as! NSData
+		return data
 	}
 }

@@ -19,16 +19,16 @@ public struct NXTLSGetStatusCommand: NXTCommand {
 	}
 
 	public var type: MindstormsCommandType {
-		return .Direct
+		return .direct
 	}
 
 	public var identifier: UInt8 {
 		return 0x0E
 	}
 
-	public var payloadData: NSData {
-		let data = NSMutableData()
+	public var payloadData: Data {
+		var data = Data()
 		data.appendUInt8(port.rawValue)
-		return data.copy() as! NSData
+		return data
 	}
 }

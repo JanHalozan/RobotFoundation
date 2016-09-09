@@ -18,9 +18,9 @@ import ExternalAccessory
 
 public enum RobotDeviceType {
 	#if os(OSX)
-	case HIDDevice
-	case LegacyUSBDevice
-	case BluetoothDevice
+	case hidDevice
+	case legacyUSBDevice
+	case bluetoothDevice
 	#endif
 
 	#if os(iOS)
@@ -86,7 +86,7 @@ public final class MetaDevice {
 				return nil
 			}
 
-			self.init(type: .BluetoothDevice, deviceClass: deviceClass, uniqueIdentifier: identifier, name: name)
+			self.init(type: .bluetoothDevice, deviceClass: deviceClass, uniqueIdentifier: identifier, name: name)
 		case kDictionaryTypeHID:
 			guard let identifier = stringDictionary[kDictionaryIdentifierKey] else {
 				return nil
@@ -96,7 +96,7 @@ public final class MetaDevice {
 				return nil
 			}
 
-			self.init(type: .HIDDevice, deviceClass: .EV3, uniqueIdentifier: identifier, name: name)
+			self.init(type: .hidDevice, deviceClass: .EV3, uniqueIdentifier: identifier, name: name)
 		case kDictionaryTypeLegacyUSB:
 			guard let identifier = stringDictionary[kDictionaryIdentifierKey] else {
 				return nil
@@ -106,7 +106,7 @@ public final class MetaDevice {
 				return nil
 			}
 
-			self.init(type: .LegacyUSBDevice, deviceClass: .NXT20, uniqueIdentifier: identifier, name: name)
+			self.init(type: .legacyUSBDevice, deviceClass: .NXT20, uniqueIdentifier: identifier, name: name)
 		default:
 			fatalError("Unimplemented type")
 			return nil
@@ -115,21 +115,21 @@ public final class MetaDevice {
 
 	public var stringDictionary: [String: String] {
 		switch type {
-		case .BluetoothDevice:
+		case .bluetoothDevice:
 			return [
 				kDictionaryTypeKey: kDictionaryTypeBluetooth,
 				kDictionaryIdentifierKey: uniqueIdentifier,
 				kDictionaryNameKey: name,
 				kDictionaryClassKey: deviceClass.rawValue
 			]
-		case .HIDDevice:
+		case .hidDevice:
 			return [
 				kDictionaryTypeKey: kDictionaryTypeHID,
 				kDictionaryIdentifierKey: uniqueIdentifier,
 				kDictionaryNameKey: name,
 				kDictionaryClassKey: deviceClass.rawValue
 			]
-		case .LegacyUSBDevice:
+		case .legacyUSBDevice:
 			return [
 				kDictionaryTypeKey: kDictionaryTypeLegacyUSB,
 				kDictionaryIdentifierKey: uniqueIdentifier,
@@ -139,9 +139,9 @@ public final class MetaDevice {
 		}
 	}
 	
-	public func updateName(newName: String) {
+	public func updateName(_ newName: String) {
 		name = newName
-		NSNotificationCenter.defaultCenter().postNotificationName(MetaDeviceNameDidChangeNotificationName, object: self)
+		NotificationCenter.default.post(name: Notification.Name(rawValue: MetaDeviceNameDidChangeNotificationName), object: self)
 	}
 }
 

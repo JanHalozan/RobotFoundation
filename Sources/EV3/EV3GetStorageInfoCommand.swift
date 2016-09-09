@@ -18,12 +18,12 @@ public struct EV3GetStorageInfoCommand: EV3DirectCommand {
 		return 8
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
-		let mutableData = NSMutableData()
-		mutableData.appendUInt8(EV3OpCode.MemoryUsage.rawValue)
+	public func payloadDataWithGlobalOffset(_ offset: UInt16) -> Data {
+		var mutableData = Data()
+		mutableData.appendUInt8(EV3OpCode.memoryUsage.rawValue)
 		mutableData.appendGV2(offset)
 		mutableData.appendGV2(offset + 4)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

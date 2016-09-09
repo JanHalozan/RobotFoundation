@@ -21,17 +21,17 @@ public struct NXTPlayToneCommand: NXTCommand {
 	}
 
 	public var type: MindstormsCommandType {
-		return .Direct
+		return .direct
 	}
 
 	public var identifier: UInt8 {
 		return 0x03
 	}
 
-	public var payloadData: NSData {
-		let data = NSMutableData()
+	public var payloadData: Data {
+		var data = Data()
 		data.appendUInt16(frequency)
 		data.appendUInt16(duration)
-		return data.copy() as! NSData
+		return data
 	}
 }

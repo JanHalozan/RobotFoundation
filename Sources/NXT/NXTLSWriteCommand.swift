@@ -9,10 +9,10 @@ import Foundation
 
 public struct NXTLSWriteCommand: NXTCommand {
 	public let port: NXTInputPort
-	public let txData: NSData
+	public let txData: Data
 	public let rxDataLength: UInt8
 
-	public init(port: NXTInputPort, txData: NSData, rxDataLength: UInt8) {
+	public init(port: NXTInputPort, txData: Data, rxDataLength: UInt8) {
 		self.port = port
 		self.txData = txData
 		self.rxDataLength = rxDataLength
@@ -23,19 +23,19 @@ public struct NXTLSWriteCommand: NXTCommand {
 	}
 
 	public var type: MindstormsCommandType {
-		return .Direct
+		return .direct
 	}
 
 	public var identifier: UInt8 {
 		return 0x0F
 	}
 
-	public var payloadData: NSData {
-		let data = NSMutableData()
+	public var payloadData: Data {
+		var data = Data()
 		data.appendUInt8(port.rawValue)
-		data.appendUInt8(UInt8(txData.length))
+		data.appendUInt8(UInt8(txData.count))
 		data.appendUInt8(rxDataLength)
-		data.appendData(txData)
-		return data.copy() as! NSData
+		data.append(txData)
+		return data
 	}
 }

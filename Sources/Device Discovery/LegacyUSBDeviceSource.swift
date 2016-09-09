@@ -11,7 +11,7 @@ import Foundation
 import IOKit.usb
 
 extension io_iterator_t {
-	func enumerate(@noescape handler: io_service_t -> ()) {
+	func enumerate(_ handler: (io_service_t) -> ()) {
 		var device = io_service_t()
 		repeat {
 			device = IOIteratorNext(self)
@@ -22,7 +22,7 @@ extension io_iterator_t {
 	}
 }
 
-private func matchingDictionaryForProductID(productID: Int, vendorID: Int) -> [String: AnyObject] {
+private func matchingDictionaryForProductID(_ productID: Int, vendorID: Int) -> [String: AnyObject] {
 	guard let matchingDict = IOServiceMatching(kIOUSBDeviceClassName) else {
 		assertionFailure()
 		return [:]
@@ -35,8 +35,8 @@ private func matchingDictionaryForProductID(productID: Int, vendorID: Int) -> [S
 	return (matchingDictSwift.copy() as! NSDictionary) as! [String: AnyObject]
 }
 
-private func matchingDevicesForProductID(productID: Int, vendorID: Int) -> [MetaDevice]? {
-	let matchingDict = matchingDictionaryForProductID(productID, vendorID: vendorID)
+private func matchingDevicesForProductID(_ productID: Int, vendorID: Int) -> [MetaDevice]? {
+	let matchingDict = matchingDictionaryForProductID(productID, vendorID: vendorID) as CFDictionary
 
 	var iterator = io_iterator_t()
 	if (IOServiceGetMatchingServices(kIOMasterPortDefault, matchingDict, &iterator) != kIOReturnSuccess) {
@@ -56,18 +56,22 @@ private func matchingDevicesForProductID(productID: Int, vendorID: Int) -> [Meta
 	return devices
 }
 
-private func robotDeviceForService(service: io_service_t) -> MetaDevice? {
-	guard let uniqueIdentifier = IORegistryEntrySearchCFProperty(service, kIOServicePlane, kUSBSerialNumberString, kCFAllocatorDefault, IOOptionBits(kIORegistryIterateRecursively)) as? String else {
+private func robotDeviceForService(_ service: io_service_t) -> MetaDevice? {
+	guard let uniqueIdentifier = IORegistryEntrySearchCFProperty(service, kIOServicePlane, kUSBSerialNumberString as CFString, kCFAllocatorDefault, IOOptionBits(kIORegistryIterateRecursively)) as? String else {
 		assertionFailure()
 		return nil
 	}
 
-	let name = IORegistryEntrySearchCFProperty(service, kIOServicePlane, kUSBProductString, kCFAllocatorDefault, IOOptionBits(kIORegistryIterateRecursively)) as? String ?? "NXT USB"
-	return MetaDevice(type: .LegacyUSBDevice, deviceClass: .NXT20, uniqueIdentifier: uniqueIdentifier, name: name)
+	let name = IORegistryEntrySearchCFProperty(service, kIOServicePlane, kUSBProductString as CFString, kCFAllocatorDefault, IOOptionBits(kIORegistryIterateRecursively)) as? String ?? "NXT USB"
+	return MetaDevice(type: .legacyUSBDevice, deviceClass: .NXT20, uniqueIdentifier: uniqueIdentifier, name: name)
 }
 
-private func deviceAdded(pointer: UnsafeMutablePointer<Void>, _ iterator: io_iterator_t) {
-	let source = Unmanaged<LegacyUSBDeviceSource>.fromOpaque(COpaquePointer(pointer)).takeUnretainedValue()
+private func deviceAdded(_ pointer: UnsafeMutableRawPointer?, _ iterator: io_iterator_t) {
+	guard let pointer = pointer else {
+		assertionFailure()
+		return
+	}
+	let source = Unmanaged<LegacyUSBDeviceSource>.fromOpaque(pointer).takeUnretainedValue()
 	iterator.enumerate { device in
 		guard let robotDevice = robotDeviceForService(device) else {
 			assertionFailure()
@@ -78,8 +82,12 @@ private func deviceAdded(pointer: UnsafeMutablePointer<Void>, _ iterator: io_ite
 	}
 }
 
-private func deviceRemoved(pointer: UnsafeMutablePointer<Void>, _ iterator: io_iterator_t) {
-	let source = Unmanaged<LegacyUSBDeviceSource>.fromOpaque(COpaquePointer(pointer)).takeUnretainedValue()
+private func deviceRemoved(_ pointer: UnsafeMutableRawPointer?, _ iterator: io_iterator_t) {
+	guard let pointer = pointer else {
+		assertionFailure()
+		return
+	}
+	let source = Unmanaged<LegacyUSBDeviceSource>.fromOpaque(pointer).takeUnretainedValue()
 	iterator.enumerate { device in
 		guard let robotDevice = robotDeviceForService(device) else {
 			assertionFailure()
@@ -91,16 +99,16 @@ private func deviceRemoved(pointer: UnsafeMutablePointer<Void>, _ iterator: io_i
 }
 
 public final class LegacyUSBDeviceSource: RobotDeviceSource {
-	private unowned var client: RobotDeviceSourceClient
-	private var foundDevices = Set<MetaDevice>()
+	fileprivate unowned var client: RobotDeviceSourceClient
+	fileprivate var foundDevices = Set<MetaDevice>()
 
 	public init(client: RobotDeviceSourceClient) {
 		self.client = client
-		CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes)
+		CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, CFRunLoopMode.commonModes)
 	}
 
 	deinit {
-		CFRunLoopRemoveSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes)
+		CFRunLoopRemoveSource(CFRunLoopGetCurrent(), runLoopSource, CFRunLoopMode.commonModes)
 		IONotificationPortDestroy(notificationPort)
 	}
 
@@ -122,12 +130,12 @@ public final class LegacyUSBDeviceSource: RobotDeviceSource {
 		foundDevices = Set<MetaDevice>(currentDevices)
 
 		// FIXME: NXT 2.0 is hardcoded here because that's the only device that uses this; fix it later.
-		let matchingDict = matchingDictionaryForProductID(0x2, vendorID: 0x694)
+		let matchingDict = matchingDictionaryForProductID(0x2, vendorID: 0x694) as CFDictionary
 
 		var matchIterator = io_iterator_t()
 		var removeIterator = io_iterator_t()
 
-		let selfPointer = UnsafeMutablePointer<Void>(Unmanaged.passUnretained(self).toOpaque())
+		let selfPointer = UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque())
 		IOServiceAddMatchingNotification(notificationPort, kIOMatchedNotification, matchingDict, deviceAdded, selfPointer, &matchIterator);
 		IOServiceAddMatchingNotification(notificationPort, kIOTerminatedNotification, matchingDict, deviceRemoved, selfPointer, &removeIterator)
 

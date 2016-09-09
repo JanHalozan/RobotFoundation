@@ -28,12 +28,12 @@ public struct EV3ReadFileCommand: EV3SystemCommand {
 		return [kEV3FileLengthInfo: Int(bytesToRead)]
 	}
 
-	public var payloadData: NSData {
-		let mutableData = NSMutableData()
+	public var payloadData: Data {
+		var mutableData = Data()
 		mutableData.appendUInt16(bytesToRead)
 		mutableData.appendString(path)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }
 
@@ -59,11 +59,11 @@ public struct EV3ContinueReadFileCommand: EV3SystemCommand {
 		return [kEV3FileLengthInfo: Int(bytesToRead)]
 	}
 
-	public var payloadData: NSData {
-		let mutableData = NSMutableData()
+	public var payloadData: Data {
+		var mutableData = Data()
 		mutableData.appendUInt8(handle)
 		mutableData.appendUInt16(bytesToRead)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

@@ -8,9 +8,9 @@
 import Foundation
 
 public enum EV3LEDPattern: UInt8 {
-	case None = 0, Green, Red, Orange
-	case FlashingGreen, FlashingRed, FlashingOrange
-	case PulsingGreen, PulsingRed, PulsingOrange
+	case none = 0, green, red, orange
+	case flashingGreen, flashingRed, flashingOrange
+	case pulsingGreen, pulsingRed, pulsingOrange
 }
 
 public struct EV3SetLEDCommand: EV3DirectCommand {
@@ -24,13 +24,13 @@ public struct EV3SetLEDCommand: EV3DirectCommand {
 		return EV3GenericResponse.self
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
-		let mutableData = NSMutableData()
-		mutableData.appendUInt8(EV3OpCode.UIWrite.rawValue)
-		mutableData.appendUInt8(EV3UIWriteOpSubcode.LED.rawValue)
+	public func payloadDataWithGlobalOffset(_ offset: UInt16) -> Data {
+		var mutableData = Data()
+		mutableData.appendUInt8(EV3OpCode.uiWrite.rawValue)
+		mutableData.appendUInt8(EV3UIWriteOpSubcode.led.rawValue)
 
 		mutableData.appendUInt8(pattern.rawValue)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

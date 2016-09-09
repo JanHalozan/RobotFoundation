@@ -9,7 +9,7 @@ import Foundation
 import IOKit.hid
 
 protocol HIDTransportServiceDelegate: class {
-	func handleData(data: NSData)
+	func handleData(_ data: Data)
 	func closedConnection()
 }
 
@@ -17,7 +17,7 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 	private var device: IOHIDDevice?
 	private var activeClients = 0
 	private var awaitingDeferredClose = false
-	private var inputReportBuffer = [UInt8](count: 1024, repeatedValue: 0)
+	private var inputReportBuffer = [UInt8](repeating: 0, count: 1024)
 
 	private weak var delegate: HIDTransportServiceDelegate?
 
@@ -26,30 +26,30 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 	}
 
 	private var currentIdentifier: String? {
-		assert(NSThread.isMainThread())
+		assert(Thread.isMainThread)
 
 		guard let device = device else {
 			return nil
 		}
 
-		return IOHIDDeviceGetProperty(device, kIOHIDSerialNumberKey) as? String
+		return IOHIDDeviceGetProperty(device, kIOHIDSerialNumberKey as CFString) as? String
 	}
 
-	private func open(identifier: NSString, handler: Int -> ()) -> Bool {
+	private func open(_ identifier: NSString, handler: (Int) -> ()) -> Bool {
 		var result = false
-		dispatch_sync(dispatch_get_main_queue()) {
+		DispatchQueue.main.sync {
 			result = self.actuallyOpenWithIdentifier(identifier, handler: handler)
 		}
 		return result
 	}
 
-	private func actuallyOpenWithIdentifier(identifier: NSString, handler: Int -> ()) -> Bool {
-		assert(NSThread.isMainThread())
+	private func actuallyOpenWithIdentifier(_ identifier: NSString, handler: (Int) -> ()) -> Bool {
+		assert(Thread.isMainThread)
 
 		if awaitingDeferredClose {
 			if currentIdentifier == nil {
 				// Just go on and open.
-			} else if currentIdentifier! == identifier {
+			} else if currentIdentifier! == identifier as String {
 				// Bring back the connection we have.
 				cancelDeferredClose()
 				activeClients += 1
@@ -71,7 +71,7 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 
 			activeClients += 1
 			return true
-		} else if currentIdentifier! == identifier {
+		} else if currentIdentifier! == identifier as String {
 			activeClients += 1
 			return true
 		} else {
@@ -81,11 +81,11 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 		}
 	}
 
-	private func openNewDevice(identifier: NSString) -> Int {
+	private func openNewDevice(_ identifier: NSString) -> Int {
 		let matching = IOServiceMatching(kIOHIDDeviceKey) as NSMutableDictionary
 		matching[kIOHIDSerialNumberKey] = identifier
 
-		let service = IOServiceGetMatchingService(kIOMasterPortDefault, matching as CFDictionaryRef)
+		let service = IOServiceGetMatchingService(kIOMasterPortDefault, matching as CFDictionary)
 
 		guard let hidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, service) else {
 			return 1
@@ -93,11 +93,10 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 
 		IOHIDDeviceRegisterInputReportCallback(hidDevice, &inputReportBuffer, inputReportBuffer.count, { context, result, interface, reportType, index, bytes, length in
 
-			let selfPointer = unsafeBitCast(context, HIDTransportService.self)
+			let selfPointer = unsafeBitCast(context, to: HIDTransportService.self)
 			selfPointer.receivedReport()
-
-		}, UnsafeMutablePointer(unsafeAddressOf(self)))
-		IOHIDDeviceScheduleWithRunLoop(hidDevice, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode)
+		}, UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque()))
+		IOHIDDeviceScheduleWithRunLoop(hidDevice, CFRunLoopGetCurrent(), CFRunLoopMode.defaultMode.rawValue)
 
 		let result = IOHIDDeviceOpen(hidDevice, 0)
 		guard result == kIOReturnSuccess else {
@@ -106,10 +105,10 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 
 		IOHIDDeviceRegisterRemovalCallback(hidDevice, { context, result, refcon in
 
-			let selfPointer = unsafeBitCast(context, HIDTransportService.self)
+			let selfPointer = unsafeBitCast(context, to: HIDTransportService.self)
 			selfPointer.closedConnection()
 
-		}, UnsafeMutablePointer(unsafeAddressOf(self)))
+		}, UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque()))
 
 		device = hidDevice
 
@@ -117,22 +116,22 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 	}
 
 	private func closedConnection() {
-		assert(NSThread.isMainThread())
+		assert(Thread.isMainThread)
 
 		actuallyClose()
 
 		delegate?.closedConnection()
 	}
 
-	func writeData(data: NSData, identifier: NSString, handler: Int -> ()) {
+	func writeData(_ data: NSData, identifier: NSString, handler: @escaping (Int) -> ()) {
 		if !open(identifier, handler: handler) {
 			return
 		}
 
 		var result: IOReturn?
 
-		dispatch_sync(dispatch_get_main_queue()) {
-			result = self.actuallyWriteData(data, identifier: identifier)
+		DispatchQueue.main.sync {
+			result = self.actuallyWriteData(data as Data, identifier: identifier)
 		}
 
 		guard let theResult = result else {
@@ -146,21 +145,21 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 		handler(Int(theResult))
 	}
 
-	private func actuallyWriteData(data: NSData, identifier: NSString) -> IOReturn {
+	private func actuallyWriteData(_ data: Data, identifier: NSString) -> IOReturn {
 		guard let currentIdentifier = currentIdentifier else {
 			debugPrint("No open device; nowhere to write to.")
 			return kIOReturnNotOpen
 		}
 
-		guard currentIdentifier == identifier else {
+		guard currentIdentifier == identifier as String else {
 			debugPrint("Device mismatch.")
 			return kIOReturnInternalError
 		}
 
-		let bytes = unsafeBitCast(data.bytes, UnsafePointer<UInt8>.self)
-
 		if let existingDevice = device {
-			return IOHIDDeviceSetReport(existingDevice, kIOHIDReportTypeOutput, 0, bytes, data.length)
+			return data.withUnsafeBytes { (bytes: UnsafePointer<UInt8>) in
+				return IOHIDDeviceSetReport(existingDevice, kIOHIDReportTypeOutput, 0, bytes, data.count)
+			}
 		} else {
 			assertionFailure()
 			return kIOReturnNoDevice
@@ -168,27 +167,27 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 	}
 
 	private func receivedReport() {
-		assert(NSThread.isMainThread())
+		assert(Thread.isMainThread)
 
-		let receivedData = NSData(bytes: &inputReportBuffer, length: inputReportBuffer.count)
+		let receivedData = Data(bytes: &inputReportBuffer, count: inputReportBuffer.count)
 		delegate?.handleData(receivedData)
 	}
 
-	private func close(identifier: NSString) {
-		dispatch_sync(dispatch_get_main_queue()) {
+	private func close(_ identifier: NSString) {
+		DispatchQueue.main.sync {
 			self.actuallyCloseWithIdentifier(identifier)
 		}
 	}
 
-	private func actuallyCloseWithIdentifier(identifier: NSString) {
-		assert(NSThread.isMainThread())
+	private func actuallyCloseWithIdentifier(_ identifier: NSString) {
+		assert(Thread.isMainThread)
 
 		guard let currentIdentifier = currentIdentifier else {
 			print("No open device; nothing to close.")
 			return
 		}
 
-		guard currentIdentifier == identifier else {
+		guard currentIdentifier == identifier as String else {
 			print("Device mismatch.")
 			return
 		}
@@ -198,18 +197,18 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 
 		if activeClients == 0 {
 			if awaitingDeferredClose {
-				HIDTransportService.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(actuallyClose), object: nil)
+				HIDTransportService.cancelPreviousPerformRequests(withTarget: self, selector: #selector(actuallyClose), object: nil)
 			}
 
 			// Schedule a deferred close.
 			awaitingDeferredClose = true
-			performSelector(#selector(actuallyClose), withObject: nil, afterDelay: 10)
+			perform(#selector(actuallyClose), with: nil, afterDelay: 10)
 		}
 	}
 
 	private func cancelDeferredClose() {
-		assert(NSThread.isMainThread())
-		HIDTransportService.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(actuallyClose), object: nil)
+		assert(Thread.isMainThread)
+		HIDTransportService.cancelPreviousPerformRequests(withTarget: self, selector: #selector(actuallyClose), object: nil)
 		awaitingDeferredClose = false
 	}
 
@@ -226,7 +225,7 @@ final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
 		activeClients = 0
 	}
 
-	func scheduleRead(identifier: NSString, handler: Int -> ()) {
+	func scheduleRead(_ identifier: NSString, handler: @escaping (Int) -> ()) {
 		fatalError("Not supported")
 	}
 }

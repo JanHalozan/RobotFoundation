@@ -9,6 +9,6 @@
 
 import Foundation
 
-extension IOReturn: ErrorType { }
+extension IOReturn: Error { }
 
 #endif

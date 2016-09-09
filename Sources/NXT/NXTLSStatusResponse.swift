@@ -11,7 +11,7 @@ public struct NXTLSStatusResponse: NXTResponse {
 	public let status: NXTStatus
 	public let bytesReady: UInt8
 
-	public init?(data: NSData, userInfo: [String : Any]) {
+	public init?(data: Data, userInfo: [String : Any]) {
 		guard let (_, status) = processReplyWithResponseData(data) else {
 			return nil
 		}

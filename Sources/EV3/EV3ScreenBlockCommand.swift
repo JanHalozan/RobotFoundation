@@ -18,12 +18,12 @@ public struct EV3ScreenBlockCommand: EV3DirectCommand {
 		return EV3GenericResponse.self
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
-		let mutableData = NSMutableData()
-		mutableData.appendUInt8(EV3OpCode.UIWrite.rawValue)
-		mutableData.appendUInt8(EV3UIWriteOpSubcode.ScreenBlock.rawValue)
+	public func payloadDataWithGlobalOffset(_ offset: UInt16) -> Data {
+		var mutableData = Data()
+		mutableData.appendUInt8(EV3OpCode.uiWrite.rawValue)
+		mutableData.appendUInt8(EV3UIWriteOpSubcode.screenBlock.rawValue)
 		mutableData.appendUInt8(block ? 1 : 0)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 public enum EV3SensorColor: UInt32 {
-	case None = 0, Black, Blue, Green, Yellow, Red, White, Brown
+	case none = 0, black, blue, green, yellow, red, white, brown
 }
 
 public struct EV3ColorResponse: EV3Response {
@@ -16,12 +16,12 @@ public struct EV3ColorResponse: EV3Response {
 
 	public let responseLength: Int
 
-	public init?(data: NSData, userInfo: [String : Any]) {
+	public init?(data: Data, userInfo: [String : Any]) {
 		let index = data.readFloatAtIndex(0)
 		if index.isNaN || index.isInfinite {
-			color = .None
+			color = .none
 		} else {
-			color = EV3SensorColor(rawValue: UInt32(Int(index))) ?? EV3SensorColor.None
+			color = EV3SensorColor(rawValue: UInt32(Int(index))) ?? EV3SensorColor.none
 		}
 		responseLength = 4
 	}

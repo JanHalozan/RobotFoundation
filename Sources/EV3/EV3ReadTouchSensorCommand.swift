@@ -25,16 +25,16 @@ public struct EV3ReadTouchSensorCommand: EV3DirectCommand {
 		return 1
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
-		let mutableData = NSMutableData()
-		mutableData.appendUInt8(EV3OpCode.InputRead.rawValue)
-		mutableData.appendUInt8(EV3Layer.ThisBrick.rawValue)
+	public func payloadDataWithGlobalOffset(_ offset: UInt16) -> Data {
+		var mutableData = Data()
+		mutableData.appendUInt8(EV3OpCode.inputRead.rawValue)
+		mutableData.appendUInt8(EV3Layer.thisBrick.rawValue)
 		mutableData.appendUInt8(port.rawValue)
 
-		mutableData.appendUInt8(EV3SensorType.KeepType.rawValue)
+		mutableData.appendUInt8(EV3SensorType.keepType.rawValue)
 		mutableData.appendUInt8(kEV3TouchSensorBooleanMode)
 		mutableData.appendGV2(offset)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

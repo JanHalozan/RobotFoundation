@@ -22,10 +22,10 @@ public struct EV3DeleteItemCommand: EV3SystemCommand {
 		return 0x9C
 	}
 
-	public var payloadData: NSData {
-		let mutableData = NSMutableData()
+	public var payloadData: Data {
+		var mutableData = Data()
 		mutableData.appendString(path)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

@@ -8,8 +8,8 @@
 import Foundation
 
 public enum EV3ReadLightType: UInt8 {
-	case Reflected = 0
-	case Ambient = 1
+	case reflected = 0
+	case ambient = 1
 }
 
 public struct EV3ReadLightCommand: EV3DirectCommand {
@@ -29,16 +29,16 @@ public struct EV3ReadLightCommand: EV3DirectCommand {
 		return 1
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
-		let mutableData = NSMutableData()
-		mutableData.appendUInt8(EV3OpCode.InputRead.rawValue)
-		mutableData.appendUInt8(EV3Layer.ThisBrick.rawValue)
+	public func payloadDataWithGlobalOffset(_ offset: UInt16) -> Data {
+		var mutableData = Data()
+		mutableData.appendUInt8(EV3OpCode.inputRead.rawValue)
+		mutableData.appendUInt8(EV3Layer.thisBrick.rawValue)
 		mutableData.appendUInt8(port.rawValue)
 
-		mutableData.appendUInt8(EV3SensorType.KeepType.rawValue)
+		mutableData.appendUInt8(EV3SensorType.keepType.rawValue)
 		mutableData.appendUInt8(lightType.rawValue)
 		mutableData.appendGV2(offset)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

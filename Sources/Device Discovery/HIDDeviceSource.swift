@@ -11,7 +11,7 @@ import Foundation
 import IOKit.hid
 
 public final class HIDDeviceSource: RobotDeviceSource {
-	private let manager: IOHIDManagerRef
+	private let manager: IOHIDManager
 	private var foundDevices = Set<MetaDevice>()
 
 	private unowned var client: RobotDeviceSourceClient
@@ -22,7 +22,7 @@ public final class HIDDeviceSource: RobotDeviceSource {
 	}
 
 	deinit {
-		IOHIDManagerUnscheduleFromRunLoop(manager, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode)
+		IOHIDManagerUnscheduleFromRunLoop(manager, CFRunLoopGetCurrent(), CFRunLoopMode.defaultMode.rawValue)
 		IOHIDManagerClose(manager, 0)
 	}
 
@@ -34,28 +34,28 @@ public final class HIDDeviceSource: RobotDeviceSource {
 		}
 	}
 
-	public func searchForDeviceWithCriteria(criteria: [RobotDeviceDescriptor]) throws {
+	public func searchForDeviceWithCriteria(_ criteria: [RobotDeviceDescriptor]) throws {
 		var matchingDicts = [CFDictionary]()
 
 		for c in criteria {
 			let matching = [kIOHIDVendorIDKey: c.vendorID, kIOHIDProductIDKey: c.productID]
-			matchingDicts.append(matching)
+			matchingDicts.append(matching as CFDictionary)
 		}
 
-		IOHIDManagerSetDeviceMatchingMultiple(manager, matchingDicts)
+		IOHIDManagerSetDeviceMatchingMultiple(manager, matchingDicts as CFArray)
 		IOHIDManagerRegisterDeviceMatchingCallback(manager, { context, result, other, device in
 
-			let selfPointer = unsafeBitCast(context, HIDDeviceSource.self)
+			let selfPointer = unsafeBitCast(context, to: HIDDeviceSource.self)
 			selfPointer.foundDevice(device)
 
-		}, UnsafeMutablePointer<Void>(unsafeAddressOf(self)))
+		}, UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque()))
 		IOHIDManagerRegisterDeviceRemovalCallback(manager, { context, result, other, device in
 
-			let selfPointer = unsafeBitCast(context, HIDDeviceSource.self)
+			let selfPointer = unsafeBitCast(context, to: HIDDeviceSource.self)
 			selfPointer.lostDevice(device)
 
-		}, UnsafeMutablePointer<Void>(unsafeAddressOf(self)))
-		IOHIDManagerScheduleWithRunLoop(manager, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode)
+		}, UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque()))
+		IOHIDManagerScheduleWithRunLoop(manager, CFRunLoopGetCurrent(), CFRunLoopMode.defaultMode.rawValue)
 
 		let result = IOHIDManagerOpen(manager, 0)
 		guard result == kIOReturnSuccess else {
@@ -63,26 +63,26 @@ public final class HIDDeviceSource: RobotDeviceSource {
 		}
 	}
 
-	private func foundDevice(device: IOHIDDeviceRef) {
-		let name = IOHIDDeviceGetProperty(device, kIOHIDProductKey) as? String ?? "HID Device"
-		let uniqueIdentifier = IOHIDDeviceGetProperty(device, kIOHIDSerialNumberKey) as? String ?? ""
+	private func foundDevice(_ device: IOHIDDevice) {
+		let name = IOHIDDeviceGetProperty(device, kIOHIDProductKey as CFString) as? String ?? "HID Device"
+		let uniqueIdentifier = IOHIDDeviceGetProperty(device, kIOHIDSerialNumberKey as CFString) as? String ?? ""
 
-		let robotDevice = MetaDevice(type: .HIDDevice, deviceClass: .EV3, uniqueIdentifier: uniqueIdentifier, name: name)
+		let robotDevice = MetaDevice(type: .hidDevice, deviceClass: .EV3, uniqueIdentifier: uniqueIdentifier, name: name)
 		foundDevices.insert(robotDevice)
 		client.robotDeviceSourceDidFindDevice(robotDevice)
 	}
 
-	private func lostDevice(device: IOHIDDeviceRef) {
+	private func lostDevice(_ device: IOHIDDevice) {
 		if let robotDevice = findHIDRobotDevice(device) {
 			client.robotDeviceSourceDidLoseDevice(robotDevice)
 		}
 	}
 
-	private func findHIDRobotDevice(deviceRef: IOHIDDeviceRef) -> MetaDevice? {
-		let uniqueIdentifier = IOHIDDeviceGetProperty(deviceRef, kIOHIDSerialNumberKey) as? String ?? ""
+	private func findHIDRobotDevice(_ deviceRef: IOHIDDevice) -> MetaDevice? {
+		let uniqueIdentifier = IOHIDDeviceGetProperty(deviceRef, kIOHIDSerialNumberKey as CFString) as? String ?? ""
 
 		for foundDevice in foundDevices {
-			if case RobotDeviceType.HIDDevice = foundDevice.type {
+			if case RobotDeviceType.hidDevice = foundDevice.type {
 				if foundDevice.uniqueIdentifier == uniqueIdentifier {
 					return foundDevice
 				}

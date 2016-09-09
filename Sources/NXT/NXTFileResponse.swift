@@ -13,7 +13,7 @@ public struct NXTFileResponse: NXTResponse {
 	public let filename: String
 	public let size: UInt32
 
-	public init?(data: NSData, userInfo: [String : Any]) {
+	public init?(data: Data, userInfo: [String : Any]) {
 		guard let (_, status) = processReplyWithResponseData(data) else {
 			return nil
 		}
@@ -26,14 +26,16 @@ public struct NXTFileResponse: NXTResponse {
 
 		self.handle = payloadData.readUInt8AtIndex(0)
 
-		var name = [Int8](count: 20, repeatedValue: 0)
-		payloadData.getBytes(&name, range: NSMakeRange(1, 20))
+		var name = [UInt8](repeating: 0, count: 20)
+		payloadData.copyBytes(to: &name, from: 1..<21)
 
-		guard let filename = NSString(UTF8String: &name) else {
+		guard let filename = (name.withUnsafeBufferPointer { ptr in
+			return String(validatingUTF8: unsafeBitCast(ptr.baseAddress!, to: UnsafePointer<Int8>.self))
+		}) else {
 			return nil
 		}
 
-		self.filename = filename as String
+		self.filename = filename
 		self.size = payloadData.readUInt32AtIndex(21)
 	}
 }

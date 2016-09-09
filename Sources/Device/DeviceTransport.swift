@@ -8,16 +8,16 @@
 import Foundation
 
 protocol DeviceTransportDelegate: class {
-	func deviceTransportDidWriteData(transport: DeviceTransport)
-	func deviceTransportHandleData(transport: DeviceTransport, data: NSData)
+	func deviceTransportDidWriteData(_ transport: DeviceTransport)
+	func deviceTransportHandleData(_ transport: DeviceTransport, data: Data)
 
-	func deviceTransportDidClose(transport: DeviceTransport)
+	func deviceTransportDidClose(_ transport: DeviceTransport)
 }
 
 class DeviceTransport {
 	weak var delegate: DeviceTransportDelegate?
 
-	func writeData(data: NSData, errorHandler: (ErrorType) -> ()) throws {
+	func writeData(_ data: Data, errorHandler: @escaping (Error) -> ()) throws {
 		fatalError("Must be overriden")
 	}
 
@@ -30,7 +30,7 @@ class DeviceTransport {
 		delegate?.deviceTransportDidWriteData(self)
 	}
 
-	func handleData(data: NSData) {
+	func handleData(_ data: Data) {
 		delegate?.deviceTransportHandleData(self, data: data)
 	}
 

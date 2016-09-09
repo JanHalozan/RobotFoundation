@@ -26,12 +26,12 @@ public struct EV3ListFilesCommand: EV3SystemCommand {
 		return 0x99
 	}
 
-	public var payloadData: NSData {
-		let mutableData = NSMutableData()
+	public var payloadData: Data {
+		var mutableData = Data()
 		mutableData.appendUInt16(kMaxBytesToRead)
 		mutableData.appendString(path)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }
 
@@ -51,11 +51,11 @@ public struct EV3ContinueListFilesCommand: EV3SystemCommand {
 		return 0x9A
 	}
 
-	public var payloadData: NSData {
-		let mutableData = NSMutableData()
+	public var payloadData: Data {
+		var mutableData = Data()
 		mutableData.appendUInt8(handle)
 		mutableData.appendUInt16(kMaxBytesToRead)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

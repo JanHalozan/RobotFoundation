@@ -11,9 +11,9 @@ public struct NXTIOMapResponse: NXTResponse {
 	public let status: NXTStatus
 	public let module: UInt32
 	public let bytesRead: UInt16
-	public let contents: NSData
+	public let contents: Data
 
-	public init?(data: NSData, userInfo: [String : Any]) {
+	public init?(data: Data, userInfo: [String : Any]) {
 		guard let (_, status) = processReplyWithResponseData(data) else {
 			return nil
 		}
@@ -26,6 +26,6 @@ public struct NXTIOMapResponse: NXTResponse {
 
 		self.module = payloadData.readUInt32AtIndex(0)
 		self.bytesRead = payloadData.readUInt16AtIndex(4)
-		self.contents = payloadData.subdataWithRange(NSMakeRange(6, Int(bytesRead)))
+		self.contents = payloadData.subdata(in: 6..<(Int(bytesRead)+6))
 	}
 }

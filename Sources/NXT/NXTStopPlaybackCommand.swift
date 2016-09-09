@@ -15,14 +15,14 @@ public struct NXTStopPlaybackCommand: NXTCommand {
 	}
 
 	public var type: MindstormsCommandType {
-		return .Direct
+		return .direct
 	}
 
 	public var identifier: UInt8 {
 		return 0x0C
 	}
 
-	public var payloadData: NSData {
-		return NSData()
+	public var payloadData: Data {
+		return Data()
 	}
 }

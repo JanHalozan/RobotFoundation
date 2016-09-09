@@ -7,29 +7,29 @@
 
 import Foundation
 
-extension NSString {
-	var dataForFilename: NSData {
-		let clippedName = length > 19 ? substringToIndex(19) : self
-		let paddedName = clippedName.stringByPaddingToLength(20, withString: "\0", startingAtIndex: 0)
+extension String {
+	var dataForFilename: Data {
+		let clippedName = utf8.count > 19 ? String(utf8.prefix(19))! : self as String
+		let paddedName = clippedName.padding(toLength: 20, withPad: "\0", startingAt: 0)
 
-		return paddedName.dataUsingEncoding(NSUTF8StringEncoding) ?? NSData()
+		return paddedName.data(using: .utf8) ?? Data()
 	}
 }
 
-extension NSMutableData {
-	func appendNXTFilename(filename: NSString) {
-		appendData(filename.dataForFilename)
+extension Data {
+	mutating func appendNXTFilename(_ filename: String) {
+		append(filename.dataForFilename)
 	}
 
-	func appendNXTBrickName(name: NSString) {
-		let clippedName = name.length > 15 ? name.substringToIndex(15) : name
-		let paddedName = clippedName.stringByAppendingString("\0")
+	mutating func appendNXTBrickName(_ name: String) {
+		let clippedName = name.utf8.count > 15 ? String(name.utf8.prefix(15))! : name
+		let paddedName = clippedName.appending("\0")
 
-		guard let data = paddedName.dataUsingEncoding(NSUTF8StringEncoding) else {
+		guard let data = paddedName.data(using: .utf8) else {
 			assertionFailure()
 			return
 		}
 
-		appendData(data)
+		append(data)
 	}
 }

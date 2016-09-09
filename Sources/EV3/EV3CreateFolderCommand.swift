@@ -22,10 +22,10 @@ public struct EV3CreateFolderCommand: EV3SystemCommand {
 		return 0x9B
 	}
 
-	public var payloadData: NSData {
-		let mutableData = NSMutableData()
+	public var payloadData: Data {
+		var mutableData = Data()
 		mutableData.appendString(path)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

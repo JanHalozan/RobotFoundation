@@ -16,17 +16,17 @@ struct NXTOpenWriteCommand: NXTCommand {
 	}
 
 	var type: MindstormsCommandType {
-		return .System
+		return .system
 	}
 
 	var identifier: UInt8 {
 		return 0x81
 	}
 
-	var payloadData: NSData {
-		let data = NSMutableData()
+	var payloadData: Data {
+		var data = Data()
 		data.appendNXTFilename(filename)
 		data.appendUInt32(CFSwapInt32HostToLittle(size))
-		return data.copy() as! NSData
+		return data
 	}
 }

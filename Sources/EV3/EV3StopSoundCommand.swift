@@ -14,11 +14,11 @@ public struct EV3StopSoundCommand: EV3DirectCommand {
 		return EV3GenericResponse.self
 	}
 
-	public func payloadDataWithGlobalOffset(offset: UInt16) -> NSData {
-		let mutableData = NSMutableData()
-		mutableData.appendUInt8(EV3OpCode.Sound.rawValue)
-		mutableData.appendUInt8(EV3SoundOpSubcode.Break.rawValue)
+	public func payloadDataWithGlobalOffset(_ offset: UInt16) -> Data {
+		var mutableData = Data()
+		mutableData.appendUInt8(EV3OpCode.sound.rawValue)
+		mutableData.appendUInt8(EV3SoundOpSubcode.break.rawValue)
 
-		return mutableData.copy() as! NSData
+		return mutableData
 	}
 }

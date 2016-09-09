@@ -13,7 +13,7 @@ public struct EV3StorageResponse: EV3Response {
 
 	public let responseLength: Int
 
-	public init?(data: NSData, userInfo: [String : Any]) {
+	public init?(data: Data, userInfo: [String : Any]) {
 		totalSize = data.readUInt32AtIndex(0)
 		freeSize = data.readUInt32AtIndex(4)
 		responseLength = 8
