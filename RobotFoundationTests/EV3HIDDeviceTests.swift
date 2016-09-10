@@ -29,7 +29,7 @@ final class EV3HIDDeviceTests: XCTestCase, RobotDeviceManagerDelegate {
 	func robotDeviceManagerDidLoseDevice(device: MetaDevice) { }
 
 	func robotDeviceManagerDidFindDevice(device: MetaDevice) {
-		assert(NSThread.isMainThread())
+		assert(Thread.isMainThread)
 
 		self.device = EV3Device(metaDevice: device)
 		try! self.device.open()
