@@ -139,7 +139,7 @@ private func deviceClassForBluetoothDevice(_ bluetoothDevice: IOBluetoothDevice)
 		return .Unknown
 	}
 
-	guard let platform = firstService.attributes[258] as? IOBluetoothSDPDataElement else {
+	guard let platform = firstService.attributes[258 as NSNumber] as? IOBluetoothSDPDataElement else {
 		// Hacky, but the NXTs don't have this key.
 		return .NXT20
 	}
