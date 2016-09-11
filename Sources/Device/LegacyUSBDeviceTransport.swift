@@ -9,7 +9,7 @@
 
 import Foundation
 
-final class LegacyUSBDeviceTransport: XPCBackedDeviceTransport {
+final class LegacyUSBDeviceTransport: MachBackedDeviceTransport {
 	private let serialNumber: String
 
 	init(serialNumber: String) {
@@ -18,7 +18,11 @@ final class LegacyUSBDeviceTransport: XPCBackedDeviceTransport {
 	}
 
 	override var serviceName: String {
-		return "com.Robotary.LegacyUSBTransportService"
+		return "RJKYY38TY2.com.Robotary.Legacy"
+	}
+
+	override var executableName: String {
+		return "LegacyUSBTransportService"
 	}
 
 	override var identifier: String {
