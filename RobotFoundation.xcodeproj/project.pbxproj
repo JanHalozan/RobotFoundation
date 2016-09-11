@@ -201,6 +201,9 @@
 		C97A848F1D860BC200767A43 /* MachServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97A84651D85F88D00767A43 /* MachServer.swift */; };
 		C97A84901D860BC800767A43 /* XPCTransportServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9683A1D1D2432CE00741EFF /* XPCTransportServiceProtocol.swift */; };
 		C97A84931D860C8300767A43 /* LegacyUSBTransportService in Copy Mach Services */ = {isa = PBXBuildFile; fileRef = C97A84851D860B8A00767A43 /* LegacyUSBTransportService */; };
+		C97A84941D860D1000767A43 /* RBMachBootstrapServer.m in Sources */ = {isa = PBXBuildFile; fileRef = C924D93E1D85CC2700F2877F /* RBMachBootstrapServer.m */; };
+		C97A84951D860D1100767A43 /* RBMachBootstrapServer.m in Sources */ = {isa = PBXBuildFile; fileRef = C924D93E1D85CC2700F2877F /* RBMachBootstrapServer.m */; };
+		C97A84961D860D1100767A43 /* RBMachBootstrapServer.m in Sources */ = {isa = PBXBuildFile; fileRef = C924D93E1D85CC2700F2877F /* RBMachBootstrapServer.m */; };
 		C98C34781C25C160006840C3 /* RobotFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C98C346D1C25C160006840C3 /* RobotFoundation.framework */; };
 		C98C347D1C25C160006840C3 /* RobotFoundationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C347C1C25C160006840C3 /* RobotFoundationTests.swift */; };
 		C98C34881C25C262006840C3 /* RobotFoundation.h in Headers */ = {isa = PBXBuildFile; fileRef = C98C34871C25C262006840C3 /* RobotFoundation.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1234,6 +1237,7 @@
 			files = (
 				C97A847C1D8609B600767A43 /* main.swift in Sources */,
 				C97A847A1D8609B200767A43 /* MachKeys.swift in Sources */,
+				C97A84951D860D1100767A43 /* RBMachBootstrapServer.m in Sources */,
 				C97A847B1D8609B200767A43 /* MachServer.swift in Sources */,
 				C97A84791D8609AA00767A43 /* XPCTransportServiceProtocol.swift in Sources */,
 				C97A84781D8609A300767A43 /* BluetoothTransportService.swift in Sources */,
@@ -1246,6 +1250,7 @@
 			files = (
 				C97A84901D860BC800767A43 /* XPCTransportServiceProtocol.swift in Sources */,
 				C97A848E1D860BC200767A43 /* MachKeys.swift in Sources */,
+				C97A84961D860D1100767A43 /* RBMachBootstrapServer.m in Sources */,
 				C97A848F1D860BC200767A43 /* MachServer.swift in Sources */,
 				C97A848D1D860BBD00767A43 /* LegacyUSBTransportService.m in Sources */,
 				C97A848C1D860BB800767A43 /* main.swift in Sources */,
@@ -1585,6 +1590,7 @@
 			files = (
 				C9EC35FC1D85C3520065790D /* XPCTransportServiceProtocol.swift in Sources */,
 				C97A84681D85FAE200767A43 /* MachKeys.swift in Sources */,
+				C97A84941D860D1000767A43 /* RBMachBootstrapServer.m in Sources */,
 				C9EC35FB1D85C3190065790D /* HIDTransportService.swift in Sources */,
 				C9EC35FA1D85C3110065790D /* main.swift in Sources */,
 				C97A84661D85F88D00767A43 /* MachServer.swift in Sources */,

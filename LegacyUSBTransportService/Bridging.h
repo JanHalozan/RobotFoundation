@@ -3,4 +3,4 @@
 //
 
 #import "LegacyUSBTransportService.h"
-#import "RBMachBootstrapService.h"
+#import "RBMachBootstrapServer.h"
