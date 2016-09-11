@@ -15,6 +15,7 @@ enum MachRequestType: String {
 
 enum MachResponseType: String {
 	case receivedData = "receivedData"
+	case receivedWriteResponse = "receivedWriteResponse"
 	case closedConnection = "closedConnection"
 }
 
@@ -22,4 +23,5 @@ enum MachEventKey: String {
 	case type = "type"
 	case data = "data"
 	case identifier = "identifier"
+	case result = "result"
 }
