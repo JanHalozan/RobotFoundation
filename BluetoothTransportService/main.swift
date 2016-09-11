@@ -5,65 +5,10 @@
 //  Created by Matt on 12/26/15.
 //
 
-import Foundation
+let server = MachServer(name: "RJKYY38TY2.com.Robotary.HID", transportServiceType: BluetoothTransportService.self)
 
-final class ServiceDelegate : NSObject, NSXPCListenerDelegate, TransportClientProtocol {
-	private lazy var exportedObject: BluetoothTransportService = {
-		BluetoothTransportService(delegate: self)
-	}()
+// Incoming connections are processed on a new thread which this creates (matches XPC).
+server.run()
 
-	private var connections = Set<NSXPCConnection>()
-	
-	func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
-		connections.insert(newConnection)
-
-		newConnection.exportedInterface = NSXPCInterface(with: TransportServiceProtocol.self)
-		newConnection.remoteObjectInterface = NSXPCInterface(with: TransportClientProtocol.self)
-		newConnection.exportedObject = exportedObject
-		newConnection.invalidationHandler = { [unowned self] in
-			DispatchQueue.main.async {
-				self.connections.remove(newConnection)
-
-				if self.connections.isEmpty {
-					// Exit if no more connections...
-					exit(0)
-				}
-			}
-		}
-		newConnection.resume()
-
-		return true
-	}
-
-	func handleTransportData(_ data: NSData) {
-		for connection in connections {
-			if let client = connection.remoteObjectProxyWithErrorHandler({ error in
-				print("Error communicating with the client after data was received: \(error)")
-			}) as? TransportClientProtocol {
-				client.handleTransportData(data as NSData)
-			} else {
-				assertionFailure()
-			}
-		}
-	}
-
-	func closedTransportConnection() {
-		for connection in connections {
-			if let client = connection.remoteObjectProxyWithErrorHandler({ error in
-				print("Error communicating with the client after a device connection was closed: \(error)")
-			}) as? TransportClientProtocol {
-				client.closedTransportConnection()
-			} else {
-				assertionFailure()
-			}
-		}
-	}
-}
-
-let delegate = ServiceDelegate()
-
-let listener = NSXPCListener.service()
-listener.delegate = delegate
-
-// This method does not return.
-listener.resume()
+// The hardware code is processed on the main thread.
+RunLoop.current.run()
