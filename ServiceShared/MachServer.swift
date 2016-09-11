@@ -140,11 +140,12 @@ class MachServer : NSObject, NSMachPortDelegate, TransportClientProtocol {
 	}
 
 	func run() {
+		assert(Thread.isMainThread)
 		Thread.detachNewThreadSelector(#selector(runThread), toTarget: self, with: nil)
 	}
 
 	@objc private func runThread() {
-		assert(Thread.isMainThread)
+		assert(!Thread.isMainThread)
 		assert(serverPort == nil)
 
 		let port = NSMachPort()
