@@ -17,8 +17,8 @@ final class ServiceDelegate : NSObject, NSXPCListenerDelegate, BluetoothTranspor
 	func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
 		connections.insert(newConnection)
 
-		newConnection.exportedInterface = NSXPCInterface(with: XPCTransportServiceProtocol.self)
-		newConnection.remoteObjectInterface = NSXPCInterface(with: XPCTransportClientProtocol.self)
+		newConnection.exportedInterface = NSXPCInterface(with: TransportServiceProtocol.self)
+		newConnection.remoteObjectInterface = NSXPCInterface(with: TransportClientProtocol.self)
 		newConnection.exportedObject = exportedObject
 		newConnection.invalidationHandler = { [unowned self] in
 			DispatchQueue.main.async {
@@ -39,7 +39,7 @@ final class ServiceDelegate : NSObject, NSXPCListenerDelegate, BluetoothTranspor
 		for connection in connections {
 			if let client = connection.remoteObjectProxyWithErrorHandler({ error in
 				print("Error communicating with the client after data was received: \(error)")
-			}) as? XPCTransportClientProtocol {
+			}) as? TransportClientProtocol {
 				client.handleTransportData(data as NSData)
 			} else {
 				assertionFailure()
@@ -51,7 +51,7 @@ final class ServiceDelegate : NSObject, NSXPCListenerDelegate, BluetoothTranspor
 		for connection in connections {
 			if let client = connection.remoteObjectProxyWithErrorHandler({ error in
 				print("Error communicating with the client after a device connection was closed: \(error)")
-			}) as? XPCTransportClientProtocol {
+			}) as? TransportClientProtocol {
 				client.closedTransportConnection()
 			} else {
 				assertionFailure()

@@ -35,7 +35,7 @@ protocol BluetoothTransportServiceDelegate: class {
 	func closedConnection()
 }
 
-final class BluetoothTransportService : NSObject, XPCTransportServiceProtocol, IOBluetoothRFCOMMChannelDelegate {
+final class BluetoothTransportService : NSObject, TransportServiceProtocol, IOBluetoothRFCOMMChannelDelegate {
 	private var state: BluetoothState = .ready
 	private var channel: IOBluetoothRFCOMMChannel?
 	private var awaitingDeferredClose = false

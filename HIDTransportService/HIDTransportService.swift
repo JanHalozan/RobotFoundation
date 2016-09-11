@@ -13,7 +13,7 @@ protocol HIDTransportServiceDelegate: class {
 	func closedConnection()
 }
 
-final class HIDTransportService : NSObject, XPCTransportServiceProtocol {
+final class HIDTransportService : NSObject, TransportServiceProtocol {
 	private var device: IOHIDDevice?
 	private var activeClients = 0
 	private var awaitingDeferredClose = false

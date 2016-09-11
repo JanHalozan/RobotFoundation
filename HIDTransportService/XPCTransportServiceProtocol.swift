@@ -9,12 +9,12 @@
 
 import Foundation
 
-@objc protocol XPCTransportClientProtocol {
+@objc protocol TransportClientProtocol {
 	func handleTransportData(_ data: NSData)
 	func closedTransportConnection()
 }
 
-@objc protocol XPCTransportServiceProtocol {
+@objc protocol TransportServiceProtocol {
 	func writeData(_ data: NSData, identifier: NSString, handler: @escaping (Int) -> ())
 	func scheduleRead(_ identifier: NSString, handler: @escaping (Int) -> ())
 }

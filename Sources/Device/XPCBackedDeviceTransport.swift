@@ -10,7 +10,7 @@
 import Foundation
 import IOKit.hid
 
-class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
+class XPCBackedDeviceTransport: DeviceTransport, TransportClientProtocol {
 	private var serviceConnection: NSXPCConnection?
 	private let connectionQueue = DispatchQueue(label: "xpc transport", attributes: [])
 
@@ -53,9 +53,9 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
 			}
 
 			let connection = NSXPCConnection(serviceName: self.serviceName)
-			connection.remoteObjectInterface = NSXPCInterface(with: XPCTransportServiceProtocol.self)
+			connection.remoteObjectInterface = NSXPCInterface(with: TransportServiceProtocol.self)
 			connection.exportedObject = self
-			connection.exportedInterface = NSXPCInterface(with: XPCTransportClientProtocol.self)
+			connection.exportedInterface = NSXPCInterface(with: TransportClientProtocol.self)
 			connection.resume()
 			self.serviceConnection = connection
 		}
@@ -66,7 +66,7 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
 			guard let proxy = connection.remoteObjectProxyWithErrorHandler({ error in
 				print("Failed to communicate with the XPC transport service during write: \(error)")
 				errorHandler(kIOReturnNoMedia as Error)
-			}) as? XPCTransportServiceProtocol else {
+			}) as? TransportServiceProtocol else {
 				errorHandler(kIOReturnNoMedia as Error)
 				assertionFailure()
 				return false
@@ -90,7 +90,7 @@ class XPCBackedDeviceTransport: DeviceTransport, XPCTransportClientProtocol {
 		accessConnection(errorHandler: {
 			print("Tried to write to a device even though we have no XPC connection.")
 		}) { connection in
-			guard let proxy = connection.remoteObjectProxy as? XPCTransportServiceProtocol else {
+			guard let proxy = connection.remoteObjectProxy as? TransportServiceProtocol else {
 				assertionFailure()
 				return false
 			}
