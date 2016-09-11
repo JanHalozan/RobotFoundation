@@ -158,9 +158,6 @@ class MachServer : NSObject, NSMachPortDelegate, TransportClientProtocol {
 	}
 
 	@objc private func portWasInvalidated(note: NSNotification) {
-		// Our port is on a secondary thread.
-		assert(!Thread.isMainThread)
-
 		guard let port = note.object as? Port else {
 			assertionFailure()
 			return
