@@ -58,6 +58,13 @@
 		C9229E541C5C1EFC001E74ED /* NXTDeviceInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229E521C5C1EFC001E74ED /* NXTDeviceInfoResponse.swift */; };
 		C9229E561C5C206E001E74ED /* NXTDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229E551C5C206E001E74ED /* NXTDataResponse.swift */; };
 		C9229E571C5C206E001E74ED /* NXTDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229E551C5C206E001E74ED /* NXTDataResponse.swift */; };
+		C924D93B1D85CA8000F2877F /* MachBackedDeviceTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C924D93A1D85CA8000F2877F /* MachBackedDeviceTransport.swift */; };
+		C924D93C1D85CA8000F2877F /* MachBackedDeviceTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C924D93A1D85CA8000F2877F /* MachBackedDeviceTransport.swift */; };
+		C924D93F1D85CC2700F2877F /* RBMachBootstrapServer.h in Headers */ = {isa = PBXBuildFile; fileRef = C924D93D1D85CC2700F2877F /* RBMachBootstrapServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C924D9401D85CC2700F2877F /* RBMachBootstrapServer.h in Headers */ = {isa = PBXBuildFile; fileRef = C924D93D1D85CC2700F2877F /* RBMachBootstrapServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C924D9411D85CC2700F2877F /* RBMachBootstrapServer.m in Sources */ = {isa = PBXBuildFile; fileRef = C924D93E1D85CC2700F2877F /* RBMachBootstrapServer.m */; };
+		C924D9421D85CC2700F2877F /* RBMachBootstrapServer.m in Sources */ = {isa = PBXBuildFile; fileRef = C924D93E1D85CC2700F2877F /* RBMachBootstrapServer.m */; };
+		C924D9551D85D1D900F2877F /* HIDTransportService in Copy Mach Services */ = {isa = PBXBuildFile; fileRef = C9EC35F21D85C2D20065790D /* HIDTransportService */; };
 		C92618F31CAEDAE600B52B8D /* NXTStopPlaybackCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92618F21CAEDAE600B52B8D /* NXTStopPlaybackCommand.swift */; };
 		C92618F41CAEDAE600B52B8D /* NXTStopPlaybackCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92618F21CAEDAE600B52B8D /* NXTStopPlaybackCommand.swift */; };
 		C933B3EB1C406A12002B8464 /* EV3WriteChainedCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C933B3EA1C406A12002B8464 /* EV3WriteChainedCommand.swift */; };
@@ -182,6 +189,10 @@
 		C97868711C28DF5A0099BB82 /* EV3SetSensorModeCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C978686F1C28DF5A0099BB82 /* EV3SetSensorModeCommand.swift */; };
 		C97868731C28E89F0099BB82 /* EV3ColorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97868721C28E89F0099BB82 /* EV3ColorResponse.swift */; };
 		C97868741C28E89F0099BB82 /* EV3ColorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97868721C28E89F0099BB82 /* EV3ColorResponse.swift */; };
+		C97A84631D85EE7800767A43 /* MachKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97A84621D85EE7800767A43 /* MachKeys.swift */; };
+		C97A84641D85EE7800767A43 /* MachKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97A84621D85EE7800767A43 /* MachKeys.swift */; };
+		C97A84661D85F88D00767A43 /* MachServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97A84651D85F88D00767A43 /* MachServer.swift */; };
+		C97A84681D85FAE200767A43 /* MachKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97A84671D85FAE200767A43 /* MachKeys.swift */; };
 		C98C34781C25C160006840C3 /* RobotFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C98C346D1C25C160006840C3 /* RobotFoundation.framework */; };
 		C98C347D1C25C160006840C3 /* RobotFoundationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C347C1C25C160006840C3 /* RobotFoundationTests.swift */; };
 		C98C34881C25C262006840C3 /* RobotFoundation.h in Headers */ = {isa = PBXBuildFile; fileRef = C98C34871C25C262006840C3 /* RobotFoundation.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -260,9 +271,6 @@
 		C9B1387B1C2B12BB0018812F /* EV3ListingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B138791C2B12BB0018812F /* EV3ListingResponse.swift */; };
 		C9B1387D1C2B1C5C0018812F /* EV3ListingParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B1387C1C2B1C5C0018812F /* EV3ListingParser.swift */; };
 		C9B1387E1C2B1C5C0018812F /* EV3ListingParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B1387C1C2B1C5C0018812F /* EV3ListingParser.swift */; };
-		C9BC33D51C2F162300E0A41F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BC33D41C2F162300E0A41F /* main.swift */; };
-		C9BC33DA1C2F162400E0A41F /* HIDTransportService.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = C9BC33CE1C2F162300E0A41F /* HIDTransportService.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		C9BC33DE1C2F170800E0A41F /* HIDTransportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BC33D11C2F162300E0A41F /* HIDTransportService.swift */; };
 		C9BC33E11C2F1A2D00E0A41F /* XPCTransportServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BC33E01C2F1A2D00E0A41F /* XPCTransportServiceProtocol.swift */; };
 		C9BC33E21C2F1A2D00E0A41F /* XPCTransportServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BC33E01C2F1A2D00E0A41F /* XPCTransportServiceProtocol.swift */; };
 		C9BEB1511C737CA600B2194D /* EV3OutputReadyCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BEB1501C737CA600B2194D /* EV3OutputReadyCommand.swift */; };
@@ -279,7 +287,6 @@
 		C9CD0CEF1D580D5A00584574 /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CD0CED1D580D5A00584574 /* Atomic.swift */; };
 		C9CFFC291C2F393800E75768 /* HIDDeviceTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CFFC281C2F393800E75768 /* HIDDeviceTransport.swift */; };
 		C9CFFC2A1C2F393800E75768 /* HIDDeviceTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CFFC281C2F393800E75768 /* HIDDeviceTransport.swift */; };
-		C9CFFC2C1C2F3A8200E75768 /* XPCTransportServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CFFC2B1C2F3A8200E75768 /* XPCTransportServiceProtocol.swift */; };
 		C9CFFC3F1C2F542700E75768 /* BluetoothTransportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CFFC3E1C2F542700E75768 /* BluetoothTransportService.swift */; };
 		C9CFFC411C2F542700E75768 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CFFC401C2F542700E75768 /* main.swift */; };
 		C9CFFC451C2F542700E75768 /* BluetoothTransportService.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = C9CFFC3A1C2F542700E75768 /* BluetoothTransportService.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -304,6 +311,9 @@
 		C9E4B0B11C5B0D1B008C8D01 /* NXTConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E4B0AF1C5B0D1B008C8D01 /* NXTConstants.swift */; };
 		C9EB12E51CAAD44800E41D4D /* NXTPlayToneCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EB12E41CAAD44800E41D4D /* NXTPlayToneCommand.swift */; };
 		C9EB12E61CAAD44800E41D4D /* NXTPlayToneCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EB12E41CAAD44800E41D4D /* NXTPlayToneCommand.swift */; };
+		C9EC35FA1D85C3110065790D /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BC33D41C2F162300E0A41F /* main.swift */; };
+		C9EC35FB1D85C3190065790D /* HIDTransportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BC33D11C2F162300E0A41F /* HIDTransportService.swift */; };
+		C9EC35FC1D85C3520065790D /* XPCTransportServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CFFC2B1C2F3A8200E75768 /* XPCTransportServiceProtocol.swift */; };
 		C9ED2FDF1CF9D18500C7182E /* EV3SetBrickNameCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ED2FDE1CF9D18500C7182E /* EV3SetBrickNameCommand.swift */; };
 		C9ED2FE01CF9D18500C7182E /* EV3SetBrickNameCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ED2FDE1CF9D18500C7182E /* EV3SetBrickNameCommand.swift */; };
 		C9EDF44E1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF44D1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift */; };
@@ -325,6 +335,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		C924D9531D85D1D300F2877F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C98C34641C25C160006840C3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C9EC35F11D85C2D20065790D;
+			remoteInfo = HIDTransportService;
+		};
 		C9683A161D24325C00741EFF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C98C34641C25C160006840C3 /* Project object */;
@@ -339,13 +356,6 @@
 			remoteGlobalIDString = C98C346C1C25C160006840C3;
 			remoteInfo = RobotFoundation;
 		};
-		C9BC33D71C2F162400E0A41F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C98C34641C25C160006840C3 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C9BC33CD1C2F162300E0A41F;
-			remoteInfo = HIDTransportService;
-		};
 		C9CFFC431C2F542700E75768 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C98C34641C25C160006840C3 /* Project object */;
@@ -356,6 +366,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		C924D9521D85D1C300F2877F /* Copy Mach Services */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				C924D9551D85D1D900F2877F /* HIDTransportService in Copy Mach Services */,
+			);
+			name = "Copy Mach Services";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C9BC33D91C2F162400E0A41F /* Embed XPC Services */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -363,11 +384,19 @@
 			dstSubfolderSpec = 16;
 			files = (
 				C9CFFC451C2F542700E75768 /* BluetoothTransportService.xpc in Embed XPC Services */,
-				C9BC33DA1C2F162400E0A41F /* HIDTransportService.xpc in Embed XPC Services */,
 				C9683A181D24325C00741EFF /* LegacyUSBTransportService.xpc in Embed XPC Services */,
 			);
 			name = "Embed XPC Services";
 			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9EC35F01D85C2D20065790D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -398,6 +427,10 @@
 		C9229E4E1C5C1B6F001E74ED /* NXTGetDeviceInfoCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTGetDeviceInfoCommand.swift; sourceTree = "<group>"; };
 		C9229E521C5C1EFC001E74ED /* NXTDeviceInfoResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTDeviceInfoResponse.swift; sourceTree = "<group>"; };
 		C9229E551C5C206E001E74ED /* NXTDataResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTDataResponse.swift; sourceTree = "<group>"; };
+		C924D9331D85C54E00F2877F /* Bridging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bridging.h; sourceTree = "<group>"; };
+		C924D93A1D85CA8000F2877F /* MachBackedDeviceTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MachBackedDeviceTransport.swift; sourceTree = "<group>"; };
+		C924D93D1D85CC2700F2877F /* RBMachBootstrapServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBMachBootstrapServer.h; sourceTree = "<group>"; };
+		C924D93E1D85CC2700F2877F /* RBMachBootstrapServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBMachBootstrapServer.m; sourceTree = "<group>"; };
 		C92618F21CAEDAE600B52B8D /* NXTStopPlaybackCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTStopPlaybackCommand.swift; sourceTree = "<group>"; };
 		C933B3EA1C406A12002B8464 /* EV3WriteChainedCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3WriteChainedCommand.swift; sourceTree = "<group>"; };
 		C93436811C5548C500CD93EC /* EV3WaitForButtonCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3WaitForButtonCommand.swift; sourceTree = "<group>"; };
@@ -465,6 +498,9 @@
 		C978686C1C28DE5B0099BB82 /* EV3ReadColorCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ReadColorCommand.swift; sourceTree = "<group>"; };
 		C978686F1C28DF5A0099BB82 /* EV3SetSensorModeCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3SetSensorModeCommand.swift; sourceTree = "<group>"; };
 		C97868721C28E89F0099BB82 /* EV3ColorResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ColorResponse.swift; sourceTree = "<group>"; };
+		C97A84621D85EE7800767A43 /* MachKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MachKeys.swift; sourceTree = "<group>"; };
+		C97A84651D85F88D00767A43 /* MachServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MachServer.swift; path = ServiceShared/MachServer.swift; sourceTree = SOURCE_ROOT; };
+		C97A84671D85FAE200767A43 /* MachKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MachKeys.swift; path = Sources/Device/MachKeys.swift; sourceTree = SOURCE_ROOT; };
 		C98C346D1C25C160006840C3 /* RobotFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RobotFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C98C34721C25C160006840C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C98C34771C25C160006840C3 /* RobotFoundationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RobotFoundationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -515,7 +551,6 @@
 		C9B5895F1D63B6C500E9586D /* HIDTransportService.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = HIDTransportService.entitlements; sourceTree = "<group>"; };
 		C9B589601D63B6CF00E9586D /* LegacyUSBTransportService.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = LegacyUSBTransportService.entitlements; sourceTree = "<group>"; };
 		C9B589611D63B6EF00E9586D /* BluetoothTransportService.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = BluetoothTransportService.entitlements; sourceTree = "<group>"; };
-		C9BC33CE1C2F162300E0A41F /* HIDTransportService.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = HIDTransportService.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9BC33D11C2F162300E0A41F /* HIDTransportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDTransportService.swift; sourceTree = "<group>"; };
 		C9BC33D41C2F162300E0A41F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		C9BC33D61C2F162400E0A41F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -543,6 +578,7 @@
 		C9E4B0AC1C5B0CB6008C8D01 /* NXTDisplayFramebuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTDisplayFramebuffer.swift; sourceTree = "<group>"; };
 		C9E4B0AF1C5B0D1B008C8D01 /* NXTConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTConstants.swift; sourceTree = "<group>"; };
 		C9EB12E41CAAD44800E41D4D /* NXTPlayToneCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTPlayToneCommand.swift; sourceTree = "<group>"; };
+		C9EC35F21D85C2D20065790D /* HIDTransportService */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = HIDTransportService; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9ED2FDE1CF9D18500C7182E /* EV3SetBrickNameCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3SetBrickNameCommand.swift; sourceTree = "<group>"; };
 		C9EDF44D1C2B4F5A00879F00 /* EV3CreateFolderCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3CreateFolderCommand.swift; sourceTree = "<group>"; };
 		C9EDF4501C2B56B600879F00 /* EV3DeleteItemCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3DeleteItemCommand.swift; sourceTree = "<group>"; };
@@ -584,14 +620,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C9BC33CB1C2F162300E0A41F /* Frameworks */ = {
+		C9CFFC371C2F542700E75768 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C9CFFC371C2F542700E75768 /* Frameworks */ = {
+		C9EC35EF1D85C2D20065790D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -732,9 +768,9 @@
 				C98C346D1C25C160006840C3 /* RobotFoundation.framework */,
 				C98C34771C25C160006840C3 /* RobotFoundationTests.xctest */,
 				C98C34F31C26540C006840C3 /* MobileRobotFoundation.framework */,
-				C9BC33CE1C2F162300E0A41F /* HIDTransportService.xpc */,
 				C9CFFC3A1C2F542700E75768 /* BluetoothTransportService.xpc */,
 				C9683A0D1D24325C00741EFF /* LegacyUSBTransportService.xpc */,
+				C9EC35F21D85C2D20065790D /* HIDTransportService */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -798,8 +834,12 @@
 				C98C34B61C25DC40006840C3 /* IOKitUtilities.swift */,
 				C9CFFC281C2F393800E75768 /* HIDDeviceTransport.swift */,
 				C9683A061D24320C00741EFF /* LegacyUSBDeviceTransport.swift */,
+				C924D93A1D85CA8000F2877F /* MachBackedDeviceTransport.swift */,
+				C97A84621D85EE7800767A43 /* MachKeys.swift */,
 				C98C34BE1C25E520006840C3 /* XPCBackedDeviceTransport.swift */,
 				C9BC33E01C2F1A2D00E0A41F /* XPCTransportServiceProtocol.swift */,
+				C924D93D1D85CC2700F2877F /* RBMachBootstrapServer.h */,
+				C924D93E1D85CC2700F2877F /* RBMachBootstrapServer.m */,
 			);
 			path = Device;
 			sourceTree = "<group>";
@@ -845,11 +885,14 @@
 		C9BC33CF1C2F162300E0A41F /* HIDTransportService */ = {
 			isa = PBXGroup;
 			children = (
+				C924D9331D85C54E00F2877F /* Bridging.h */,
 				C9B5895F1D63B6C500E9586D /* HIDTransportService.entitlements */,
-				C9CFFC2B1C2F3A8200E75768 /* XPCTransportServiceProtocol.swift */,
 				C9BC33D11C2F162300E0A41F /* HIDTransportService.swift */,
-				C9BC33D41C2F162300E0A41F /* main.swift */,
 				C9BC33D61C2F162400E0A41F /* Info.plist */,
+				C97A84671D85FAE200767A43 /* MachKeys.swift */,
+				C97A84651D85F88D00767A43 /* MachServer.swift */,
+				C9BC33D41C2F162300E0A41F /* main.swift */,
+				C9CFFC2B1C2F3A8200E75768 /* XPCTransportServiceProtocol.swift */,
 			);
 			path = HIDTransportService;
 			sourceTree = "<group>";
@@ -955,6 +998,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C98C34881C25C262006840C3 /* RobotFoundation.h in Headers */,
+				C924D93F1D85CC2700F2877F /* RBMachBootstrapServer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -963,6 +1007,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C98C34F61C26540C006840C3 /* MobileRobotFoundation.h in Headers */,
+				C924D9401D85CC2700F2877F /* RBMachBootstrapServer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -993,13 +1038,14 @@
 				C98C34681C25C160006840C3 /* Sources */,
 				C98C34691C25C160006840C3 /* Frameworks */,
 				C98C346A1C25C160006840C3 /* Headers */,
-				C98C346B1C25C160006840C3 /* Resources */,
 				C9BC33D91C2F162400E0A41F /* Embed XPC Services */,
+				C924D9521D85D1C300F2877F /* Copy Mach Services */,
+				C924D9561D85D1F200F2877F /* Sign Mach Services */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				C9BC33D81C2F162400E0A41F /* PBXTargetDependency */,
+				C924D9541D85D1D300F2877F /* PBXTargetDependency */,
 				C9CFFC441C2F542700E75768 /* PBXTargetDependency */,
 				C9683A171D24325C00741EFF /* PBXTargetDependency */,
 			);
@@ -1044,23 +1090,6 @@
 			productReference = C98C34F31C26540C006840C3 /* MobileRobotFoundation.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		C9BC33CD1C2F162300E0A41F /* HIDTransportService */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C9BC33DD1C2F162400E0A41F /* Build configuration list for PBXNativeTarget "HIDTransportService" */;
-			buildPhases = (
-				C9BC33CA1C2F162300E0A41F /* Sources */,
-				C9BC33CB1C2F162300E0A41F /* Frameworks */,
-				C9BC33CC1C2F162300E0A41F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = HIDTransportService;
-			productName = HIDTransportService;
-			productReference = C9BC33CE1C2F162300E0A41F /* HIDTransportService.xpc */;
-			productType = "com.apple.product-type.xpc-service";
-		};
 		C9CFFC391C2F542700E75768 /* BluetoothTransportService */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C9CFFC481C2F542700E75768 /* Build configuration list for PBXNativeTarget "BluetoothTransportService" */;
@@ -1078,13 +1107,30 @@
 			productReference = C9CFFC3A1C2F542700E75768 /* BluetoothTransportService.xpc */;
 			productType = "com.apple.product-type.xpc-service";
 		};
+		C9EC35F11D85C2D20065790D /* HIDTransportService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C9EC35F61D85C2D20065790D /* Build configuration list for PBXNativeTarget "HIDTransportService" */;
+			buildPhases = (
+				C9EC35EE1D85C2D20065790D /* Sources */,
+				C9EC35EF1D85C2D20065790D /* Frameworks */,
+				C9EC35F01D85C2D20065790D /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HIDTransportService;
+			productName = HIDTransportService;
+			productReference = C9EC35F21D85C2D20065790D /* HIDTransportService */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		C98C34641C25C160006840C3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0800;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Matt Rajca";
 				TargetAttributes = {
@@ -1107,15 +1153,7 @@
 					};
 					C98C34F21C26540C006840C3 = {
 						CreatedOnToolsVersion = 7.2;
-					};
-					C9BC33CD1C2F162300E0A41F = {
-						CreatedOnToolsVersion = 7.2;
 						LastSwiftMigration = 0800;
-						SystemCapabilities = {
-							com.apple.Sandbox = {
-								enabled = 1;
-							};
-						};
 					};
 					C9CFFC391C2F542700E75768 = {
 						CreatedOnToolsVersion = 7.2;
@@ -1125,6 +1163,11 @@
 								enabled = 1;
 							};
 						};
+					};
+					C9EC35F11D85C2D20065790D = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = RJKYY38TY2;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -1143,22 +1186,15 @@
 				C98C346C1C25C160006840C3 /* RobotFoundation */,
 				C98C34F21C26540C006840C3 /* MobileRobotFoundation */,
 				C98C34761C25C160006840C3 /* RobotFoundationTests */,
-				C9BC33CD1C2F162300E0A41F /* HIDTransportService */,
 				C9CFFC391C2F542700E75768 /* BluetoothTransportService */,
 				C9683A0C1D24325C00741EFF /* LegacyUSBTransportService */,
+				C9EC35F11D85C2D20065790D /* HIDTransportService */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		C9683A0B1D24325C00741EFF /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C98C346B1C25C160006840C3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1179,13 +1215,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C9BC33CC1C2F162300E0A41F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C9CFFC381C2F542700E75768 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1194,6 +1223,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C924D9561D85D1F200F2877F /* Sign Mach Services */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Sign Mach Services";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "HID=\"$BUILT_PRODUCTS_DIR/RobotFoundation.framework/Versions/A/HIDTransportService\"\ncd $SRCROOT\nexport CODESIGN_ALLOCATE=\"$DT_TOOLCHAIN_DIR/usr/bin/codesign_allocate\"\n/usr/bin/codesign --force --sign \"${CODE_SIGN_IDENTITY}\" --entitlements /Users/Matt/Projects/Xrobot/External/RobotFoundation/HIDTransportService/HIDTransportService.entitlements --timestamp=none $HID\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C9683A091D24325C00741EFF /* Sources */ = {
@@ -1248,6 +1294,7 @@
 				C98C34BF1C25E520006840C3 /* XPCBackedDeviceTransport.swift in Sources */,
 				C905867A1C2C5FDB0068E560 /* EV3ReadFileCommand.swift in Sources */,
 				C96945701C28FA0B0030DEB3 /* RobotDeviceSource.swift in Sources */,
+				C924D9411D85CC2700F2877F /* RBMachBootstrapServer.m in Sources */,
 				C94751761C54083700A30AA6 /* EV3FillRectCommand.swift in Sources */,
 				C94751791C5408EB00A30AA6 /* EV3DrawRectCommand.swift in Sources */,
 				C93436821C5548C500CD93EC /* EV3WaitForButtonCommand.swift in Sources */,
@@ -1261,6 +1308,7 @@
 				C9F58A5C1C5BC07D000B3F09 /* RobotDisplayFramebuffer.swift in Sources */,
 				C98C34DB1C260E72006840C3 /* MindstormsResponse.swift in Sources */,
 				C91E1A111C5C278300D5154A /* NXTPlaySoundFileCommand.swift in Sources */,
+				C924D93B1D85CA8000F2877F /* MachBackedDeviceTransport.swift in Sources */,
 				C9A9B1271C552E4E004AC1F0 /* EV3DisplayRestorationCommands.swift in Sources */,
 				C9ED2FDF1CF9D18500C7182E /* EV3SetBrickNameCommand.swift in Sources */,
 				C9E12DD81CD2DAE6002543B1 /* EV3OutputSpeedTachoResponse.swift in Sources */,
@@ -1282,6 +1330,7 @@
 				C905867D1C2C605F0068E560 /* EV3FileResponse.swift in Sources */,
 				C94FE90A1C5D7FFB0037838A /* EV3PlaySoundFileCommand.swift in Sources */,
 				C94751831C54114F00A30AA6 /* EV3CleanDisplayCommand.swift in Sources */,
+				C97A84631D85EE7800767A43 /* MachKeys.swift in Sources */,
 				C9C561281C2E21F700E61C28 /* EV3DisplayFramebuffer.swift in Sources */,
 				C91E1A171C5C28BF00D5154A /* NXTWriteCommand.swift in Sources */,
 				C978686D1C28DE5B0099BB82 /* EV3ReadColorCommand.swift in Sources */,
@@ -1414,6 +1463,7 @@
 				C96945591C28F3760030DEB3 /* NXTHandleResponse.swift in Sources */,
 				C905867B1C2C5FDB0068E560 /* EV3ReadFileCommand.swift in Sources */,
 				C98C35021C26544D006840C3 /* EV3Command.swift in Sources */,
+				C924D9421D85CC2700F2877F /* RBMachBootstrapServer.m in Sources */,
 				C94751771C54083700A30AA6 /* EV3FillRectCommand.swift in Sources */,
 				C947517A1C5408EB00A30AA6 /* EV3DrawRectCommand.swift in Sources */,
 				C93436831C5548C500CD93EC /* EV3WaitForButtonCommand.swift in Sources */,
@@ -1427,6 +1477,7 @@
 				C9F58A5D1C5BC07D000B3F09 /* RobotDisplayFramebuffer.swift in Sources */,
 				C97868711C28DF5A0099BB82 /* EV3SetSensorModeCommand.swift in Sources */,
 				C91E1A121C5C278300D5154A /* NXTPlaySoundFileCommand.swift in Sources */,
+				C924D93C1D85CA8000F2877F /* MachBackedDeviceTransport.swift in Sources */,
 				C9A9B1281C552E4E004AC1F0 /* EV3DisplayRestorationCommands.swift in Sources */,
 				C9ED2FE01CF9D18500C7182E /* EV3SetBrickNameCommand.swift in Sources */,
 				C9E12DD91CD2DAE6002543B1 /* EV3OutputSpeedTachoResponse.swift in Sources */,
@@ -1448,6 +1499,7 @@
 				C905867E1C2C605F0068E560 /* EV3FileResponse.swift in Sources */,
 				C94FE90B1C5D7FFB0037838A /* EV3PlaySoundFileCommand.swift in Sources */,
 				C94751841C54114F00A30AA6 /* EV3CleanDisplayCommand.swift in Sources */,
+				C97A84641D85EE7800767A43 /* MachKeys.swift in Sources */,
 				C9C561291C2E21F700E61C28 /* EV3DisplayFramebuffer.swift in Sources */,
 				C91E1A181C5C28BF00D5154A /* NXTWriteCommand.swift in Sources */,
 				C98C35051C26544D006840C3 /* EV3GenericResponse.swift in Sources */,
@@ -1527,16 +1579,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C9BC33CA1C2F162300E0A41F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C9BC33DE1C2F170800E0A41F /* HIDTransportService.swift in Sources */,
-				C9CFFC2C1C2F3A8200E75768 /* XPCTransportServiceProtocol.swift in Sources */,
-				C9BC33D51C2F162300E0A41F /* main.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C9CFFC361C2F542700E75768 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1547,9 +1589,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C9EC35EE1D85C2D20065790D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9EC35FC1D85C3520065790D /* XPCTransportServiceProtocol.swift in Sources */,
+				C97A84681D85FAE200767A43 /* MachKeys.swift in Sources */,
+				C9EC35FB1D85C3190065790D /* HIDTransportService.swift in Sources */,
+				C9EC35FA1D85C3110065790D /* main.swift in Sources */,
+				C97A84661D85F88D00767A43 /* MachServer.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		C924D9541D85D1D300F2877F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C9EC35F11D85C2D20065790D /* HIDTransportService */;
+			targetProxy = C924D9531D85D1D300F2877F /* PBXContainerItemProxy */;
+		};
 		C9683A171D24325C00741EFF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C9683A0C1D24325C00741EFF /* LegacyUSBTransportService */;
@@ -1559,11 +1618,6 @@
 			isa = PBXTargetDependency;
 			target = C98C346C1C25C160006840C3 /* RobotFoundation */;
 			targetProxy = C98C34791C25C160006840C3 /* PBXContainerItemProxy */;
-		};
-		C9BC33D81C2F162400E0A41F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C9BC33CD1C2F162300E0A41F /* HIDTransportService */;
-			targetProxy = C9BC33D71C2F162400E0A41F /* PBXContainerItemProxy */;
 		};
 		C9CFFC441C2F542700E75768 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1767,6 +1821,7 @@
 		C98C34F91C26540C006840C3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1781,6 +1836,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1788,6 +1845,7 @@
 		C98C34FA1C26540C006840C3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1801,40 +1859,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		C9BC33DB1C2F162400E0A41F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = HIDTransportService/HIDTransportService.entitlements;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				INFOPLIST_FILE = HIDTransportService/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Robotary.HIDTransportService;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-			};
-			name = Debug;
-		};
-		C9BC33DC1C2F162400E0A41F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = HIDTransportService/HIDTransportService.entitlements;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				INFOPLIST_FILE = HIDTransportService/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Robotary.HIDTransportService;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -1849,7 +1876,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Robotary.BluetoothTransportService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1864,7 +1890,34 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Robotary.BluetoothTransportService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		C9EC35F71D85C2D20065790D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				DEVELOPMENT_TEAM = RJKYY38TY2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = HIDTransportService/Bridging.h;
+			};
+			name = Debug;
+		};
+		C9EC35F81D85C2D20065790D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				DEVELOPMENT_TEAM = RJKYY38TY2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = HIDTransportService/Bridging.h;
 			};
 			name = Release;
 		};
@@ -1916,20 +1969,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C9BC33DD1C2F162400E0A41F /* Build configuration list for PBXNativeTarget "HIDTransportService" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C9BC33DB1C2F162400E0A41F /* Debug */,
-				C9BC33DC1C2F162400E0A41F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		C9CFFC481C2F542700E75768 /* Build configuration list for PBXNativeTarget "BluetoothTransportService" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C9CFFC461C2F542700E75768 /* Debug */,
 				C9CFFC471C2F542700E75768 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C9EC35F61D85C2D20065790D /* Build configuration list for PBXNativeTarget "HIDTransportService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9EC35F71D85C2D20065790D /* Debug */,
+				C9EC35F81D85C2D20065790D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
