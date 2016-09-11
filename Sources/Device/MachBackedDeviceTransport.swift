@@ -121,6 +121,9 @@ class MachBackedDeviceTransport: DeviceTransport, TransportClientProtocol {
 			}
 
 			handleTransportData(packetData)
+		case .receivedWriteResponse:
+			// TODO: Call error handler.
+			wroteData()
 		case .closedConnection:
 			handleClosedConnection()
 		}
