@@ -91,7 +91,7 @@ static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 	return IO_OBJECT_NULL;
 }
 
-- (instancetype)initWithDelegate:(id<LegacyUSBTransportServiceDelegate>)delegate
+- (instancetype)initWithDelegate:(id<TransportClientProtocol>)delegate
 {
 	if (!(self = [super init])) {
 		return nil;
@@ -337,7 +337,7 @@ static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 	NSAssert(NSThread.isMainThread, @"Unexpected thread");
 
 	if (result == kIOReturnSuccess) {
-		[self.delegate handleData:[NSData dataWithBytes:_readBuffer length:sizeof(_readBuffer)]];
+		[self.delegate handleTransportData:[NSData dataWithBytes:_readBuffer length:sizeof(_readBuffer)]];
 	}
 	
 	self.readResult = result;

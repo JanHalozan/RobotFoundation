@@ -10,11 +10,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol TransportServiceProtocol;
-
-@protocol LegacyUSBTransportServiceDelegate
-- (void)handleData:(NSData *)data;
-@end
-
+@protocol TransportClientProtocol;
 
 // LegacyUSBTransportService only works with Bulk In/Out transfers.
 // It has also only been tested while talking to devices configured by the AppleUSBComposite driver.
@@ -23,9 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
-- (instancetype)initWithDelegate:(id <LegacyUSBTransportServiceDelegate>)delegate;
+- (instancetype)initWithDelegate:(id <TransportClientProtocol>)delegate;
 
-@property (nonatomic, weak) id <LegacyUSBTransportServiceDelegate> delegate;
+@property (nonatomic, weak) id <TransportClientProtocol> delegate;
 
 @end
 

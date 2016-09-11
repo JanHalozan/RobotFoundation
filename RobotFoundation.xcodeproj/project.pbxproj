@@ -143,10 +143,6 @@
 		C960264D1C307096007BCF93 /* EV3StorageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C960264B1C307096007BCF93 /* EV3StorageResponse.swift */; };
 		C9683A071D24320C00741EFF /* LegacyUSBDeviceTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9683A061D24320C00741EFF /* LegacyUSBDeviceTransport.swift */; };
 		C9683A081D24320C00741EFF /* LegacyUSBDeviceTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9683A061D24320C00741EFF /* LegacyUSBDeviceTransport.swift */; };
-		C9683A121D24325C00741EFF /* LegacyUSBTransportService.m in Sources */ = {isa = PBXBuildFile; fileRef = C9683A111D24325C00741EFF /* LegacyUSBTransportService.m */; };
-		C9683A181D24325C00741EFF /* LegacyUSBTransportService.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = C9683A0D1D24325C00741EFF /* LegacyUSBTransportService.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		C9683A1E1D2432CE00741EFF /* XPCTransportServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9683A1D1D2432CE00741EFF /* XPCTransportServiceProtocol.swift */; };
-		C9683A201D24336900741EFF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9683A1F1D24336900741EFF /* main.swift */; };
 		C96945581C28F3760030DEB3 /* NXTHandleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96945571C28F3760030DEB3 /* NXTHandleResponse.swift */; };
 		C96945591C28F3760030DEB3 /* NXTHandleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96945571C28F3760030DEB3 /* NXTHandleResponse.swift */; };
 		C969455B1C28F3C50030DEB3 /* NXTHandleSizeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C969455A1C28F3C50030DEB3 /* NXTHandleSizeResponse.swift */; };
@@ -199,6 +195,12 @@
 		C97A847B1D8609B200767A43 /* MachServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97A84651D85F88D00767A43 /* MachServer.swift */; };
 		C97A847C1D8609B600767A43 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CFFC401C2F542700E75768 /* main.swift */; };
 		C97A847F1D860A0600767A43 /* BluetoothTransportService in Copy Mach Services */ = {isa = PBXBuildFile; fileRef = C97A84711D86098E00767A43 /* BluetoothTransportService */; };
+		C97A848C1D860BB800767A43 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9683A1F1D24336900741EFF /* main.swift */; };
+		C97A848D1D860BBD00767A43 /* LegacyUSBTransportService.m in Sources */ = {isa = PBXBuildFile; fileRef = C9683A111D24325C00741EFF /* LegacyUSBTransportService.m */; };
+		C97A848E1D860BC200767A43 /* MachKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97A84671D85FAE200767A43 /* MachKeys.swift */; };
+		C97A848F1D860BC200767A43 /* MachServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97A84651D85F88D00767A43 /* MachServer.swift */; };
+		C97A84901D860BC800767A43 /* XPCTransportServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9683A1D1D2432CE00741EFF /* XPCTransportServiceProtocol.swift */; };
+		C97A84931D860C8300767A43 /* LegacyUSBTransportService in Copy Mach Services */ = {isa = PBXBuildFile; fileRef = C97A84851D860B8A00767A43 /* LegacyUSBTransportService */; };
 		C98C34781C25C160006840C3 /* RobotFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C98C346D1C25C160006840C3 /* RobotFoundation.framework */; };
 		C98C347D1C25C160006840C3 /* RobotFoundationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C347C1C25C160006840C3 /* RobotFoundationTests.swift */; };
 		C98C34881C25C262006840C3 /* RobotFoundation.h in Headers */ = {isa = PBXBuildFile; fileRef = C98C34871C25C262006840C3 /* RobotFoundation.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -344,19 +346,19 @@
 			remoteGlobalIDString = C9EC35F11D85C2D20065790D;
 			remoteInfo = HIDTransportService;
 		};
-		C9683A161D24325C00741EFF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C98C34641C25C160006840C3 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C9683A0C1D24325C00741EFF;
-			remoteInfo = LegacyUSBTransportService;
-		};
 		C97A847D1D8609C700767A43 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C98C34641C25C160006840C3 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = C97A84701D86098E00767A43;
 			remoteInfo = BluetoothTransportService;
+		};
+		C97A84911D860C7200767A43 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C98C34641C25C160006840C3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C97A84841D860B8A00767A43;
+			remoteInfo = LegacyUSBTransportService;
 		};
 		C98C34791C25C160006840C3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -374,6 +376,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
+				C97A84931D860C8300767A43 /* LegacyUSBTransportService in Copy Mach Services */,
 				C97A847F1D860A0600767A43 /* BluetoothTransportService in Copy Mach Services */,
 				C924D9551D85D1D900F2877F /* HIDTransportService in Copy Mach Services */,
 			);
@@ -389,16 +392,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
-		C9BC33D91C2F162400E0A41F /* Embed XPC Services */ = {
+		C97A84831D860B8A00767A43 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
-			dstSubfolderSpec = 16;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
 			files = (
-				C9683A181D24325C00741EFF /* LegacyUSBTransportService.xpc in Embed XPC Services */,
 			);
-			name = "Embed XPC Services";
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 		};
 		C9EC35F01D85C2D20065790D /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -480,10 +481,9 @@
 		C96026481C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3GetStorageInfoCommand.swift; sourceTree = "<group>"; };
 		C960264B1C307096007BCF93 /* EV3StorageResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3StorageResponse.swift; sourceTree = "<group>"; };
 		C9683A061D24320C00741EFF /* LegacyUSBDeviceTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacyUSBDeviceTransport.swift; sourceTree = "<group>"; };
-		C9683A0D1D24325C00741EFF /* LegacyUSBTransportService.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = LegacyUSBTransportService.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9683A101D24325C00741EFF /* LegacyUSBTransportService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LegacyUSBTransportService.h; sourceTree = "<group>"; };
 		C9683A111D24325C00741EFF /* LegacyUSBTransportService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LegacyUSBTransportService.m; sourceTree = "<group>"; };
-		C9683A1C1D2432CD00741EFF /* LegacyUSBTransportService-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LegacyUSBTransportService-Bridging-Header.h"; sourceTree = "<group>"; };
+		C9683A1C1D2432CD00741EFF /* Bridging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bridging.h; sourceTree = "<group>"; };
 		C9683A1D1D2432CE00741EFF /* XPCTransportServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XPCTransportServiceProtocol.swift; path = HIDTransportService/XPCTransportServiceProtocol.swift; sourceTree = SOURCE_ROOT; };
 		C9683A1F1D24336900741EFF /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		C96945571C28F3760030DEB3 /* NXTHandleResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NXTHandleResponse.swift; sourceTree = "<group>"; };
@@ -513,6 +513,7 @@
 		C97A846B1D86091200767A43 /* Bridging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bridging.h; path = ServiceShared/Bridging.h; sourceTree = "<group>"; };
 		C97A846C1D86091200767A43 /* TransportService.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = TransportService.entitlements; path = ServiceShared/TransportService.entitlements; sourceTree = "<group>"; };
 		C97A84711D86098E00767A43 /* BluetoothTransportService */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = BluetoothTransportService; sourceTree = BUILT_PRODUCTS_DIR; };
+		C97A84851D860B8A00767A43 /* LegacyUSBTransportService */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LegacyUSBTransportService; sourceTree = BUILT_PRODUCTS_DIR; };
 		C98C346D1C25C160006840C3 /* RobotFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RobotFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C98C34721C25C160006840C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C98C34771C25C160006840C3 /* RobotFoundationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RobotFoundationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -597,14 +598,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		C9683A0A1D24325C00741EFF /* Frameworks */ = {
+		C97A846E1D86098E00767A43 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C97A846E1D86098E00767A43 /* Frameworks */ = {
+		C97A84821D860B8A00767A43 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -729,7 +730,7 @@
 		C9683A0E1D24325C00741EFF /* LegacyUSBTransportService */ = {
 			isa = PBXGroup;
 			children = (
-				C9683A1C1D2432CD00741EFF /* LegacyUSBTransportService-Bridging-Header.h */,
+				C9683A1C1D2432CD00741EFF /* Bridging.h */,
 				C9683A101D24325C00741EFF /* LegacyUSBTransportService.h */,
 				C9683A111D24325C00741EFF /* LegacyUSBTransportService.m */,
 				C9683A1F1D24336900741EFF /* main.swift */,
@@ -784,9 +785,9 @@
 				C98C346D1C25C160006840C3 /* RobotFoundation.framework */,
 				C98C34771C25C160006840C3 /* RobotFoundationTests.xctest */,
 				C98C34F31C26540C006840C3 /* MobileRobotFoundation.framework */,
-				C9683A0D1D24325C00741EFF /* LegacyUSBTransportService.xpc */,
 				C9EC35F21D85C2D20065790D /* HIDTransportService */,
 				C97A84711D86098E00767A43 /* BluetoothTransportService */,
+				C97A84851D860B8A00767A43 /* LegacyUSBTransportService */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1023,23 +1024,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		C9683A0C1D24325C00741EFF /* LegacyUSBTransportService */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C9683A191D24325C00741EFF /* Build configuration list for PBXNativeTarget "LegacyUSBTransportService" */;
-			buildPhases = (
-				C9683A091D24325C00741EFF /* Sources */,
-				C9683A0A1D24325C00741EFF /* Frameworks */,
-				C9683A0B1D24325C00741EFF /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = LegacyUSBTransportService;
-			productName = LegacyUSBTransportService;
-			productReference = C9683A0D1D24325C00741EFF /* LegacyUSBTransportService.xpc */;
-			productType = "com.apple.product-type.xpc-service";
-		};
 		C97A84701D86098E00767A43 /* BluetoothTransportService */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C97A84751D86098E00767A43 /* Build configuration list for PBXNativeTarget "BluetoothTransportService" */;
@@ -1057,6 +1041,23 @@
 			productReference = C97A84711D86098E00767A43 /* BluetoothTransportService */;
 			productType = "com.apple.product-type.tool";
 		};
+		C97A84841D860B8A00767A43 /* LegacyUSBTransportService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C97A84891D860B8A00767A43 /* Build configuration list for PBXNativeTarget "LegacyUSBTransportService" */;
+			buildPhases = (
+				C97A84811D860B8A00767A43 /* Sources */,
+				C97A84821D860B8A00767A43 /* Frameworks */,
+				C97A84831D860B8A00767A43 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LegacyUSBTransportService;
+			productName = LegacyUSBTransportService;
+			productReference = C97A84851D860B8A00767A43 /* LegacyUSBTransportService */;
+			productType = "com.apple.product-type.tool";
+		};
 		C98C346C1C25C160006840C3 /* RobotFoundation */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C98C34811C25C160006840C3 /* Build configuration list for PBXNativeTarget "RobotFoundation" */;
@@ -1064,16 +1065,15 @@
 				C98C34681C25C160006840C3 /* Sources */,
 				C98C34691C25C160006840C3 /* Frameworks */,
 				C98C346A1C25C160006840C3 /* Headers */,
-				C9BC33D91C2F162400E0A41F /* Embed XPC Services */,
 				C924D9521D85D1C300F2877F /* Copy Mach Services */,
 				C924D9561D85D1F200F2877F /* Sign Mach Services */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				C97A84921D860C7200767A43 /* PBXTargetDependency */,
 				C97A847E1D8609C700767A43 /* PBXTargetDependency */,
 				C924D9541D85D1D300F2877F /* PBXTargetDependency */,
-				C9683A171D24325C00741EFF /* PBXTargetDependency */,
 			);
 			name = RobotFoundation;
 			productName = RobotFoundation;
@@ -1143,17 +1143,12 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Matt Rajca";
 				TargetAttributes = {
-					C9683A0C1D24325C00741EFF = {
-						CreatedOnToolsVersion = 8.0;
-						LastSwiftMigration = 0800;
-						ProvisioningStyle = Automatic;
-						SystemCapabilities = {
-							com.apple.Sandbox = {
-								enabled = 1;
-							};
-						};
-					};
 					C97A84701D86098E00767A43 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = RJKYY38TY2;
+						ProvisioningStyle = Automatic;
+					};
+					C97A84841D860B8A00767A43 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = RJKYY38TY2;
 						ProvisioningStyle = Automatic;
@@ -1191,21 +1186,14 @@
 				C98C346C1C25C160006840C3 /* RobotFoundation */,
 				C98C34F21C26540C006840C3 /* MobileRobotFoundation */,
 				C98C34761C25C160006840C3 /* RobotFoundationTests */,
-				C9683A0C1D24325C00741EFF /* LegacyUSBTransportService */,
 				C9EC35F11D85C2D20065790D /* HIDTransportService */,
 				C97A84701D86098E00767A43 /* BluetoothTransportService */,
+				C97A84841D860B8A00767A43 /* LegacyUSBTransportService */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		C9683A0B1D24325C00741EFF /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C98C34751C25C160006840C3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1235,21 +1223,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "HID=\"$BUILT_PRODUCTS_DIR/RobotFoundation.framework/Versions/A/HIDTransportService\"\nBluetooth=\"$BUILT_PRODUCTS_DIR/RobotFoundation.framework/Versions/A/BluetoothTransportService\"\n\ncd $SRCROOT\nexport CODESIGN_ALLOCATE=\"$DT_TOOLCHAIN_DIR/usr/bin/codesign_allocate\"\n/usr/bin/codesign --force --sign \"${CODE_SIGN_IDENTITY}\" --entitlements ServiceShared/TransportService.entitlements --timestamp=none $HID\n/usr/bin/codesign --force --sign \"${CODE_SIGN_IDENTITY}\" --entitlements ServiceShared/TransportService.entitlements --timestamp=none $HID";
+			shellScript = "HID=\"$BUILT_PRODUCTS_DIR/RobotFoundation.framework/Versions/A/HIDTransportService\"\nBluetooth=\"$BUILT_PRODUCTS_DIR/RobotFoundation.framework/Versions/A/BluetoothTransportService\"\nLegacy=\"$BUILT_PRODUCTS_DIR/RobotFoundation.framework/Versions/A/LegacyUSBTransportService\"\n\ncd $SRCROOT\nexport CODESIGN_ALLOCATE=\"$DT_TOOLCHAIN_DIR/usr/bin/codesign_allocate\"\n/usr/bin/codesign --force --sign \"${CODE_SIGN_IDENTITY}\" --entitlements ServiceShared/TransportService.entitlements --timestamp=none $HID\n/usr/bin/codesign --force --sign \"${CODE_SIGN_IDENTITY}\" --entitlements ServiceShared/TransportService.entitlements --timestamp=none $HID\n/usr/bin/codesign --force --sign \"${CODE_SIGN_IDENTITY}\" --entitlements ServiceShared/TransportService.entitlements --timestamp=none $Legacy\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		C9683A091D24325C00741EFF /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C9683A1E1D2432CE00741EFF /* XPCTransportServiceProtocol.swift in Sources */,
-				C9683A121D24325C00741EFF /* LegacyUSBTransportService.m in Sources */,
-				C9683A201D24336900741EFF /* main.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C97A846D1D86098E00767A43 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1259,6 +1237,18 @@
 				C97A847B1D8609B200767A43 /* MachServer.swift in Sources */,
 				C97A84791D8609AA00767A43 /* XPCTransportServiceProtocol.swift in Sources */,
 				C97A84781D8609A300767A43 /* BluetoothTransportService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C97A84811D860B8A00767A43 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C97A84901D860BC800767A43 /* XPCTransportServiceProtocol.swift in Sources */,
+				C97A848E1D860BC200767A43 /* MachKeys.swift in Sources */,
+				C97A848F1D860BC200767A43 /* MachServer.swift in Sources */,
+				C97A848D1D860BBD00767A43 /* LegacyUSBTransportService.m in Sources */,
+				C97A848C1D860BB800767A43 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1609,15 +1599,15 @@
 			target = C9EC35F11D85C2D20065790D /* HIDTransportService */;
 			targetProxy = C924D9531D85D1D300F2877F /* PBXContainerItemProxy */;
 		};
-		C9683A171D24325C00741EFF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C9683A0C1D24325C00741EFF /* LegacyUSBTransportService */;
-			targetProxy = C9683A161D24325C00741EFF /* PBXContainerItemProxy */;
-		};
 		C97A847E1D8609C700767A43 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C97A84701D86098E00767A43 /* BluetoothTransportService */;
 			targetProxy = C97A847D1D8609C700767A43 /* PBXContainerItemProxy */;
+		};
+		C97A84921D860C7200767A43 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C97A84841D860B8A00767A43 /* LegacyUSBTransportService */;
+			targetProxy = C97A84911D860C7200767A43 /* PBXContainerItemProxy */;
 		};
 		C98C347A1C25C160006840C3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1627,41 +1617,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		C9683A1A1D24325C00741EFF /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_ENTITLEMENTS = LegacyUSBTransportService/LegacyUSBTransportService.entitlements;
-				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = LegacyUSBTransportService/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Robotary.LegacyUSBTransportService;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "LegacyUSBTransportService/LegacyUSBTransportService-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Debug;
-		};
-		C9683A1B1D24325C00741EFF /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_ENTITLEMENTS = LegacyUSBTransportService/LegacyUSBTransportService.entitlements;
-				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = LegacyUSBTransportService/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Robotary.LegacyUSBTransportService;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "LegacyUSBTransportService/LegacyUSBTransportService-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
 		C97A84761D86098E00767A43 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1687,6 +1642,36 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = ServiceShared/Bridging.h;
+			};
+			name = Release;
+		};
+		C97A848A1D860B8A00767A43 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				DEVELOPMENT_TEAM = RJKYY38TY2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = LegacyUSBTransportService/Bridging.h;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		C97A848B1D860B8A00767A43 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				DEVELOPMENT_TEAM = RJKYY38TY2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = LegacyUSBTransportService/Bridging.h;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -1924,20 +1909,19 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C9683A191D24325C00741EFF /* Build configuration list for PBXNativeTarget "LegacyUSBTransportService" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C9683A1A1D24325C00741EFF /* Debug */,
-				C9683A1B1D24325C00741EFF /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		C97A84751D86098E00767A43 /* Build configuration list for PBXNativeTarget "BluetoothTransportService" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C97A84761D86098E00767A43 /* Debug */,
 				C97A84771D86098E00767A43 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		C97A84891D860B8A00767A43 /* Build configuration list for PBXNativeTarget "LegacyUSBTransportService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C97A848A1D860B8A00767A43 /* Debug */,
+				C97A848B1D860B8A00767A43 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
