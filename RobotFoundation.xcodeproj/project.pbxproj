@@ -483,7 +483,6 @@
 		C9683A0D1D24325C00741EFF /* LegacyUSBTransportService.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = LegacyUSBTransportService.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9683A101D24325C00741EFF /* LegacyUSBTransportService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LegacyUSBTransportService.h; sourceTree = "<group>"; };
 		C9683A111D24325C00741EFF /* LegacyUSBTransportService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LegacyUSBTransportService.m; sourceTree = "<group>"; };
-		C9683A151D24325C00741EFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C9683A1C1D2432CD00741EFF /* LegacyUSBTransportService-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LegacyUSBTransportService-Bridging-Header.h"; sourceTree = "<group>"; };
 		C9683A1D1D2432CE00741EFF /* XPCTransportServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XPCTransportServiceProtocol.swift; path = HIDTransportService/XPCTransportServiceProtocol.swift; sourceTree = SOURCE_ROOT; };
 		C9683A1F1D24336900741EFF /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -561,7 +560,6 @@
 		C9B138761C2B09650018812F /* EV3ListFilesCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ListFilesCommand.swift; sourceTree = "<group>"; };
 		C9B138791C2B12BB0018812F /* EV3ListingResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ListingResponse.swift; sourceTree = "<group>"; };
 		C9B1387C1C2B1C5C0018812F /* EV3ListingParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ListingParser.swift; sourceTree = "<group>"; };
-		C9B589601D63B6CF00E9586D /* LegacyUSBTransportService.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = LegacyUSBTransportService.entitlements; sourceTree = "<group>"; };
 		C9BC33D11C2F162300E0A41F /* HIDTransportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDTransportService.swift; sourceTree = "<group>"; };
 		C9BC33D41C2F162300E0A41F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		C9BC33E01C2F1A2D00E0A41F /* XPCTransportServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XPCTransportServiceProtocol.swift; path = HIDTransportService/XPCTransportServiceProtocol.swift; sourceTree = SOURCE_ROOT; };
@@ -731,13 +729,11 @@
 		C9683A0E1D24325C00741EFF /* LegacyUSBTransportService */ = {
 			isa = PBXGroup;
 			children = (
-				C9B589601D63B6CF00E9586D /* LegacyUSBTransportService.entitlements */,
-				C9683A1D1D2432CE00741EFF /* XPCTransportServiceProtocol.swift */,
+				C9683A1C1D2432CD00741EFF /* LegacyUSBTransportService-Bridging-Header.h */,
 				C9683A101D24325C00741EFF /* LegacyUSBTransportService.h */,
 				C9683A111D24325C00741EFF /* LegacyUSBTransportService.m */,
-				C9683A1C1D2432CD00741EFF /* LegacyUSBTransportService-Bridging-Header.h */,
 				C9683A1F1D24336900741EFF /* main.swift */,
-				C9683A151D24325C00741EFF /* Info.plist */,
+				C9683A1D1D2432CE00741EFF /* XPCTransportServiceProtocol.swift */,
 			);
 			path = LegacyUSBTransportService;
 			sourceTree = "<group>";
