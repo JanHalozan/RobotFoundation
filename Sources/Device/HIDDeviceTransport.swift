@@ -9,7 +9,7 @@
 
 import Foundation
 
-final class HIDDeviceTransport: XPCBackedDeviceTransport {
+final class HIDDeviceTransport: MachBackedDeviceTransport {
 	private let serialNumber: String
 
 	init(serialNumber: String) {
@@ -18,7 +18,7 @@ final class HIDDeviceTransport: XPCBackedDeviceTransport {
 	}
 
 	override var serviceName: String {
-		return "com.Robotary.HIDTransportService"
+		return "RJKYY38TY2.com.Robotary.HID"
 	}
 
 	override var identifier: String {
