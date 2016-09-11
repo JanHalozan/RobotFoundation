@@ -19,6 +19,8 @@
 		C907C2601C2A28B000647531 /* EV3StartMotorCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907C25E1C2A28B000647531 /* EV3StartMotorCommand.swift */; };
 		C907C2651C2A2F0300647531 /* EV3StopMotorCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907C2641C2A2F0300647531 /* EV3StopMotorCommand.swift */; };
 		C907C2661C2A2F0300647531 /* EV3StopMotorCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907C2641C2A2F0300647531 /* EV3StopMotorCommand.swift */; };
+		C90B1EF61D850C21007B13CC /* EV3ReadGyroCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90B1EF51D850C21007B13CC /* EV3ReadGyroCommand.swift */; };
+		C90B1EF71D850C21007B13CC /* EV3ReadGyroCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90B1EF51D850C21007B13CC /* EV3ReadGyroCommand.swift */; };
 		C9115B521C2EF69600BCE9BC /* EV3DeviceConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9115B511C2EF69600BCE9BC /* EV3DeviceConvenience.swift */; };
 		C9115B531C2EF69600BCE9BC /* EV3DeviceConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9115B511C2EF69600BCE9BC /* EV3DeviceConvenience.swift */; };
 		C91381301C2F5C6000BB2C67 /* EV3Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = C913812F1C2F5C6000BB2C67 /* EV3Response.swift */; };
@@ -376,6 +378,7 @@
 		C907C25B1C2A239400647531 /* EV3SetMotorSpeedCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3SetMotorSpeedCommand.swift; sourceTree = "<group>"; };
 		C907C25E1C2A28B000647531 /* EV3StartMotorCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3StartMotorCommand.swift; sourceTree = "<group>"; };
 		C907C2641C2A2F0300647531 /* EV3StopMotorCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3StopMotorCommand.swift; sourceTree = "<group>"; };
+		C90B1EF51D850C21007B13CC /* EV3ReadGyroCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ReadGyroCommand.swift; sourceTree = "<group>"; };
 		C9115B511C2EF69600BCE9BC /* EV3DeviceConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3DeviceConvenience.swift; sourceTree = "<group>"; };
 		C913812F1C2F5C6000BB2C67 /* EV3Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3Response.swift; sourceTree = "<group>"; };
 		C917BC701D202AF600DFE0AD /* EV3GetSensorNameCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3GetSensorNameCommand.swift; sourceTree = "<group>"; };
@@ -872,6 +875,7 @@
 				C94A9F3A1C2CF5660031642F /* EV3ReadChainedCommand.swift */,
 				C978686C1C28DE5B0099BB82 /* EV3ReadColorCommand.swift */,
 				C90586791C2C5FDB0068E560 /* EV3ReadFileCommand.swift */,
+				C90B1EF51D850C21007B13CC /* EV3ReadGyroCommand.swift */,
 				C95CEE671CF2188000FAD5F5 /* EV3ReadIRProximityCommand.swift */,
 				C98C34EA1C264DD5006840C3 /* EV3ReadLightCommand.swift */,
 				C9E12DD41CD2D720002543B1 /* EV3ReadOutputCommand.swift */,
@@ -1263,6 +1267,7 @@
 				C9229E4F1C5C1B6F001E74ED /* NXTGetDeviceInfoCommand.swift in Sources */,
 				C98C34BB1C25E1E3006840C3 /* NXTDevice.swift in Sources */,
 				C97551B11C29D094002A5796 /* EV3StringResponse.swift in Sources */,
+				C90B1EF61D850C21007B13CC /* EV3ReadGyroCommand.swift in Sources */,
 				C9E4B0B01C5B0D1B008C8D01 /* NXTConstants.swift in Sources */,
 				C96026491C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift in Sources */,
 				C901F6DD1CF9831F00150890 /* NXTSetBrickNameCommand.swift in Sources */,
@@ -1428,6 +1433,7 @@
 				C9229E501C5C1B6F001E74ED /* NXTGetDeviceInfoCommand.swift in Sources */,
 				C98C35031C26544D006840C3 /* EV3CommandOperation.swift in Sources */,
 				C98C35041C26544D006840C3 /* EV3CommandSerialization.swift in Sources */,
+				C90B1EF71D850C21007B13CC /* EV3ReadGyroCommand.swift in Sources */,
 				C9E4B0B11C5B0D1B008C8D01 /* NXTConstants.swift in Sources */,
 				C960264A1C306FD4007BCF93 /* EV3GetStorageInfoCommand.swift in Sources */,
 				C901F6DE1CF9831F00150890 /* NXTSetBrickNameCommand.swift in Sources */,

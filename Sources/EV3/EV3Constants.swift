@@ -99,6 +99,7 @@ public enum EV3SensorType: UInt8 {
 	case touch = 16
 	case light = 29
 	case ultrasound = 30
+	case gyro = 32
 	case ir = 33
 }
 
