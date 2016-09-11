@@ -21,6 +21,10 @@ final class HIDDeviceTransport: MachBackedDeviceTransport {
 		return "RJKYY38TY2.com.Robotary.HID"
 	}
 
+	override var executableName: String {
+		return "HIDTransportService"
+	}
+
 	override var identifier: String {
 		return serialNumber
 	}
