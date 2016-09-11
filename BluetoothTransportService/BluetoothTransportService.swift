@@ -30,11 +30,6 @@ private enum BluetoothAsyncWriteState {
 	case error(Int)
 }
 
-protocol BluetoothTransportServiceDelegate: class {
-	func handleData(_ data: Data)
-	func closedConnection()
-}
-
 final class BluetoothTransportService : NSObject, TransportServiceProtocol, IOBluetoothRFCOMMChannelDelegate {
 	private var state: BluetoothState = .ready
 	private var channel: IOBluetoothRFCOMMChannel?
@@ -48,9 +43,9 @@ final class BluetoothTransportService : NSObject, TransportServiceProtocol, IOBl
 	private var openStatus: IOReturn?
 	private var writeStatus: IOReturn?
 
-	private weak var delegate: BluetoothTransportServiceDelegate?
+	private weak var delegate: TransportClientProtocol?
 
-	init(delegate: BluetoothTransportServiceDelegate) {
+	init(delegate: TransportClientProtocol) {
 		self.delegate = delegate
 	}
 
@@ -463,7 +458,7 @@ final class BluetoothTransportService : NSObject, TransportServiceProtocol, IOBl
 		assert(Thread.isMainThread)
 
 		let receivedData = Data(bytes: UnsafeRawPointer(dataPointer), count: dataLength)
-		delegate?.handleData(receivedData)
+		delegate?.handleTransportData(receivedData as NSData)
 	}
 
 	@objc func rfcommChannelClosed(_ rfcommChannel: IOBluetoothRFCOMMChannel!) {
@@ -478,7 +473,7 @@ final class BluetoothTransportService : NSObject, TransportServiceProtocol, IOBl
 		actuallyClose()
 
 		// Writes will already fail gracefully, but we still tell clients about the close so they can, for example, cancel pending operations as well.
-		delegate?.closedConnection()
+		delegate?.closedTransportConnection()
 	}
 
 	func scheduleRead(_ identifier: NSString, handler: @escaping (Int) -> ()) {

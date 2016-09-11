@@ -8,20 +8,15 @@
 import Foundation
 import IOKit.hid
 
-protocol HIDTransportServiceDelegate: class {
-	func handleData(_ data: Data)
-	func closedConnection()
-}
-
 final class HIDTransportService : NSObject, TransportServiceProtocol {
 	private var device: IOHIDDevice?
 	private var activeClients = 0
 	private var awaitingDeferredClose = false
 	private var inputReportBuffer = [UInt8](repeating: 0, count: 1024)
 
-	private weak var delegate: HIDTransportServiceDelegate?
+	private weak var delegate: TransportClientProtocol?
 
-	init(delegate: HIDTransportServiceDelegate) {
+	init(delegate: TransportClientProtocol) {
 		self.delegate = delegate
 	}
 
@@ -120,7 +115,7 @@ final class HIDTransportService : NSObject, TransportServiceProtocol {
 
 		actuallyClose()
 
-		delegate?.closedConnection()
+		delegate?.closedTransportConnection()
 	}
 
 	func writeData(_ data: NSData, identifier: NSString, handler: @escaping (Int) -> ()) {
@@ -170,7 +165,7 @@ final class HIDTransportService : NSObject, TransportServiceProtocol {
 		assert(Thread.isMainThread)
 
 		let receivedData = Data(bytes: &inputReportBuffer, count: inputReportBuffer.count)
-		delegate?.handleData(receivedData)
+		delegate?.handleTransportData(receivedData as NSData)
 	}
 
 	private func close(_ identifier: NSString) {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class ServiceDelegate : NSObject, NSXPCListenerDelegate, BluetoothTransportServiceDelegate {
+final class ServiceDelegate : NSObject, NSXPCListenerDelegate, TransportClientProtocol {
 	private lazy var exportedObject: BluetoothTransportService = {
 		BluetoothTransportService(delegate: self)
 	}()
@@ -35,7 +35,7 @@ final class ServiceDelegate : NSObject, NSXPCListenerDelegate, BluetoothTranspor
 		return true
 	}
 
-	func handleData(_ data: Data) {
+	func handleTransportData(_ data: NSData) {
 		for connection in connections {
 			if let client = connection.remoteObjectProxyWithErrorHandler({ error in
 				print("Error communicating with the client after data was received: \(error)")
@@ -47,7 +47,7 @@ final class ServiceDelegate : NSObject, NSXPCListenerDelegate, BluetoothTranspor
 		}
 	}
 
-	func closedConnection() {
+	func closedTransportConnection() {
 		for connection in connections {
 			if let client = connection.remoteObjectProxyWithErrorHandler({ error in
 				print("Error communicating with the client after a device connection was closed: \(error)")

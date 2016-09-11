@@ -15,6 +15,8 @@ import Foundation
 }
 
 @objc protocol TransportServiceProtocol {
+	init(delegate: TransportClientProtocol)
+
 	func writeData(_ data: NSData, identifier: NSString, handler: @escaping (Int) -> ())
 	func scheduleRead(_ identifier: NSString, handler: @escaping (Int) -> ())
 }
