@@ -83,15 +83,11 @@ class MachServer : NSObject, NSMachPortDelegate, TransportClientProtocol {
 				}
 			}
 		case .writeData:
-			guard let identifier = dict[MachEventKey.identifier.rawValue] as? NSString else {
+			guard let identifier = dict[MachEventKey.identifier.rawValue] as? NSString,
+				  let data = dict[MachEventKey.data.rawValue] as? NSData,
+				  let counter = dict[MachEventKey.counter.rawValue] as? Int else {
 				assertionFailure()
-				print("\(#function): no identifier")
-				return
-			}
-
-			guard let data = dict[MachEventKey.data.rawValue] as? NSData else {
-				assertionFailure()
-				print("\(#function): no data")
+				print("\(#function): missing parameters")
 				return
 			}
 
@@ -99,7 +95,8 @@ class MachServer : NSObject, NSMachPortDelegate, TransportClientProtocol {
 				self.transport.writeData(data, identifier: identifier) { result in
 					let packet = [
 						MachEventKey.type.rawValue: MachResponseType.receivedWriteResponse.rawValue as NSString,
-						MachEventKey.result.rawValue: result as NSNumber
+						MachEventKey.result.rawValue: result as NSNumber,
+						MachEventKey.counter.rawValue: counter as NSNumber
 					]
 					self.sendPacket(packet)
 				}

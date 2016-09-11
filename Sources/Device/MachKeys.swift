@@ -24,4 +24,5 @@ enum MachEventKey: String {
 	case data = "data"
 	case identifier = "identifier"
 	case result = "result"
+	case counter = "counter"
 }

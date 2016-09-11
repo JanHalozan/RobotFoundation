@@ -22,6 +22,8 @@ private final class MachDelegate: NSObject, NSMachPortDelegate {
 	}
 }
 
+typealias ErrorHandler = (Error) -> ()
+
 class MachBackedDeviceTransport: DeviceTransport, TransportClientProtocol {
 	// Services can talk back to us on this port.
 	private let clientPort: NSMachPort
@@ -29,6 +31,9 @@ class MachBackedDeviceTransport: DeviceTransport, TransportClientProtocol {
 	private lazy var machDelegate: MachDelegate = { [unowned self] in
 		return MachDelegate(handler: self.handleMessage)
 	}()
+	private static var errorCounter = 0
+	private var errorHandlers = [Int: ErrorHandler]()
+	private let errorsQueue = DispatchQueue(label: "error handlers")
 
 	private var serverConnection: NSMachPort?
 
@@ -122,7 +127,22 @@ class MachBackedDeviceTransport: DeviceTransport, TransportClientProtocol {
 
 			handleTransportData(packetData)
 		case .receivedWriteResponse:
-			// TODO: Call error handler.
+			guard let result = request[MachEventKey.result.rawValue] as? Int,
+				  let counter = request[MachEventKey.counter.rawValue] as? Int else {
+				assertionFailure()
+				print("\(#function): missing values")
+				return
+			}
+
+			guard result == Int(kIOReturnSuccess) else {
+				errorsQueue.async {
+					if let handler = self.errorHandlers.removeValue(forKey: counter) {
+						handler(IOReturn(result))
+					}
+				}
+				return
+			}
+
 			wroteData()
 		case .closedConnection:
 			handleClosedConnection()
@@ -187,11 +207,19 @@ class MachBackedDeviceTransport: DeviceTransport, TransportClientProtocol {
 		}
 	}
 
-	override func writeData(_ data: Data, errorHandler: @escaping (Error) -> ()) throws {
+	override func writeData(_ data: Data, errorHandler: @escaping ErrorHandler) throws {
+		var counter = 0
+		errorsQueue.sync {
+			MachBackedDeviceTransport.errorCounter += 1
+			counter = MachBackedDeviceTransport.errorCounter
+			errorHandlers[counter] = errorHandler
+		}
+
 		let packet = [
 			MachEventKey.type.rawValue: MachRequestType.writeData.rawValue as NSString,
 			MachEventKey.data.rawValue: data as NSData,
-			MachEventKey.identifier.rawValue: identifier as NSString
+			MachEventKey.identifier.rawValue: identifier as NSString,
+			MachEventKey.counter.rawValue: counter as NSNumber
 		]
 		sendPacket(packet)
 	}
