@@ -41,6 +41,8 @@ public final class EV3Device: Device {
 			}
 		}
 
+	#if DEBUG
 		print("Unhandled EV3 response, operations: \(cachedOperations.count)")
+	#endif
 	}
 }
