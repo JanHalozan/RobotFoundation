@@ -10,7 +10,7 @@
 import Foundation
 
 /* supports RFCOMM communication */
-final class IOBluetoothDeviceTransport: XPCBackedDeviceTransport {
+final class IOBluetoothDeviceTransport: MachBackedDeviceTransport {
 	private let address: String
 
 	init(address: String) {
@@ -19,7 +19,11 @@ final class IOBluetoothDeviceTransport: XPCBackedDeviceTransport {
 	}
 
 	override var serviceName: String {
-		return "com.Robotary.BluetoothTransportService"
+		return "RJKYY38TY2.com.Robotary.Bluetooth"
+	}
+
+	override var executableName: String {
+		return "BluetoothTransportService"
 	}
 
 	override var identifier: String {
