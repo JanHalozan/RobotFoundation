@@ -18,6 +18,7 @@
 @property (weak) LegacyUSBTransportService *service;
 @property dispatch_semaphore_t semaphore;
 @property ServiceAndSemaphore *selfLoop;
+@property void *data;
 
 @end
 
@@ -38,7 +39,6 @@
 	CFRunLoopSourceRef _runLoopSource;
 	io_object_t _registeredNotification;
 	NSDictionary<NSNumber *, NSMutableArray<NSNumber *> *> *_pipes;
-	uint8_t _readBuffer[READ_BUFFER_LEN];
 	BOOL _scheduledDeferredClose;
 
 	// Shared
@@ -332,12 +332,16 @@ static io_service_t CreateServiceWithSerialNumber(NSString *serialNumber)
 
 #pragma mark - Utility
 
-- (void)_didReadBytesWithResult:(IOReturn)result number:(UInt32)number semaphore:(dispatch_semaphore_t)semaphore
+- (void)_didReadBytesWithResult:(IOReturn)result number:(UInt32)number buffer:(uint8_t *)buffer semaphore:(dispatch_semaphore_t)semaphore
 {
 	NSAssert(NSThread.isMainThread, @"Unexpected thread");
 
 	if (result == kIOReturnSuccess) {
-		[self.delegate handleTransportData:[NSData dataWithBytes:_readBuffer length:sizeof(_readBuffer)]];
+		[self.delegate handleTransportData:[NSData dataWithBytes:buffer length:READ_BUFFER_LEN]];
+	}
+
+	if (buffer != NULL) {
+		free(buffer);
 	}
 	
 	self.readResult = result;
@@ -357,7 +361,7 @@ static void ReadCompletion(void *refCon, IOReturn result, void *arg0)
 	ServiceAndSemaphore *const tuple = (__bridge ServiceAndSemaphore *)refCon;
 	const size_t bytesRead = (size_t)arg0;
 
-	[tuple.service _didReadBytesWithResult:result number:(UInt32)bytesRead semaphore:tuple.semaphore];
+	[tuple.service _didReadBytesWithResult:result number:(UInt32)bytesRead buffer:tuple.data semaphore:tuple.semaphore];
 	tuple.selfLoop = nil;
 }
 
@@ -653,13 +657,14 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 	}
 
 	const UInt8 inNum = (UInt8)[inPipes[0] intValue]; // read from the first in pipe for now
-	bzero(_readBuffer, sizeof(_readBuffer));
 
+	uint8_t *readBuffer = calloc(READ_BUFFER_LEN, sizeof(uint8_t));
 	ServiceAndSemaphore *tuple = [[ServiceAndSemaphore alloc] init];
 	tuple.service = self;
 	tuple.semaphore = semaphore;
 	tuple.selfLoop = tuple;
-	return (*_interface)->ReadPipeAsync(_interface, inNum, _readBuffer, READ_BUFFER_LEN, &ReadCompletion, (__bridge void *)tuple);
+	tuple.data = readBuffer;
+	return (*_interface)->ReadPipeAsync(_interface, inNum, readBuffer, READ_BUFFER_LEN, &ReadCompletion, (__bridge void *)tuple);
 }
 
 - (void)scheduleRead:(NSString *)identifier handler:(void (^)(NSInteger))handler
