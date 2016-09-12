@@ -34,6 +34,7 @@ class MachBackedDeviceTransport: DeviceTransport, TransportClientProtocol {
 	private static var errorCounter = 0
 	private var errorHandlers = [Int: ErrorHandler]()
 	private let errorsQueue = DispatchQueue(label: "error handlers")
+	private let packetQueue = DispatchQueue(label: "packet writes")
 
 	private var serverConnection: NSMachPort?
 
@@ -192,19 +193,21 @@ class MachBackedDeviceTransport: DeviceTransport, TransportClientProtocol {
 	}
 
 	private func sendPacket(_ packet: [String: AnyObject]) {
-		openConnectionIfNecessary()
+		packetQueue.async {
+			self.openConnectionIfNecessary()
 
-		guard let packetData = try? PropertyListSerialization.data(fromPropertyList: packet, format: .binary, options: 0) else {
-			print("\(#function): could not serialize packet")
-			assertionFailure()
-			return
-		}
+			guard let packetData = try? PropertyListSerialization.data(fromPropertyList: packet, format: .binary, options: 0) else {
+				print("\(#function): could not serialize packet")
+				assertionFailure()
+				return
+			}
 
-		serverQueue.async {
-			assert(self.serverConnection != nil)
-			let message = PortMessage(send: self.serverConnection, receive: self.clientPort, components: [packetData])
-			if !message.send(before: .distantFuture) {
-				print("\(#function): the message could not be sent")
+			self.serverQueue.async {
+				assert(self.serverConnection != nil)
+				let message = PortMessage(send: self.serverConnection, receive: self.clientPort, components: [packetData])
+				if !message.send(before: .distantFuture) {
+					print("\(#function): the message could not be sent")
+				}
 			}
 		}
 	}
