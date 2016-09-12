@@ -142,12 +142,12 @@ final class HIDTransportService : NSObject, TransportServiceProtocol {
 
 	private func actuallyWriteData(_ data: Data, identifier: NSString) -> IOReturn {
 		guard let currentIdentifier = currentIdentifier else {
-			debugPrint("No open device; nowhere to write to.")
+			print("No open device; nowhere to write to.")
 			return kIOReturnNotOpen
 		}
 
 		guard currentIdentifier == identifier as String else {
-			debugPrint("Device mismatch.")
+			print("Device mismatch.")
 			return kIOReturnInternalError
 		}
 
