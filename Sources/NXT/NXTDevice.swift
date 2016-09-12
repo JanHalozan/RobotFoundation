@@ -22,7 +22,9 @@ public final class NXTDevice: Device {
 			}
 		}
 
+	#if DEBUG
 		print("Unhandled NXT response")
+	#endif
 	}
 
 	override func wroteData() {
