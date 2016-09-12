@@ -443,7 +443,9 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 			// It's the same device! Just restore the connection we have.
 			[self _cancelDeferredClose];
 			_activeClients += 1;
+#if DEBUG
 			NSLog(@"%s: restoring a deferred close with %zd active clients", __PRETTY_FUNCTION__, _activeClients);
+#endif
 			return kIOReturnSuccess;
 		} else {
 			// Close now and open the new device.
@@ -466,7 +468,9 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 	}
 
 	_activeClients += 1;
+#if DEBUG
 	NSLog(@"%s: legacy USB transport increased active clients to %zd", __PRETTY_FUNCTION__, _activeClients);
+#endif
 	return kIOReturnSuccess;
 }
 
@@ -485,7 +489,9 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 		return NO;
 	}
 
+#if DEBUG
 	NSLog(@"%s: opened the legacy USB device", __PRETTY_FUNCTION__);
+#endif
 
 	return YES;
 }
@@ -506,13 +512,19 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 	_activeClients -= 1;
 	NSAssert(_activeClients >= 0, @"Mismatched client counting");
 
+#if DEBUG
 	NSLog(@"%s: number of active clients in legacy USB service dropped to %zd", __PRETTY_FUNCTION__, _activeClients);
+#endif
 
 	if (_activeClients == 0) {
+#if DEBUG
 		NSLog(@"%s: scheduling a deferred close", __PRETTY_FUNCTION__);
+#endif
 
 		if (_scheduledDeferredClose) {
+#if DEBUG
 			NSLog(@"%s: cancelling previous deferred close", __PRETTY_FUNCTION__);
+#endif
 			[self.class cancelPreviousPerformRequestsWithTarget:self selector:@selector(_reallyClose) object:nil];
 		}
 		_scheduledDeferredClose = YES;
@@ -525,7 +537,9 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 
 - (void)_cancelDeferredClose
 {
+#if DEBUG
 	NSLog(@"%s: cancelling a deferred close", __PRETTY_FUNCTION__);
+#endif
 	[self.class cancelPreviousPerformRequestsWithTarget:self selector:@selector(_reallyClose) object:nil];
 	_scheduledDeferredClose = NO;
 }
@@ -534,7 +548,9 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 {
 	NSAssert(NSThread.isMainThread, @"%s: unexpected thread", __PRETTY_FUNCTION__);
 
+#if DEBUG
 	NSLog(@"%s: actually closing now!", __PRETTY_FUNCTION__);
+#endif
 
 	[self _cancelDeferredClose];
 
