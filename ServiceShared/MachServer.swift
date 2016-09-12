@@ -10,7 +10,7 @@ import Foundation
 class MachServer : NSObject, NSMachPortDelegate, TransportClientProtocol {
 	private let name: String
 	private var transport: TransportServiceProtocol!
-	private let requestQueue: OperationQueue
+	private let requestQueue = DispatchQueue(label: "requests")
 	private let connectionsQueue = DispatchQueue(label: "connections")
 
 	private var connections = Set<Port>()
@@ -20,7 +20,6 @@ class MachServer : NSObject, NSMachPortDelegate, TransportClientProtocol {
 
 	init(name: String, transportServiceType: TransportServiceProtocol.Type) {
 		self.name = name
-		requestQueue = OperationQueue()
 		super.init()
 		transport = transportServiceType.init(delegate: self)
 
@@ -74,7 +73,7 @@ class MachServer : NSObject, NSMachPortDelegate, TransportClientProtocol {
 				return
 			}
 
-			requestQueue.addOperation {
+			requestQueue.async {
 				self.transport.scheduleRead(identifier) { result in
 					guard result == Int(kIOReturnSuccess) else {
 						print("\(#function): an error occurred while scheduling a read: \(result)")
@@ -91,7 +90,7 @@ class MachServer : NSObject, NSMachPortDelegate, TransportClientProtocol {
 				return
 			}
 
-			requestQueue.addOperation {
+			requestQueue.async {
 				self.transport.writeData(data, identifier: identifier) { result in
 					let packet = [
 						MachEventKey.type.rawValue: MachResponseType.receivedWriteResponse.rawValue as NSString,
