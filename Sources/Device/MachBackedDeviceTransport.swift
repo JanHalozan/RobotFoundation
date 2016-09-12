@@ -163,8 +163,10 @@ class MachBackedDeviceTransport: DeviceTransport, TransportClientProtocol {
 		if RBMachBootstrapServer.port(withName: serviceName) == nil {
 			// Launch the service first.
 			let task = Process()
-			let bundle = Bundle(for: MachDelegate.self)
-			task.launchPath = bundle.bundleURL.appendingPathComponent("Versions/A/\(executableName)").path
+			let frameworksURL = Bundle.main.privateFrameworksURL!
+			let robotFoundationURL = frameworksURL.appendingPathComponent("RobotFoundation.framework/Versions/A", isDirectory: true)
+			let executable = robotFoundationURL.appendingPathComponent(self.executableName, isDirectory: false)
+			task.launchPath = executable.path
 			task.launch()
 
 			// Wait for the port to become available.
