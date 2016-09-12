@@ -50,7 +50,9 @@ final class BluetoothTransportService : NSObject, TransportServiceProtocol, IOBl
 	}
 
 	private func open(_ identifier: NSString, handler: (Int) -> ()) -> Bool {
+	#if DEBUG
 		NSLog("\(#function): beginning open request")
+	#endif
 
 		let semaphore = DispatchSemaphore(value: 0)
 
@@ -127,7 +129,9 @@ final class BluetoothTransportService : NSObject, TransportServiceProtocol, IOBl
 			}
 		}
 
+	#if DEBUG
 		NSLog("\(#function): opened the device")
+	#endif
 
 		return true
 	}
@@ -143,24 +147,32 @@ final class BluetoothTransportService : NSObject, TransportServiceProtocol, IOBl
 					// Just don't close!
 					cancelDeferredClose()
 					activeClients += 1
+				#if DEBUG
 					NSLog("\(#function): cancelling a deferred close and increasing active clients to \(activeClients)")
+				#endif
 					return .alreadyConnected
 				}
 				else {
 					// Close now and open the new device.
+				#if DEBUG
 					NSLog("\(#function): cancelling a deferred close and opening a new device now")
+				#endif
 					actuallyClose()
 				}
 			case .opening(let device):
 				if device.addressString == identifier as String {
 					// Just don't close and wait until the open finishes before incrementing the active clients.
 					cancelDeferredClose()
+				#if DEBUG
 					NSLog("\(#function): cancelling a deferred close and waiting for existing opening")
+				#endif
 					return .alreadyOpening
 				}
 				else {
 					// Close now and open the new device.
+				#if DEBUG
 					NSLog("\(#function): cancelling a deferred close and opening a new device now")
+				#endif
 					actuallyClose()
 				}
 			}
@@ -173,14 +185,18 @@ final class BluetoothTransportService : NSObject, TransportServiceProtocol, IOBl
 		case .open(let device):
 			if device.addressString == identifier as String {
 				activeClients += 1
+			#if DEBUG
 				NSLog("\(#function): reusing open connection and increasing active clients to \(activeClients)")
+			#endif
 				return .alreadyConnected
 			}
 			break
 		case .opening(let device):
 			if device.addressString == identifier as String {
+			#if DEBUG
 				// Wait until the open finishes before incrementing the active clients.
 				NSLog("\(#function): cancelling a deferred close and waiting for existing opening")
+			#endif
 				return .alreadyOpening
 			}
 			break
@@ -234,13 +250,19 @@ final class BluetoothTransportService : NSObject, TransportServiceProtocol, IOBl
 		activeClients -= 1
 		assert(activeClients >= 0)
 
+	#if DEBUG
 		NSLog("\(#function): decreasing active clients to \(activeClients) after close")
+	#endif
 
 		if activeClients == 0 {
+		#if DEBUG
 			NSLog("\(#function): scheduling a deferred close")
+		#endif
 
 			if awaitingDeferredClose {
+			#if DEBUG
 				NSLog("\(#function): cancelling previous deferred close")
+			#endif
 				BluetoothTransportService.cancelPreviousPerformRequests(withTarget: self, selector: #selector(actuallyClose), object: nil)
 			}
 
@@ -252,7 +274,9 @@ final class BluetoothTransportService : NSObject, TransportServiceProtocol, IOBl
 
 	private func cancelDeferredClose() {
 		assert(Thread.isMainThread)
+	#if DEBUG
 		NSLog("\(#function): cancelling deferred close")
+	#endif
 		BluetoothTransportService.cancelPreviousPerformRequests(withTarget: self, selector: #selector(actuallyClose), object: nil)
 		awaitingDeferredClose = false
 	}
@@ -260,7 +284,9 @@ final class BluetoothTransportService : NSObject, TransportServiceProtocol, IOBl
 	@objc private func actuallyClose() {
 		assert(Thread.isMainThread)
 
+	#if DEBUG
 		NSLog("\(#function): actually closing the device")
+	#endif
 
 		cancelDeferredClose()
 
@@ -464,7 +490,9 @@ final class BluetoothTransportService : NSObject, TransportServiceProtocol, IOBl
 	@objc func rfcommChannelClosed(_ rfcommChannel: IOBluetoothRFCOMMChannel!) {
 		assert(Thread.isMainThread)
 
+	#if DEBUG
 		NSLog("\(#function): RFCOMM channel was closed")
+	#endif
 
 		if let rfcommChannel = rfcommChannel {
 			connectingChannels.remove(rfcommChannel)
