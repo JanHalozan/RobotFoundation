@@ -27,13 +27,4 @@ public final class NXTDevice: Device {
 		print("Unhandled NXT response, operations: \(cachedOperations.count)")
 	#endif
 	}
-
-	override func wroteData() {
-		guard let usbTransport = transport as? LegacyUSBDeviceTransport else {
-			// Skip scheduling reads for Bluetooth transports.
-			return
-		}
-
-		usbTransport.scheduleRead()
-	}
 }

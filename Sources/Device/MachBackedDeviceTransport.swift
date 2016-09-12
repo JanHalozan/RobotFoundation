@@ -229,14 +229,6 @@ class MachBackedDeviceTransport: DeviceTransport, TransportClientProtocol {
 		sendPacket(packet)
 	}
 
-	override func scheduleRead() {
-		let packet = [
-			MachEventKey.type.rawValue: MachRequestType.scheduleRead.rawValue as NSString,
-			MachEventKey.identifier.rawValue: identifier as NSString
-		]
-		sendPacket(packet)
-	}
-
 	@objc func handleTransportData(_ data: NSData) {
 		self.handleData(data as Data)
 	}

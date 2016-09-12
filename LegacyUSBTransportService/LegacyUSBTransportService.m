@@ -617,10 +617,11 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 		return;
 	}
 
-	__block IOReturn result = kIOReturnError;
-
-	dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
 	NSString *const safeIdentifier = [identifier copy];
+
+	// Write.
+	__block IOReturn result = kIOReturnError;
+	dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
 
 	dispatch_sync(dispatch_get_main_queue(), ^{
 		result = [self _actuallyWriteData:data identifier:safeIdentifier semaphore:semaphore];
@@ -648,10 +649,38 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 		return;
 	}
 
+#if DEBUG
 	NSLog(@"%s: finished writing to a legacy USB device", __PRETTY_FUNCTION__);
+#endif
 
+	// Read.
+	__block IOReturn readResult = kIOReturnError;
+	dispatch_semaphore_t readSemaphore = dispatch_semaphore_create(0);
+
+	dispatch_sync(dispatch_get_main_queue(), ^{
+		readResult = [self _actuallyScheduleReadWithIdentifier:safeIdentifier semaphore:readSemaphore];
+	});
+
+	if (readResult != kIOReturnSuccess) {
+		NSLog(@"%s: legacy USB service failed to read data (%d)", __PRETTY_FUNCTION__, readResult);
+		[self close:identifier];
+		handler(readResult);
+		return;
+	}
+
+	if (dispatch_semaphore_wait(readSemaphore, TenSecondTimeout()) != 0) {
+		NSLog(@"%s: legacy USB service timed out while reading data", __PRETTY_FUNCTION__);
+		[self close:identifier];
+		handler(kIOReturnTimeout);
+		return;
+	}
+
+#if DEBUG
+	NSLog(@"%s: legacy USB service finished reading data", __PRETTY_FUNCTION__);
+#endif
+	
 	[self close:identifier];
-	handler(kIOReturnSuccess);
+	handler(self.readResult);
 }
 
 - (IOReturn)_actuallyScheduleReadWithIdentifier:(NSString *)identifier semaphore:(dispatch_semaphore_t)semaphore
@@ -681,42 +710,6 @@ static void DeviceNotification(void *refCon, io_service_t service, natural_t mes
 	tuple.selfLoop = tuple;
 	tuple.data = readBuffer;
 	return (*_interface)->ReadPipeAsync(_interface, inNum, readBuffer, READ_BUFFER_LEN, &ReadCompletion, (__bridge void *)tuple);
-}
-
-- (void)scheduleRead:(NSString *)identifier handler:(void (^)(NSInteger))handler
-{
-	NSLog(@"%s: legacy USB service received read request", __PRETTY_FUNCTION__);
-
-	if (![self open:identifier handler:handler]) {
-		return;
-	}
-
-	__block IOReturn result = kIOReturnError;
-
-	dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-	NSString *const safeIdentifier = [identifier copy];
-
-	dispatch_sync(dispatch_get_main_queue(), ^{
-		result = [self _actuallyScheduleReadWithIdentifier:safeIdentifier semaphore:semaphore];
-	});
-
-	if (result != kIOReturnSuccess) {
-		NSLog(@"%s: legacy USB service failed to read data (%d)", __PRETTY_FUNCTION__, result);
-		[self close:identifier];
-		handler(result);
-		return;
-	}
-
-	if (dispatch_semaphore_wait(semaphore, TenSecondTimeout()) != 0) {
-		NSLog(@"%s: legacy USB service timed out while reading data", __PRETTY_FUNCTION__);
-		[self close:identifier];
-		handler(kIOReturnTimeout);
-		return;
-	}
-
-	NSLog(@"%s: legacy USB service finished reading data", __PRETTY_FUNCTION__);
-	[self close:identifier];
-	handler(self.readResult);
 }
 
 @end

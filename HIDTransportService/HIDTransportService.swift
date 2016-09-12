@@ -219,8 +219,4 @@ final class HIDTransportService : NSObject, TransportServiceProtocol {
 		device = nil
 		activeClients = 0
 	}
-
-	func scheduleRead(_ identifier: NSString, handler: @escaping (Int) -> ()) {
-		fatalError("Not supported")
-	}
 }

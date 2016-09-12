@@ -503,8 +503,4 @@ final class BluetoothTransportService : NSObject, TransportServiceProtocol, IOBl
 		// Writes will already fail gracefully, but we still tell clients about the close so they can, for example, cancel pending operations as well.
 		delegate?.closedTransportConnection()
 	}
-
-	func scheduleRead(_ identifier: NSString, handler: @escaping (Int) -> ()) {
-		fatalError("Not supported")
-	}
 }

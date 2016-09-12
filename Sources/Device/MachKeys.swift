@@ -10,7 +10,6 @@ import Foundation
 enum MachRequestType: String {
 	case openConnection = "openConnection"
 	case writeData = "writeData"
-	case scheduleRead = "scheduleRead"
 }
 
 enum MachResponseType: String {

@@ -21,10 +21,6 @@ class DeviceTransport {
 		fatalError("Must be overriden")
 	}
 
-	func scheduleRead() {
-		// May be overriden
-	}
-
 	/* these methods should only be called by subclasses to invoke delegate methods */
 	func wroteData() {
 		delegate?.deviceTransportDidWriteData(self)

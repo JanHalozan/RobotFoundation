@@ -66,21 +66,6 @@ class MachServer : NSObject, NSMachPortDelegate, TransportClientProtocol {
 		switch parsedType {
 		case .openConnection:
 			openConnection(port: message.sendPort!)
-		case .scheduleRead:
-			guard let identifier = dict[MachEventKey.identifier.rawValue] as? NSString else {
-				assertionFailure()
-				print("\(#function): no identifier")
-				return
-			}
-
-			requestQueue.async {
-				self.transport.scheduleRead(identifier) { result in
-					guard result == Int(kIOReturnSuccess) else {
-						print("\(#function): an error occurred while scheduling a read: \(result)")
-						return
-					}
-				}
-			}
 		case .writeData:
 			guard let identifier = dict[MachEventKey.identifier.rawValue] as? NSString,
 				  let data = dict[MachEventKey.data.rawValue] as? NSData,
