@@ -15,7 +15,8 @@ public final class NXTDevice: Device {
 	}
 
 	override func handleData(_ data: Data) {
-		for operation in operations {
+		let cachedOperations = operations
+		for operation in cachedOperations {
 			if let commandOperation = operation as? NXTCommandOperation, commandOperation.canHandleResponseData(data) {
 				commandOperation.handleResponseData(data)
 				return
@@ -23,7 +24,7 @@ public final class NXTDevice: Device {
 		}
 
 	#if DEBUG
-		print("Unhandled NXT response")
+		print("Unhandled NXT response, operations: \(cachedOperations.count)")
 	#endif
 	}
 
