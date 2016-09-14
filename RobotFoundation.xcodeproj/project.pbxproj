@@ -1222,7 +1222,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "HID=\"$BUILT_PRODUCTS_DIR/RobotFoundation.framework/Versions/A/HIDTransportService\"\nBluetooth=\"$BUILT_PRODUCTS_DIR/RobotFoundation.framework/Versions/A/BluetoothTransportService\"\nLegacy=\"$BUILT_PRODUCTS_DIR/RobotFoundation.framework/Versions/A/LegacyUSBTransportService\"\n\ncd $SRCROOT\nexport CODESIGN_ALLOCATE=\"$DT_TOOLCHAIN_DIR/usr/bin/codesign_allocate\"\n/usr/bin/codesign --force --sign \"${CODE_SIGN_IDENTITY}\" --entitlements ServiceShared/TransportService.entitlements --timestamp=none $HID\n/usr/bin/codesign --force --sign \"${CODE_SIGN_IDENTITY}\" --entitlements ServiceShared/TransportService.entitlements --timestamp=none $HID\n/usr/bin/codesign --force --sign \"${CODE_SIGN_IDENTITY}\" --entitlements ServiceShared/TransportService.entitlements --timestamp=none $Legacy\n";
+			shellScript = "HID=\"$BUILT_PRODUCTS_DIR/RobotFoundation.framework/Versions/A/HIDTransportService\"\nBluetooth=\"$BUILT_PRODUCTS_DIR/RobotFoundation.framework/Versions/A/BluetoothTransportService\"\nLegacy=\"$BUILT_PRODUCTS_DIR/RobotFoundation.framework/Versions/A/LegacyUSBTransportService\"\n\ncd $SRCROOT\nexport CODESIGN_ALLOCATE=\"$DT_TOOLCHAIN_DIR/usr/bin/codesign_allocate\"\n/usr/bin/codesign --force --sign \"${CODE_SIGN_IDENTITY}\" --entitlements ServiceShared/TransportService.entitlements --timestamp=none $HID\n/usr/bin/codesign --force --sign \"${CODE_SIGN_IDENTITY}\" --entitlements ServiceShared/TransportService.entitlements --timestamp=none $Bluetooth\n/usr/bin/codesign --force --sign \"${CODE_SIGN_IDENTITY}\" --entitlements ServiceShared/TransportService.entitlements --timestamp=none $Legacy\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1916,6 +1916,7 @@
 				C97A84771D86098E00767A43 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C97A84891D860B8A00767A43 /* Build configuration list for PBXNativeTarget "LegacyUSBTransportService" */ = {
 			isa = XCConfigurationList;
@@ -1924,6 +1925,7 @@
 				C97A848B1D860B8A00767A43 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C98C34671C25C160006840C3 /* Build configuration list for PBXProject "RobotFoundation" */ = {
 			isa = XCConfigurationList;
