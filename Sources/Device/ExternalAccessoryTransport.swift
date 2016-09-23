@@ -10,28 +10,63 @@
 import ExternalAccessory
 import Foundation
 
-final class ExternalAccessoryTransport: DeviceTransport {
-	private let accessory: EAAccessory
-	private let protocolString: String
+final class ExternalAccessoryTransport: DeviceTransport, ThreadedInputStreamDelegate {
+	private enum TransportError: Error {
+		case streamOpenError
+	}
 
-	private var session: EASession?
-	private var inputStream: InputStream?
-	private var outputStream: OutputStream?
+	private let accessory: EAAccessory
+
+	private let session: EASession
+	private var inputStream: ThreadedInputStream?
+	private var outputStream: ThreadedOutputStream?
 
 	init(accessory: EAAccessory, protocolString: String) {
 		self.accessory = accessory
-		self.protocolString = protocolString
+		session = EASession(accessory: accessory, forProtocol: protocolString)
 	}
 
-	func open() throws {
-		let session = EASession(accessory: accessory, forProtocol: protocolString)
-		inputStream = session.inputStream
-		outputStream = session.outputStream
+	private func openInputIfNecessary() throws {
+		if inputStream?.streamStatus == .some(.open) {
+			return
+		}
 
-		outputStream?.schedule(in: RunLoop.current, forMode: RunLoopMode.commonModes)
-		outputStream?.open()
+		guard let inputStream = session.inputStream else {
+			throw TransportError.streamOpenError
+		}
 
-		self.session = session
+		self.inputStream = ThreadedInputStream(stream: inputStream, delegate: self)
+	}
+
+	func threadedInputStreamDidClose() {
+		handleClosedConnection()
+	}
+
+	func threadedInputStreamDidReceiveData(data: Data) {
+		handleData(data)
+	}
+
+	private func openOutputIfNecessary() throws {
+		if outputStream?.streamStatus == .some(.open) {
+			return
+		}
+
+		guard let outputStream = session.outputStream else {
+			throw TransportError.streamOpenError
+		}
+
+		self.outputStream = ThreadedOutputStream(stream: outputStream)
+	}
+
+	private func openIfNecessary() throws {
+		try openInputIfNecessary()
+		try openOutputIfNecessary()
+	}
+
+	override func writeData(_ data: Data, errorHandler: @escaping (Error) -> ()) throws {
+		try openIfNecessary()
+
+		outputStream?.writeData(data: data)
 	}
 }
 
