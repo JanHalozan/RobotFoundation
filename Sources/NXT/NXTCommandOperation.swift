@@ -13,6 +13,7 @@ public enum NXTCommandError: Error {
 	case transportError(Error)
 	case commandError(NXTStatus)
 	case responseParseError
+	case operationAborted
 }
 
 public enum NXTCommandResult {
@@ -60,7 +61,7 @@ final class NXTCommandOperation: DeviceOperation {
 		#if DEBUG
 			print("Cancelling NXT operation...")
 		#endif
-			finishWithResult(.error(.transportError(kIOReturnAborted as Error)))
+			finishWithResult(.error(.operationAborted))
 			return
 		}
 
@@ -114,6 +115,7 @@ final class NXTCommandOperation: DeviceOperation {
 
 		let mainData: Data
 
+	#if os(OSX)
 		// Bluetooth responses are padded with the length.
 		if transport is IOBluetoothDeviceTransport {
 			assert(data.count >= 2)
@@ -125,6 +127,9 @@ final class NXTCommandOperation: DeviceOperation {
 		} else {
 			mainData = data
 		}
+	#else
+		mainData = data
+	#endif
 
 		guard let (commandCode, _) = processReplyWithResponseData(mainData) else {
 			return false
@@ -136,6 +141,7 @@ final class NXTCommandOperation: DeviceOperation {
 	func handleResponseData(_ data: Data) {
 		let mainData: Data
 
+	#if os(OSX)
 		// Bluetooth responses are padded with the length.
 		if transport is IOBluetoothDeviceTransport {
 			assert(data.count >= 2)
@@ -147,6 +153,9 @@ final class NXTCommandOperation: DeviceOperation {
 		} else {
 			mainData = data
 		}
+	#else
+		mainData = data
+	#endif
 
 		guard let response = command.responseType.init(data: mainData, userInfo: command.responseInfo) as? NXTResponse else {
 			print("Could not parse a response")

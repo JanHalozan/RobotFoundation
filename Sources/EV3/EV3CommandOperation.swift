@@ -17,6 +17,7 @@ public enum EV3CommandError: Error {
 	case transportError(Error)
 	case responseError(Error)
 	case commandError
+	case operationAborted
 }
 
 public enum EV3CommandResult {
@@ -84,7 +85,7 @@ final class EV3CommandGroupOperation: DeviceOperation {
 		#if DEBUG
 			print("Cancelling EV3 operation...")
 		#endif
-			finishWithResult(.error(.transportError(kIOReturnAborted)))
+			finishWithResult(.error(.operationAborted))
 			return
 		}
 

@@ -63,7 +63,6 @@
 		C924D93F1D85CC2700F2877F /* RBMachBootstrapServer.h in Headers */ = {isa = PBXBuildFile; fileRef = C924D93D1D85CC2700F2877F /* RBMachBootstrapServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C924D9401D85CC2700F2877F /* RBMachBootstrapServer.h in Headers */ = {isa = PBXBuildFile; fileRef = C924D93D1D85CC2700F2877F /* RBMachBootstrapServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C924D9411D85CC2700F2877F /* RBMachBootstrapServer.m in Sources */ = {isa = PBXBuildFile; fileRef = C924D93E1D85CC2700F2877F /* RBMachBootstrapServer.m */; };
-		C924D9421D85CC2700F2877F /* RBMachBootstrapServer.m in Sources */ = {isa = PBXBuildFile; fileRef = C924D93E1D85CC2700F2877F /* RBMachBootstrapServer.m */; };
 		C924D9551D85D1D900F2877F /* HIDTransportService in Copy Mach Services */ = {isa = PBXBuildFile; fileRef = C9EC35F21D85C2D20065790D /* HIDTransportService */; };
 		C92618F31CAEDAE600B52B8D /* NXTStopPlaybackCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92618F21CAEDAE600B52B8D /* NXTStopPlaybackCommand.swift */; };
 		C92618F41CAEDAE600B52B8D /* NXTStopPlaybackCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92618F21CAEDAE600B52B8D /* NXTStopPlaybackCommand.swift */; };
@@ -1462,7 +1461,6 @@
 				C96945591C28F3760030DEB3 /* NXTHandleResponse.swift in Sources */,
 				C905867B1C2C5FDB0068E560 /* EV3ReadFileCommand.swift in Sources */,
 				C98C35021C26544D006840C3 /* EV3Command.swift in Sources */,
-				C924D9421D85CC2700F2877F /* RBMachBootstrapServer.m in Sources */,
 				C94751771C54083700A30AA6 /* EV3FillRectCommand.swift in Sources */,
 				C947517A1C5408EB00A30AA6 /* EV3DrawRectCommand.swift in Sources */,
 				C93436831C5548C500CD93EC /* EV3WaitForButtonCommand.swift in Sources */,

@@ -24,7 +24,7 @@ public enum RobotDeviceType {
 	#endif
 
 	#if os(iOS)
-	case ExternalAccessory
+	case externalAccessory
 	#endif
 }
 
@@ -68,6 +68,7 @@ public final class MetaDevice {
 			return nil
 		}
 
+	#if os(OSX)
 		switch type {
 		case kDictionaryTypeBluetooth:
 			guard let identifier = stringDictionary[kDictionaryIdentifierKey] else {
@@ -111,9 +112,13 @@ public final class MetaDevice {
 			fatalError("Unimplemented type")
 			return nil
 		}
+	#else
+		fatalError("Unimplemented")
+	#endif
 	}
 
 	public var stringDictionary: [String: String] {
+	#if os(OSX)
 		switch type {
 		case .bluetoothDevice:
 			return [
@@ -137,6 +142,12 @@ public final class MetaDevice {
 				kDictionaryClassKey: deviceClass.rawValue
 			]
 		}
+	#else
+		switch type {
+		case .externalAccessory:
+			fatalError("Unimplemented")
+		}
+	#endif
 	}
 	
 	public func updateName(_ newName: String) {

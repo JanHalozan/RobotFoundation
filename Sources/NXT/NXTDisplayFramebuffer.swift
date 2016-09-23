@@ -7,6 +7,8 @@
 
 import Foundation
 
+#if os(OSX)
+
 public func BitmapImageRepForNXTDisplayFramebuffer(_ data: Data) -> NSBitmapImageRep {
 	guard let imageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: kNXTScreenWidth, pixelsHigh: kNXTScreenHeight, bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSCalibratedRGBColorSpace, bitmapFormat: [], bytesPerRow: 0, bitsPerPixel: 32) else {
 		fatalError()
@@ -26,3 +28,5 @@ public func BitmapImageRepForNXTDisplayFramebuffer(_ data: Data) -> NSBitmapImag
 
 	return imageRep
 }
+
+#endif
