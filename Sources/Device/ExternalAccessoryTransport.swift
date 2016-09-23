@@ -15,20 +15,20 @@ final class ExternalAccessoryTransport: DeviceTransport {
 	private let protocolString: String
 
 	private var session: EASession?
-	private var inputStream: NSInputStream?
-	private var outputStream: NSOutputStream?
+	private var inputStream: InputStream?
+	private var outputStream: OutputStream?
 
 	init(accessory: EAAccessory, protocolString: String) {
 		self.accessory = accessory
 		self.protocolString = protocolString
 	}
 
-	override func open() throws {
+	func open() throws {
 		let session = EASession(accessory: accessory, forProtocol: protocolString)
 		inputStream = session.inputStream
 		outputStream = session.outputStream
 
-		outputStream?.scheduleInRunLoop(NSRunLoop.currentRunLoop(), forMode: NSRunLoopCommonModes)
+		outputStream?.schedule(in: RunLoop.current, forMode: RunLoopMode.commonModes)
 		outputStream?.open()
 
 		self.session = session

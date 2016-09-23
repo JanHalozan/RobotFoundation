@@ -78,6 +78,8 @@
 		C93AAEB81C553E55008B7758 /* EV3IsButtonPressedCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93AAEB61C553E55008B7758 /* EV3IsButtonPressedCommand.swift */; };
 		C93AAEBA1C553F8E008B7758 /* EV3ButtonPressedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93AAEB91C553F8E008B7758 /* EV3ButtonPressedResponse.swift */; };
 		C93AAEBB1C553F8E008B7758 /* EV3ButtonPressedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93AAEB91C553F8E008B7758 /* EV3ButtonPressedResponse.swift */; };
+		C94327CA1D95A5E900966440 /* ExternalAccessoryTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94327C91D95A5E900966440 /* ExternalAccessoryTransport.swift */; };
+		C94327CB1D95A5E900966440 /* ExternalAccessoryTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94327C91D95A5E900966440 /* ExternalAccessoryTransport.swift */; };
 		C947516D1C53FFB600A30AA6 /* EV3FillWindowCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C947516C1C53FFB600A30AA6 /* EV3FillWindowCommand.swift */; };
 		C947516E1C53FFB600A30AA6 /* EV3FillWindowCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C947516C1C53FFB600A30AA6 /* EV3FillWindowCommand.swift */; };
 		C94751701C54024B00A30AA6 /* EV3UpdateDisplayCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C947516F1C54024B00A30AA6 /* EV3UpdateDisplayCommand.swift */; };
@@ -449,6 +451,7 @@
 		C93AAEB31C553C3F008B7758 /* EV3DrawBitmapCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3DrawBitmapCommand.swift; sourceTree = "<group>"; };
 		C93AAEB61C553E55008B7758 /* EV3IsButtonPressedCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3IsButtonPressedCommand.swift; sourceTree = "<group>"; };
 		C93AAEB91C553F8E008B7758 /* EV3ButtonPressedResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3ButtonPressedResponse.swift; sourceTree = "<group>"; };
+		C94327C91D95A5E900966440 /* ExternalAccessoryTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExternalAccessoryTransport.swift; sourceTree = "<group>"; };
 		C947516C1C53FFB600A30AA6 /* EV3FillWindowCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3FillWindowCommand.swift; sourceTree = "<group>"; };
 		C947516F1C54024B00A30AA6 /* EV3UpdateDisplayCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3UpdateDisplayCommand.swift; sourceTree = "<group>"; };
 		C94751721C54056200A30AA6 /* EV3DrawTextCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EV3DrawTextCommand.swift; sourceTree = "<group>"; };
@@ -846,6 +849,7 @@
 				C9CD0CED1D580D5A00584574 /* Atomic.swift */,
 				C98C34B81C25E00D006840C3 /* Device.swift */,
 				C98C34B41C25D28D006840C3 /* DeviceTransport.swift */,
+				C94327C91D95A5E900966440 /* ExternalAccessoryTransport.swift */,
 				C98C34B21C25D24B006840C3 /* IOBluetoothDeviceTransport.swift */,
 				C98C34B61C25DC40006840C3 /* IOKitUtilities.swift */,
 				C9CFFC281C2F393800E75768 /* HIDDeviceTransport.swift */,
@@ -1393,6 +1397,7 @@
 				C98C34A91C25D1D1006840C3 /* NXTCloseCommand.swift in Sources */,
 				C98C34DD1C260EA6006840C3 /* MindstormsType.swift in Sources */,
 				C9BC33E11C2F1A2D00E0A41F /* XPCTransportServiceProtocol.swift in Sources */,
+				C94327CA1D95A5E900966440 /* ExternalAccessoryTransport.swift in Sources */,
 				C98C34E91C264532006840C3 /* EV3SetLEDCommand.swift in Sources */,
 				C917BC711D202AF600DFE0AD /* EV3GetSensorNameCommand.swift in Sources */,
 				C947517D1C540F1400A30AA6 /* EV3InvertRectCommand.swift in Sources */,
@@ -1566,6 +1571,7 @@
 				C959D86C1D805476009647F0 /* NXTLSReadCommand.swift in Sources */,
 				C907C2661C2A2F0300647531 /* EV3StopMotorCommand.swift in Sources */,
 				C9E12DD61CD2D720002543B1 /* EV3ReadOutputCommand.swift in Sources */,
+				C94327CB1D95A5E900966440 /* ExternalAccessoryTransport.swift in Sources */,
 				C959D8631D8052AF009647F0 /* NXTLSWriteCommand.swift in Sources */,
 				C9B1387E1C2B1C5C0018812F /* EV3ListingParser.swift in Sources */,
 				C96E23351C6FB16500E3B073 /* EV3SetMotorPowerCommand.swift in Sources */,
