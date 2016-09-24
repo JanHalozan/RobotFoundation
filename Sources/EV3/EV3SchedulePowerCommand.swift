@@ -5,6 +5,8 @@
 //  Created by Matt on 6/22/16.
 //
 
+import Foundation
+
 public struct EV3SchedulePowerCommand: EV3DirectCommand {
 	public let ports: EV3OutputPortOptions
 	public let power: Int8

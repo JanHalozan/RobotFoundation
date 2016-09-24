@@ -5,6 +5,8 @@
 //  Created by Matt on 5/27/16.
 //
 
+import Foundation
+
 private let kEV3MaxBrickNameLength = UInt8(12)
 
 public struct EV3GetBrickNameCommand: EV3DirectCommand {
