@@ -8,9 +8,9 @@
 import Foundation
 
 public struct EV3GetSensorTypeCommand: EV3DirectCommand {
-	public let port: EV3InputPort
+	public let port: EV3RawInputPort
 
-	public init(port: EV3InputPort) {
+	public init(port: EV3RawInputPort) {
 		self.port = port
 	}
 

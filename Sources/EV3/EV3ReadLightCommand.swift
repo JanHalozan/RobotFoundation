@@ -13,10 +13,10 @@ public enum EV3ReadLightType: UInt8 {
 }
 
 public struct EV3ReadLightCommand: EV3DirectCommand {
-	public let port: EV3InputPort
+	public let port: EV3RawInputPort
 	public let lightType: EV3ReadLightType
 
-	public init(port: EV3InputPort, lightType: EV3ReadLightType) {
+	public init(port: EV3RawInputPort, lightType: EV3ReadLightType) {
 		self.port = port
 		self.lightType = lightType
 	}

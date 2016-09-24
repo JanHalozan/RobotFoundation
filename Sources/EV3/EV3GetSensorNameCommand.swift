@@ -10,9 +10,9 @@ import Foundation
 private let kEV3MaxSensorNameLength = 255
 
 public struct EV3GetSensorNameCommand: EV3DirectCommand {
-	public let port: EV3InputPort
+	public let port: EV3RawInputPort
 
-	public init(port: EV3InputPort) {
+	public init(port: EV3RawInputPort) {
 		self.port = port
 	}
 

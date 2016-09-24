@@ -112,7 +112,7 @@ public enum EV3ButtonConst: UInt8 {
 	case back = 6
 }
 
-public enum EV3InputPort: UInt8 {
+public enum EV3RawInputPort: UInt8 {
 	case one = 0, two, three, four
 }
 

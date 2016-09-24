@@ -8,7 +8,7 @@
 import Foundation
 
 public struct EV3SetSensorModeCommand: EV3DirectCommand {
-	public let port: EV3InputPort
+	public let port: EV3RawInputPort
 	public let mode: UInt8
 
 	public var responseType: MindstormsResponse.Type {

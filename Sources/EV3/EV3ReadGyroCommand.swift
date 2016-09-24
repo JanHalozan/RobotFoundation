@@ -13,10 +13,10 @@ public enum EV3GyroMode: UInt8 {
 }
 
 public struct EV3ReadGyroCommand: EV3DirectCommand {
-	public let port: EV3InputPort
+	public let port: EV3RawInputPort
 	public let mode: EV3GyroMode
 
-	public init(port: EV3InputPort, mode: EV3GyroMode) {
+	public init(port: EV3RawInputPort, mode: EV3GyroMode) {
 		self.port = port
 		self.mode = mode
 	}

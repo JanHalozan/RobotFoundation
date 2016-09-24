@@ -10,9 +10,9 @@ import Foundation
 private let kEV3UltrasonicSensorCMMode = UInt8(0)
 
 public struct EV3ReadUltrasonicSensorCommand: EV3DirectCommand {
-	public let port: EV3InputPort
+	public let port: EV3RawInputPort
 
-	public init(port: EV3InputPort) {
+	public init(port: EV3RawInputPort) {
 		self.port = port
 	}
 
