@@ -7,16 +7,16 @@
 
 import Foundation
 
-public enum EV3ButtonType: UInt8 {
+public enum EV3RawButtonType: UInt8 {
 	case press = 5
 	case release = 6
 }
 
 public struct EV3ButtonCommand: EV3DirectCommand {
 	public let button: EV3ButtonConst
-	public let type: EV3ButtonType
+	public let type: EV3RawButtonType
 
-	public init(button: EV3ButtonConst, type: EV3ButtonType) {
+	public init(button: EV3ButtonConst, type: EV3RawButtonType) {
 		self.button = button
 		self.type = type
 	}
